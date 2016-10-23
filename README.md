@@ -1,7 +1,6 @@
 # Get Out Game
 
 > Simple survival game made with [React Native](https://facebook.github.io/react-native/)
-1 real
 
 ## Getting started
 
