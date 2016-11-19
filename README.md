@@ -1,7 +1,6 @@
 # Get Out Game
 
-> Simple survival game made with [React Native](https://facebook.github.io/react-native/)
-
+> Simple survival game made with ES2015
 ## Getting started
 
   Clone from github:
