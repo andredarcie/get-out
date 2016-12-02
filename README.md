@@ -1,6 +1,7 @@
 # Get Out Game
 
 > Simple survival game made with ES2015
+
 ## Getting started
 
   Clone from github:
