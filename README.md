@@ -1,6 +1,6 @@
 # Get Out Game
 
-> Simple survival game made with ES2015
+> Simple survival game made with Unity
 
 ## Getting started
 
