@@ -6,9 +6,9 @@
 
   Clone from github:
 
-    git clone git@github.com:AndreNDarcie/Get-Out-Game.git
+    git clone git@github.com:andredarcie/get-out-game.git
 
-    cd Get-Out-Game
+    cd get-out-game
     
 ### The core team ###
-[André N. Darcie](https://github.com/AndreNDarcie) - [Alexandre Peluchi](https://github.com/alexandrepeluchi)
+[André N. Darcie](https://github.com/andredarcie) - [Alexandre Peluchi](https://github.com/alexandrepeluchi)
