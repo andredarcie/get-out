@@ -30,3 +30,8 @@ ul {
 .errors {
   color: #f00;
 }
+
+#map {
+  width: 100%;
+  height: 100%;
+}
