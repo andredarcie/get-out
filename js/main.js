@@ -1,5 +1,3 @@
-var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
 // Setup Firebase
 var config = {
     apiKey: "AIzaSyBkggHyu3tnMmuY3kkpFNsLuliJ8jZB31U",
@@ -20,7 +18,7 @@ var app = new Vue({
   data: {
     newUser: {
       name: '',
-      email: ''
+      message: ''
     }
   },
   // firebase binding
@@ -33,7 +31,7 @@ var app = new Vue({
     validation: function () {
       return {
         name: !!this.newUser.name.trim(),
-        email: emailRE.test(this.newUser.email)
+        message: !!this.newUser.message.trim()
       }
     },
     isValid: function () {
@@ -48,8 +46,7 @@ var app = new Vue({
     addUser: function () {
       if (this.isValid) {
         usersRef.push(this.newUser)
-        this.newUser.name = ''
-        this.newUser.email = ''
+        this.newUser.message = ''
       }
     },
     removeUser: function (user) {

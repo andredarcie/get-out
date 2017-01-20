@@ -10,18 +10,18 @@
         <div id="app">
             <ul is="transition-group">
                 <li v-for="user in users" class="user" :key="user['.key']">
-                <span>{{user.name}} - {{user.email}}</span>
+                <span>{{user.name}} - {{user.message}}</span>
                 <button v-on:click="removeUser(user)">X</button>
                 </li>
             </ul>
             <form id="form" v-on:submit.prevent="addUser">
                 <input type="text" v-model="newUser.name" placeholder="Username">
-                <input type="email" v-model="newUser.email" placeholder="email@email.com">
-                <input type="submit" value="Add User">
+                <input type="text" v-model="newUser.message" placeholder="Message">
+                <input type="submit" value="Send [Press Enter]">
             </form>
             <ul class="errors">
                 <li v-show="!validation.name">Name cannot be empty.</li>
-                <li v-show="!validation.email">Please provide a valid email address.</li>
+                <li v-show="!validation.message">Please provide a valid message.</li>
             </ul>
         </div>
         <script src="https://unpkg.com/vue/dist/vue.js"></script>
