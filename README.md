@@ -1,6 +1,6 @@
 # Get Out Game
 
-> Simple survival game made with vuejs and firebase
+> Simple survival game made with vuejs
 
 ## Getting started
 
