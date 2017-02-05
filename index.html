@@ -7,7 +7,9 @@
   <body>
     <canvas width="500" height="500" style="background-color: black;"></canvas>
     <p>W, A, S, D to move.</p>
+    <p>Player position: <span id="status">s</span></p>
   </body>
+  <script src='object.js'></script>
   <script>
     var canvas = document.querySelector('canvas');
     var ctx = canvas.getContext("2d");
@@ -15,12 +17,23 @@
     var cw=canvas.width;
     var ch=canvas.height;
 
+    var player = new Object({
+      x: 0,
+      y: 0,
+      width: 20,
+      height: 20
+    });
+
+    console.log(player);
+
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(0,0,150,75);
 
     function update(){
       ctx.clearRect(0,0,cw,ch);
-      ctx.fillRect(x,y,20,20);
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+      ctx.fillRect(60,60,20,20);
+      document.getElementById('status').innerHTML = "[x: " + player.x + ", y: " + player.y + "]";
     }
 
     update(20,20);
@@ -29,12 +42,15 @@
     document.addEventListener("keydown",handleKeydown,false);
 
     function handleKeydown(e){
+      let x = player.x, y = player.y;
       switch(e.keyCode){
         case 87: if(y > 0) y-=20; break;  // W
         case 65: if(x > 0) x-=20; break;  // A
         case 83: if(y < (ch-20)) y+=20; break;  // S
         case 68: if(x < (cw-20)) x+=20; break;  // D
       }
+      player.x = x;
+      player.y = y;
       update();
     }
 
