@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <canvas id="canvas" width="2000" height="2000" style="background-color: #2ecc71;"></canvas>
+    <p>W, A, S, D to move.</p>
+    <p>Player position: <span id="status">s</span></p>
+    <script>
+      var $canvas = document.getElementById('canvas');
+      var context = $canvas.getContext("2d");
+
+      /*
+      var map = [
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+      ];
+      */
+
+      var map = [];
+
+      for (var row = 0; row < 100; row++){
+        map.push([]);
+        for (var column = 0; column < 100; column++){
+            var randomNumber = Math.round((Math.random() * 10) + 1);
+            if (randomNumber === 10){
+              map[row].push(1);
+            } else {
+              map[row].push(0);
+            }
+        }
+      }
+
+      var playerPosition = {row: 0, column: 0};
+
+      function draw(){
+
+        context.clearRect(0,0,$canvas.width,$canvas.height);
+
+        for (var row = 0; row < 100; row++){
+          for (var column = 0; column < 100; column++){
+            if(map[row][column] > 0){
+              context.fillStyle = "#27ae60";
+              context.fillRect(column * 20, row * 20, 20, 20);
+            }
+          }
+        }
+
+      }
+
+      draw();
+
+      // listen for keydown events on the document
+      document.addEventListener("keydown",handleKeydown,false);
+
+      function handleKeydown(e){
+        switch(e.keyCode){
+          case 87: // W
+            if (map[playerPosition.row-1][playerPosition.column] === 1){
+              console.log("blocked");
+            } else {
+              map[playerPosition.row][playerPosition.column] = 0;
+              playerPosition.row--;
+              map[playerPosition.row][playerPosition.column] = 1;
+            }
+          break;
+          case 83: // S
+            if (map[playerPosition.row+1][playerPosition.column] === 1){
+              console.log("blocked");
+            } else {
+              map[playerPosition.row][playerPosition.column] = 0;
+              playerPosition.row++;
+              map[playerPosition.row][playerPosition.column] = 1;
+            }
+          break;
+          case 65: // S
+            if (map[playerPosition.row][playerPosition.column-1] === 1){
+              console.log("blocked");
+            } else {
+              map[playerPosition.row][playerPosition.column] = 0;
+              playerPosition.column--;
+              map[playerPosition.row][playerPosition.column] = 1;
+            }
+          break;
+          case 68: // D
+            if (map[playerPosition.row][playerPosition.column+1] === 1){
+              console.log("blocked");
+            } else {
+              map[playerPosition.row][playerPosition.column] = 0;
+              playerPosition.column++;
+              map[playerPosition.row][playerPosition.column] = 1;
+            }
+          break;
+        }
+        draw();
+      }
+
+      function handleKeydownx(e){
+
+        switch(e.keyCode){
+          case 87:
+            //if(!checkCollision('up')){
+            //if (checkCollision(0)){
+              map[playerPosition.x][playerPosition.y] = 0;
+              playerPosition.x--;
+              map[playerPosition.x][playerPosition.y] = 1;
+            //}
+          //}
+
+
+          break;  // W
+
+          case 65:
+          //if (!checkCollision('left')){
+            map[playerPosition.x][playerPosition.y] = 0;
+            playerPosition.y--;
+            map[playerPosition.x][playerPosition.y] = 1;
+          //}
+            break;  // A
+
+          case 83:
+            //if (!checkCollision('down')){
+            map[playerPosition.x][playerPosition.y] = 0;
+            playerPosition.x++;
+            map[playerPosition.x][playerPosition.y] = 1;
+            //}
+            break;  // S
+
+          case 68:
+            //if (!checkCollision('right')){
+            map[playerPosition.x][playerPosition.y] = 0;
+            playerPosition.y++;
+            map[playerPosition.x][playerPosition.y] = 1;
+            //}
+            break;  // D
+
+        }
+        document.getElementById('status').innerHTML = "[x: " + playerPosition.x + ", y: " + playerPosition.y + "]";
+        draw();
+      }
+
+      function checkCollision(direction){
+        var hit = false;
+        /*
+        switch(direction){
+          case 'up':
+            hit = (map[playerPosition.x - 1][playerPosition.y] > 0);
+            break;
+          case 'down':
+            hit = (map[playerPosition.x + 1][playerPosition.y] > 0);
+            break;
+          case 'left':
+            hit = (map[playerPosition.x][playerPosition.y - 1] > 0);
+            break;
+          case 'right':
+            hit = (map[playerPosition.x][playerPosition.y + 1] > 0);
+            break;
+        }*/
+
+
+
+        console.log("Up: " + map[playerPosition.x-1][playerPosition.y]);
+        console.log("Down: " + map[playerPosition.x+1][playerPosition.y]);
+        console.log("Left: " + map[playerPosition.x][playerPosition.y-1]);
+        console.log("Right: " + map[playerPosition.x][playerPosition.y+1]);
+
+        console.log("hit -> " + hit);
+        return hit;
+      }
+
+    </script>
+  </body>
+</html>
