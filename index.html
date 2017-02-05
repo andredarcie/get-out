@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title>Teste</title>
   </head>
-  <body>
-    <canvas width="500" height="500" style="background-color: black;"></canvas>
+  <body style="background-color: #27ae60; font-family: Arial, Helvetica, sans-serif; color: #ecf0f1; text-align:center;">
+    <h1>Dungeon Crawler</h1>
+    <canvas width="500" height="500" style="background-color: #2ecc71;"></canvas>
     <p>W, A, S, D to move.</p>
     <p>Player position: <span id="status">s</span></p>
   </body>
@@ -19,31 +20,45 @@
     var objectList = [];
 
     var player = new Object({
+      type: 'player',
       x: 0,
       y: 0,
       width: 20,
-      height: 20
+      height: 20,
+      color: "#34495e"
     });
     objectList.push(player);
 
     var npc = new Object({
+      type: 'npc',
       x: 60,
       y: 60,
       width: 20,
-      height: 20
+      height: 20,
+      color: "#9b59b6"
     });
     objectList.push(npc);
 
+    var wall = new Object({
+      type: 'wall',
+      x: 100,
+      y: 100,
+      width: 20,
+      height: 20,
+      color: "#95a5a6"
+    });
+    objectList.push(wall);
+
     console.log(objectList);
 
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(0,0,150,75);
+
 
     function update(){
 
       ctx.clearRect(0,0,cw,ch);
 
       objectList.forEach(function (obj) {
+        ctx.fillStyle = obj.color;
         ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
       });
 
@@ -57,13 +72,23 @@
 
     function handleKeydown(e){
       let moveRight, moveLeft, moveUp, moveDown;
+      let canMove = true;
 
       objectList.forEach(function (obj) {
         //if ((player.x + player.width) === obj.x && player.y === obj.y) { moveRight = false } else { moveRight = true }
-        moveRight = !((player.x + player.width) === obj.x && player.y === obj.y);
-        moveLeft = !(player.x === (obj.x + obj.width) && player.y === obj.y);
-        moveUp = !(player.y === (obj.y + obj.height) && player.x === obj.x);
-        moveDown = !((player.y + player.height) === obj.y && player.x === obj.x);
+        //if (obj.type === "player") { return; }
+
+        if (canMove){
+          moveRight = !((player.x + player.width) === obj.x && player.y === obj.y);
+          moveLeft = !(player.x === (obj.x + obj.width) && player.y === obj.y);
+          moveUp = !(player.y === (obj.y + obj.height) && player.x === obj.x);
+          moveDown = !((player.y + player.height) === obj.y && player.x === obj.x);
+        }
+
+        canMove = moveUp && moveDown && moveLeft && moveRight;
+
+        canMove ? console.log("pode mover " + obj.type) : console.log("nao pode mover "  + obj.type);
+
       });
 
       let x = player.x, y = player.y;
