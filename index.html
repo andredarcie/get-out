@@ -56,12 +56,22 @@
     document.addEventListener("keydown",handleKeydown,false);
 
     function handleKeydown(e){
+      let moveRight, moveLeft, moveUp, moveDown;
+
+      objectList.forEach(function (obj) {
+        //if ((player.x + player.width) === obj.x && player.y === obj.y) { moveRight = false } else { moveRight = true }
+        moveRight = !((player.x + player.width) === obj.x && player.y === obj.y);
+        moveLeft = !(player.x === (obj.x + obj.width) && player.y === obj.y);
+        moveUp = !(player.y === (obj.y + obj.height) && player.x === obj.x);
+        moveDown = !((player.y + player.height) === obj.y && player.x === obj.x);
+      });
+
       let x = player.x, y = player.y;
       switch(e.keyCode){
-        case 87: if(y > 0) y-=20; break;  // W
-        case 65: if(x > 0) x-=20; break;  // A
-        case 83: if(y < (ch-20)) y+=20; break;  // S
-        case 68: if(x < (cw-20)) x+=20; break;  // D
+        case 87: if(moveUp && y > 0) y-=20; break;  // W
+        case 65: if(moveLeft && x > 0) x-=20; break;  // A
+        case 83: if(moveDown && y < (ch - 20)) y+=20; break;  // S
+        case 68: if(moveRight && x < (cw - 20)) x+=20; break;  // D
       }
       player.x = x;
       player.y = y;
