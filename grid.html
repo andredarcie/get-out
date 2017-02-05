@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <canvas id="canvas" width="2000" height="2000" style="background-color: #2ecc71;"></canvas>
+    <canvas id="canvas" width="300" height="300" style="background-color: #2ecc71;"></canvas>
     <p>W, A, S, D to move.</p>
     <p>Player position: <span id="status">s</span></p>
     <script>
@@ -49,13 +49,18 @@
 
         context.clearRect(0,0,$canvas.width,$canvas.height);
 
+        var rowx = 0, columnx = 0;
+
         for (var row = visionRow; row < visionRow+20; row++){
+          rowx++;
           for (var column = visionColumn; column < visionColumn+20; column++){
+            columnx++;
             if(map[row][column] > 0){
               context.fillStyle = "#27ae60";
-              context.fillRect(column * 20, row * 20, 20, 20);
+              context.fillRect(columnx * 20, rowx * 20, 20, 20);
             }
           }
+          columnx = 0;
         }
 
       }
