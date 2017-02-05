@@ -30,10 +30,10 @@
 
     function handleKeydown(e){
       switch(e.keyCode){
-        case 87: y-=20; break;  // W
-        case 65: x-=20; break;  // A
-        case 83: y+=20; break;  // S
-        case 68: x+=20; break;  // D
+        case 87: if(y > 0) y-=20; break;  // W
+        case 65: if(x > 0) x-=20; break;  // A
+        case 83: if(y < (ch-20)) y+=20; break;  // S
+        case 68: if(x < (cw-20)) x+=20; break;  // D
       }
       update();
     }
