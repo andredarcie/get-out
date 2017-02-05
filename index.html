@@ -16,6 +16,7 @@
     var x = 0, y = 0;
     var cw=canvas.width;
     var ch=canvas.height;
+    var objectList = [];
 
     var player = new Object({
       x: 0,
@@ -23,16 +24,29 @@
       width: 20,
       height: 20
     });
+    objectList.push(player);
 
-    console.log(player);
+    var npc = new Object({
+      x: 60,
+      y: 60,
+      width: 20,
+      height: 20
+    });
+    objectList.push(npc);
+
+    console.log(objectList);
 
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(0,0,150,75);
 
     function update(){
+
       ctx.clearRect(0,0,cw,ch);
-      ctx.fillRect(player.x, player.y, player.width, player.height);
-      ctx.fillRect(60,60,20,20);
+
+      objectList.forEach(function (obj) {
+        ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+      });
+
       document.getElementById('status').innerHTML = "[x: " + player.x + ", y: " + player.y + "]";
     }
 
