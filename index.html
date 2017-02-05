@@ -49,6 +49,25 @@
     });
     objectList.push(wall);
 
+    for (var i = 0; i < 50; i++){
+      let randomX, randomY;
+
+      randomX = Math.round(Math.floor((Math.random() * 40) + 1) / 2);
+      randomY = Math.round(Math.floor((Math.random() * 40) + 1) / 2);
+
+      randomX = randomX * 20;
+      randomY = randomY * 20;
+
+      objectList.push(new Object({
+        type: 'wall',
+        x: randomX,
+        y: randomY,
+        width: 20,
+        height: 20,
+        color: "#95a5a6"
+      }));
+    }
+
     console.log(objectList);
 
 
