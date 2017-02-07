@@ -3,192 +3,95 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <canvas id="canvas" width="300" height="300" style="background-color: #2ecc71;"></canvas>
+    <h1>Dungeon Crawler</h1>
+    <canvas id="canvas" width="200" height="200" style="background-color: #2ecc71;"></canvas>
     <p>W, A, S, D to move.</p>
     <p>Player position: <span id="status">s</span></p>
+    <script src="js/object.js"></script>
     <script>
       var $canvas = document.getElementById('canvas');
       var context = $canvas.getContext("2d");
 
-      /*
-      var vision = [
-        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+      // listen for keydown events on the document
+      document.addEventListener("keydown",handleKeydown,false);
+
+      var map = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
       ];
-      */
 
+      var player = new Object({
+        type: '',
+        row: 1,
+        column: 1,
+        color: '',
+        layer: map
+      });
 
-      var map = [];
-      for (var row = 0; row < 100; row++){
-        map.push([]);
-        for (var column = 0; column < 100; column++){
-            var randomNumber = Math.round((Math.random() * 10) + 1);
-            if (randomNumber === 10){
-              map[row].push(1);
-            } else {
-              map[row].push(0);
-            }
-        }
-      }
-
-      var playerPosition = {row: 0, column: 0};
-      var visionRow = 0;
-      var visionColumn = 0;
+      draw();
 
       function draw(){
 
         context.clearRect(0,0,$canvas.width,$canvas.height);
 
-        var rowx = 0, columnx = 0;
-
-        for (var row = visionRow; row < visionRow+20; row++){
-          rowx++;
-          for (var column = visionColumn; column < visionColumn+20; column++){
-            columnx++;
+        for (var row = 0; row < 10; row++){
+          for (var column = 0; column < 10; column++){
             if(map[row][column] > 0){
-              context.fillStyle = "#27ae60";
-              context.fillRect(columnx * 20, rowx * 20, 20, 20);
+              context.fillStyle = "#7f8c8d";
+              context.fillRect(column * 20, row * 20, 20, 20);
             }
           }
-          columnx = 0;
         }
 
+        document.getElementById('status').innerHTML =
+                "[ column: " + player.column + ", row: " + player.row + " ]";
+
       }
-
-      draw();
-
-      // listen for keydown events on the document
-      document.addEventListener("keydown",handleKeydown,false);
 
       function handleKeydown(e){
         switch(e.keyCode){
           case 87: // W
-            if (map[playerPosition.row-1][playerPosition.column] === 1){
+            if (map[player.row-1][player.column] === 1){
               console.log("blocked");
             } else {
-              visionRow--;
-              map[playerPosition.row][playerPosition.column] = 0;
-              playerPosition.row--;
-              map[playerPosition.row][playerPosition.column] = 1;
+              player.moveUp();
             }
           break;
           case 83: // S
-            if (map[playerPosition.row+1][playerPosition.column] === 1){
+            if (map[player.row+1][player.column] === 1){
               console.log("blocked");
             } else {
-              visionRow++;
-              map[playerPosition.row][playerPosition.column] = 0;
-              playerPosition.row++;
-              map[playerPosition.row][playerPosition.column] = 1;
+              player.moveDown();
             }
           break;
-          case 65: // S
-            if (map[playerPosition.row][playerPosition.column-1] === 1){
+          case 65: // A
+            if (map[player.row][player.column-1] === 1){
               console.log("blocked");
             } else {
-              visionColumn--;
-              map[playerPosition.row][playerPosition.column] = 0;
-              playerPosition.column--;
-              map[playerPosition.row][playerPosition.column] = 1;
+              player.moveLeft();
             }
           break;
           case 68: // D
-            if (map[playerPosition.row][playerPosition.column+1] === 1){
+            if (map[player.row][player.column+1] === 1){
               console.log("blocked");
             } else {
-              visionColumn++;
-              map[playerPosition.row][playerPosition.column] = 0;
-              playerPosition.column++;
-              map[playerPosition.row][playerPosition.column] = 1;
+              player.moveRight();
             }
           break;
         }
         draw();
       }
-
-      function handleKeydownx(e){
-
-        switch(e.keyCode){
-          case 87:
-            //if(!checkCollision('up')){
-            //if (checkCollision(0)){
-              map[playerPosition.x][playerPosition.y] = 0;
-              playerPosition.x--;
-              map[playerPosition.x][playerPosition.y] = 1;
-            //}
-          //}
-
-
-          break;  // W
-
-          case 65:
-          //if (!checkCollision('left')){
-            map[playerPosition.x][playerPosition.y] = 0;
-            playerPosition.y--;
-            map[playerPosition.x][playerPosition.y] = 1;
-          //}
-            break;  // A
-
-          case 83:
-            //if (!checkCollision('down')){
-            map[playerPosition.x][playerPosition.y] = 0;
-            playerPosition.x++;
-            map[playerPosition.x][playerPosition.y] = 1;
-            //}
-            break;  // S
-
-          case 68:
-            //if (!checkCollision('right')){
-            map[playerPosition.x][playerPosition.y] = 0;
-            playerPosition.y++;
-            map[playerPosition.x][playerPosition.y] = 1;
-            //}
-            break;  // D
-
-        }
-        document.getElementById('status').innerHTML = "[x: " + playerPosition.x + ", y: " + playerPosition.y + "]";
-        draw();
-      }
-
-      function checkCollision(direction){
-        var hit = false;
-        /*
-        switch(direction){
-          case 'up':
-            hit = (map[playerPosition.x - 1][playerPosition.y] > 0);
-            break;
-          case 'down':
-            hit = (map[playerPosition.x + 1][playerPosition.y] > 0);
-            break;
-          case 'left':
-            hit = (map[playerPosition.x][playerPosition.y - 1] > 0);
-            break;
-          case 'right':
-            hit = (map[playerPosition.x][playerPosition.y + 1] > 0);
-            break;
-        }*/
-
-
-
-        console.log("Up: " + map[playerPosition.x-1][playerPosition.y]);
-        console.log("Down: " + map[playerPosition.x+1][playerPosition.y]);
-        console.log("Left: " + map[playerPosition.x][playerPosition.y-1]);
-        console.log("Right: " + map[playerPosition.x][playerPosition.y+1]);
-
-        console.log("hit -> " + hit);
-        return hit;
-      }
-
     </script>
   </body>
 </html>
