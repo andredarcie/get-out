@@ -6,6 +6,24 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1434700419907771',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
     <h1>Dungeon Crawler</h1>
     <canvas id="canvas" width="400" height="400" style="background-color: #2ecc71;"></canvas>
     <p>W, A, S, D to move. <span id="status">[]</span></p>
@@ -17,22 +35,6 @@
     </div>
     <script src="js/object.js"></script>
     <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '1434700419907771',
-        xfbml      : true,
-        version    : 'v2.8'
-      });
-      FB.AppEvents.logPageView();
-      };
-
-      (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
 
 
       var $canvas = document.getElementById('canvas');
