@@ -40,23 +40,17 @@
 
       draw(map);
 
-      var rowView = 0, columnView = 0;
-      var viewX = 0, viewY = 0;
-
       function draw(layer){
 
         context.clearRect(0,0,$canvas.width,$canvas.height);
 
-        for (var row = rowView; row < rowView+2; row++){
-          viewX++;
-          for (var column = columnView; column < columnView+2; column++){
-            viewY++;
+        for (var row = 0; row < layer.length; row++){
+          for (var column = 0; column < layer[0].length; column++){
             if(layer[row][column] > 0){
               context.fillStyle = "#8e44ad";
-              context.fillRect(viewY * 40, viewX * 40, 40, 40);
+              context.fillRect(column * 40, row * 40, 40, 40);
             }
           }
-          viewY = 0;
         }
 
         document.getElementById('status').innerHTML =
@@ -72,7 +66,7 @@
               if (map[player.row-1][player.column] === 1){
                 console.log("blocked");
               } else {
-                player.moveUp(); rowView--;
+                player.moveUp();
               }
           break;
           case 83: // S
@@ -81,21 +75,21 @@
             if (map[player.row+1][player.column] === 1){
               console.log("blocked");
             } else {
-              player.moveDown(); rowView++;
+              player.moveDown();
             }
           break;
           case 65: // A
             if (map[player.row][player.column-1] === 1 || (player.column-1) === -1){
               console.log("blocked");
             } else {
-              player.moveLeft(); columnView--;
+              player.moveLeft();
             }
           break;
           case 68: // D
             if (map[player.row][player.column+1] === 1 || (player.column+1) === 10){
               console.log("blocked");
             } else {
-              player.moveRight(); columnView++;
+              player.moveRight();
             }
           break;
         }
