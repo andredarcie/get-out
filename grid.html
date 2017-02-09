@@ -7,9 +7,8 @@
   </head>
   <body>
     <h1>Dungeon Crawler</h1>
-    <canvas id="canvas" width="200" height="200" style="background-color: #2ecc71;"></canvas>
-    <p>W, A, S, D to move.</p>
-    <p>Player position: <span id="status">s</span></p>
+    <canvas id="canvas" width="400" height="400" style="background-color: #2ecc71;"></canvas>
+    <p>W, A, S, D to move. <span id="status">[]</span></p>
     <script src="js/object.js"></script>
     <script>
       var $canvas = document.getElementById('canvas');
@@ -19,78 +18,88 @@
       document.addEventListener("keydown",handleKeydown,false);
 
       var map = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
       ];
 
       var player = new Object({
         type: '',
-        row: 1,
-        column: 1,
+        row: 0,
+        column: 0,
         color: '',
         layer: map
       });
 
-      draw();
+      draw(map);
 
-      function draw(){
+      var rowView = 0, columnView = 0;
+      var viewX = 0, viewY = 0;
+
+      function draw(layer){
 
         context.clearRect(0,0,$canvas.width,$canvas.height);
 
-        for (var row = 0; row < 10; row++){
-          for (var column = 0; column < 10; column++){
-            if(map[row][column] > 0){
-              context.fillStyle = "#7f8c8d";
-              context.fillRect(column * 20, row * 20, 20, 20);
+        for (var row = rowView; row < rowView+2; row++){
+          viewX++;
+          for (var column = columnView; column < columnView+2; column++){
+            viewY++;
+            if(layer[row][column] > 0){
+              context.fillStyle = "#8e44ad";
+              context.fillRect(viewY * 40, viewX * 40, 40, 40);
             }
           }
+          viewY = 0;
         }
 
         document.getElementById('status').innerHTML =
-                "[ column: " + player.column + ", row: " + player.row + " ]";
+                "[ " + player.column + ", " + player.row + " ]";
 
       }
 
       function handleKeydown(e){
         switch(e.keyCode){
           case 87: // W
-            if (map[player.row-1][player.column] === 1){
-              console.log("blocked");
-            } else {
-              player.moveUp();
-            }
+              if (player.row-1 === -1) return;
+
+              if (map[player.row-1][player.column] === 1){
+                console.log("blocked");
+              } else {
+                player.moveUp(); rowView--;
+              }
           break;
           case 83: // S
+            if (player.row+1 === 10) return;
+
             if (map[player.row+1][player.column] === 1){
               console.log("blocked");
             } else {
-              player.moveDown();
+              player.moveDown(); rowView++;
             }
           break;
           case 65: // A
-            if (map[player.row][player.column-1] === 1){
+            if (map[player.row][player.column-1] === 1 || (player.column-1) === -1){
               console.log("blocked");
             } else {
-              player.moveLeft();
+              player.moveLeft(); columnView--;
             }
           break;
           case 68: // D
-            if (map[player.row][player.column+1] === 1){
+            if (map[player.row][player.column+1] === 1 || (player.column+1) === 10){
               console.log("blocked");
             } else {
-              player.moveRight();
+              player.moveRight(); columnView++;
             }
           break;
         }
-        draw();
+        draw(map);
       }
     </script>
   </body>
