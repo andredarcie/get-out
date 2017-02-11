@@ -5,11 +5,37 @@
     <title></title>
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body>
+  <body style="text-align: center">
+    <!--
     <h1>Dungeon Crawler</h1>
     <canvas id="canvas" width="400" height="400" style="background-color: #2ecc71;"></canvas>
     <p>W, A, S, D to move. <span id="status">[]</span></p>
-    <script src="js/object.js"></script>
+    -->
+    <script src="js/phaser.min.js" type="text/javascript"></script>
+    <script>
+      var game = new Phaser.Game(800, 600, Phaser.AUTO, '',
+        {
+          preload: preload,
+          create: create,
+          update: update
+        });
+
+      function preload() {
+        game.load.image('sky', 'assets/sky.png');
+        game.load.image('ground', 'assets/platform.png');
+        game.load.image('star', 'assets/star.png');
+        game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+      }
+
+      function create() {
+        game.add.sprite(0, 0, 'star');
+      }
+
+      function update() {
+      }
+
+    </script>
+    <!-- <script src="js/object.js"></script>
     <script>
       var $canvas = document.getElementById('canvas');
       var context = $canvas.getContext("2d");
@@ -96,5 +122,6 @@
         draw(map);
       }
     </script>
+    -->
   </body>
 </html>
