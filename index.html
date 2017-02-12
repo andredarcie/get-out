@@ -165,17 +165,17 @@
           player.animations.play('left-up');
         } else if (left && down){
           player.animations.play('left-down');
-        } else if (left) {
+        } else if (left && !right) {
           player.animations.play('left');
         } else if (right && up){
           player.animations.play('right-up');
         } else if (right && down){
           player.animations.play('right-down');
-        } else if (right){
+        } else if (right && !left){
           player.animations.play('right');
-        } else if (up){
+        } else if (up && !down){
           player.animations.play('up');
-        } else if (down){
+        } else if (down && !up){
           player.animations.play('down');
         } else {
           player.animations.stop();
