@@ -14,7 +14,7 @@
     <div id="canvas"></div>
     <script src="js/phaser.min.js" type="text/javascript"></script>
     <script>
-      var game = new Phaser.Game(800, 600, Phaser.AUTO, 'canvas',
+      var game = new Phaser.Game(640, 480, Phaser.AUTO, 'canvas',
         {
           preload: preload,
           create: create,
@@ -26,10 +26,10 @@
       var scoreText;
 
       function preload() {
-        game.load.image('sky', 'assets/sky.png');
+        game.load.image('sky', 'assets/cenario.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
-        game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+        game.load.spritesheet('dude', 'assets/player.png', 56, 84);
       }
 
       function create() {
@@ -46,28 +46,28 @@
         game.add.sprite(0, 0, 'sky');
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
-        platforms = game.add.group();
+        //platforms = game.add.group();
 
         //  We will enable physics for any object that is created in this group
-        platforms.enableBody = true;
+        //platforms.enableBody = true;
 
         // Here we create the ground.
-        var ground = platforms.create(0, game.world.height - 64, 'ground');
+        //var ground = platforms.create(0, game.world.height - 64, 'ground');
 
         //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        ground.scale.setTo(2, 2);
+        //ground.scale.setTo(2, 2);
 
         //  This stops it from falling away when you jump on it
-        ground.body.immovable = true;
+        //ground.body.immovable = true;
 
         //  Now let's create two ledges
-        var ledge = platforms.create(400, 400, 'ground');
+        //var ledge = platforms.create(400, 400, 'ground');
 
-        ledge.body.immovable = true;
+        //ledge.body.immovable = true;
 
-        ledge = platforms.create(-150, 250, 'ground');
+        //ledge = platforms.create(-150, 250, 'ground');
 
-        ledge.body.immovable = true;
+        //ledge.body.immovable = true;
 
         // The player and its settings
         player = game.add.sprite(32, game.world.height - 150, 'dude');
@@ -76,14 +76,17 @@
         game.physics.arcade.enable(player);
 
         //  Player physics properties. Give the little guy a slight bounce.
-        player.body.bounce.y = 0.2;
-        player.body.gravity.y = 300;
+        //player.body.bounce.y = 0.2;
+        //player.body.gravity.y = 300;
         player.body.collideWorldBounds = true;
 
         //  Our two animations, walking left and right.
-        player.animations.add('left', [0, 1, 2, 3], 10, true);
-        player.animations.add('right', [5, 6, 7, 8], 10, true);
+        player.animations.add('left', [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47], 20, true);
+        player.animations.add('right', [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71], 20, true);
+        player.animations.add('up', [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95], 20, true);
+        player.animations.add('down', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 20, true);
 
+        /*
         stars = game.add.group();
 
         stars.enableBody = true;
@@ -101,6 +104,7 @@
             //star.body.bounce.y = 0.7 + Math.random() * 0.2;
             star.body.bounce.y = 0.2;
         }
+        */
 
         // Game score
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -111,7 +115,7 @@
         var hitPlatform = game.physics.arcade.collide(player, platforms);
         cursors = game.input.keyboard.createCursorKeys();
 
-        game.physics.arcade.collide(stars, platforms);
+        //game.physics.arcade.collide(stars, platforms);
 
         //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
@@ -130,21 +134,34 @@
 
             player.animations.play('right');
         }
+        else if (cursors.up.isDown)
+        {
+          player.body.velocity.y = -150;
+          player.animations.play('up');
+        }
+        else if (cursors.down.isDown)
+        {
+          player.body.velocity.y = 150;
+          player.animations.play('down');
+        }
         else
         {
             //  Stand still
             player.animations.stop();
-
+            player.body.velocity.x = 0;
+            player.body.velocity.y = 0;
             player.frame = 4;
         }
 
+        /*
         //  Allow the player to jump if they are touching the ground.
         if (cursors.up.isDown && player.body.touching.down && hitPlatform)
         {
             player.body.velocity.y = -350;
         }
+        */
 
-        game.physics.arcade.overlap(player, stars, collectStar, null, this);
+        //game.physics.arcade.overlap(player, stars, collectStar, null, this);
       }
 
       function collectStar (player, star) {
