@@ -27,12 +27,15 @@
       var scoreText;
       var up = false, right = false, down = false, left = false;
       var playerSpeed = 80;
+      var weapon;
+      var fireButton;
 
       function preload() {
         document.getElementById('message').innerHTML = 'LOADING...';
         game.load.image('sky', 'assets/cenario.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
+        game.load.image('bullet','assets/bullet.png');
         game.load.spritesheet('dude', 'assets/player.png', 56, 84);
       }
 
@@ -116,6 +119,24 @@
         */
         //frames({ first: 24, last: 47});
 
+
+        //  Creates 30 bullets, using the 'bullet' graphic
+        //weapon = game.add.weapon(40, 'dude');
+        //weapon = this.add.weapon(1, 'bullet');
+
+        //  Creates 1 single bullet, using the 'bullet' graphic
+weapon = game.add.weapon(1, 'bullet');
+
+        //  The speed at which the bullet is fired
+        weapon.bulletSpeed = 400;
+
+        //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 50ms
+        weapon.fireRate = 50;
+
+        weapon.trackSprite(player, 0, 0, true);
+
+
+
         // Game score
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
       }
@@ -132,6 +153,7 @@
         //  Collide the player and the stars with the platforms
         var hitPlatform = game.physics.arcade.collide(player, platforms);
         cursors = game.input.keyboard.createCursorKeys();
+        //fireButton = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
         //game.physics.arcade.collide(stars, platforms);
 
@@ -181,6 +203,10 @@
           player.animations.stop();
         }
 
+        if (up)
+        {
+          weapon.fire();
+        }
 
         /*
         player.body.velocity.x = 0;
