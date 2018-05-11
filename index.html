@@ -7,6 +7,7 @@
   <title>Get Out Game</title>
   <meta name="description" content="Get out game">
   <meta name="author" content="game">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css?v=1.0">
@@ -19,27 +20,41 @@
 <body>
   <div id="travel-page">
     <h1>Travel page</h1>
+    <button>Next Day</button>
+    <button onclick="goToState(GameStates.CAMP)">Camp</button>
   </div>
   <div id="camp-page">
       <h1>Camp page</h1>
+      <button onclick="goToState(GameStates.TRAVEL)">Travel</button>
+      <button onclick="goToState(GameStates.SLEEP)">Sleep</button>
+      <button onclick="goToState(GameStates.HUNT)">Hunt</button>
+      <button onclick="goToState(GameStates.HEAL)">Heal</button>
+      <button onclick="goToState(GameStates.STATS)">Stats</button>
+      <button onclick="goToState(GameStates.MAP)">Map</button>
   </div>
   <div id="sleep-page">
       <h1>Sleep page</h1>
+      <button onclick="goToState(GameStates.CAMP)">Back</button>
   </div>
   <div id="hunt-page">
       <h1>Hunt page</h1>
+      <button onclick="goToState(GameStates.CAMP)">Back</button>
   </div>
   <div id="heal-page">
       <h1>Heal page</h1>
+      <button onclick="goToState(GameStates.CAMP)">Back</button>
   </div>
   <div id="stats-page">
       <h1>Stats page</h1>
+      <button onclick="goToState(GameStates.CAMP)">Back</button>
   </div>
   <div id="map-page">
       <h1>Map page</h1>
+      <button onclick="goToState(GameStates.CAMP)">Back</button>
   </div>
   <div id="event-page">
       <h1>Event page</h1>
+      <button onclick="goToState(GameStates.TRAVEL)">Back</button>
   </div>
   <script src="js/main.js"></script>
 </body>
