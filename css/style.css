@@ -1,0 +1,17 @@
+button {
+  border: 0;
+  background: #6ab04c;
+  box-shadow: none;
+  border-radius: 0px;
+  color: white;
+}
+
+@font-face {
+	font-family: "Mono";
+	src: url("../upheavtt.ttf");
+}
+
+body {
+	font-family: "Mono";
+	background-color: #ecf0f1;
+}
