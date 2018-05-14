@@ -89,3 +89,36 @@ function gameStart(){
     hideAllPages();
     showPage(GamePages.campPage);
 }
+
+var Player = {
+    name: "",
+    thinking: "",
+    health: 5,
+    wounds: 0,
+    hunger: 5,
+    fatigue: 5,
+    feeling: Feelings.Excited,
+    item: 0
+}
+
+var Feelings = {
+    Excited: 1,
+    Tender: 2,
+    Scared: 3,
+    Angry: 4,
+    Sad: 5,
+    Happy: 6
+}
+
+var Wounds = {
+    BulletWounds: 1,
+    ArrowWounds: 2,
+    BrokenBones: 3,
+    Burns: 4,
+    Colds: 5,
+    Cuts: 6,
+    FoodPoisoning: 7,
+    Leeches: 8,
+    StomachAches: 9,
+    Poison: 10
+}
