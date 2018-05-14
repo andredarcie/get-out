@@ -9,7 +9,10 @@ var GameStates = {
     EVENT: 8
 };
 
-var currentState = GameStates.TRAVEL;
+var Globals = {
+    currentState: GameStates.TRAVEL,
+    currentDay: 0
+}
 
 var GamePages = {
     travelPage: document.getElementById("travel-page"),
@@ -23,7 +26,7 @@ var GamePages = {
 };
 
 function stateController(){
-    switch(currentState){
+    switch(Globals.currentState){
         case GameStates.TRAVEL: 
             showPage(GamePages.travelPage);
             hidePage(GamePages.campPage);
@@ -60,7 +63,7 @@ function stateController(){
 }
 
 function goToState(state){
-    currentState = state;
+    Globals.currentState = state;
     stateController();
 }
 
