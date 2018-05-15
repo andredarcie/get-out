@@ -46,6 +46,17 @@
   </div>
   <div id="stats-page">
       <h1>Stats page</h1>
+      <p id="name-field"></p>
+      <p id="relationship-field"></p>
+      <p id="thinking-field"></p>
+      <p id="health-field"></p>
+      <p id="wounds-field"></p>
+      <p id="hunger-field"></p>
+      <p id="fatigue-field"></p>
+      <p id="feeling-field"></p>
+      <p id="item-field"></p>
+      <button onclick="previousCharacter()">Previous</button>
+      <button onclick="nextCharacter()">Next</button>
       <button onclick="goToState(GameStates.CAMP)">Back</button>
   </div>
   <div id="map-page">
@@ -56,6 +67,12 @@
       <h1>Event page</h1>
       <button onclick="goToState(GameStates.TRAVEL)">Back</button>
   </div>
+  <script src="js/globals.js"></script>
   <script src="js/main.js"></script>
+  <!-- Entities -->
+  <script src="js/entities/character.js"></script>
+  <!-- Managers -->
+  <script src="js/managers/characterManager.js"></script>
+  <script src="js/managers/statsManager.js"></script>
 </body>
 </html>
