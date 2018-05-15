@@ -66,17 +66,6 @@ function gameStart(){
     showPage(GamePages.campPage);
 }
 
-var Player = {
-    name: "",
-    thinking: "",
-    health: 5,
-    wounds: 0,
-    hunger: 5,
-    fatigue: 5,
-    feeling: Feelings.Excited,
-    item: 0
-}
-
 var Feelings = {
     Excited: 1,
     Tender: 2,
