@@ -1,13 +1,53 @@
 button {
-  border: 0;
-  background: #6ab04c;
-  box-shadow: none;
-  border-radius: 0px;
-  color: white;
-  display: block;
-  padding: 0.5em;
-  margin: 0.2em;
+  color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+  font-family: "Mono";
+  text-align: left;
+  width: 98%;
+  padding: 10px;
+
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 3px #27496d;
+
+  margin-top: 5px;
+  outline:none;
+
+  margin-left: 1%;
+  margin-right: 1%;
 }
+
+button:hover.button_voltar,
+button.hover.button_voltar {
+  background-color: #c0392b;
+  box-shadow: 0 3px #7d251c;
+}
+
+button:hover.button_avancar,
+button.hover.button_avancar {
+  background-color: #e74c3c;
+  box-shadow: 0 3px #c0392b;
+}
+
+button:hover,
+button.hover {
+  background-color: #346392;
+  text-shadow: -1px 1px #27496d;
+}
+
+button:active.button_voltar,
+button.active.button_voltar {
+  background-color: #c0392b;
+  box-shadow: 0 3px #c0392b;
+}
+
+button:active,
+button.active {
+  background-color: #27496d;
+  text-shadow: -1px 1px #193047;
+}
+
 
 h1 {
   margin: 0.2em;
