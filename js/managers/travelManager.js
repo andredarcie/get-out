@@ -7,6 +7,10 @@ function start(){
     $currentDayField = document.getElementById("current-day-field");
 }
 function onClickNextDay(){
+
+    if(calculateEvent()){
+        goToState(GameStates.EVENT);
+    }
     goToNextDay();
 }
 

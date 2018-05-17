@@ -3,6 +3,7 @@ function stateController(){
         case GameStates.TRAVEL: 
             showPage(GamePages.travelPage);
             hidePage(GamePages.campPage);
+            hidePage(GamePages.eventPage);
         break;
         case GameStates.CAMP: 
             hideAllPages();
@@ -31,6 +32,7 @@ function stateController(){
         case GameStates.EVENT: 
             showPage(GamePages.eventPage);
             hidePage(GamePages.travelPage);
+            startEventManager();
         break;
     }
 }
