@@ -72,3 +72,10 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
+
+#progress-bar {
+  width: 407px;
+  height: 5px;
+  background-color: #27ae60;
+  margin-left: 2%;
+}
