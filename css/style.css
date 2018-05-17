@@ -61,9 +61,14 @@ h1 {
 body {
 	font-family: "Mono";
   background-color: #ecf0f1;
-  margin: 2em;
 }
 
 #name-field {
   font-size: 1.5em;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
