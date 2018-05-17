@@ -6,7 +6,8 @@ var GameStates = {
     HEAL: 5,
     STATS: 6,
     MAP: 7,
-    EVENT: 8
+    EVENT: 8,
+    GAME_OVER: 9
 };
 
 var Globals = {
@@ -24,4 +25,5 @@ var GamePages = {
     statsPage: document.getElementById("stats-page"),
     mapPage: document.getElementById("map-page"),
     eventPage: document.getElementById("event-page"),
+    gameOverPage: document.getElementById("game-over-page"),
 };

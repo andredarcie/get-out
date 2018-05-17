@@ -34,6 +34,10 @@ function stateController(){
             hidePage(GamePages.travelPage);
             startEventManager();
         break;
+        case GameStates.GAME_OVER:
+            hideAllPages();
+            showPage(GamePages.gameOverPage);
+        break;
     }
 }
 
@@ -59,6 +63,7 @@ function hideAllPages(){
     hidePage(GamePages.statsPage);
     hidePage(GamePages.mapPage);
     hidePage(GamePages.eventPage);
+    hidePage(GamePages.gameOverPage);
 }
 
 gameStart();
