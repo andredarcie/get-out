@@ -6,9 +6,70 @@ function startCharacterManager(){
 }
 
 function createAllCharacters(){
-    Globals.characters.push(new Character("Carter", "you", "I hope to save my family", 10, 0, 0, 0, 0, 0));
-    Globals.characters.push(new Character("Mary", "wife", "We're lost", 10, 0, 0, 0, 0, 0));
-    Globals.characters.push(new Character("Alice", "daughter", "I wanted to go home", 10, 0, 0, 0, 0, 0));
-    Globals.characters.push(new Character("Issac", "son", "Just leave me alone", 10, 0, 0, 0, 0, 0));
-    Globals.characters.push(new Character("Teresa", "grandmother", "I just wanted to die", 10, 0, 0, 0, 0, 0));
+
+    Globals.characters.push({
+        name: "Carter",
+        img: "",
+        relationship: "you",
+        thinking: "I hope to save my family",
+        health: 10,
+        wounds: 0,
+        hunger: 0,
+        fatigue: 0,
+        feeling: 0,
+        item: 0
+    });
+
+    Globals.characters.push({
+        name: "Mary",
+        img: "",
+        relationship: "wife",
+        thinking: "We're lost",
+        health: 10,
+        wounds: 0,
+        hunger: 0,
+        fatigue: 0,
+        feeling: 0,
+        item: 0
+    });
+
+    Globals.characters.push({
+        name: "Alice",
+        img: "",
+        relationship: "daughter",
+        thinking: "I wanna go home",
+        health: 10,
+        wounds: 0,
+        hunger: 0,
+        fatigue: 0,
+        feeling: 0,
+        item: 0
+    });
+
+    Globals.characters.push({
+        name: "Issac",
+        img: "",
+        relationship: "son",
+        thinking: "Just leave me alone",
+        health: 10,
+        wounds: 0,
+        hunger: 0,
+        fatigue: 0,
+        feeling: 0,
+        item: 0
+    });
+
+    Globals.characters.push({
+        name: "Teresa",
+        img: "",
+        relationship: "grandmother",
+        thinking: "I wanna go home",
+        health: 10,
+        wounds: 0,
+        hunger: 0,
+        fatigue: 0,
+        feeling: 0,
+        item: 0
+    });
+
 }
