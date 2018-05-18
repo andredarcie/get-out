@@ -12,10 +12,7 @@ function start(){
     $nextDayElement.style.width = progressBarWidth + "%";
 }
 function onClickNextDay(){
-
-    //if(calculateEvent()){
-    //    goToState(GameStates.EVENT);
-    //}
+    goToState(GameStates.EVENT);
     goToNextDay();
 }
 

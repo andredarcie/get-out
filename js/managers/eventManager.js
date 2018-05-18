@@ -1,8 +1,13 @@
+var $travelingMessage = document.getElementById("traveling-message");
+var $container = document.getElementById("container");
+
 function startEventManager(){
-    testEvent();
+    $travelingMessage.style.display = "block";
+    //setInterval(function(){ testEvent(); }, 3000);
 }
 
 function testEvent(){
+    $travelingMessage.style.display = "none";
     var beforeCharacters = JSON.parse(JSON.stringify(Globals.characters));
 
     for (var i = 0; i < 3; i++){

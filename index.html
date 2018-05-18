@@ -18,63 +18,70 @@
 </head>
 
 <body>
-  <div id="travel-page">
-    <h1>Travel page</h1>
-    <img src="img/snow_forest.png" alt="Smiley face" height="222" width="321">
-    <p id="current-day-field"></p>
-    <div id="progress-bar"></div>
-    <button onclick="onClickNextDay()">Next Day</button>
-    <button onclick="goToState(GameStates.CAMP)">Camp</button>
-  </div>
-  <div id="camp-page">
-      <h1>Camp page</h1>
-      <img src="img/snow_camp.png" alt="Snow camp" height="222" width="321">
-      <button onclick="goToState(GameStates.TRAVEL)">Travel</button>
-      <button onclick="goToState(GameStates.SLEEP)">Sleep</button>
-      <button onclick="goToState(GameStates.HUNT)">Hunt</button>
-      <button onclick="goToState(GameStates.HEAL)">Heal</button>
-      <button onclick="goToState(GameStates.STATS)">Stats</button>
-      <button onclick="goToState(GameStates.MAP)">Map</button>
-  </div>
-  <div id="sleep-page">
-      <h1>Sleep page</h1>
-      <button onclick="goToState(GameStates.CAMP)">Back</button>
-  </div>
-  <div id="hunt-page">
-      <h1>Hunt page</h1>
-      <button onclick="goToState(GameStates.CAMP)">Back</button>
-  </div>
-  <div id="heal-page">
-      <h1>Heal page</h1>
-      <button onclick="goToState(GameStates.CAMP)">Back</button>
-  </div>
-  <div id="stats-page">
-      <h1>Stats page</h1>
-      <p id="name-field"></p>
-      <p id="relationship-field"></p>
-      <p id="thinking-field"></p>
-      <p id="health-field"></p>
-      <p id="wounds-field"></p>
-      <p id="hunger-field"></p>
-      <p id="fatigue-field"></p>
-      <p id="feeling-field"></p>
-      <p id="item-field"></p>
-      <button onclick="previousCharacter()">Previous</button>
-      <button onclick="nextCharacter()">Next</button>
-      <button onclick="goToState(GameStates.CAMP)">Back</button>
-  </div>
-  <div id="map-page">
-      <h1>Map page</h1>
-      <button onclick="goToState(GameStates.CAMP)">Back</button>
-  </div>
-  <div id="event-page">
-      <h1>Event page</h1>
-      <ul id="report-list"></ul>
-      <button onclick="goToState(GameStates.TRAVEL)">Back</button>
-  </div>
-  <div id="game-over-page">
-    <h1>Game over page</h1>
-  </div>
+    <div id="container">
+        <div id="core">
+            <div id="travel-page">
+                <h1>Travel page</h1>
+                <img src="img/snow_forest.png" alt="Smiley face" height="222" width="321">
+                <p id="current-day-field"></p>
+                <div id="progress-bar"></div>
+                <button onclick="onClickNextDay()">Next Day</button>
+                <button onclick="goToState(GameStates.CAMP)">Camp</button>
+            </div>
+            <div id="camp-page">
+                <h1>Camp page</h1>
+                <img src="img/snow_camp.png" alt="Snow camp" height="222" width="321">
+                <button onclick="goToState(GameStates.TRAVEL)">Travel</button>
+                <button onclick="goToState(GameStates.SLEEP)">Sleep</button>
+                <button onclick="goToState(GameStates.HUNT)">Hunt</button>
+                <button onclick="goToState(GameStates.HEAL)">Heal</button>
+                <button onclick="goToState(GameStates.STATS)">Stats</button>
+                <button onclick="goToState(GameStates.MAP)">Map</button>
+            </div>
+            <div id="sleep-page">
+                <h1>Sleep page</h1>
+                <button onclick="goToState(GameStates.CAMP)">Back</button>
+            </div>
+            <div id="hunt-page">
+                <h1>Hunt page</h1>
+                <button onclick="goToState(GameStates.CAMP)">Back</button>
+            </div>
+            <div id="heal-page">
+                <h1>Heal page</h1>
+                <button onclick="goToState(GameStates.CAMP)">Back</button>
+            </div>
+            <div id="stats-page">
+                <h1>Stats page</h1>
+                <p id="name-field"></p>
+                <p id="relationship-field"></p>
+                <p id="thinking-field"></p>
+                <p id="health-field"></p>
+                <p id="wounds-field"></p>
+                <p id="hunger-field"></p>
+                <p id="fatigue-field"></p>
+                <p id="feeling-field"></p>
+                <p id="item-field"></p>
+                <button onclick="previousCharacter()">Previous</button>
+                <button onclick="nextCharacter()">Next</button>
+                <button onclick="goToState(GameStates.CAMP)">Back</button>
+            </div>
+            <div id="map-page">
+                <h1>Map page</h1>
+                <button onclick="goToState(GameStates.CAMP)">Back</button>
+            </div>
+            <div id="event-page">
+                <h1></h1>
+                <p id="traveling-message">traveling...</p>
+                <!--
+                <ul id="report-list"></ul>
+                -->
+                <button onclick="goToState(GameStates.TRAVEL)">Back</button>
+            </div>
+            <div id="game-over-page">
+                <h1>Game over page</h1>
+            </div>
+        </div>
+    </div>
   <script src="js/globals.js"></script>
   <script src="js/main.js"></script>
   <!-- Entities -->
