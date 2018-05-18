@@ -1,13 +1,43 @@
 var $travelingMessage = document.getElementById("traveling-message");
-var $container = document.getElementById("container");
+var $travelingMessageFound = document.getElementById("traveling-message-found");
+var $core = document.getElementById("core");
+var $eventPageBackBtn = document.getElementById("event-page-back-btn");
+var $eventPageTitle = document.getElementById("event-page-title");
+var $eventPageImage = document.getElementById("event-page-image");
 
 function startEventManager(){
     $travelingMessage.style.display = "block";
-    //setInterval(function(){ testEvent(); }, 3000);
+    $travelingMessageFound.style.display = "none";
+    $core.style.backgroundColor = "black";
+    $eventPageBackBtn.style.display = "none";
+    $eventPageTitle.style.display = "none";
+    $eventPageImage.style.display = "none";
+    setTimeout(function(){ checkEvent(); }, 2000);
+}
+
+function checkEvent(){
+    if(calculateEvent()){
+        foundEvent();
+    } else {
+        $core.style.backgroundColor = "#ecf0f1";
+        goToState(GameStates.TRAVEL);
+    }
+}
+
+function foundEvent(){
+    $travelingMessageFound.style.display = "block";
+    setTimeout(function(){ testEvent(); }, 2000);
 }
 
 function testEvent(){
     $travelingMessage.style.display = "none";
+    $travelingMessageFound.style.display = "none";
+    $eventPageBackBtn.style.display = "block";
+    $eventPageTitle.style.display = "block";
+    $eventPageImage.style.display = "block";
+    $core.style.backgroundColor = "#ecf0f1";
+    $eventPageTitle.innerHTML = "Sample Event";
+
     var beforeCharacters = JSON.parse(JSON.stringify(Globals.characters));
 
     for (var i = 0; i < 3; i++){
@@ -30,7 +60,7 @@ function testEvent(){
         reportHtml += "<li>" + reports[i] + "</li>";
     }
     
-    $reportList.innerHTML = reportHtml;
+    //$reportList.innerHTML = reportHtml;
 }
 
 function calculateEvent(){

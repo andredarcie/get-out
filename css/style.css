@@ -102,7 +102,16 @@ h1 {
 }
 
 #traveling-message {
-  margin: 0;
+  margin: auto;
+  color: white;
+  text-align: center;
+  padding-top: 50%;
+}
+
+#traveling-message-found {
+  margin: auto;
+  color: white;
+  text-align: center;
 }
 
 #core {

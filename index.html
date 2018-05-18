@@ -70,12 +70,14 @@
                 <button onclick="goToState(GameStates.CAMP)">Back</button>
             </div>
             <div id="event-page">
-                <h1></h1>
+                <h1 id="event-page-title"></h1>
+                <img id="event-page-image" src="img/snow_old.png" alt="Event image" height="222" width="321">
                 <p id="traveling-message">traveling...</p>
+                <p id="traveling-message-found">found event!</p>
                 <!--
                 <ul id="report-list"></ul>
                 -->
-                <button onclick="goToState(GameStates.TRAVEL)">Back</button>
+                <button id="event-page-back-btn"onclick="goToState(GameStates.TRAVEL)">Back</button>
             </div>
             <div id="game-over-page">
                 <h1>Game over page</h1>
