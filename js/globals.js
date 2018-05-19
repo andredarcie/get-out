@@ -1,18 +1,17 @@
-var GameStates = {
-    TRAVEL: 1,
-    CAMP: 2,
-    SLEEP: 3,
-    HUNT: 4,
-    HEAL: 5,
-    STATS: 6,
-    MAP: 7,
-    EVENT: 8,
-    WALKING: 9,
-    GAME_OVER: 10
-};
-
 var Globals = {
-    currentState: GameStates.TRAVEL,
+    gameStates: {
+        TRAVEL: 1,
+        CAMP: 2,
+        SLEEP: 3,
+        HUNT: 4,
+        HEAL: 5,
+        STATS: 6,
+        MAP: 7,
+        EVENT: 8,
+        WALKING: 9,
+        GAME_OVER: 10
+    },
+    currentState: 1,
     currentDay: 0,
     characters: [],
     gamePages: {

@@ -1,50 +1,51 @@
 function stateController(){
 
     var gamePages = Globals.gamePages;
+    var gameStates = Globals.gameStates;
 
     switch(Globals.currentState){
-        case GameStates.TRAVEL: 
+        case gameStates.TRAVEL: 
             showPage(gamePages.travelPage);
             hidePage(gamePages.campPage);
             hidePage(gamePages.eventPage);
             hidePage(gamePages.walkingPage);
         break;
-        case GameStates.CAMP: 
+        case gameStates.CAMP: 
             hideAllPages();
             showPage(gamePages.campPage);
         break;
-        case GameStates.SLEEP: 
+        case gameStates.SLEEP: 
             showPage(gamePages.sleepPage);
             hidePage(gamePages.campPage);
         break;
-        case GameStates.HUNT: 
+        case gameStates.HUNT: 
             showPage(gamePages.huntPage);
             hidePage(gamePages.campPage);
         break;
-        case GameStates.HEAL: 
+        case gameStates.HEAL: 
             showPage(gamePages.healPage);
             hidePage(gamePages.campPage);
         break;
-        case GameStates.STATS: 
+        case gameStates.STATS: 
             showPage(gamePages.statsPage);
             hidePage(gamePages.campPage);
         break;
-        case GameStates.MAP: 
+        case gameStates.MAP: 
             showPage(gamePages.mapPage);
             hidePage(gamePages.campPage);
         break;
-        case GameStates.EVENT: 
+        case gameStates.EVENT: 
             showPage(gamePages.eventPage);
             hidePage(gamePages.travelPage);
             hidePage(gamePages.walkingPage);
             //startEventManager();
         break;
-        case GameStates.WALKING:
+        case gameStates.WALKING:
             showPage(gamePages.walkingPage);
             hidePage(gamePages.travelPage);
             initWalking();
         break;
-        case GameStates.GAME_OVER:
+        case gameStates.GAME_OVER:
             hideAllPages();
             showPage(gamePages.gameOverPage);
         break;

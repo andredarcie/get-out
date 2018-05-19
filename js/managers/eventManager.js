@@ -1,16 +1,13 @@
-var $travelingMessage = document.getElementById("traveling-message");
-var $travelingMessageFound = document.getElementById("traveling-message-found");
-var $core = document.getElementById("core");
-var $eventPageBackBtn = document.getElementById("event-page-back-btn");
-var $eventPageTitle = document.getElementById("event-page-title");
-var $eventPageImage = document.getElementById("event-page-image");
 
 function checkEvent(){
+
+    var gameStates = Globals.gameStates;
+    
     if(calculateEvent()){
-        goToState(GameStates.EVENT);
+        goToState(gameStates.EVENT);
         foundEvent();
     } else {
-        goToState(GameStates.TRAVEL);
+        goToState(gameStates.TRAVEL);
     }
 }
 

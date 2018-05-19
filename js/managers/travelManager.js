@@ -12,18 +12,24 @@ function start(){
     $nextDayElement.style.width = progressBarWidth + "%";
 }
 function onClickWalk(){
-    goToState(GameStates.WALKING);
+
+    var gameStates = Globals.gameStates;
+
+    goToState(gameStates.WALKING);
     goToNextDay();
 }
 
 function goToNextDay(){
+
+    var gameStates = Globals.gameStates;
+
     Globals.currentDay++;
 
     progressBarWidth += 1;
     $nextDayElement.style.width = progressBarWidth + "%";
 
     if(progressBarWidth >= 98){
-        goToState(GameStates.GAME_OVER);
+        goToState(gameStates.GAME_OVER);
     }
 
     setDay();
