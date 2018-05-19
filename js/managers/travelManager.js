@@ -11,7 +11,7 @@ function start(){
     $nextDayElement = document.getElementById("progress-bar");
     $nextDayElement.style.width = progressBarWidth + "%";
 }
-function onClickNextDay(){
+function onClickWalk(){
     goToState(GameStates.EVENT);
     goToNextDay();
 }

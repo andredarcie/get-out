@@ -36,7 +36,7 @@ function testEvent(){
     $eventPageTitle.style.display = "block";
     $eventPageImage.style.display = "block";
     $core.style.backgroundColor = "#ecf0f1";
-    $eventPageTitle.innerHTML = "Sample Event";
+    $eventPageTitle.innerHTML = "Frozen lake";
 
     var beforeCharacters = JSON.parse(JSON.stringify(Globals.characters));
 
