@@ -6,10 +6,9 @@ var Globals = {
         HUNT: 4,
         HEAL: 5,
         STATS: 6,
-        MAP: 7,
-        EVENT: 8,
-        WALKING: 9,
-        GAME_OVER: 10
+        EVENT: 7,
+        WALKING: 8,
+        GAME_OVER: 9
     },
     currentState: 1,
     currentDay: 0,
@@ -21,7 +20,6 @@ var Globals = {
         huntPage: document.getElementById("hunt-page"),
         healPage: document.getElementById("heal-page"),
         statsPage: document.getElementById("stats-page"),
-        mapPage: document.getElementById("map-page"),
         eventPage: document.getElementById("event-page"),
         walkingPage: document.getElementById("walking-page"),
         gameOverPage: document.getElementById("game-over-page"),

@@ -30,10 +30,6 @@ function stateController(){
             showPage(gamePages.statsPage);
             hidePage(gamePages.campPage);
         break;
-        case gameStates.MAP: 
-            showPage(gamePages.mapPage);
-            hidePage(gamePages.campPage);
-        break;
         case gameStates.EVENT: 
             showPage(gamePages.eventPage);
             hidePage(gamePages.travelPage);
@@ -75,7 +71,6 @@ function hideAllPages(){
     hidePage(gamePages.huntPage);
     hidePage(gamePages.healPage);
     hidePage(gamePages.statsPage);
-    hidePage(gamePages.mapPage);
     hidePage(gamePages.eventPage);
     hidePage(gamePages.walkingPage);
     hidePage(gamePages.gameOverPage);
