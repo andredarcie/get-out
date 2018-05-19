@@ -101,16 +101,14 @@ h1 {
   padding: 0;
 }
 
-#traveling-message {
+#walking-message {
   margin: auto;
-  color: white;
   text-align: center;
   padding-top: 50%;
 }
 
-#traveling-message-found {
+#walking-message-found {
   margin: auto;
-  color: white;
   text-align: center;
 }
 

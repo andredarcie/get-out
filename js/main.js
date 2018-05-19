@@ -1,42 +1,52 @@
 function stateController(){
+
+    var gamePages = Globals.gamePages;
+
     switch(Globals.currentState){
         case GameStates.TRAVEL: 
-            showPage(GamePages.travelPage);
-            hidePage(GamePages.campPage);
-            hidePage(GamePages.eventPage);
+            showPage(gamePages.travelPage);
+            hidePage(gamePages.campPage);
+            hidePage(gamePages.eventPage);
+            hidePage(gamePages.walkingPage);
         break;
         case GameStates.CAMP: 
             hideAllPages();
-            showPage(GamePages.campPage);
+            showPage(gamePages.campPage);
         break;
         case GameStates.SLEEP: 
-            showPage(GamePages.sleepPage);
-            hidePage(GamePages.campPage);
+            showPage(gamePages.sleepPage);
+            hidePage(gamePages.campPage);
         break;
         case GameStates.HUNT: 
-            showPage(GamePages.huntPage);
-            hidePage(GamePages.campPage);
+            showPage(gamePages.huntPage);
+            hidePage(gamePages.campPage);
         break;
         case GameStates.HEAL: 
-            showPage(GamePages.healPage);
-            hidePage(GamePages.campPage);
+            showPage(gamePages.healPage);
+            hidePage(gamePages.campPage);
         break;
         case GameStates.STATS: 
-            showPage(GamePages.statsPage);
-            hidePage(GamePages.campPage);
+            showPage(gamePages.statsPage);
+            hidePage(gamePages.campPage);
         break;
         case GameStates.MAP: 
-            showPage(GamePages.mapPage);
-            hidePage(GamePages.campPage);
+            showPage(gamePages.mapPage);
+            hidePage(gamePages.campPage);
         break;
         case GameStates.EVENT: 
-            showPage(GamePages.eventPage);
-            hidePage(GamePages.travelPage);
-            startEventManager();
+            showPage(gamePages.eventPage);
+            hidePage(gamePages.travelPage);
+            hidePage(gamePages.walkingPage);
+            //startEventManager();
+        break;
+        case GameStates.WALKING:
+            showPage(gamePages.walkingPage);
+            hidePage(gamePages.travelPage);
+            initWalking();
         break;
         case GameStates.GAME_OVER:
             hideAllPages();
-            showPage(GamePages.gameOverPage);
+            showPage(gamePages.gameOverPage);
         break;
     }
 }
@@ -55,22 +65,29 @@ function hidePage(page){
 }
 
 function hideAllPages(){
-    hidePage(GamePages.travelPage);
-    hidePage(GamePages.campPage);
-    hidePage(GamePages.sleepPage);
-    hidePage(GamePages.huntPage);
-    hidePage(GamePages.healPage);
-    hidePage(GamePages.statsPage);
-    hidePage(GamePages.mapPage);
-    hidePage(GamePages.eventPage);
-    hidePage(GamePages.gameOverPage);
+
+    var gamePages = Globals.gamePages;
+
+    hidePage(gamePages.travelPage);
+    hidePage(gamePages.campPage);
+    hidePage(gamePages.sleepPage);
+    hidePage(gamePages.huntPage);
+    hidePage(gamePages.healPage);
+    hidePage(gamePages.statsPage);
+    hidePage(gamePages.mapPage);
+    hidePage(gamePages.eventPage);
+    hidePage(gamePages.walkingPage);
+    hidePage(gamePages.gameOverPage);
 }
 
 gameStart();
 
 function gameStart(){
+
+    var gamePages = Globals.gamePages;
+
     hideAllPages();
-    showPage(GamePages.campPage);
+    showPage(gamePages.campPage);
 }
 
 var Feelings = {

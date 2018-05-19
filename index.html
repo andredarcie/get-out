@@ -69,14 +69,13 @@
                 <h1>Map page</h1>
                 <button onclick="goToState(GameStates.CAMP)">Back</button>
             </div>
+            <div id="walking-page">
+                <p id="walking-message">Walking...</p>
+                <p id="walking-message-found">Found an event!</p>
+            </div>
             <div id="event-page">
-                <h1 id="event-page-title"></h1>
+                <h1 id="event-page-title">Frozen lake</h1>
                 <img id="event-page-image" src="img/snow_old.png" alt="Event image" height="222" width="321">
-                <p id="traveling-message">Walking...</p>
-                <p id="traveling-message-found">Found an event!</p>
-                <!--
-                <ul id="report-list"></ul>
-                -->
                 <button id="event-page-back-btn"onclick="goToState(GameStates.TRAVEL)">Back</button>
             </div>
             <div id="game-over-page">
@@ -93,5 +92,6 @@
   <script src="js/managers/statsManager.js"></script>
   <script src="js/managers/travelManager.js"></script>
   <script src="js/managers/eventManager.js"></script>
+  <script src="js/managers/walking.js"></script>
 </body>
 </html>

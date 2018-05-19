@@ -5,38 +5,20 @@ var $eventPageBackBtn = document.getElementById("event-page-back-btn");
 var $eventPageTitle = document.getElementById("event-page-title");
 var $eventPageImage = document.getElementById("event-page-image");
 
-function startEventManager(){
-    $travelingMessage.style.display = "block";
-    $travelingMessageFound.style.display = "none";
-    $core.style.backgroundColor = "black";
-    $eventPageBackBtn.style.display = "none";
-    $eventPageTitle.style.display = "none";
-    $eventPageImage.style.display = "none";
-    setTimeout(function(){ checkEvent(); }, 2000);
-}
-
 function checkEvent(){
     if(calculateEvent()){
+        goToState(GameStates.EVENT);
         foundEvent();
     } else {
-        $core.style.backgroundColor = "#ecf0f1";
         goToState(GameStates.TRAVEL);
     }
 }
 
 function foundEvent(){
-    $travelingMessageFound.style.display = "block";
     setTimeout(function(){ testEvent(); }, 2000);
 }
 
 function testEvent(){
-    $travelingMessage.style.display = "none";
-    $travelingMessageFound.style.display = "none";
-    $eventPageBackBtn.style.display = "block";
-    $eventPageTitle.style.display = "block";
-    $eventPageImage.style.display = "block";
-    $core.style.backgroundColor = "#ecf0f1";
-    $eventPageTitle.innerHTML = "Frozen lake";
 
     var beforeCharacters = JSON.parse(JSON.stringify(Globals.characters));
 
