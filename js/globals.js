@@ -8,7 +8,8 @@ var Globals = {
         STATS: 6,
         EVENT: 7,
         WALKING: 8,
-        GAME_OVER: 9
+        REPORT: 9,
+        GAME_OVER: 10
     },
     currentState: 1,
     currentDay: 0,
@@ -22,6 +23,7 @@ var Globals = {
         statsPage: document.getElementById("stats-page"),
         eventPage: document.getElementById("event-page"),
         walkingPage: document.getElementById("walking-page"),
+        reportPage: document.getElementById("report-page"),
         gameOverPage: document.getElementById("game-over-page"),
     }
 }

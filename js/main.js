@@ -41,6 +41,8 @@ function stateController(){
             hidePage(gamePages.travelPage);
             initWalking();
         break;
+        case gameStates.REPORT:
+            showPage(gamePages.reportPage);
         case gameStates.GAME_OVER:
             hideAllPages();
             showPage(gamePages.gameOverPage);
