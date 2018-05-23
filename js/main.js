@@ -43,6 +43,7 @@ function stateController(){
         break;
         case gameStates.REPORT:
             showPage(gamePages.reportPage);
+            hidePage(gamePages.travelPage);
         case gameStates.GAME_OVER:
             hideAllPages();
             showPage(gamePages.gameOverPage);
@@ -74,6 +75,7 @@ function hideAllPages(){
     hidePage(gamePages.healPage);
     hidePage(gamePages.statsPage);
     hidePage(gamePages.eventPage);
+    hidePage(gamePages.reportPage);
     hidePage(gamePages.walkingPage);
     hidePage(gamePages.gameOverPage);
 }
