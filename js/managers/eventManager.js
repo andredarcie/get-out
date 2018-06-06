@@ -12,7 +12,7 @@ function checkEvent(){
 }
 
 function foundEvent(){
-    setTimeout(function(){ testEvent(); }, 2000);
+    generateEvent();
 }
 
 function testEvent(){
@@ -40,6 +40,17 @@ function testEvent(){
     }
     
     //$reportList.innerHTML = reportHtml;
+}
+
+function generateEvent(){
+
+    var randomEventNumber = Math.floor((Math.random() * (events.length - 1)) + 1);
+
+    var actualEvent = events[randomEventNumber];
+
+    var eventPageTitle = document.getElementById("event-page-title");
+
+    eventPageTitle.innerHTML = actualEvent.name;
 }
 
 function calculateEvent(){
