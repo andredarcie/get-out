@@ -34,7 +34,6 @@ function stateController(){
             showPage(gamePages.eventPage);
             hidePage(gamePages.travelPage);
             hidePage(gamePages.walkingPage);
-            //startEventManager();
         break;
         case gameStates.WALKING:
             showPage(gamePages.walkingPage);
@@ -44,6 +43,7 @@ function stateController(){
         case gameStates.REPORT:
             showPage(gamePages.reportPage);
             hidePage(gamePages.travelPage);
+        break;
         case gameStates.GAME_OVER:
             hideAllPages();
             showPage(gamePages.gameOverPage);
@@ -97,7 +97,7 @@ var Feelings = {
     Angry: 4,
     Sad: 5,
     Happy: 6
-}
+};
 
 var Wounds = {
     BulletWounds: 1,
@@ -110,4 +110,4 @@ var Wounds = {
     Leeches: 8,
     StomachAches: 9,
     Poison: 10
-}
+};
