@@ -18,8 +18,9 @@ function foundEvent(){
 function testEvent(){
 
     var beforeCharacters = JSON.parse(JSON.stringify(Globals.characters));
-
-    for (var i = 0; i < 3; i++){
+    
+    var i = 0;
+    for (i = 0; i < 3; i++){
         var characterNumber = Math.floor((Math.random() * 4) + 0);
 
         Globals.characters[characterNumber].health--;
@@ -27,7 +28,7 @@ function testEvent(){
         Globals.characters[characterNumber].fatigue++;
     }
 
-    var afterCharacters = Globals.characters
+    var afterCharacters = Globals.characters;
 
     var reports = report(beforeCharacters, afterCharacters);
 
@@ -35,7 +36,7 @@ function testEvent(){
 
     var reportHtml = "";
 
-    for(var i = 0; i < reports.length; i++){
+    for(i = 0; i < reports.length; i++){
         reportHtml += "<li>" + reports[i] + "</li>";
     }
     
