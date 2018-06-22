@@ -1,18 +1,14 @@
 
-function checkEvent(){
+function checkEvent(walkingMessageFound){
 
     var gameStates = Globals.gameStates;
     
     if(calculateEvent()){
-        goToState(gameStates.EVENT);
-        foundEvent();
+        walkingMessageFound.style.display = "block";
+        setTimeout(function(){ generateEvent(); }, 1000);
     } else {
         goToState(gameStates.TRAVEL);
     }
-}
-
-function foundEvent(){
-    generateEvent();
 }
 
 function testEvent(){
@@ -45,6 +41,10 @@ function testEvent(){
 
 function generateEvent(){
 
+    var gameStates = Globals.gameStates;
+    
+    goToState(gameStates.EVENT);
+    
     var randomEventNumber = Math.floor((Math.random() * (events.length - 1)) + 1);
 
     var actualEvent = events[randomEventNumber];
