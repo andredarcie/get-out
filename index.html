@@ -22,15 +22,15 @@
         <div id="core">
             <div id="travel-page">
                 <h1>Travel</h1>
-                <img src="img/snow_forest.png" alt="Smiley face" height="222" width="321">
+                <img id="travel-img" src="img/snow_forest.png" alt="Smiley face" height="222" width="321">
                 <p id="current-day-field"></p>
                 <div id="progress-bar"></div>
-                <button onclick="onClickWalk()">Walk</button>
+                <button id="walk-btn" onclick="onClickWalk()">Walk</button>
                 <button onclick="goToState(Globals.gameStates.CAMP)">Camp</button>
             </div>
             <div id="camp-page">
                 <h1>Camp</h1>
-                <img src="img/snow_camp.png" alt="Snow camp" height="222" width="321">
+                <img id="camp-img" src="img/snow_camp.png" alt="Snow camp" height="222" width="321">
                 <button onclick="goToState(Globals.gameStates.TRAVEL)">Travel</button>
                 <button onclick="goToState(Globals.gameStates.STATS)">Stats</button>
                 <button onclick="goToState(Globals.gameStates.SLEEP)">Sleep</button>
