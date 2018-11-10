@@ -1,3 +1,3 @@
 module.exports = {
-    baseUrl: '/vue-test/',
+    baseUrl: '/get-out-game/',
 }
