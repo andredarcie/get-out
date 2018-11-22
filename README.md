@@ -5,15 +5,23 @@
 ## Getting Started
 
 Install Parcel using npm
-```console
+```
 npm install -g parcel-bundler
 ```
 
 Run
-```console
-parcel index.html
+```
+npm start
 ```
 
-Enjoy :)
+## Deploy to Github Pages
+
+```
+npm run deploy
+```
+
+## Live Demo
 
 [Play here](http://andredarcie.com/get-out-game/)
+
+Enjoy :)
