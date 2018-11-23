@@ -4,7 +4,7 @@
   "description": "> Super simple survival game 🎮",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel index.html --public-url /",
     "predeploy": "del dist && parcel build index.html",
     "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"

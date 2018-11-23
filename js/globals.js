@@ -1,4 +1,4 @@
-var Globals = {
+export let Globals = {
     gameStates: {
         TRAVEL: 1,
         CAMP: 2,
@@ -33,7 +33,8 @@ var Globals = {
             img: document.getElementById("travel-img"),
             currentDay: document.getElementById("current-day-field"),
             progressBar: document.getElementById("progress-bar"),
-            walkBtn: document.getElementById("walk-btn")
+            walkBtn: document.getElementById("walk-btn"),
+            travelBtn: document.querySelector('#travel-btn')
         },
         campPage: {
             element: document.getElementById("camp-page"),
