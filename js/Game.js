@@ -1,10 +1,15 @@
 import { Globals } from './globals.js';
+import { Travel } from './managers/travel.js';
 
 export class Game {
 
     constructor() {
         this.states = Globals.gameStates;
         this.pages = Globals.gamePages;
+
+        this.travel = new Travel();
+
+        this.addListeners();
         
         Globals.pages.travelPage.travelBtn.addEventListener('click', (e) => { this.onClick(e) });
     }
@@ -18,6 +23,10 @@ export class Game {
 
     onClick(evt) {
         this.goToState(this.states.TRAVEL);
+    }
+
+    addListeners() {
+        this.travel.walkBtn.addEventListener('click', (e) => { this.travel.onClickWalk() })
     }
 
     goToState(state) {
@@ -62,7 +71,7 @@ export class Game {
         switch(Globals.currentState) {
             case gameStates.TRAVEL: 
                 this.showPage(gamePages.travelPage);
-                // startTravel();
+                this.travel.start();
             break;
             case gameStates.CAMP: 
                 this.showPage(gamePages.campPage);
