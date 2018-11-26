@@ -15,6 +15,7 @@ export let Globals = {
     currentDay: 0,
     hours: 0,
     characters: [],
+    travelledDistance: 0,
     gamePages: {
         travelPage: document.getElementById("travel-page"),
         campPage: document.getElementById("camp-page"),
