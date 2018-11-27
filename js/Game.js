@@ -7,9 +7,7 @@ export class Game {
         this.states = Globals.gameStates;
         this.pages = Globals.gamePages;
 
-        this.travel = new Travel();
-
-        this.addListeners();
+        this.travel = new Travel(this);
         
         Globals.pages.travelPage.travelBtn.addEventListener('click', (e) => { this.onClick(e) });
     }
@@ -23,10 +21,6 @@ export class Game {
 
     onClick(evt) {
         this.goToState(this.states.TRAVEL);
-    }
-
-    addListeners() {
-        this.travel.walkBtn.addEventListener('click', (e) => { this.travel.onClickWalk() })
     }
 
     goToState(state) {

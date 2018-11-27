@@ -2,7 +2,9 @@ import { Globals } from '../globals.js';
 
 export class Travel {
 
-    constructor() {
+    constructor(game) {
+        this.game = game;
+
         this.travelPage = document.querySelector("#travel-page");
         this.travelImage = document.querySelector("#travel-img");
         this.travelledDistanceField = document.querySelector("#travelled-distance");
@@ -11,6 +13,8 @@ export class Travel {
         this.progressBar = document.querySelector("#progress-bar");
         this.walkBtn = document.querySelector("#walk-btn");
         this.campBtn = document.querySelector("#camp-btn");
+
+        this.walkBtn.addEventListener('click', (e) => { this.onClickWalk(e) });
     }
 
     start() {
@@ -27,12 +31,17 @@ export class Travel {
         travelPage.progressBar.style.width = progressBarWidth + "%";
     }
 
-    onClickWalk() {
-        this.passHours(5);
+    onClickWalk(e) {
+        this.startWalking();
+        this.passHours(3);
     }
 
     passHours(hours) {
         for (let i = 0; i < hours; i++) {
+
+            if (!this.walking)
+                break;
+
             this.gotoNextHour();
         }
     }
@@ -54,11 +63,11 @@ export class Travel {
     }
 
     showDay() {
-        this.currentDayField.innerHTML = 'Day: ' + Globals.currentDay;
+        this.currentDayField.innerHTML = 'day ' + Globals.currentDay;
     }
 
     showHour() {
-        this.currentHourField.innerHTML = 'Hour: ' + Globals.hours;
+        this.currentHourField.innerHTML = Globals.hours + ':00';
     }
 
     walkOneHour() {
@@ -68,14 +77,22 @@ export class Travel {
         if(Globals.travelledDistance > 300) {
             this.arrivedAtTheGoal();
         }
-        
     }
 
     showTravelledDistance() {
         this.travelledDistanceField.innerHTML = 'Travelled distance: ' + Globals.travelledDistance;
     }
 
+    startWalking() {
+        this.walking = true;
+    }
+
+    stopWalking() {
+        this.walking = false;
+    }
+
     arrivedAtTheGoal() {
-        console.log("Arrived At The Goal");
+        stopWalking();
+        this.game.goToState(Globals.gameStates.GAME_OVER);
     }
 }
