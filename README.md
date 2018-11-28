@@ -11,7 +11,7 @@ npm install -g parcel-bundler
 
 Run
 ```
-npm start
+parcel index.html
 ```
 
 ## Deploy to Github Pages
