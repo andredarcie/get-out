@@ -23,14 +23,6 @@ export class Travel {
         this.showHour();
     }
 
-    startTravels() {
-
-        travelPage = Globals.pages.travelPage;
-    
-        progressBarWidth = 1;
-        travelPage.progressBar.style.width = progressBarWidth + "%";
-    }
-
     onClickWalk(e) {
         this.startWalking();
         this.passHours(3);
