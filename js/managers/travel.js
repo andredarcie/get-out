@@ -39,7 +39,6 @@ export class Travel {
     }
 
     gotoNextHour() {
-        Globals.hours++;
         this.walkOneHour();
 
         if (Globals.hours >= 24 ) {
@@ -47,11 +46,27 @@ export class Travel {
             this.gotoNextDay();
         }
         this.showHour();
+        this.checkEvent();
+    }
+
+    checkEvent() {
+        if (this.getRandomArbitrary(1, 100) <= 50 ) {
+            this.game.goToState(Globals.gameStates.EVENT);
+        }
+    }
+
+    getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
     }
 
     gotoNextDay() {
         Globals.currentDay++;
         this.showDay();
+    }
+
+    passOneHour() {
+        Globals.hours++;
+        this.showHour();
     }
 
     showDay() {
@@ -63,8 +78,10 @@ export class Travel {
     }
 
     walkOneHour() {
+        
         Globals.travelledDistance++;
         this.showTravelledDistance();
+        this.passOneHour();
 
         if(Globals.travelledDistance > 300) {
             this.arrivedAtTheGoal();

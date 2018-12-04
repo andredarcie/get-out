@@ -1,5 +1,6 @@
 import { Globals } from './globals.js';
 import { Travel } from './managers/travel.js';
+import { Events } from './managers/Events.js';
 
 export class Game {
 
@@ -8,6 +9,7 @@ export class Game {
         this.pages = Globals.gamePages;
 
         this.travel = new Travel(this);
+        this.events = new Events(this);
         
         Globals.pages.travelPage.travelBtn.addEventListener('click', (e) => { this.onClick(e) });
     }
@@ -89,7 +91,7 @@ export class Game {
             break;
             case gameStates.EVENT: 
                 this.showPage(gamePages.eventPage);
-                // startEvent();
+                this.events.start();
             break;
             case gameStates.WALK:
                 this.showPage(gamePages.walkingPage);
