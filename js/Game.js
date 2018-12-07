@@ -1,6 +1,15 @@
 import { Globals } from './globals.js';
-import { Travel } from './managers/travel.js';
+import { Camp } from './managers/Camp.js';
 import { Events } from './managers/Events.js';
+import { GameOver } from './managers/GameOver.js';
+import { Heal } from './managers/GameOver.js';
+import { Hunt } from './managers/Travel.js';
+import { Report } from './managers/Travel.js';
+import { Sleep } from './managers/Travel.js';
+import { Stats } from './managers/Travel.js';
+import { Travel } from './managers/Travel.js';
+import { Walk } from './managers/Travel.js';
+
 
 export class Game {
 
@@ -8,9 +17,17 @@ export class Game {
         this.states = Globals.gameStates;
         this.pages = Globals.gamePages;
 
-        this.travel = new Travel(this);
+        this.camp = new Camp(this);
         this.events = new Events(this);
-        
+        this.gameOver = new GameOver(this);
+        this.heal = new Heal(this);
+        this.hunt = new Hunt(this);
+        this.report = new Report(this);
+        this.sleep = new Sleep(this);
+        this.stats = new Stats(this);
+        this.travel = new Travel(this);
+        this.walk = new Walk(this);
+
         Globals.pages.travelPage.travelBtn.addEventListener('click', (e) => { this.onClick(e) });
     }
 
@@ -71,7 +88,7 @@ export class Game {
             break;
             case gameStates.CAMP: 
                 this.showPage(gamePages.campPage);
-                // startCamp();
+                this.camp.start();
             break;
             case gameStates.SLEEP: 
                 this.showPage(gamePages.sleepPage);

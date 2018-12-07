@@ -15,6 +15,7 @@ export class Travel {
         this.campBtn = document.querySelector("#camp-btn");
 
         this.walkBtn.addEventListener('click', (e) => { this.onClickWalk(e) });
+        this.campBtn.addEventListener('click', (e) => { this.onClickCamp(e) });
     }
 
     start() {
@@ -26,6 +27,10 @@ export class Travel {
     onClickWalk(e) {
         this.startWalking();
         this.passHours(3);
+    }
+
+    onClickCamp(e) {
+        this.game.goToState(Globals.gameStates.CAMP);
     }
 
     passHours(hours) {

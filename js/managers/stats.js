@@ -1,61 +1,41 @@
-var $nameField;
-var $relationshipField;
-var $thinkingField;
-var $healthField;
-var $woundsField;
-var $hungerField;
-var $fatigueField;
-var $feelingField;
-var $itemField;
+import { Globals } from '../globals.js';
 
-var currentCharacter = 0;
-
-function getViewElements(){
-    $nameField = document.getElementById("name-field");
-    $relationshipField = document.getElementById("relationship-field");
-    $thinkingField = document.getElementById("thinking-field");
-    $healthField = document.getElementById("health-field");
-    $woundsField = document.getElementById("wounds-field");
-    $hungerField = document.getElementById("hunger-field");
-    $fatigueField = document.getElementById("fatigue-field");
-    $feelingField = document.getElementById("feeling-field");
-    $itemField = document.getElementById("item-field");
-}
-
-function setViewElements(character){
-    $nameField.innerHTML = character.name;
-    $relationshipField.innerHTML = character.relationship;
-    $thinkingField.innerHTML = "Thinking: " + character.thinking;
-    $healthField.innerHTML = "Health: " + character.health;
-    $woundsField.innerHTML = "Wounds: " + character.wounds;
-    $hungerField.innerHTML = "Hunger: " + character.hunger;
-    $fatigueField.innerHTML = "Fatigue: " + character.fatigue;
-    $feelingField.innerHTML = "Feeling: " + character.feeling;
-    $itemField.innerHTML = "Items: " + character.item;
-}
-
-function previousCharacter(){
-    currentCharacter--;
+export class Stats {
     
-    if(currentCharacter < 0){
-        currentCharacter = Globals.characters.length - 1;
+    constructor(game) {
+        this.game = game;
+
+        this.nameField = document.querySelector("#name-field");
+        this.relationshipField = document.querySelector("#relationship-field");
+        this.thinkingField = document.querySelector("#thinking-field");
+        this.healthField = document.querySelector("#health-field");
+        this.woundsField = document.querySelector("#wounds-field");
+        this.hungerField = document.querySelector("#hunger-field");
+        this.fatigueField = document.querySelector("#fatigue-field");
+        this.feelingField = document.querySelector("#feeling-field");
+        this.itemField = document.querySelector("#item-field");
+        this.previousCharacterBtn = document.querySelector("#previous-character-btn");
+        this.nextCharacterBtn = document.querySelector("#next-character-btn");
+        this.backCharacterBtn = document.querySelector("#back-character-btn");
+
+        this.previousCharacterBtn.addEventListener('click', (e) => { this.onClickPreviousCharacter(e) });
+        this.nextCharacterBtn.addEventListener('click', (e) => { this.onClickNextCharacter(e) });
+        this.backCharacterBtn.addEventListener('click', (e) => { this.onClickBackCharacter(e) });
     }
 
-    setViewElements(Globals.characters[currentCharacter]);
-}
+    start() {
 
-function nextCharacter(){
-    currentCharacter++;
-
-    if(currentCharacter === Globals.characters.length){
-        currentCharacter = 0;
     }
 
-    setViewElements(Globals.characters[currentCharacter]);
-}
+    onClickPreviousCharacter() {
 
-start();
-function start(){
-    getViewElements();
-    setViewElements(Globals.characters[0]);
+    }
+
+    onClickNextCharacter() {
+
+    }
+
+    onClickBackCharacter() {
+        
+    }
 }

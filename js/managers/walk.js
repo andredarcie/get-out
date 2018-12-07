@@ -1,8 +1,13 @@
+import { Globals } from '../globals.js';
 
-function initWalking(){
+export class Walk {
+    
+    constructor(game) {
+        this.game = game;
 
-    var walkingMessageFound = document.getElementById("walking-message-found");
-    walkingMessageFound.style.display = "none";
+    }
 
-    setTimeout(function(){ checkEvent(walkingMessageFound); }, 2000);
+    start() {
+
+    }
 }

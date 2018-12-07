@@ -44,22 +44,22 @@
                 <h1>Camp</h1>
                 <img id="camp-img" src="img/snow_camp.png" alt="Snow camp" height="222" width="321">
                 <button id="travel-btn">Travel</button>
-                <button onclick="goToState(Globals.gameStates.STATS)">Stats</button>
-                <button onclick="goToState(Globals.gameStates.SLEEP)">Sleep</button>
-                <button onclick="goToState(Globals.gameStates.HUNT)">Hunt</button>
-                <button onclick="goToState(Globals.gameStates.HEAL)">Heal</button>
+                <button id="stats-btn">Stats</button>
+                <button id="sleep-btn">Sleep</button>
+                <button id="hunt-btn">Hunt</button>
+                <button id="heal-btn">Heal</button>
             </div>
             <div id="sleep-page">
                 <h1>Sleep</h1>
-                <button onclick="goToState(Globals.gameStates.CAMP)">Back</button>
+                <button id="sleep-back-btn">Back</button>
             </div>
             <div id="hunt-page">
                 <h1>Hunt</h1>
-                <button onclick="goToState(Globals.gameStates.CAMP)">Back</button>
+                <button id="hunt-back-btn">Back</button>
             </div>
             <div id="heal-page">
                 <h1>Heal</h1>
-                <button onclick="goToState(Globals.gameStates.CAMP)">Back</button>
+                <button id="heal-back-btn">Back</button>
             </div>
             <div id="stats-page">
                 <h1>Stats</h1>
@@ -72,9 +72,9 @@
                 <p id="fatigue-field"></p>
                 <p id="feeling-field"></p>
                 <p id="item-field"></p>
-                <button onclick="previousCharacter()">Previous</button>
-                <button onclick="nextCharacter()">Next</button>
-                <button onclick="goToState(Globals.gameStates.CAMP)">Back</button>
+                <button id="previous-character-btn">Previous</button>
+                <button id="next-character-btn">Next</button>
+                <button id="back-character-btn">Back</button>
             </div>
             <div id="walking-page">
                 <p id="walking-message">Walking...</p>
@@ -88,7 +88,7 @@
                 <h1 id="event-page-title">Frozen lake</h1>
                 <img id="event-page-image" src="img/snow_old.png" alt="Event image" height="222" width="321">
                 <p id="event-page-description"></p>
-                <button id="event-page-back-btn"onclick="goToState(Globals.gameStates.TRAVEL)">Back</button>
+                <button id="event-page-back-btn">Back</button>
             </div>
             <div id="game-over-page">
                 <h1>Game over</h1>
