@@ -8,8 +8,7 @@ export class Travel {
         this.travelPage = document.querySelector("#travel-page");
         this.travelImage = document.querySelector("#travel-img");
         this.travelledDistanceField = document.querySelector("#travelled-distance");
-        this.currentDayField = document.querySelector("#current-day-field");
-        this.currentHourField = document.querySelector("#current-hour-field");
+        this.currentTimeField = document.querySelector("#current-time-field");
         this.progressBar = document.querySelector("#progress-bar");
         this.walkBtn = document.querySelector("#walk-btn");
         this.campBtn = document.querySelector("#camp-btn");
@@ -20,8 +19,7 @@ export class Travel {
 
     start() {
         Globals.currentDay++;
-        this.showDay();
-        this.showHour();
+        this.showTime();
     }
 
     onClickWalk(e) {
@@ -50,7 +48,7 @@ export class Travel {
             Globals.hours = 0;
             this.gotoNextDay();
         }
-        this.showHour();
+        this.showTime();
         this.checkEvent();
     }
 
@@ -66,35 +64,40 @@ export class Travel {
 
     gotoNextDay() {
         Globals.currentDay++;
-        this.showDay();
+        this.showTime();
     }
 
     passOneHour() {
         Globals.hours++;
-        this.showHour();
+        this.showTime();
     }
 
-    showDay() {
-        this.currentDayField.innerHTML = 'day ' + Globals.currentDay;
-    }
+    showTime() {
+        this.currentTimeField.innerHTML = Globals.hours + ':00 - day ' + Globals.currentDay;
 
-    showHour() {
-        this.currentHourField.innerHTML = Globals.hours + ':00';
+        if(Globals.hours >= 18 || Globals.hours <= 6) {
+            this.currentTimeField.innerHTML += ' - night';
+        } else {
+            this.currentTimeField.innerHTML += ' - daylight';
+        }
     }
 
     walkOneHour() {
         
-        Globals.travelledDistance++;
+        Globals.travelledDistance += 2;
         this.showTravelledDistance();
         this.passOneHour();
+        Globals.characters[0].looseHealth(1);
 
+        console.log(Globals.logs);
+        
         if(Globals.travelledDistance > 300) {
             this.arrivedAtTheGoal();
         }
     }
 
     showTravelledDistance() {
-        this.travelledDistanceField.innerHTML = 'Travelled distance: ' + Globals.travelledDistance;
+        this.travelledDistanceField.innerHTML = 'Travelled distance: ' + Globals.travelledDistance + ' miles';
     }
 
     startWalking() {
