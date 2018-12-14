@@ -16,14 +16,18 @@ export class Events {
     }
 
     start() {
-        let events = [new Event("Event 1", "Event description"), new Event("Event 2", "Event description")];
+        let events = [new Event("Event 1", "Event description"), 
+                      new Event("Wolf", "Event description")];
         let randomIndex = this.getRandomArbitrary(events.length);
-        var event = events[randomIndex];
+
+        this.event = events[randomIndex];
+
+        this.showEvent();
     }
 
-    showEvent(event) {
-        this.eventPageTitle.innerHTML = event.name;
-        this.eventPageDescription.innerHTML = event.description;
+    showEvent() {
+        this.eventPageTitle.innerHTML = this.event.name;
+        this.eventPageDescription.innerHTML = this.event.description;
     }
 
     onEventPageBackBtn(e) {
