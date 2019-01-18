@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html --public-url /",
-    "predeploy": "del dist && parcel build index.html",
+    "predeploy": "del dist && parcel build index.html --public-url ./",
     "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
