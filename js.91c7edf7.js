@@ -29,4 +29,4 @@ parcelRequire=function(e,r,n,t){var i="function"==typeof parcelRequire&&parcelRe
 },{"./globals.js":"5zVv","./managers/Camp.js":"xsWE","./managers/Events.js":"HaJu","./managers/GameOver.js":"ipOg","./managers/Heal.js":"k8bR","./managers/Hunt.js":"mPZJ","./managers/Report.js":"Bh8L","./managers/Sleep.js":"VEAF","./managers/Stats.js":"1NOm","./managers/Travel.js":"dfWL","./managers/Walk.js":"uz18"}],"QvaY":[function(require,module,exports) {
 "use strict";var e=require("./Game.js"),r=new e.Game;r.start();
 },{"./Game.js":"6+xC"}]},{},["QvaY"], null)
-//# sourceMappingURL=/js.91c7edf7.map
+//# sourceMappingURL=js.91c7edf7.map
