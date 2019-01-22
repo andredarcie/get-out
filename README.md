@@ -1,4 +1,4 @@
-# Get Out Game
+# Get Out
 
 > A Minimalist Survival Text Game
 
