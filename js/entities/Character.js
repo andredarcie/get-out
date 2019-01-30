@@ -16,9 +16,9 @@ export class Character {
 
             if (this.health <= 0) {
                 this.health = 0;
-                Globals.logs.push(this.name + ' died at day ' + Globals.currentDay);
+                Globals.tempLogs.push(this.name + ' died at day ' + Globals.currentDay);
             } else {
-                Globals.logs.push(this.name + ' lost -' + healthToLoose + ' health');
+                Globals.tempLogs.push(this.name + ' lost -' + healthToLoose + ' health');
             }
         }
     }

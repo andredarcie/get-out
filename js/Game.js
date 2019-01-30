@@ -9,7 +9,7 @@ import { Sleep } from './managers/Sleep.js';
 import { Stats } from './managers/Stats.js';
 import { Travel } from './managers/Travel.js';
 import { Walk } from './managers/Walk.js';
-
+import { Log } from './managers/Log.js';
 
 export class Game {
 
@@ -27,6 +27,7 @@ export class Game {
         this.stats = new Stats(this);
         this.travel = new Travel(this);
         this.walk = new Walk(this);
+        this.log = new Log(this);
     }
 
     start() {
@@ -69,6 +70,7 @@ export class Game {
         this.hidePage(gamePages.eventPage);
         this.hidePage(gamePages.reportPage);
         this.hidePage(gamePages.walkingPage);
+        this.hidePage(gamePages.logPage);
         this.hidePage(gamePages.gameOverPage);
     }
 
@@ -115,6 +117,10 @@ export class Game {
             case gameStates.REPORT:
                 this.showPage(gamePages.reportPage);
                 // startReport();
+            break;
+            case gameStates.LOG:
+                this.showPage(gamePages.logPage);
+                this.log.start();
             break;
             case gameStates.GAME_OVER:
                 this.showPage(gamePages.gameOverPage);

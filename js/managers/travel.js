@@ -25,6 +25,10 @@ export class Travel {
     onClickWalk(e) {
         this.startWalking();
         this.passHours(3);
+
+        if (Globals.tempLogs.length > 0) {
+            this.game.goToState(Globals.gameStates.LOG);
+        }
     }
 
     onClickCamp(e) {
@@ -53,7 +57,9 @@ export class Travel {
     }
 
     checkEvent() {
-        if (this.getRandomArbitrary(1, 100) <= 50 ) {
+        let randomValue = this.getRandomArbitrary(1, 100) <= 50;
+
+        if (randomValue) {
             this.game.goToState(Globals.gameStates.EVENT);
         }
     }
