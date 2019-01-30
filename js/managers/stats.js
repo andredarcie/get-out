@@ -54,7 +54,7 @@ export class Stats {
     showCurrentCharacter() {
         let currentCharacter = Globals.characters[this.currentCharacterIndex];
         this.nameField.innerHTML = 'Name: ' + currentCharacter.name;
-        this.healthField.innerHTML = 'Health: ' + currentCharacter.health;
+        this.healthField.innerHTML = 'Health: ' + ((currentCharacter.health <= 0) ? 'Is dead' : currentCharacter.health);
         this.kinshipField.innerHTML = 'Kinship: ' + currentCharacter.kinship;
     }
 

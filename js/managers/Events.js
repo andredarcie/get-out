@@ -16,8 +16,8 @@ export class Events {
     }
 
     start() {
-        let events = [new Event("Event 1", "Event description"), 
-                      new Event("Wolf", "Event description")];
+        let events = [new Event("Abandoned house", "No sign of life"), 
+                      new Event("Wild wolf appeared", "He is hungry")];
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this.event = events[randomIndex];
@@ -31,7 +31,12 @@ export class Events {
     }
 
     onEventPageBackBtn(e) {
-        this.game.goToState(Globals.gameStates.TRAVEL);
+
+        if (Globals.tempLogs.length > 0) {
+            this.game.goToState(Globals.gameStates.LOG);
+        } else {
+            this.game.goToState(Globals.gameStates.TRAVEL);
+        }
     }
 
     getRandomArbitrary(max) {

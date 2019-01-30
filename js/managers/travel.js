@@ -26,7 +26,11 @@ export class Travel {
         this.startWalking();
         this.passHours(3);
 
-        if (Globals.tempLogs.length > 0) {
+        const foundEvent = this.checkEvent();
+
+        if (foundEvent) {
+            this.game.goToState(Globals.gameStates.EVENT);
+        } else if (Globals.tempLogs.length > 0) {
             this.game.goToState(Globals.gameStates.LOG);
         }
     }
@@ -53,15 +57,10 @@ export class Travel {
             this.gotoNextDay();
         }
         this.showTime();
-        this.checkEvent();
     }
 
     checkEvent() {
-        let randomValue = this.getRandomArbitrary(1, 100) <= 50;
-
-        if (randomValue) {
-            this.game.goToState(Globals.gameStates.EVENT);
-        }
+        return this.getRandomArbitrary(1, 100) <= 50;
     }
 
     getRandomArbitrary(min, max) {
@@ -93,13 +92,18 @@ export class Travel {
         Globals.travelledDistance += 2;
         this.showTravelledDistance();
         this.passOneHour();
-        Globals.characters[0].looseHealth(1);
+        Globals.characters[this.getRandomCharacter()].looseHealth(1);
 
         console.log(Globals.logs);
         
-        if(Globals.travelledDistance > 300) {
+        if(Globals.travelledDistance >= 300) {
             this.arrivedAtTheGoal();
         }
+    }
+
+    getRandomCharacter() {
+        let x = Math.floor(Math.random() * (Globals.characters.length - 1));
+        return x;
     }
 
     showTravelledDistance() {
