@@ -1,6 +1,6 @@
-# Get Out Game
+# Get Out
 
-> Super simple survival game 🎮
+> A Minimalist Survival Text Game
 
 ## Getting Started
 
