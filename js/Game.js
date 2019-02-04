@@ -124,7 +124,7 @@ export class Game {
             break;
             case gameStates.GAME_OVER:
                 this.showPage(gamePages.gameOverPage);
-                // startGameOver();
+                this.gameOver.start();
             break;
         }
     }

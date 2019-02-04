@@ -96,7 +96,7 @@ export class Travel {
 
         console.log(Globals.logs);
         
-        if(Globals.travelledDistance >= 300) {
+        if(Globals.travelledDistance >= 100) {
             this.arrivedAtTheGoal();
         }
     }
@@ -119,7 +119,7 @@ export class Travel {
     }
 
     arrivedAtTheGoal() {
-        stopWalking();
+        this.stopWalking();
         this.game.goToState(Globals.gameStates.GAME_OVER);
     }
 }
