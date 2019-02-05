@@ -10,14 +10,16 @@ export class Events {
         this.eventPageTitle = document.getElementById("event-page-title");
         this.eventPageDescription = document.getElementById("event-page-description");
         this.eventPageImage = document.getElementById("event-page-image");
-        this.eventPageBackBtn = document.getElementById("event-page-back-btn");
+        this.eventPageYesBtn = document.getElementById("event-page-yes-btn");
+        this.eventPageNoBtn = document.getElementById("event-page-no-btn");
 
-        this.eventPageBackBtn.addEventListener('click', (e) => { this.onEventPageBackBtn(e) });
+        this.eventPageYesBtn.addEventListener('click', (e) => { this.onEventPageYesBtn(e) });
+        this.eventPageNoBtn.addEventListener('click', (e) => { this.onEventPageNoBtn(e) });
     }
 
     start() {
-        let events = [new Event("Abandoned house", "No sign of life"), 
-                      new Event("Wild wolf appeared", "He is hungry")];
+        let events = [new Event("Abandoned house", "No sign of life. Explore the house?"), 
+                      new Event("Wild Wolf Appeared", "Fight with the wolf?")];
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this.event = events[randomIndex];
@@ -30,7 +32,16 @@ export class Events {
         this.eventPageDescription.innerHTML = this.event.description;
     }
 
-    onEventPageBackBtn(e) {
+    onEventPageYesBtn(e) {
+
+        if (Globals.tempLogs.length > 0) {
+            this.game.goToState(Globals.gameStates.LOG);
+        } else {
+            this.game.goToState(Globals.gameStates.TRAVEL);
+        }
+    }
+
+    onEventPageNoBtn(e) {
 
         if (Globals.tempLogs.length > 0) {
             this.game.goToState(Globals.gameStates.LOG);

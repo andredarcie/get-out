@@ -5,11 +5,17 @@ export class Log {
     constructor(game) {
         this.game = game;
         this.logList = document.querySelector("#log-list");
+        this.logBackBtn = document.querySelector("#log-back-btn");
+
+        this.logBackBtn.addEventListener('click', (e) => { this.onClickBackBtn(e) });
     }
 
     start() {
-        setTimeout(() => { this.backToTravel() }, 2000);
         this.showLogs();
+    }
+
+    onClickBackBtn(e) {
+        this.backToTravel();
     }
 
     showLogs() {
