@@ -20,7 +20,7 @@ export class GameOver {
             }
         }
 
-        this.setGameOverMessage(livingCharacters + " survived!");
+        this.setGameOverMessage(livingCharacters + " of " + Globals.characters.length + " survived!");
     }
 
     setGameOverMessage(message) {
