@@ -35,7 +35,7 @@ export class Events {
     onEventPageYesBtn(e) {
 
         if (Globals.tempLogs.length > 0) {
-            this.game.goToState(Globals.gameStates.LOG);
+            this.game.log.start();
         } else {
             this.game.goToState(Globals.gameStates.TRAVEL);
         }
@@ -44,7 +44,7 @@ export class Events {
     onEventPageNoBtn(e) {
 
         if (Globals.tempLogs.length > 0) {
-            this.game.goToState(Globals.gameStates.LOG);
+            this.game.log.start();
         } else {
             this.game.goToState(Globals.gameStates.TRAVEL);
         }

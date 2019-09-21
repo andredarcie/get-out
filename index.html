@@ -10,32 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/normalize.css">
-  <style>
-      body {
-          background-color: black;
-          color: white;
-          font-family: "Times New Roman", Times, Sans-Serif;
-          font-size: 16px;
-          font-weight: normal;
-          line-height: normal;
-          letter-spacing: normal;
-      }
-
-      button {
-        background-color: rgb(0, 0, 0); /* Green */
-        border: 1px solid white;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-      }
-
-      img {
-          height: 10px;
-          width: 10px;
-      }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
   <!--<link rel="stylesheet" href="css/style.css?v=1.0">-->
 
   <!--[if lt IE 9]>
@@ -52,6 +27,7 @@
                 <img id="travel-img" src="img/snow_forest.png" alt="Smiley face" height="222" width="321">
                 <p id="travelled-distance"></p>
                 <div id="progress-bar"></div>
+                <ul id="log-list"></ul>
                 <button id="walk-btn">Walk (+3 hours)</button>
                 <button id="camp-btn">Camp</button>
             </div>
@@ -105,11 +81,6 @@
                 <p id="event-page-description"></p>
                 <button id="event-page-no-btn">NO</button>
                 <button id="event-page-yes-btn">YES</button>
-            </div>
-            <div id="log-page">
-                <h1>Log page</h1>
-                <ul id="log-list"></ul>
-                <button id="log-back-btn">Back</button>
             </div>
             <div id="game-over-page">
                 <h1>Game over</h1>

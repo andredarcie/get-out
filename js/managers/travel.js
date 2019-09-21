@@ -15,6 +15,8 @@ export class Travel {
 
         this.walkBtn.addEventListener('click', (e) => { this.onClickWalk(e) });
         this.campBtn.addEventListener('click', (e) => { this.onClickCamp(e) });
+
+        this.showTravelledDistance();
     }
 
     start() {
@@ -31,7 +33,9 @@ export class Travel {
         if (foundEvent) {
             this.game.goToState(Globals.gameStates.EVENT);
         } else if (Globals.tempLogs.length > 0) {
-            this.game.goToState(Globals.gameStates.LOG);
+            this.game.log.showLogs();
+        } else {
+            this.game.log.clearLogs();
         }
     }
 
@@ -60,7 +64,7 @@ export class Travel {
     }
 
     checkEvent() {
-        return this.getRandomArbitrary(1, 100) <= 50;
+        return this.getRandomArbitrary(1, 100) <= 25;
     }
 
     getRandomArbitrary(min, max) {
@@ -90,15 +94,23 @@ export class Travel {
     walkOneHour() {
         
         Globals.travelledDistance += 2;
+        this.increaseProgressBar();
+
         this.showTravelledDistance();
         this.passOneHour();
         Globals.characters[this.getRandomCharacter()].looseHealth(1);
 
         console.log(Globals.logs);
         
-        if(Globals.travelledDistance >= 100) {
+        if(Globals.travelledDistance > Globals.distanceToGoal) {
             this.arrivedAtTheGoal();
         }
+    }
+
+    increaseProgressBar() {
+        let progressBarFullWidth = 321;
+        let unity = progressBarFullWidth / Globals.distanceToGoal;
+        this.progressBar.style.width = Globals.travelledDistance * unity + 'px';
     }
 
     getRandomCharacter() {

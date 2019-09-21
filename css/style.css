@@ -2,13 +2,13 @@ body, html {
   height: 100%;
   margin: 0;
   min-height: 100%;
+  padding: 0;
 }
 
 button {
   color: #fff;
   background-color: #6496c8;
   text-shadow: -1px 1px #417cb8;
-  font-family: "Mono";
   text-align: left;
   width: 98%;
   padding: 10px;
@@ -59,11 +59,6 @@ h1 {
   margin: 0.2em;
 }
 
-@font-face {
-	font-family: "Mono";
-	src: url("../upheavtt.ttf");
-}
-
 body {
 	font-family: "Mono";
   background-color: #ecf0f1;
@@ -80,7 +75,7 @@ img {
 }
 
 #progress-bar {
-  width: 98%;
+  width: 0;
   height: 8px;
   background-color: #27ae60;
   margin-left: 1%;
@@ -122,11 +117,19 @@ h1 {
 
 #container {
   background-color: #2c3e50;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
   margin-left: 1%;
 }
+
+#log-list {
+  border-style: solid;
+  height: 80px;
+}
+
 /* On screens that are 600px wide or less, the background color is olive */
 @media screen and (max-width: 378px) {
   #core {

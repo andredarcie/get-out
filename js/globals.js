@@ -11,14 +11,14 @@ export let Globals = {
         EVENT: 7,
         WALKING: 8,
         REPORT: 9,
-        LOG: 10,
-        GAME_OVER: 11
+        GAME_OVER: 10
     },
     currentState: 1,
     currentDay: 0,
     hours: 0,
     characters: [],
     travelledDistance: 0,
+    distanceToGoal: 300,
     tempLogs: [],
     logs: [],
     gamePages: {
@@ -31,7 +31,6 @@ export let Globals = {
         eventPage: document.getElementById("event-page"),
         walkingPage: document.getElementById("walking-page"),
         reportPage: document.getElementById("report-page"),
-        logPage: document.getElementById("log-page"),
         gameOverPage: document.getElementById("game-over-page"),
     }
 }

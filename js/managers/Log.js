@@ -5,17 +5,10 @@ export class Log {
     constructor(game) {
         this.game = game;
         this.logList = document.querySelector("#log-list");
-        this.logBackBtn = document.querySelector("#log-back-btn");
-
-        this.logBackBtn.addEventListener('click', (e) => { this.onClickBackBtn(e) });
     }
 
     start() {
         this.showLogs();
-    }
-
-    onClickBackBtn(e) {
-        this.backToTravel();
     }
 
     showLogs() {
@@ -31,7 +24,7 @@ export class Log {
         this.logList.innerHTML = logs;
     }
 
-    backToTravel() {
-        this.game.goToState(Globals.gameStates.TRAVEL);
+    clearLogs() {
+        this.logList.innerHTML = '';
     }
 }

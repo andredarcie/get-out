@@ -70,7 +70,6 @@ export class Game {
         this.hidePage(gamePages.eventPage);
         this.hidePage(gamePages.reportPage);
         this.hidePage(gamePages.walkingPage);
-        this.hidePage(gamePages.logPage);
         this.hidePage(gamePages.gameOverPage);
     }
 
@@ -119,7 +118,6 @@ export class Game {
                 // startReport();
             break;
             case gameStates.LOG:
-                this.showPage(gamePages.logPage);
                 this.log.start();
             break;
             case gameStates.GAME_OVER:
