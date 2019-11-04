@@ -1,6 +1,6 @@
-import { Globals } from '../globals.js';
+import { Globals } from '../Globals.js';
 
-export class GameOver {
+export class GameOverManager {
     
     constructor(game) {
         this.game = game;

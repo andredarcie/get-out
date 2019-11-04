@@ -1,4 +1,4 @@
-import { Globals } from '../globals.js';
+import { Globals } from '../Globals.js';
 
 export class Event {
 

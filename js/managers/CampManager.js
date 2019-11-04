@@ -1,6 +1,6 @@
-import { Globals } from '../globals.js';
+import { Globals } from '../Globals.js';
 
-export class Camp {
+export class CampManager {
 
     constructor(game) {
         this.game = game;
@@ -14,9 +14,6 @@ export class Camp {
 
         this.travelBtn.addEventListener('click', (e) => { this.onClickTravel(e) });
         this.statsBtn.addEventListener('click', (e) => { this.onClickStats(e) });
-        this.sleepBtn.addEventListener('click', (e) => { this.onClickSleep(e) });
-        this.huntBtn.addEventListener('click', (e) => { this.onClickHunt(e) });
-        this.healBtn.addEventListener('click', (e) => { this.onClickHeal(e) });
     }
 
     start() {

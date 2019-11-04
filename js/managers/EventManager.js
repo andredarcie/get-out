@@ -1,7 +1,7 @@
-import { Event } from './Event.js';
-import { Globals } from '../globals.js';
+import { Event } from '../entities/Event.js';
+import { Globals } from '../Globals.js';
 
-export class Events {
+export class EventManager {
 
     constructor(game) {
         this.game = game;

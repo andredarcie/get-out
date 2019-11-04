@@ -1,33 +1,23 @@
-import { Globals } from './globals.js';
-import { Camp } from './managers/Camp.js';
-import { Events } from './managers/Events.js';
-import { GameOver } from './managers/GameOver.js';
-import { Heal } from './managers/Heal.js';
-import { Hunt } from './managers/Hunt.js';
-import { Report } from './managers/Report.js';
-import { Sleep } from './managers/Sleep.js';
-import { Stats } from './managers/Stats.js';
-import { Travel } from './managers/Travel.js';
-import { Walk } from './managers/Walk.js';
-import { Log } from './managers/Log.js';
+import { Globals } from './Globals.js';
+import { CampManager } from './managers/CampManager.js';
+import { EventManager } from './managers/EventManager.js';
+import { GameOverManager } from './managers/GameOverManager.js';
+import { StatsManager } from './managers/StatsManager.js';
+import { TravelManager } from './managers/TravelManager.js';
+import { LogManager } from './managers/LogManager.js';
 
-export class Game {
+export class GameManager {
 
     constructor() {
         this.states = Globals.gameStates;
         this.pages = Globals.gamePages;
 
-        this.camp = new Camp(this);
-        this.events = new Events(this);
-        this.gameOver = new GameOver(this);
-        this.heal = new Heal(this);
-        this.hunt = new Hunt(this);
-        this.report = new Report(this);
-        this.sleep = new Sleep(this);
-        this.stats = new Stats(this);
-        this.travel = new Travel(this);
-        this.walk = new Walk(this);
-        this.log = new Log(this);
+        this.camp = new CampManager(this);
+        this.events = new EventManager(this);
+        this.gameOver = new GameOverManager(this);
+        this.stats = new StatsManager(this);
+        this.travel = new TravelManager(this);
+        this.log = new LogManager(this);
     }
 
     start() {
@@ -63,13 +53,8 @@ export class Game {
     
         this.hidePage(gamePages.travelPage);
         this.hidePage(gamePages.campPage);
-        this.hidePage(gamePages.sleepPage);
-        this.hidePage(gamePages.huntPage);
-        this.hidePage(gamePages.healPage);
         this.hidePage(gamePages.statsPage);
         this.hidePage(gamePages.eventPage);
-        this.hidePage(gamePages.reportPage);
-        this.hidePage(gamePages.walkingPage);
         this.hidePage(gamePages.gameOverPage);
     }
 
@@ -89,18 +74,6 @@ export class Game {
                 this.showPage(gamePages.campPage);
                 this.camp.start();
             break;
-            case gameStates.SLEEP: 
-                this.showPage(gamePages.sleepPage);
-                // startSleep();
-            break;
-            case gameStates.HUNT: 
-                this.showPage(gamePages.huntPage);
-                // startHunt();
-            break;
-            case gameStates.HEAL: 
-                this.showPage(gamePages.healPage);
-                // startHeal();
-            break;
             case gameStates.STATS: 
                 this.showPage(gamePages.statsPage);
                 this.stats.start();
@@ -109,13 +82,6 @@ export class Game {
                 this.showPage(gamePages.eventPage);
                 this.events.start();
             break;
-            case gameStates.WALK:
-                this.showPage(gamePages.walkingPage);
-                // startWalk();
-            break;
-            case gameStates.REPORT:
-                this.showPage(gamePages.reportPage);
-                // startReport();
             break;
             case gameStates.LOG:
                 this.log.start();

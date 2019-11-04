@@ -1,4 +1,4 @@
-import { Globals } from "../globals";
+import { Globals } from "../Globals";
 
 export class Character {
     
