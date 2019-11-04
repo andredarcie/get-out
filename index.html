@@ -10,12 +10,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
+  <!--<link rel="stylesheet" href="css/style.css">-->
   <!--<link rel="stylesheet" href="css/style.css?v=1.0">-->
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
+  <style>
+      img {
+          width: 0;
+          height: 0;
+      }
+      body {
+          background-color: black;
+          color: white;
+      }
+  </style>
 </head>
 
 <body>
@@ -30,12 +40,12 @@
                 <ul id="log-list"></ul>
                 <button id="walk-btn">Walk (+3 hours)</button>
                 <button id="camp-btn">Camp</button>
+                <button id="stats-btn">Stats</button>
             </div>
             <div id="camp-page">
                 <h1>Camp</h1>
                 <img id="camp-img" src="img/snow_camp.png" alt="Snow camp" height="222" width="321">
                 <button id="travel-btn">Travel</button>
-                <button id="stats-btn">Stats</button>
                 <button id="sleep-btn">Sleep</button>
                 <button id="hunt-btn">Hunt</button>
                 <button id="heal-btn">Heal</button>
@@ -54,18 +64,34 @@
             </div>
             <div id="stats-page">
                 <h1>Stats</h1>
-                <p id="name-field"></p>
-                <p id="kinship-field"></p>
-                <p id="thinking-field"></p>
-                <p id="health-field"></p>
-                <p id="wounds-field"></p>
-                <p id="hunger-field"></p>
-                <p id="fatigue-field"></p>
-                <p id="feeling-field"></p>
-                <p id="item-field"></p>
-                <button id="previous-character-btn"> - Previous</button>
-                <button id="next-character-btn">Next - </button>
-                <button id="back-character-btn">Back</button>
+                <ul>
+                    <li>
+                        <p id="first-character-name-field"></p>
+                        <p id="first-character-kinship-field"></p>
+                        <p id="first-character-health-field"></p>
+                    </li>
+                    <li>
+                        <p id="second-character-name-field"></p>
+                        <p id="second-character-kinship-field"></p>
+                        <p id="second-character-health-field"></p>
+                    </li>
+                    <li>
+                        <p id="third-character-name-field"></p>
+                        <p id="third-character-kinship-field"></p>
+                        <p id="third-character-health-field"></p>
+                    </li>
+                    <li>
+                        <p id="fourth-character-name-field"></p>
+                        <p id="fourth-character-kinship-field"></p>
+                        <p id="fourth-character-health-field"></p>
+                    </li>
+                    <li>
+                        <p id="fifth-character-name-field"></p>
+                        <p id="fifth-character-kinship-field"></p>
+                        <p id="fifth-character-health-field"></p>
+                    </li>
+                </ul>
+                <button id="back-character-btn">Back to travel</button>
             </div>
             <div id="walking-page">
                 <p id="walking-message">Walking...</p>

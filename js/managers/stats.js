@@ -5,60 +5,60 @@ export class Stats {
     constructor(game) {
         this.game = game;
         this.currentCharacterIndex = 0;
+        this.characters = [];
 
         this.getPageElements();
     }
 
     start() {
-        this.showCurrentCharacter();
+        this.showCharacters();
     }
 
     getPageElements() {
+        
+        this.characters[0] = {};
+        this.characters[0].nameField = document.querySelector("#first-character-name-field");
+        this.characters[0].kinshipField = document.querySelector("#first-character-kinship-field");
+        this.characters[0].healthField = document.querySelector("#first-character-health-field");
 
-        this.nameField = document.querySelector("#name-field");
-        this.kinshipField = document.querySelector("#kinship-field");
-        this.thinkingField = document.querySelector("#thinking-field");
-        this.healthField = document.querySelector("#health-field");
-        this.woundsField = document.querySelector("#wounds-field");
-        this.hungerField = document.querySelector("#hunger-field");
-        this.fatigueField = document.querySelector("#fatigue-field");
-        this.feelingField = document.querySelector("#feeling-field");
-        this.itemField = document.querySelector("#item-field");
-        this.previousCharacterBtn = document.querySelector("#previous-character-btn");
-        this.nextCharacterBtn = document.querySelector("#next-character-btn");
+        this.characters[1] = {};
+        this.characters[1].nameField = document.querySelector("#second-character-name-field");
+        this.characters[1].kinshipField = document.querySelector("#second-character-kinship-field");
+        this.characters[1].healthField = document.querySelector("#second-character-health-field");
+
+        this.characters[2] = {};
+        this.characters[2].nameField = document.querySelector("#third-character-name-field");
+        this.characters[2].kinshipField = document.querySelector("#third-character-kinship-field");
+        this.characters[2].healthField = document.querySelector("#third-character-health-field");
+
+        this.characters[3] = {};
+        this.characters[3].nameField = document.querySelector("#fourth-character-name-field");
+        this.characters[3].kinshipField = document.querySelector("#fourth-character-kinship-field");
+        this.characters[3].healthField = document.querySelector("#fourth-character-health-field");
+
+        this.characters[4] = {};
+        this.characters[4].nameField = document.querySelector("#fifth-character-name-field");
+        this.characters[4].kinshipField = document.querySelector("#fifth-character-kinship-field");
+        this.characters[4].healthField = document.querySelector("#fifth-character-health-field");
+
         this.backCharacterBtn = document.querySelector("#back-character-btn");
 
-        this.previousCharacterBtn.addEventListener('click', (e) => { this.onClickPreviousCharacter(e) });
-        this.nextCharacterBtn.addEventListener('click', (e) => { this.onClickNextCharacter(e) });
         this.backCharacterBtn.addEventListener('click', (e) => { this.onClickBackCharacter(e) });
     }
 
-    onClickPreviousCharacter() {
+    showCharacters() {
+        let characters = Globals.characters;
 
-        if (this.currentCharacterIndex > 0) {
-            this.currentCharacterIndex--;
+        for (let [index, character] of characters.entries()){
+            this.characters[index].nameField.innerHTML = 'Name: ' + character.name;
+            this.characters[index].kinshipField.innerHTML = 'Kinship: ' + character.kinship;
+            this.characters[index].healthField.innerHTML = character.health 
+                                                        ? 'Health: ' + character.health
+                                                        : 'Is Dead';
         }
-
-        this.showCurrentCharacter();
-    }
-
-    onClickNextCharacter() {
-
-        if (this.currentCharacterIndex < (Globals.characters.length - 1)) {
-            this.currentCharacterIndex++;
-        }
-
-        this.showCurrentCharacter();
-    }
-
-    showCurrentCharacter() {
-        let currentCharacter = Globals.characters[this.currentCharacterIndex];
-        this.nameField.innerHTML = 'Name: ' + currentCharacter.name;
-        this.healthField.innerHTML = 'Health: ' + ((currentCharacter.health <= 0) ? 'Is dead' : currentCharacter.health);
-        this.kinshipField.innerHTML = 'Kinship: ' + currentCharacter.kinship;
     }
 
     onClickBackCharacter() {
-        this.game.goToState(Globals.gameStates.CAMP);
+        this.game.goToState(Globals.gameStates.TRAVEL);
     }
 }
