@@ -2,11 +2,14 @@ import { Globals } from "../Globals";
 
 export class Character {
     
-    constructor(name, health, kinship) {
+    constructor(name, health, kinship, sick, hungry, cold) {
         this.name = name;
         this.health = health;
         this.kinship = kinship;
         this.isDead = false;
+        this.sick = sick;
+        this.hungry = hungry;
+        this.cold = cold;
     }
 
     looseHealth(healthToLoose) {

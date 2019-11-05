@@ -82,7 +82,6 @@ export class GameManager {
                 this.showPage(gamePages.eventPage);
                 this.events.start();
             break;
-            break;
             case gameStates.LOG:
                 this.log.start();
             break;
