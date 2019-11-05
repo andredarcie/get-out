@@ -1,4 +1,5 @@
 import { Globals } from '../Globals.js';
+import { CharacterManager } from './CharacterManager.js';
 
 export class TravelManager {
 
@@ -15,7 +16,8 @@ export class TravelManager {
 
         this.walkBtn.addEventListener('click', (e) => { this.onClickWalk(e) });
         this.campBtn.addEventListener('click', (e) => { this.onClickCamp(e) });
-
+        
+        this.characterManager = new CharacterManager();
         this.showTravelledDistance();
     }
 
@@ -98,7 +100,12 @@ export class TravelManager {
 
         this.showTravelledDistance();
         this.passOneHour();
+
         Globals.characters[this.getRandomCharacter()].looseHealth(1);
+
+        let allPlayerAreDead = this.characterManager.checkIfAllCharactersAreDead();
+        if (allPlayerAreDead) 
+            this.game.goToState(Globals.gameStates.GAME_OVER);
 
         console.log(Globals.logs);
         
@@ -114,7 +121,7 @@ export class TravelManager {
     }
 
     getRandomCharacter() {
-        let x = Math.floor(Math.random() * (Globals.characters.length - 1));
+        let x = Math.floor(Math.random() * (Globals.characters.length));
         return x;
     }
 
