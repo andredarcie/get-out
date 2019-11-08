@@ -12,6 +12,8 @@ export class LogManager {
     }
 
     showLogs() {
+        if(Globals.tempLogs.length <= 0) return;
+
         let logs = "";
 
         for (var i = 0; i < Globals.tempLogs.length; i++) {
