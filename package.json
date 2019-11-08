@@ -7,7 +7,7 @@
     "start": "parcel index.html --public-url /",
     "predeploy": "del dist && parcel build index.html --public-url ./",
     "deploy": "gh-pages -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,12 @@
   },
   "homepage": "https://github.com/andredarcie/get-out-game#readme",
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-jest": "^24.9.0",
     "cssnano": "^4.1.7",
-    "gh-pages": "^2.0.1"
+    "gh-pages": "^2.0.1",
+    "jest": "^24.9.0",
+    "parcel": "^1.12.4"
   }
 }

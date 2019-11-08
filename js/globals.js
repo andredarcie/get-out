@@ -1,5 +1,3 @@
-import { Character } from '/js/entities/Character.js';
-
 export let Globals = {
     gameStates: {
         TRAVEL: 1,
@@ -24,9 +22,3 @@ export let Globals = {
         gameOverPage: document.getElementById("game-over-page"),
     }
 }
-
-Globals.characters.push(new Character('Ethan', 5, 'father', true, false, false));
-Globals.characters.push(new Character('Olivia', 5, 'mother', false, true, true));
-Globals.characters.push(new Character('Michael', 5, 'son', true, true, true));
-Globals.characters.push(new Character('Sophia', 5, 'daughter', false, false, false));
-Globals.characters.push(new Character('Emma', 5, 'grandmother', true, true, false));

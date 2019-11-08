@@ -9,9 +9,14 @@ Install Parcel using npm
 npm install -g parcel-bundler
 ```
 
-Run
 ```
 parcel index.html
+```
+
+## Testing
+
+```
+npm run test
 ```
 
 ## Deploy to Github Pages
