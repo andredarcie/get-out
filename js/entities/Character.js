@@ -15,7 +15,6 @@ export class Character {
     looseHealth(healthToLoose) {
 
         if (this.health > 0) {
-            
             this.health -= healthToLoose;
 
             if (this.health <= 0) {

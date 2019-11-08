@@ -18,8 +18,8 @@ export class EventManager {
     }
 
     start() {
-        let events = [new Event("Abandoned house", "No sign of life. Explore the house?"), 
-                      new Event("Wild Wolf Appeared", "Fight with the wolf?")];
+        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", "exploration"), 
+                      new Event("Wild Wolf Appeared", "Fight with the wolf?", "combat")];
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this.event = events[randomIndex];
@@ -33,12 +33,22 @@ export class EventManager {
     }
 
     onEventPageYesBtn(e) {
+        let randomCharacterIndex = this.getRandomArbitrary(Globals.characters.length);
+        let randomCharacter = Globals.characters[randomCharacterIndex];
+        switch (this.event.type) {
+            case "exploration":
+                Globals.tempLogs.push(randomCharacter.name + ' found food!');
+                break;
+            case "combat":
+                randomCharacter.looseHealth(1);
+                break;
+        }
 
         if (Globals.tempLogs.length > 0) {
             this.game.log.start();
-        } else {
-            this.game.goToState(Globals.gameStates.TRAVEL);
         }
+
+        this.game.goToState(Globals.gameStates.TRAVEL);
     }
 
     onEventPageNoBtn(e) {

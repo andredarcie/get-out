@@ -24,6 +24,7 @@ export class TravelManager {
     start() {
         Globals.currentDay++;
         this.showTime();
+        this.game.log.showLogs();
     }
 
     onClickWalk(e) {
@@ -101,13 +102,9 @@ export class TravelManager {
         this.showTravelledDistance();
         this.passOneHour();
 
-        Globals.characters[this.getRandomCharacter()].looseHealth(1);
-
         let allPlayerAreDead = this.characterManager.checkIfAllCharactersAreDead();
         if (allPlayerAreDead) 
             this.game.goToState(Globals.gameStates.GAME_OVER);
-
-        console.log(Globals.logs);
         
         if(Globals.travelledDistance > Globals.distanceToGoal) {
             this.arrivedAtTheGoal();
