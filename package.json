@@ -20,6 +20,9 @@
     "url": "https://github.com/andredarcie/get-out-game/issues"
   },
   "homepage": "https://github.com/andredarcie/get-out-game#readme",
+  "jest": {
+    "collectCoverageFrom" : ["js/**/*.js"]
+  },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
@@ -27,6 +30,7 @@
     "cssnano": "^4.1.7",
     "gh-pages": "^2.0.1",
     "jest": "^24.9.0",
-    "parcel": "^1.12.4"
+    "parcel": "^1.12.4",
+    "typescript": "^3.7.2"
   }
 }

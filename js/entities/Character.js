@@ -10,9 +10,13 @@ export class Character {
         this.sick = sick;
         this.hungry = hungry;
         this.cold = cold;
+        this.maxHealth = health;
     }
 
     looseHealth(healthToLoose) {
+        if (healthToLoose < 0 || healthToLoose > this.maxHealth){
+            throw new Error('Invalid value for healthToLoose');
+        }
 
         if (this.health > 0) {
             this.health -= healthToLoose;
