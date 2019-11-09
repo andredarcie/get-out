@@ -1,4 +1,4 @@
-import { Character } from '../js/entities/Character.js';
+import { Character } from '../src/entities/Character';
 
 test('Character should loose 1 health point', () => {
   let character = new Character('Ethan', 5, 'father', true, false, false);

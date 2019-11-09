@@ -1,17 +1,15 @@
-import { Globals } from '../Globals.js';
+import { Game } from '../Game';
 
 export class CharacterManager {
-
     constructor() {
-
     }
 
     start() {
 
     }
 
-    checkIfAllCharactersAreDead() {
-        let characters = Globals.characters;
+    checkIfAllCharactersAreDead(): boolean {
+        let characters = Game.characters;
 
         return characters.every((character) => character.isDead);
     }
