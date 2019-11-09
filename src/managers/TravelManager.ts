@@ -1,52 +1,63 @@
-import { Globals } from '../Globals.js';
-import { CharacterManager } from './CharacterManager.js';
+import { Game, GameStates } from '../Game';
 
 export class TravelManager {
+    travelPage: Element;
+    travelImage: Element;
+    travelledDistanceField: Element;
+    currentTimeField: Element;
+    progressBar: HTMLElement;
+    walkBtn: Element;
+    campBtn: Element;
+    statsBtn: Element;
+    walking: boolean;
 
-    constructor(game) {
-        this.game = game;
-
+    constructor() {
         this.travelPage = document.querySelector("#travel-page");
         this.travelImage = document.querySelector("#travel-img");
         this.travelledDistanceField = document.querySelector("#travelled-distance");
         this.currentTimeField = document.querySelector("#current-time-field");
-        this.progressBar = document.querySelector("#progress-bar");
+        this.progressBar = document.getElementById("progress-bar");
         this.walkBtn = document.querySelector("#walk-btn");
         this.campBtn = document.querySelector("#camp-btn");
+        this.statsBtn = document.querySelector("#stats-btn");
 
-        this.walkBtn.addEventListener('click', (e) => { this.onClickWalk(e) });
-        this.campBtn.addEventListener('click', (e) => { this.onClickCamp(e) });
-        
-        this.characterManager = new CharacterManager();
+        this.walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
+        this.campBtn.addEventListener('click', () => { this.onClickCampBtn() });
+        this.statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
+
         this.showTravelledDistance();
     }
 
-    start() {
-        Globals.currentDay++;
+    start(): void {
+        Game.currentDay++;
         this.showTime();
-        this.game.log.showLogs();
+        Game.log.showLogs();
     }
 
-    onClickWalk(e) {
+    onClickWalkBtn(): void {
         this.startWalking();
         this.passHours(3);
 
         const foundEvent = this.checkEvent();
 
         if (foundEvent) {
-            this.game.goToState(Globals.gameStates.EVENT);
-        } else if (Globals.tempLogs.length > 0) {
-            this.game.log.showLogs();
+            Game.goToState(GameStates.EVENT);
+        } else if (Game.tempLogs.length > 0) {
+            Game.log.showLogs();
         } else {
-            this.game.log.clearLogs();
+            Game.log.clearLogs();
         }
     }
 
-    onClickCamp(e) {
-        this.game.goToState(Globals.gameStates.CAMP);
+    onClickCampBtn(): void {
+        Game.goToState(GameStates.CAMP);
     }
 
-    passHours(hours) {
+    onClickStatsBtn() {
+        Game.goToState(GameStates.STATS);
+    }
+
+    passHours(hours: number): void {
         for (let i = 0; i < hours; i++) {
 
             if (!this.walking)
@@ -59,8 +70,8 @@ export class TravelManager {
     gotoNextHour() {
         this.walkOneHour();
 
-        if (Globals.hours >= 24 ) {
-            Globals.hours = 0;
+        if (Game.hours >= 24 ) {
+            Game.hours = 0;
             this.gotoNextDay();
         }
         this.showTime();
@@ -75,19 +86,19 @@ export class TravelManager {
     }
 
     gotoNextDay() {
-        Globals.currentDay++;
+        Game.currentDay++;
         this.showTime();
     }
 
     passOneHour() {
-        Globals.hours++;
+        Game.hours++;
         this.showTime();
     }
 
     showTime() {
-        this.currentTimeField.innerHTML = Globals.hours + ':00 - day ' + Globals.currentDay;
+        this.currentTimeField.innerHTML = Game.hours + ':00 - day ' + Game.currentDay;
 
-        if(Globals.hours >= 18 || Globals.hours <= 6) {
+        if(Game.hours >= 18 || Game.hours <= 6) {
             this.currentTimeField.innerHTML += ' - night';
         } else {
             this.currentTimeField.innerHTML += ' - daylight';
@@ -96,34 +107,34 @@ export class TravelManager {
 
     walkOneHour() {
         
-        Globals.travelledDistance += 2;
+        Game.travelledDistance += 2;
         this.increaseProgressBar();
 
         this.showTravelledDistance();
         this.passOneHour();
 
-        let allPlayerAreDead = this.characterManager.checkIfAllCharactersAreDead();
+        let allPlayerAreDead = Game.characterManager.checkIfAllCharactersAreDead();
         if (allPlayerAreDead) 
-            this.game.goToState(Globals.gameStates.GAME_OVER);
+            Game.goToState(GameStates.GAME_OVER);
         
-        if(Globals.travelledDistance > Globals.distanceToGoal) {
+        if(Game.travelledDistance > Game.distanceToGoal) {
             this.arrivedAtTheGoal();
         }
     }
 
     increaseProgressBar() {
         let progressBarFullWidth = 321;
-        let unity = progressBarFullWidth / Globals.distanceToGoal;
-        this.progressBar.style.width = Globals.travelledDistance * unity + 'px';
+        let unity = progressBarFullWidth / Game.distanceToGoal;
+        this.progressBar.style.width = Game.travelledDistance * unity + 'px';
     }
 
     getRandomCharacter() {
-        let x = Math.floor(Math.random() * (Globals.characters.length));
+        let x = Math.floor(Math.random() * (Game.characters.length));
         return x;
     }
 
     showTravelledDistance() {
-        this.travelledDistanceField.innerHTML = 'Travelled distance: ' + Globals.travelledDistance + ' miles';
+        this.travelledDistanceField.innerHTML = 'Travelled distance: ' + Game.travelledDistance + ' miles';
     }
 
     startWalking() {
@@ -136,6 +147,6 @@ export class TravelManager {
 
     arrivedAtTheGoal() {
         this.stopWalking();
-        this.game.goToState(Globals.gameStates.GAME_OVER);
+        Game.goToState(GameStates.GAME_OVER);
     }
 }

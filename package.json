@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/andredarcie/get-out-game#readme",
   "jest": {
-    "collectCoverageFrom" : ["js/**/*.js"]
+    "collectCoverageFrom": [
+      "js/**/*.js"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -32,5 +34,8 @@
     "jest": "^24.9.0",
     "parcel": "^1.12.4",
     "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.7.2"
   }
 }
