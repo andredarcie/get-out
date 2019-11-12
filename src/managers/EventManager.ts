@@ -26,13 +26,26 @@ export class EventManager {
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this.currentEvent = events[randomIndex];
+        this.showWaitingMessage();
+    }
 
-        this.showEvent();
+    showWaitingMessage(): void {
+        this.titleElement.style.display = 'none';
+        this.descriptionElement.innerHTML = 'Something happened!'
+        this.imageElement.style.display = 'none';
+        this.yesButton.style.display = 'none';
+        this.noButton.style.display = 'none';
+
+        setTimeout(() => this.showEvent(), 1000);
     }
 
     showEvent(): void {
+        this.titleElement.style.display = 'block';
         this.titleElement.innerHTML = this.currentEvent.name;
         this.descriptionElement.innerHTML = this.currentEvent.description;
+        this.imageElement.style.display = 'block';
+        this.yesButton.style.display = 'inline-block';
+        this.noButton.style.display = 'inline-block';
     }
 
     onEventPageYesBtn(): void {
