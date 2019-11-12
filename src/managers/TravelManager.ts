@@ -31,7 +31,6 @@ export class TravelManager {
     start(): void {
         Game.currentDay++;
         this.showTime();
-        Game.log.showLogs();
     }
 
     onClickWalkBtn(): void {
@@ -43,7 +42,7 @@ export class TravelManager {
         if (foundEvent) {
             Game.goToState(GameStates.EVENT);
         } else if (Game.tempLogs.length > 0) {
-            Game.log.showLogs();
+            Game.goToState(GameStates.LOG);
         } else {
             Game.log.clearLogs();
         }

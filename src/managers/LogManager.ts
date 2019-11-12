@@ -1,10 +1,14 @@
-import { Game } from '../Game';
+import { Game, GameStates } from '../Game';
 
 export class LogManager {
     logList: Element;
+    travelBtn: Element;
 
     constructor() {
         this.logList = document.querySelector("#log-list");
+        
+        this.travelBtn = document.querySelector("#log-back-character-btn");
+        this.travelBtn.addEventListener('click', () => { this.onClickTravel() });
     }
 
     start(): void {
@@ -12,12 +16,13 @@ export class LogManager {
     }
 
     showLogs(): void {
-        if(Game.tempLogs.length <= 0) return;
+        if(Game.tempLogs.length <= 0) 
+            throw new Error('No logs found');
 
-        let logs = "";
+        let logs = '';
 
-        for (var i = 0; i < Game.tempLogs.length; i++) {
-            logs += "<li>" + Game.tempLogs[i] + "</li>";
+        for (let i = 0; i < Game.tempLogs.length; i++) {
+            logs += '<li>' + Game.tempLogs[i] + '</li>';
         }
 
         Game.logs = Game.tempLogs;
@@ -32,5 +37,9 @@ export class LogManager {
 
     log(text: string): void {
         Game.tempLogs.push(text);
+    }
+
+    onClickTravel() {
+        Game.goToState(GameStates.TRAVEL);
     }
 }

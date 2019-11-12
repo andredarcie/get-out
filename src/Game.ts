@@ -27,6 +27,7 @@ export class Game {
     static tempLogs: string[] = [];
     static logs: string[] = [];
     static travelPage: HTMLElement;
+    static logPage: HTMLElement;
     static campPage: HTMLElement;
     static statsPage: HTMLElement;
     static eventPage: HTMLElement;
@@ -40,11 +41,12 @@ export class Game {
     static characterManager: CharacterManager;
 
     constructor() {
-        Game.travelPage = document.getElementById("travel-page"),
-        Game.campPage = document.getElementById("camp-page"),
-        Game.statsPage = document.getElementById("stats-page"),
-        Game.eventPage = document.getElementById("event-page"),
-        Game.gameOverPage = document.getElementById("game-over-page")
+        Game.travelPage = document.getElementById("travel-page");
+        Game.logPage = document.getElementById("log-page");
+        Game.campPage = document.getElementById("camp-page");
+        Game.statsPage = document.getElementById("stats-page");
+        Game.eventPage = document.getElementById("event-page");
+        Game.gameOverPage = document.getElementById("game-over-page");
 
         Game.camp = new CampManager();
         Game.events = new EventManager();
@@ -84,6 +86,7 @@ export class Game {
 
     static hideAllPages() {
         this.hidePage(Game.travelPage);
+        this.hidePage(Game.logPage);
         this.hidePage(Game.campPage);
         this.hidePage(Game.statsPage);
         this.hidePage(Game.eventPage);
@@ -111,6 +114,7 @@ export class Game {
                 Game.events.start();
             break;
             case GameStates.LOG:
+                this.showPage(Game.logPage);
                 Game.log.start();
             break;
             case GameStates.GAME_OVER:

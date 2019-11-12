@@ -76,16 +76,16 @@ export class EventManager {
         }
 
         if (Game.tempLogs.length > 0) {
-            Game.log.start();
+            Game.goToState(GameStates.LOG);
+        } else {
+            Game.goToState(GameStates.TRAVEL);
         }
-
-        Game.goToState(GameStates.TRAVEL);
     }
 
     onEventPageNoBtn(): void {
 
         if (Game.tempLogs.length > 0) {
-            Game.log.start();
+            Game.goToState(GameStates.LOG);
         } else {
             Game.goToState(GameStates.TRAVEL);
         }
