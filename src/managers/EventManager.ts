@@ -44,8 +44,22 @@ export class EventManager {
         this.titleElement.innerHTML = this.currentEvent.name;
         this.descriptionElement.innerHTML = this.currentEvent.description;
         this.imageElement.style.display = 'block';
+        this.showButtons();
+    }
+
+    showButtons(): void {
         this.yesButton.style.display = 'inline-block';
         this.noButton.style.display = 'inline-block';
+
+        switch (this.currentEvent.type) {
+            case EventType.Exploration: 
+                this.yesButton.innerHTML = 'Explore';
+                this.noButton.innerHTML = 'Ignore';
+                break;
+            case EventType.Combat:
+                this.yesButton.innerHTML = 'Fight';
+                this.noButton.innerHTML = 'Run away';
+        }
     }
 
     onEventPageYesBtn(): void {
