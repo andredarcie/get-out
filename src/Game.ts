@@ -4,8 +4,10 @@ import { GameOverManager } from './managers/GameOverManager';
 import { StatsManager } from './managers/StatsManager';
 import { TravelManager } from './managers/TravelManager';
 import { LogManager } from './managers/LogManager';
+import { BagManager } from './managers/BagManager';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
+import { Item } from './entities/Item';
 
 export enum GameStates {
     TRAVEL,
@@ -13,7 +15,8 @@ export enum GameStates {
     STATS,
     EVENT,
     GAME_OVER,
-    LOG
+    LOG,
+    BAG
 }
 
 export class Game {
@@ -32,12 +35,14 @@ export class Game {
     static statsPage: HTMLElement;
     static eventPage: HTMLElement;
     static gameOverPage: HTMLElement;
+    static bagPage: HTMLElement;
     static camp: CampManager;
     static events: EventManager;
     static gameOver: GameOverManager;
     static stats: StatsManager;
     static travel: TravelManager;
     static log: LogManager;
+    static bag: BagManager;
     static characterManager: CharacterManager;
 
     constructor() {
@@ -47,6 +52,7 @@ export class Game {
         Game.statsPage = document.getElementById("stats-page");
         Game.eventPage = document.getElementById("event-page");
         Game.gameOverPage = document.getElementById("game-over-page");
+        Game.bagPage = document.getElementById("bag-page");
 
         Game.camp = new CampManager();
         Game.events = new EventManager();
@@ -54,12 +60,14 @@ export class Game {
         Game.stats = new StatsManager();
         Game.travel = new TravelManager();
         Game.log = new LogManager();
+        Game.bag = new BagManager();
         Game.characterManager = new CharacterManager();
     }
 
     start() {
         Game.createAllCharacters();
         Game.hideAllPages();
+        Game.addItemsToBag();
         Game.showPage(Game.campPage);
     }
 
@@ -69,6 +77,14 @@ export class Game {
         Game.characters.push(new Character('Michael', 5, 'son', true, true, true));
         Game.characters.push(new Character('Sophia', 5, 'daughter', false, false, false));
         Game.characters.push(new Character('Emma', 5, 'grandmother', true, true, false));
+    }
+
+    static addItemsToBag() {
+        Game.bag.putItem(new Item("Cigar", ""));
+        Game.bag.putItem(new Item("Peanuts", ""));
+        Game.bag.putItem(new Item("Bottle (Unsafe Water)", ""));
+        Game.bag.putItem(new Item("Soda", ""));
+        Game.bag.putItem(new Item("Milk (Radioactive)", ""));
     }
 
     static goToState(state: GameStates) {
@@ -91,6 +107,7 @@ export class Game {
         this.hidePage(Game.statsPage);
         this.hidePage(Game.eventPage);
         this.hidePage(Game.gameOverPage);
+        this.hidePage(Game.bagPage);
     }
 
     static setState() {
@@ -120,6 +137,10 @@ export class Game {
             case GameStates.GAME_OVER:
                 this.showPage(Game.gameOverPage);
                 Game.gameOver.start();
+            break;
+            case GameStates.BAG:
+                this.showPage(Game.bagPage);
+                Game.bag.start();
             break;
         }
     }
