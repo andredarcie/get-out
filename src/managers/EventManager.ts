@@ -1,5 +1,6 @@
 import { Event, EventType } from '../entities/Event';
 import { Game, GameStates } from '../Game';
+import { Item } from '../entities/Item';
 
 export class EventManager {
     titleElement: HTMLElement;
@@ -21,7 +22,7 @@ export class EventManager {
     }
 
     start(): void {
-        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration), 
+        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration, [new Item('Food', '', 1)]), 
                       new Event("Wild Wolf Appeared", "Fight with the wolf?", EventType.Combat)];
         let randomIndex = this.getRandomArbitrary(events.length);
 
@@ -73,6 +74,12 @@ export class EventManager {
             case EventType.Combat:
                 randomCharacter.looseHealth(1);
                 break;
+        }
+
+        if(this.currentEvent.willGiveItems()) {
+            for (let item of this.currentEvent.items) {
+                Game.bag.putItem(item);
+            }       
         }
 
         if (Game.tempLogs.length > 0) {

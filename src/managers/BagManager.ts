@@ -53,7 +53,13 @@ export class BagManager {
     }
 
     putItem(item: Item): void {
-        this.items.push(item);
+        let existingItemIndex = this.items.findIndex(item => item.getName() == item.getName());
+
+        if (existingItemIndex >= 0) {
+            this.items[existingItemIndex].increaseAmount();
+        } else {
+            this.items.push(item);
+        }
     }
 
     showCharacters() {

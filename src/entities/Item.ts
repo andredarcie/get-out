@@ -28,4 +28,8 @@ export class Item {
     decreaseAmount(): void {
         this.amount--;
     }
+
+    increaseAmount(): void {
+        this.amount++;
+    }
 }
