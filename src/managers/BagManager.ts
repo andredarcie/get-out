@@ -45,7 +45,7 @@ export class BagManager {
             const li = document.createElement("li");
             const button = document.createElement("input");
             button.type = "button";
-            button.value = this.items[i].name;
+            button.value = this.items[i].getNameWithAmount();
             button.addEventListener('click', () => this.selectItem(this.items[i]) );
             li.appendChild(button);
             this.itemListElement.appendChild(li);
@@ -71,13 +71,18 @@ export class BagManager {
     selectItem(selectedItem: Item) {
         this.selectedItem = selectedItem;
         this.itemListElement.innerHTML = '';
-        this.selectedItemElement.innerHTML = 'Give ' + this.selectedItem.name + ' to';
+        this.selectedItemElement.innerHTML = 'Give ' + this.selectedItem.getName() + ' to';
         this.showSelectedItem();
         this.showCharacters();
     }
 
     selectCharacter(i: number) {
-        this.removeItem(this.selectedItem);
+        if (this.selectedItem.getAmount() > 1) {
+            this.selectedItem.decreaseAmount();
+        } else {
+            this.removeItem(this.selectedItem);
+        }
+
         this.itemListElement.innerHTML = '';
         this.selectedItemElement.innerHTML = '';
         this.hideSelectedItem();

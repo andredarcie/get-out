@@ -80,11 +80,7 @@ export class Game {
     }
 
     static addItemsToBag() {
-        Game.bag.putItem(new Item("Cigar", ""));
-        Game.bag.putItem(new Item("Peanuts", ""));
-        Game.bag.putItem(new Item("Bottle (Unsafe Water)", ""));
-        Game.bag.putItem(new Item("Soda", ""));
-        Game.bag.putItem(new Item("Milk (Radioactive)", ""));
+        Game.bag.putItem(new Item("Food", "", 2));
     }
 
     static goToState(state: GameStates) {
