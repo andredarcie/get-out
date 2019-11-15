@@ -35,7 +35,7 @@ export class TravelManager {
 
     onClickWalkBtn(): void {
         this.startWalking();
-        this.passHours(3);
+        this.passHours(1);
 
         const foundEvent = this.checkEvent();
 
@@ -68,6 +68,7 @@ export class TravelManager {
 
     gotoNextHour() {
         this.walkOneHour();
+        Game.characterManager.increaseHungryOfAllCharacters();
 
         if (Game.hours >= 24 ) {
             Game.hours = 0;

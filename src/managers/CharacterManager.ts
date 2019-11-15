@@ -13,4 +13,11 @@ export class CharacterManager {
 
         return characters.every((character) => character.isDead);
     }
+
+    increaseHungryOfAllCharacters() {
+        let characters = Game.characters;
+        for (let character of characters) {
+            character.increaseHungry();
+        }
+    }
 }

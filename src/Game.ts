@@ -72,11 +72,11 @@ export class Game {
     }
 
     static createAllCharacters() {
-        Game.characters.push(new Character('Ethan', 5, 'father', true, false, false));
-        Game.characters.push(new Character('Olivia', 5, 'mother', false, true, true));
-        Game.characters.push(new Character('Michael', 5, 'son', true, true, true));
-        Game.characters.push(new Character('Sophia', 5, 'daughter', false, false, false));
-        Game.characters.push(new Character('Emma', 5, 'grandmother', true, true, false));
+        Game.characters.push(new Character('Ethan', 5, 'father', true, 0, false));
+        Game.characters.push(new Character('Olivia', 5, 'mother', false, 0, true));
+        Game.characters.push(new Character('Michael', 5, 'son', true, 0, true));
+        Game.characters.push(new Character('Sophia', 5, 'daughter', false, 0, false));
+        Game.characters.push(new Character('Emma', 5, 'grandmother', true, 0, false));
     }
 
     static addItemsToBag() {

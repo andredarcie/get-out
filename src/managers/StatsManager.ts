@@ -53,12 +53,14 @@ export class StatsManager {
         for (let i = 0; i < characters.length; i++){
             let character = characters[i];
             this.charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
-            this.charactersList[i].healthField.innerHTML = character.isDead
-                                                        ? 'Is Dead'
-                                                        : 'Health: ' + character.health;
-            this.charactersList[i].atributesField.innerHTML = (character.sick ? ' [SICK] ' : '') +
-                                                              (character.hungry ? ' [HUNGRY] ' : '') +
-                                                              (character.cold ? ' [COLD] ' : '');
+
+            if (character.isDead) {
+                this.charactersList[i].healthField.innerHTML = 'Is Dead';
+                this.charactersList[i].atributesField.style.display = 'none';
+            } else {
+                this.charactersList[i].healthField.innerHTML = 'Health: ' + character.health;
+                this.charactersList[i].atributesField.innerHTML = character.getHungry();
+            }
         }
     }
 

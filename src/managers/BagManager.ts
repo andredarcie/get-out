@@ -68,7 +68,7 @@ export class BagManager {
             const button = document.createElement("input");
             button.type = "button";
             button.value = Game.characters[i].name;
-            button.addEventListener('click', () => this.selectCharacter(i) );
+            button.addEventListener('click', () => this.useItem(i) );
             li.appendChild(button);
             this.itemListElement.appendChild(li);
         }
@@ -82,7 +82,7 @@ export class BagManager {
         this.showCharacters();
     }
 
-    selectCharacter(i: number) {
+    useItem(i: number) {
         if (this.selectedItem.getAmount() > 1) {
             this.selectedItem.decreaseAmount();
         } else {
@@ -93,7 +93,7 @@ export class BagManager {
         this.selectedItemElement.innerHTML = '';
         this.hideSelectedItem();
         this.showItems();
-        Game.characters[i].looseHealth(1);
+        Game.characters[i].decreaseHungry(12);
     }
 
     removeItem(itemToRemove: Item): void {
