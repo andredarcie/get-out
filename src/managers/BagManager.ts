@@ -97,6 +97,6 @@ export class BagManager {
     }
 
     removeItem(itemToRemove: Item): void {
-        this.items = this.items.filter(item => item.name !== itemToRemove.name);
+        this.items = this.items.filter(item => item.getName() !== itemToRemove.getName());
     }
 }
