@@ -1,24 +1,24 @@
 export class Item {
-    private name: string;
-    private description: string;
-    private amount: number;
+    private _name: string;
+    private _description: string;
+    private _amount: number;
 
     constructor(name: string, description: string, amount: number) {
-        this.name = name;
-        this.description = description;
-        this.amount = amount;
+        this._name = name;
+        this._description = description;
+        this._amount = amount;
     }
 
-    getName(): string {
-        return this.name;
+    get name(): string {
+        return this._name;
     }
 
-    getDescription(): string {
-        return this.description;
+    get description(): string {
+        return this._description;
     }
 
-    getAmount(): number {
-        return this.amount;
+    get amount(): number {
+        return this._amount;
     }
 
     getNameWithAmount(): string {
@@ -26,10 +26,10 @@ export class Item {
     }
 
     decreaseAmount(): void {
-        this.amount--;
+        this._amount--;
     }
 
     increaseAmount(): void {
-        this.amount++;
+        this._amount++;
     }
 }

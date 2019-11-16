@@ -1,10 +1,10 @@
 import { Game } from '../Game';
 
 export class GameOverManager {
-    gameOverMessage: Element;
+    private _gameOverMessage: Element;
 
     constructor() {
-        this.gameOverMessage = document.querySelector("#game-over-message");
+        this._gameOverMessage = document.querySelector("#game-over-message");
     }
 
     start(): void {
@@ -22,6 +22,6 @@ export class GameOverManager {
     }
 
     setGameOverMessage(message: string): void {
-        this.gameOverMessage.innerHTML = message;
+        this._gameOverMessage.innerHTML = message;
     }
 }

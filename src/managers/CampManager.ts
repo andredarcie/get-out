@@ -1,17 +1,17 @@
 import { Game, GameStates } from '../Game';
 
 export class CampManager {
-    campImg: Element;
-    travelBtn: Element;
-    bagBtn: Element;
+    private _campImg: Element;
+    private _travelBtn: Element;
+    private _bagBtn: Element;
     
     constructor() {
-        this.campImg = document.querySelector('#camp-img');
-        this.travelBtn = document.querySelector('#travel-btn');
-        this.bagBtn = document.querySelector('#bag-btn');
+        this._campImg = document.querySelector('#camp-img');
+        this._travelBtn = document.querySelector('#travel-btn');
+        this._bagBtn = document.querySelector('#bag-btn');
 
-        this.travelBtn.addEventListener('click', () => { this.onClickTravel() });
-        this.bagBtn.addEventListener('click', () => { this.onClickBag() });
+        this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
+        this._bagBtn.addEventListener('click', () => { this.onClickBag() });
     }
 
     start() {

@@ -3,22 +3,22 @@ import { Game, GameStates } from '../Game';
 import { Item } from '../entities/Item';
 
 export class EventManager {
-    titleElement: HTMLElement;
-    descriptionElement: HTMLElement;
-    imageElement: HTMLElement;
-    yesButton: HTMLElement;
-    noButton: HTMLElement;
-    currentEvent: Event;
+    private _titleElement: HTMLElement;
+    private _descriptionElement: HTMLElement;
+    private _imageElement: HTMLElement;
+    private _yesButton: HTMLElement;
+    private _noButton: HTMLElement;
+    private _currentEvent: Event;
 
     constructor() {
-        this.titleElement = document.getElementById("event-page-title");
-        this.descriptionElement = document.getElementById("event-page-description");
-        this.imageElement = document.getElementById("event-page-image");
-        this.yesButton = document.getElementById("event-page-yes-btn");
-        this.noButton = document.getElementById("event-page-no-btn");
+        this._titleElement = document.getElementById("event-page-title");
+        this._descriptionElement = document.getElementById("event-page-description");
+        this._imageElement = document.getElementById("event-page-image");
+        this._yesButton = document.getElementById("event-page-yes-btn");
+        this._noButton = document.getElementById("event-page-no-btn");
 
-        this.yesButton.addEventListener('click', () => { this.onEventPageYesBtn() });
-        this.noButton.addEventListener('click', () => { this.onEventPageNoBtn() });
+        this._yesButton.addEventListener('click', () => { this.onEventPageYesBtn() });
+        this._noButton.addEventListener('click', () => { this.onEventPageNoBtn() });
     }
 
     start(): void {
@@ -26,40 +26,40 @@ export class EventManager {
                       new Event("Wild Wolf Appeared", "Fight with the wolf?", EventType.Combat)];
         let randomIndex = this.getRandomArbitrary(events.length);
 
-        this.currentEvent = events[randomIndex];
+        this._currentEvent = events[randomIndex];
         this.showWaitingMessage();
     }
 
     showWaitingMessage(): void {
-        this.titleElement.style.display = 'none';
-        this.descriptionElement.innerHTML = 'Something happened!'
-        this.imageElement.style.display = 'none';
-        this.yesButton.style.display = 'none';
-        this.noButton.style.display = 'none';
+        this._titleElement.style.display = 'none';
+        this._descriptionElement.innerHTML = 'Something happened!'
+        this._imageElement.style.display = 'none';
+        this._yesButton.style.display = 'none';
+        this._noButton.style.display = 'none';
 
         setTimeout(() => this.showEvent(), 1000);
     }
 
     showEvent(): void {
-        this.titleElement.style.display = 'block';
-        this.titleElement.innerHTML = this.currentEvent.name;
-        this.descriptionElement.innerHTML = this.currentEvent.description;
-        this.imageElement.style.display = 'block';
+        this._titleElement.style.display = 'block';
+        this._titleElement.innerHTML = this._currentEvent.name;
+        this._descriptionElement.innerHTML = this._currentEvent.description;
+        this._imageElement.style.display = 'block';
         this.showButtons();
     }
 
     showButtons(): void {
-        this.yesButton.style.display = 'inline-block';
-        this.noButton.style.display = 'inline-block';
+        this._yesButton.style.display = 'inline-block';
+        this._noButton.style.display = 'inline-block';
 
-        switch (this.currentEvent.type) {
+        switch (this._currentEvent.type) {
             case EventType.Exploration: 
-                this.yesButton.innerHTML = 'Explore';
-                this.noButton.innerHTML = 'Ignore';
+                this._yesButton.innerHTML = 'Explore';
+                this._noButton.innerHTML = 'Ignore';
                 break;
             case EventType.Combat:
-                this.yesButton.innerHTML = 'Fight';
-                this.noButton.innerHTML = 'Run away';
+                this._yesButton.innerHTML = 'Fight';
+                this._noButton.innerHTML = 'Run away';
         }
     }
 
@@ -67,7 +67,7 @@ export class EventManager {
         let randomCharacterIndex = this.getRandomArbitrary(Game.characters.length);
         let randomCharacter = Game.characters[randomCharacterIndex];
 
-        switch (this.currentEvent.type) {
+        switch (this._currentEvent.type) {
             case EventType.Exploration:
                 Game.tempLogs.push(randomCharacter.name + ' found food!');
                 break;
@@ -76,8 +76,8 @@ export class EventManager {
                 break;
         }
 
-        if(this.currentEvent.willGiveItems()) {
-            for (let item of this.currentEvent.items) {
+        if(this._currentEvent.willGiveItems()) {
+            for (let item of this._currentEvent.items) {
                 Game.bag.putItem(item);
             }       
         }

@@ -2,18 +2,18 @@ import { Game, GameStates } from '../Game';
 import { Item } from '../entities/Item';
 
 export class BagManager {
-    items: Item[] = [];
-    itemListElement: Element;
-    selectedItemElement: any;
-    selectedItem: Item;
-    bagCloseBtn: Element;
+    private _items: Item[] = [];
+    private _itemListElement: Element;
+    private _selectedItemElement: any;
+    private _selectedItem: Item;
+    private _bagCloseBtn: Element;
 
     constructor() {
-        this.itemListElement = document.querySelector('#bag-item-list');
-        this.selectedItemElement = document.getElementById('bag-selected-item');
-        this.bagCloseBtn = document.querySelector('#bag-close-btn');
+        this._itemListElement = document.querySelector('#bag-item-list');
+        this._selectedItemElement = document.getElementById('bag-selected-item');
+        this._bagCloseBtn = document.querySelector('#bag-close-btn');
 
-        this.bagCloseBtn.addEventListener('click', () => { this.onClickBagClose() });
+        this._bagCloseBtn.addEventListener('click', () => { this.onClickBagClose() });
     }
 
     start() {
@@ -26,39 +26,39 @@ export class BagManager {
     }
 
     hideSelectedItem() {
-        this.selectedItemElement.style.display = 'none';
+        this._selectedItemElement.style.display = 'none';
     }
 
     showSelectedItem() {
-        this.selectedItemElement.style.display = 'block';
+        this._selectedItemElement.style.display = 'block';
     }
 
     showItems() {
-        this.itemListElement.innerHTML = '';
+        this._itemListElement.innerHTML = '';
 
-        if (this.items.length == 0) {
-            this.itemListElement.innerHTML = 'Empty';
+        if (this._items.length == 0) {
+            this._itemListElement.innerHTML = 'Empty';
             return;
         }
 
-        for (let i = 0; i < this.items.length; i++) {
+        for (let i = 0; i < this._items.length; i++) {
             const li = document.createElement("li");
             const button = document.createElement("input");
             button.type = "button";
-            button.value = this.items[i].getNameWithAmount();
-            button.addEventListener('click', () => this.selectItem(this.items[i]) );
+            button.value = this._items[i].getNameWithAmount();
+            button.addEventListener('click', () => this.selectItem(this._items[i]) );
             li.appendChild(button);
-            this.itemListElement.appendChild(li);
+            this._itemListElement.appendChild(li);
         }
     }
 
     putItem(item: Item): void {
-        let existingItemIndex = this.items.findIndex(item => item.getName() == item.getName());
+        let existingItemIndex = this._items.findIndex(item => item.name == item.name);
 
         if (existingItemIndex >= 0) {
-            this.items[existingItemIndex].increaseAmount();
+            this._items[existingItemIndex].increaseAmount();
         } else {
-            this.items.push(item);
+            this._items.push(item);
         }
     }
 
@@ -70,33 +70,33 @@ export class BagManager {
             button.value = Game.characters[i].name;
             button.addEventListener('click', () => this.useItem(i) );
             li.appendChild(button);
-            this.itemListElement.appendChild(li);
+            this._itemListElement.appendChild(li);
         }
     }
 
     selectItem(selectedItem: Item) {
-        this.selectedItem = selectedItem;
-        this.itemListElement.innerHTML = '';
-        this.selectedItemElement.innerHTML = 'Give ' + this.selectedItem.getName() + ' to';
+        this._selectedItem = selectedItem;
+        this._itemListElement.innerHTML = '';
+        this._selectedItemElement.innerHTML = 'Give ' + this._selectedItem.name + ' to';
         this.showSelectedItem();
         this.showCharacters();
     }
 
-    useItem(i: number) {
-        if (this.selectedItem.getAmount() > 1) {
-            this.selectedItem.decreaseAmount();
+    useItem(index: number) {
+        if (this._selectedItem.amount > 1) {
+            this._selectedItem.decreaseAmount();
         } else {
-            this.removeItem(this.selectedItem);
+            this.removeItem(this._selectedItem);
         }
 
-        this.itemListElement.innerHTML = '';
-        this.selectedItemElement.innerHTML = '';
+        this._itemListElement.innerHTML = '';
+        this._selectedItemElement.innerHTML = '';
         this.hideSelectedItem();
         this.showItems();
-        Game.characters[i].decreaseHungry(12);
+        Game.characters[index].decreaseHungry(12);
     }
 
     removeItem(itemToRemove: Item): void {
-        this.items = this.items.filter(item => item.getName() !== itemToRemove.getName());
+        this._items = this._items.filter(item => item.name !== itemToRemove.name);
     }
 }

@@ -1,29 +1,29 @@
 import { Game, GameStates } from '../Game';
 
 export class TravelManager {
-    travelPage: Element;
-    travelImage: Element;
-    travelledDistanceField: Element;
-    currentTimeField: Element;
-    progressBar: HTMLElement;
-    walkBtn: Element;
-    campBtn: Element;
-    statsBtn: Element;
-    walking: boolean;
+    private _travelPage: Element;
+    private _travelImage: Element;
+    private _travelledDistanceField: Element;
+    private _currentTimeField: Element;
+    private _progressBar: HTMLElement;
+    private _walkBtn: Element;
+    private _campBtn: Element;
+    private _statsBtn: Element;
+    private _walking: boolean;
 
     constructor() {
-        this.travelPage = document.querySelector("#travel-page");
-        this.travelImage = document.querySelector("#travel-img");
-        this.travelledDistanceField = document.querySelector("#travelled-distance");
-        this.currentTimeField = document.querySelector("#current-time-field");
-        this.progressBar = document.getElementById("progress-bar");
-        this.walkBtn = document.querySelector("#walk-btn");
-        this.campBtn = document.querySelector("#camp-btn");
-        this.statsBtn = document.querySelector("#stats-btn");
+        this._travelPage = document.querySelector("#travel-page");
+        this._travelImage = document.querySelector("#travel-img");
+        this._travelledDistanceField = document.querySelector("#travelled-distance");
+        this._currentTimeField = document.querySelector("#current-time-field");
+        this._progressBar = document.getElementById("progress-bar");
+        this._walkBtn = document.querySelector("#walk-btn");
+        this._campBtn = document.querySelector("#camp-btn");
+        this._statsBtn = document.querySelector("#stats-btn");
 
-        this.walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
-        this.campBtn.addEventListener('click', () => { this.onClickCampBtn() });
-        this.statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
+        this._walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
+        this._campBtn.addEventListener('click', () => { this.onClickCampBtn() });
+        this._statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
 
         this.showTravelledDistance();
     }
@@ -59,7 +59,7 @@ export class TravelManager {
     passHours(hours: number): void {
         for (let i = 0; i < hours; i++) {
 
-            if (!this.walking)
+            if (!this._walking)
                 break;
 
             this.gotoNextHour();
@@ -96,12 +96,12 @@ export class TravelManager {
     }
 
     showTime() {
-        this.currentTimeField.innerHTML = Game.hours + ':00 - day ' + Game.currentDay;
+        this._currentTimeField.innerHTML = Game.hours + ':00 - day ' + Game.currentDay;
 
         if(Game.hours >= 18 || Game.hours <= 6) {
-            this.currentTimeField.innerHTML += ' - night';
+            this._currentTimeField.innerHTML += ' - night';
         } else {
-            this.currentTimeField.innerHTML += ' - daylight';
+            this._currentTimeField.innerHTML += ' - daylight';
         }
     }
 
@@ -125,7 +125,7 @@ export class TravelManager {
     increaseProgressBar() {
         let progressBarFullWidth = 321;
         let unity = progressBarFullWidth / Game.distanceToGoal;
-        this.progressBar.style.width = Game.travelledDistance * unity + 'px';
+        this._progressBar.style.width = Game.travelledDistance * unity + 'px';
     }
 
     getRandomCharacter() {
@@ -134,15 +134,15 @@ export class TravelManager {
     }
 
     showTravelledDistance() {
-        this.travelledDistanceField.innerHTML = 'Travelled distance: ' + Game.travelledDistance + ' miles';
+        this._travelledDistanceField.innerHTML = 'Travelled distance: ' + Game.travelledDistance + ' miles';
     }
 
     startWalking() {
-        this.walking = true;
+        this._walking = true;
     }
 
     stopWalking() {
-        this.walking = false;
+        this._walking = false;
     }
 
     arrivedAtTheGoal() {
