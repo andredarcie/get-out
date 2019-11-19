@@ -41,7 +41,7 @@ export class Character {
     increaseHungry() {
         if (this._hungry >= this._limitForHungry) {
             if (!this._isDead) {
-                Game.tempLogs.push(this._name + ' is starving to death');
+                Game.log.addTempLog(this._name + ' is starving to death');
             }
             this.looseHealth(1);
         } else {
@@ -81,14 +81,14 @@ export class Character {
                 this._health = 0;
 
                 if (this._hungry >= this._limitForHungry) {
-                    Game.tempLogs.push(this._name + ' starved to death at day ' + Game.currentDay);
+                    Game.log.addTempLog(this._name + ' starved to death at day ' + Game.currentDay);
                 } else {
-                    Game.tempLogs.push(this._name + ' died at day ' + Game.currentDay);
+                    Game.log.addTempLog(this._name + ' died at day ' + Game.currentDay);
                 }
                 
                 this._isDead = true;
             } else {
-                Game.tempLogs.push(this._name + ' lost -' + healthToLoose + ' health');
+                Game.log.addTempLog(this._name + ' lost -' + healthToLoose + ' health');
             }
         }
     }

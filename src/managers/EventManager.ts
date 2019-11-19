@@ -69,7 +69,7 @@ export class EventManager {
 
         switch (this._currentEvent.type) {
             case EventType.Exploration:
-                Game.tempLogs.push(randomCharacter.name + ' found food!');
+                Game.log.addTempLog(randomCharacter.name + ' found food!');
                 break;
             case EventType.Combat:
                 randomCharacter.looseHealth(1);
@@ -78,11 +78,11 @@ export class EventManager {
 
         if(this._currentEvent.willGiveItems()) {
             for (let item of this._currentEvent.items) {
-                Game.bag.putItem(item);
-            }       
+                Game.bagManager.putItem(item);
+            }
         }
 
-        if (Game.tempLogs.length > 0) {
+        if (Game.log.isThereAnyTemporaryLog()) {
             Game.goToState(GameStates.LOG);
         } else {
             Game.goToState(GameStates.TRAVEL);
@@ -91,7 +91,7 @@ export class EventManager {
 
     onEventPageNoBtn(): void {
 
-        if (Game.tempLogs.length > 0) {
+        if (Game.log.isThereAnyTemporaryLog()) {
             Game.goToState(GameStates.LOG);
         } else {
             Game.goToState(GameStates.TRAVEL);

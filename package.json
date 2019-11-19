@@ -28,6 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
+    "@babel/preset-typescript": "^7.7.2",
     "@types/jest": "^24.0.22",
     "babel-jest": "^24.9.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -38,7 +39,5 @@
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.2"
   },
-  "dependencies": {
-    "@babel/preset-typescript": "^7.7.2"
-  }
+  "dependencies": {}
 }

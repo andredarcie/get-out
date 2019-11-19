@@ -29,7 +29,7 @@ export class TravelManager {
     }
 
     start(): void {
-        Game.currentDay++;
+        Game.addDaysToCurrentDay(1);
         this.showTime();
     }
 
@@ -41,7 +41,7 @@ export class TravelManager {
 
         if (foundEvent) {
             Game.goToState(GameStates.EVENT);
-        } else if (Game.tempLogs.length > 0) {
+        } else if (Game.log.isThereAnyTemporaryLog()) {
             Game.goToState(GameStates.LOG);
         } else {
             Game.log.clearLogs();
@@ -86,7 +86,7 @@ export class TravelManager {
     }
 
     gotoNextDay() {
-        Game.currentDay++;
+        Game.addDaysToCurrentDay(1);
         this.showTime();
     }
 
@@ -107,7 +107,7 @@ export class TravelManager {
 
     walkOneHour() {
         
-        Game.travelledDistance += 2;
+        Game.addDistanceToTravelledDistance(2);
         this.increaseProgressBar();
 
         this.showTravelledDistance();

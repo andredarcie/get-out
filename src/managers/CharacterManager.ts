@@ -20,4 +20,8 @@ export class CharacterManager {
             character.increaseHungry();
         }
     }
+
+    getNumberOfCharactersAlive(): number {
+        return Game.characters.filter((character) => !character.isDead).length;
+    }
 }

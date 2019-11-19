@@ -3,6 +3,8 @@ import { Game, GameStates } from '../Game';
 export class LogManager {
     private _logList: Element;
     private _travelBtn: Element;
+    private _tempLogs: string[] = [];
+    private _logs: string[] = [];
 
     constructor() {
         this._logList = document.querySelector("#log-list");
@@ -16,17 +18,17 @@ export class LogManager {
     }
 
     showLogs(): void {
-        if(Game.tempLogs.length <= 0) 
+        if(this._tempLogs.length <= 0) 
             throw new Error('No logs found');
 
         let logs = '';
 
-        for (let i = 0; i < Game.tempLogs.length; i++) {
-            logs += '<li>' + Game.tempLogs[i] + '</li>';
+        for (let i = 0; i < this._tempLogs.length; i++) {
+            logs += '<li>' + this._tempLogs[i] + '</li>';
         }
 
-        Game.logs = Game.tempLogs;
-        Game.tempLogs = [];
+        this._logs = this._tempLogs;
+        this._tempLogs = [];
 
         this._logList.innerHTML = logs;
     }
@@ -36,10 +38,18 @@ export class LogManager {
     }
 
     log(text: string): void {
-        Game.tempLogs.push(text);
+        this._tempLogs.push(text);
     }
 
     onClickTravel() {
         Game.goToState(GameStates.TRAVEL);
+    }
+
+    isThereAnyTemporaryLog(): boolean {
+        return this._tempLogs.length > 0;
+    }
+
+    addTempLog(log: string) {
+        this._tempLogs.push(log);
     }
 }

@@ -16,127 +16,170 @@ export enum GameStates {
     EVENT,
     GAME_OVER,
     LOG,
-    BAG
+    BAG,
 }
 
 export class Game {
-    static states: GameStates;
-    static currentState: number = 1;
-    static currentDay:number = 0;
-    static hours: number = 0;
-    static characters: Character[] = [];
-    static travelledDistance: number = 0;
-    static distanceToGoal: number = 300;
-    static tempLogs: string[] = [];
-    static logs: string[] = [];
-    static travelPage: HTMLElement;
-    static logPage: HTMLElement;
-    static campPage: HTMLElement;
-    static statsPage: HTMLElement;
-    static eventPage: HTMLElement;
-    static gameOverPage: HTMLElement;
-    static bagPage: HTMLElement;
-    static camp: CampManager;
-    static events: EventManager;
-    static gameOver: GameOverManager;
-    static stats: StatsManager;
-    static travel: TravelManager;
-    static log: LogManager;
-    static bag: BagManager;
-    static characterManager: CharacterManager;
+    private static _states: GameStates;
+    private static _currentState: number = 1;
+    private static _currentDay: number = 0;
+    private static _hours: number = 0;
+    private static _characters: Character[] = [];
+    private static _travelledDistance: number = 0;
+    private static _distanceToGoal: number = 300;
+    private static _travelPage: HTMLElement;
+    private static _logPage: HTMLElement;
+    private static _campPage: HTMLElement;
+    private static _statsPage: HTMLElement;
+    private static _eventPage: HTMLElement;
+    private static _gameOverPage: HTMLElement;
+    private static _bagPage: HTMLElement;
+    private static _camp: CampManager;
+    private static _events: EventManager;
+    private static _gameOver: GameOverManager;
+    private static _stats: StatsManager;
+    private static _travel: TravelManager;
+    private static _log: LogManager;
+    private static _bag: BagManager;
+    private static _characterManager: CharacterManager;
 
     constructor() {
-        Game.travelPage = document.getElementById("travel-page");
-        Game.logPage = document.getElementById("log-page");
-        Game.campPage = document.getElementById("camp-page");
-        Game.statsPage = document.getElementById("stats-page");
-        Game.eventPage = document.getElementById("event-page");
-        Game.gameOverPage = document.getElementById("game-over-page");
-        Game.bagPage = document.getElementById("bag-page");
+        Game._travelPage = document.getElementById("travel-page");
+        Game._logPage = document.getElementById("log-page");
+        Game._campPage = document.getElementById("camp-page");
+        Game._statsPage = document.getElementById("stats-page");
+        Game._eventPage = document.getElementById("event-page");
+        Game._gameOverPage = document.getElementById("game-over-page");
+        Game._bagPage = document.getElementById("bag-page");
 
-        Game.camp = new CampManager();
-        Game.events = new EventManager();
-        Game.gameOver = new GameOverManager();
-        Game.stats = new StatsManager();
-        Game.travel = new TravelManager();
-        Game.log = new LogManager();
-        Game.bag = new BagManager();
-        Game.characterManager = new CharacterManager();
+        Game._camp = new CampManager();
+        Game._events = new EventManager();
+        Game._gameOver = new GameOverManager();
+        Game._stats = new StatsManager();
+        Game._travel = new TravelManager();
+        Game._log = new LogManager();
+        Game._bag = new BagManager();
+        Game._characterManager = new CharacterManager();
     }
 
-    start() {
+    start(): void {
         Game.createAllCharacters();
         Game.hideAllPages();
         Game.addItemsToBag();
-        Game.showPage(Game.campPage);
+        Game.showPage(Game._campPage);
     }
 
-    static createAllCharacters() {
-        Game.characters.push(new Character('Ethan', 5, 'father', true, 0, false));
-        Game.characters.push(new Character('Olivia', 5, 'mother', false, 0, true));
-        Game.characters.push(new Character('Michael', 5, 'son', true, 0, true));
-        Game.characters.push(new Character('Sophia', 5, 'daughter', false, 0, false));
-        Game.characters.push(new Character('Emma', 5, 'grandmother', true, 0, false));
+    static get log(): LogManager {
+        return Game._log;
     }
 
-    static addItemsToBag() {
-        Game.bag.putItem(new Item("Food", "", 2));
+    static get characterManager(): CharacterManager {
+        return Game._characterManager;
     }
 
-    static goToState(state: GameStates) {
-        Game.currentState = state;
+    static get bagManager(): BagManager {
+        return Game._bag;
+    }
+
+    static get hours(): number {
+        return this._hours;
+    }
+
+    static set hours(hours: number) {
+        this._hours = hours;
+    }
+
+    static get currentDay(): number {
+        return Game._currentDay;
+    }
+
+    static addDaysToCurrentDay (daysToAdd: number) {
+        Game._currentDay += daysToAdd;
+    }
+
+    static get distanceToGoal(): number {
+        return this._distanceToGoal;
+    }
+
+    static get travelledDistance(): number {
+        return this._travelledDistance;
+    }
+
+    static get characters(): Character[] {
+        return this._characters;
+    }
+
+    static addDistanceToTravelledDistance(distanceToAdd: number) {
+        Game._travelledDistance += distanceToAdd;
+    }
+
+    static createAllCharacters(): void {
+        const initialHealth = 5;
+        Game._characters.push(new Character('Ethan', initialHealth, 'father', true, 0, false));
+        Game._characters.push(new Character('Olivia', initialHealth, 'mother', false, 0, true));
+        Game._characters.push(new Character('Michael', initialHealth, 'son', true, 0, true));
+        Game._characters.push(new Character('Sophia', initialHealth, 'daughter', false, 0, false));
+        Game._characters.push(new Character('Emma', initialHealth, 'grandmother', true, 0, false));
+    }
+
+    static addItemsToBag(): void {
+        Game._bag.putItem(new Item("Food", "", 2));
+    }
+
+    static goToState(state: GameStates): void {
+        Game._currentState = state;
         this.setState();
     }
 
-    static showPage(page) {
+    static showPage(page: HTMLElement): void {
         page.style.display = "block";
     }
 
-    static hidePage(page) {
+    static hidePage(page: HTMLElement): void {
         page.style.display = "none";
     }
 
-    static hideAllPages() {
-        this.hidePage(Game.travelPage);
-        this.hidePage(Game.logPage);
-        this.hidePage(Game.campPage);
-        this.hidePage(Game.statsPage);
-        this.hidePage(Game.eventPage);
-        this.hidePage(Game.gameOverPage);
-        this.hidePage(Game.bagPage);
+    static hideAllPages(): void {
+        this.hidePage(Game._travelPage);
+        this.hidePage(Game._logPage);
+        this.hidePage(Game._campPage);
+        this.hidePage(Game._statsPage);
+        this.hidePage(Game._eventPage);
+        this.hidePage(Game._gameOverPage);
+        this.hidePage(Game._bagPage);
     }
 
-    static setState() {
+    static setState(): void {
         this.hideAllPages();
 
-        switch(Game.currentState) {
+        switch(Game._currentState) {
             case GameStates.TRAVEL: 
-                this.showPage(Game.travelPage);
-                Game.travel.start();
+                this.showPage(Game._travelPage);
+                Game._travel.start();
             break;
             case GameStates.CAMP: 
-                this.showPage(Game.campPage);
-                Game.camp.start();
+                this.showPage(Game._campPage);
+                Game._camp.start();
             break;
             case GameStates.STATS: 
-                this.showPage(Game.statsPage);
-                Game.stats.start();
+                this.showPage(Game._statsPage);
+                Game._stats.start();
             break;
             case GameStates.EVENT: 
-                this.showPage(Game.eventPage);
-                Game.events.start();
+                this.showPage(Game._eventPage);
+                Game._events.start();
             break;
             case GameStates.LOG:
-                this.showPage(Game.logPage);
-                Game.log.start();
+                this.showPage(Game._logPage);
+                Game._log.start();
             break;
             case GameStates.GAME_OVER:
-                this.showPage(Game.gameOverPage);
-                Game.gameOver.start();
+                this.showPage(Game._gameOverPage);
+                Game._gameOver.start();
             break;
             case GameStates.BAG:
-                this.showPage(Game.bagPage);
-                Game.bag.start();
+                this.showPage(Game._bagPage);
+                Game._bag.start();
             break;
         }
     }
