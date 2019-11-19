@@ -7,25 +7,37 @@ export class BagManager {
     private _selectedItemElement: any;
     private _selectedItem: Item;
     private _bagCloseBtn: Element;
+    private _bagThrowAwayBtn: HTMLElement;
 
     constructor() {
         this._itemListElement = document.querySelector('#bag-item-list');
         this._selectedItemElement = document.getElementById('bag-selected-item');
         this._bagCloseBtn = document.querySelector('#bag-close-btn');
+        this._bagThrowAwayBtn = document.getElementById('bag-throw-away-btn');
 
         this._bagCloseBtn.addEventListener('click', () => { this.onClickBagClose() });
+        this._bagThrowAwayBtn.addEventListener('click', () => { this.onClickThrowAway() });
     }
 
     start() {
         this.hideSelectedItem();
         this.showItems();
+        this._bagThrowAwayBtn.style.display = 'none';
     }
 
     onClickBagClose() {
         Game.goToState(GameStates.CAMP);
     }
 
+    onClickThrowAway() {
+        this.removeOrDecreaseItem();
+        this._itemListElement.innerHTML = '';
+        this.showItems();
+        this._bagThrowAwayBtn.style.display = 'none';
+    }
+
     hideSelectedItem() {
+        this._selectedItemElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
     }
 
@@ -80,20 +92,23 @@ export class BagManager {
         this._selectedItemElement.innerHTML = 'Give ' + this._selectedItem.name + ' to';
         this.showSelectedItem();
         this.showCharacters();
+        this._bagThrowAwayBtn.style.display = 'block';
     }
 
     useItem(index: number) {
+        this.removeOrDecreaseItem();
+        this.hideSelectedItem();
+        this.showItems();
+        Game.characters[index].decreaseHungry(12);
+        this._bagThrowAwayBtn.style.display = 'none';
+    }
+
+    removeOrDecreaseItem() {
         if (this._selectedItem.amount > 1) {
             this._selectedItem.decreaseAmount();
         } else {
             this.removeItem(this._selectedItem);
         }
-
-        this._itemListElement.innerHTML = '';
-        this._selectedItemElement.innerHTML = '';
-        this.hideSelectedItem();
-        this.showItems();
-        Game.characters[index].decreaseHungry(12);
     }
 
     removeItem(itemToRemove: Item): void {
