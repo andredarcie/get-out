@@ -21,12 +21,12 @@ export enum GameStates {
 
 export class Game {
     private static _states: GameStates;
-    private static _currentState: number = 1;
-    private static _currentDay: number = 0;
-    private static _hours: number = 0;
+    private static _currentState = 1;
+    private static _currentDay = 0;
+    private static _hours = 0;
     private static _characters: Character[] = [];
-    private static _travelledDistance: number = 0;
-    private static _distanceToGoal: number = 300;
+    private static _travelledDistance = 0;
+    private static _distanceToGoal = 300;
     private static _travelPage: HTMLElement;
     private static _logPage: HTMLElement;
     private static _campPage: HTMLElement;
@@ -62,7 +62,7 @@ export class Game {
         Game._characterManager = new CharacterManager();
     }
 
-    start(): void {
+    public start(): void {
         Game.createAllCharacters();
         Game.hideAllPages();
         Game.addItemsToBag();
@@ -93,10 +93,6 @@ export class Game {
         return Game._currentDay;
     }
 
-    static addDaysToCurrentDay (daysToAdd: number) {
-        Game._currentDay += daysToAdd;
-    }
-
     static get distanceToGoal(): number {
         return this._distanceToGoal;
     }
@@ -109,33 +105,38 @@ export class Game {
         return this._characters;
     }
 
-    static addDistanceToTravelledDistance(distanceToAdd: number) {
+    public static addDistanceToTravelledDistance(distanceToAdd: number) {
         Game._travelledDistance += distanceToAdd;
+    }
+
+    public static addDaysToCurrentDay (daysToAdd: number): void {
+        Game._currentDay += daysToAdd;
     }
 
     static createAllCharacters(): void {
         const initialHealth = 5;
-        Game._characters.push(new Character('Ethan', initialHealth, 'father', true, 0, false));
-        Game._characters.push(new Character('Olivia', initialHealth, 'mother', false, 0, true));
-        Game._characters.push(new Character('Michael', initialHealth, 'son', true, 0, true));
-        Game._characters.push(new Character('Sophia', initialHealth, 'daughter', false, 0, false));
-        Game._characters.push(new Character('Emma', initialHealth, 'grandmother', true, 0, false));
+        const initialHungry = 0;
+        Game._characters.push(new Character('Ethan', initialHealth, 'father', true, initialHungry, false));
+        Game._characters.push(new Character('Olivia', initialHealth, 'mother', false, initialHungry, true));
+        Game._characters.push(new Character('Michael', initialHealth, 'son', true, initialHungry, true));
+        Game._characters.push(new Character('Sophia', initialHealth, 'daughter', false, initialHungry, false));
+        Game._characters.push(new Character('Emma', initialHealth, 'grandmother', true, initialHungry, false));
     }
 
-    static addItemsToBag(): void {
+    public static addItemsToBag(): void {
         Game._bag.putItem(new Item("Food", "", 2));
     }
 
-    static goToState(state: GameStates): void {
+    public static goToState(state: GameStates): void {
         Game._currentState = state;
         this.setState();
     }
 
-    static showPage(page: HTMLElement): void {
+    public static showPage(page: HTMLElement): void {
         page.style.display = "block";
     }
 
-    static hidePage(page: HTMLElement): void {
+    public static hidePage(page: HTMLElement): void {
         page.style.display = "none";
     }
 
@@ -149,7 +150,7 @@ export class Game {
         this.hidePage(Game._bagPage);
     }
 
-    static setState(): void {
+    public static setState(): void {
         this.hideAllPages();
 
         switch(Game._currentState) {
