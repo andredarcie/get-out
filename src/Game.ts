@@ -8,6 +8,7 @@ import { BagManager } from './managers/BagManager';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
 import { Item } from './entities/Item';
+import { Clock } from './entities/Clock';
 
 export enum GameStates {
     TRAVEL,
@@ -22,8 +23,9 @@ export enum GameStates {
 export class Game {
     private static _states: GameStates;
     private static _currentState = 1;
-    private static _currentDay = 0;
+    private static _currentDay = 1;
     private static _hours = 0;
+    private static _clock: Clock; 
     private static _characters: Character[] = [];
     private static _travelledDistance = 0;
     private static _distanceToGoal = 300;
@@ -60,6 +62,8 @@ export class Game {
         Game._log = new LogManager();
         Game._bag = new BagManager();
         Game._characterManager = new CharacterManager();
+
+        Game._clock = new Clock(8, true);
     }
 
     public start(): void {
@@ -71,6 +75,10 @@ export class Game {
 
     static get log(): LogManager {
         return Game._log;
+    }
+
+    static get clock(): Clock {
+        return Game._clock;
     }
 
     static get characterManager(): CharacterManager {

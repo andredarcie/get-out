@@ -10,7 +10,7 @@ export class TravelManager {
     private _campBtn: Element;
     private _statsBtn: Element;
     private _walking: boolean;
-
+    
     constructor() {
         this._travelPage = document.querySelector("#travel-page");
         this._travelImage = document.querySelector("#travel-img");
@@ -29,13 +29,11 @@ export class TravelManager {
     }
 
     start(): void {
-        Game.addDaysToCurrentDay(1);
         this.showTime();
     }
 
     onClickWalkBtn(): void {
-        this.startWalking();
-        this.passHours(1);
+        this.passOneHour();
 
         const foundEvent = this.checkEvent();
 
@@ -43,8 +41,6 @@ export class TravelManager {
             Game.goToState(GameStates.EVENT);
         } else if (Game.log.isThereAnyTemporaryLog()) {
             Game.goToState(GameStates.LOG);
-        } else {
-            Game.log.clearLogs();
         }
     }
 
@@ -56,24 +52,17 @@ export class TravelManager {
         Game.goToState(GameStates.STATS);
     }
 
-    passHours(hours: number): void {
-        for (let i = 0; i < hours; i++) {
+    passOneHour(): void {
 
-            if (!this._walking)
-                break;
-
-            this.gotoNextHour();
+        if (Game.clock.currentHour == 12 && Game.clock.anteMeridiem) {
+            this.gotoNextDay();
         }
-    }
 
-    gotoNextHour() {
+        Game.clock.nextHour();
         this.walkOneHour();
         Game.characterManager.increaseHungryOfAllCharacters();
 
-        if (Game.hours >= 24 ) {
-            Game.hours = 0;
-            this.gotoNextDay();
-        }
+
         this.showTime();
     }
 
@@ -90,28 +79,29 @@ export class TravelManager {
         this.showTime();
     }
 
-    passOneHour() {
-        Game.hours++;
-        this.showTime();
-    }
-
     showTime() {
-        this._currentTimeField.innerHTML = Game.hours + ':00 - day ' + Game.currentDay;
+        this._currentTimeField.innerHTML = Game.clock.showTime() + ' - day ' + Game.currentDay;
 
-        if(Game.hours >= 18 || Game.hours <= 6) {
-            this._currentTimeField.innerHTML += ' - night';
+        if (Game.clock.anteMeridiem) {
+            if (Game.clock.currentHour > 6 && Game.clock.currentHour < 12) {
+                this._currentTimeField.innerHTML += ' - daylight';
+            } else {
+                this._currentTimeField.innerHTML += ' - night';
+            }
         } else {
-            this._currentTimeField.innerHTML += ' - daylight';
+            if (Game.clock.currentHour > 6 && Game.clock.currentHour < 12) {
+                this._currentTimeField.innerHTML += ' - night';
+            } else {
+                this._currentTimeField.innerHTML += ' - daylight';
+            }
         }
     }
 
     walkOneHour() {
-        
         Game.addDistanceToTravelledDistance(2);
         this.increaseProgressBar();
 
         this.showTravelledDistance();
-        this.passOneHour();
 
         let allPlayerAreDead = Game.characterManager.checkIfAllCharactersAreDead();
         if (allPlayerAreDead) 
@@ -137,16 +127,7 @@ export class TravelManager {
         this._travelledDistanceField.innerHTML = 'Travelled distance: ' + Game.travelledDistance + ' miles';
     }
 
-    startWalking() {
-        this._walking = true;
-    }
-
-    stopWalking() {
-        this._walking = false;
-    }
-
     arrivedAtTheGoal() {
-        this.stopWalking();
         Game.goToState(GameStates.GAME_OVER);
     }
 }
