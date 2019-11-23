@@ -21,174 +21,178 @@ export enum GameStates {
 }
 
 export class Game {
-    private static _states: GameStates;
-    private static _currentState = 1;
-    private static _currentDay = 1;
-    private static _hours = 0;
-    private static _clock: Clock; 
-    private static _characters: Character[] = [];
-    private static _travelledDistance = 0;
-    private static _distanceToGoal = 300;
-    private static _travelPage: HTMLElement;
-    private static _logPage: HTMLElement;
-    private static _campPage: HTMLElement;
-    private static _statsPage: HTMLElement;
-    private static _eventPage: HTMLElement;
-    private static _gameOverPage: HTMLElement;
-    private static _bagPage: HTMLElement;
-    private static _camp: CampManager;
-    private static _events: EventManager;
-    private static _gameOver: GameOverManager;
-    private static _stats: StatsManager;
-    private static _travel: TravelManager;
-    private static _log: LogManager;
-    private static _bag: BagManager;
-    private static _characterManager: CharacterManager;
+    private static readonly _instance: Game = new Game();
+    private _states: GameStates;
+    private _currentState = 1;
+    private _currentDay = 1;
+    private _hours = 0;
+    private _clock: Clock; 
+    private _characters: Character[] = [];
+    private _travelledDistance = 0;
+    private _distanceToGoal = 300;
+    private _travelPage: HTMLElement;
+    private _logPage: HTMLElement;
+    private _campPage: HTMLElement;
+    private _statsPage: HTMLElement;
+    private _eventPage: HTMLElement;
+    private _gameOverPage: HTMLElement;
+    private _bagPage: HTMLElement;
+    private _camp: CampManager;
+    private _events: EventManager;
+    private _gameOver: GameOverManager;
+    private _stats: StatsManager;
+    private _travel: TravelManager;
+    private _log: LogManager;
+    private _bag: BagManager;
+    private _characterManager: CharacterManager;
 
-    constructor() {
-        Game._travelPage = document.getElementById("travel-page");
-        Game._logPage = document.getElementById("log-page");
-        Game._campPage = document.getElementById("camp-page");
-        Game._statsPage = document.getElementById("stats-page");
-        Game._eventPage = document.getElementById("event-page");
-        Game._gameOverPage = document.getElementById("game-over-page");
-        Game._bagPage = document.getElementById("bag-page");
+    private constructor() {
+        this._travelPage = document.getElementById("travel-page");
+        this._logPage = document.getElementById("log-page");
+        this._campPage = document.getElementById("camp-page");
+        this._statsPage = document.getElementById("stats-page");
+        this._eventPage = document.getElementById("event-page");
+        this._gameOverPage = document.getElementById("game-over-page");
+        this._bagPage = document.getElementById("bag-page");
 
-        Game._camp = new CampManager();
-        Game._events = new EventManager();
-        Game._gameOver = new GameOverManager();
-        Game._stats = new StatsManager();
-        Game._travel = new TravelManager();
-        Game._log = new LogManager();
-        Game._bag = new BagManager();
-        Game._characterManager = new CharacterManager();
+        this._camp = new CampManager();
+        this._events = new EventManager();
+        this._gameOver = new GameOverManager();
+        this._stats = new StatsManager();
+        this._travel = new TravelManager();
+        this._bag = new BagManager();
+        this._characterManager = new CharacterManager();
 
-        Game._clock = new Clock(8, true);
+        this._clock = new Clock(8, true);
+    }
+
+    static getInstance(): Game {
+        return this._instance;
     }
 
     public start(): void {
-        Game.createAllCharacters();
-        Game.hideAllPages();
-        Game.addItemsToBag();
-        Game.showPage(Game._campPage);
+        this.createAllCharacters();
+        this.hideAllPages();
+        this.addItemsToBag();
+        this.showPage(this._campPage);
     }
 
-    static get log(): LogManager {
-        return Game._log;
+    get log(): LogManager {
+        return this._log;
     }
 
-    static get clock(): Clock {
-        return Game._clock;
+    get clock(): Clock {
+        return this._clock;
     }
 
-    static get characterManager(): CharacterManager {
-        return Game._characterManager;
+    get characterManager(): CharacterManager {
+        return this._characterManager;
     }
 
-    static get bagManager(): BagManager {
-        return Game._bag;
+    get bagManager(): BagManager {
+        return this._bag;
     }
 
-    static get hours(): number {
+    get hours(): number {
         return this._hours;
     }
 
-    static set hours(hours: number) {
+    set hours(hours: number) {
         this._hours = hours;
     }
 
-    static get currentDay(): number {
-        return Game._currentDay;
+    get currentDay(): number {
+        return this._currentDay;
     }
 
-    static get distanceToGoal(): number {
+    get distanceToGoal(): number {
         return this._distanceToGoal;
     }
 
-    static get travelledDistance(): number {
+    get travelledDistance(): number {
         return this._travelledDistance;
     }
 
-    static get characters(): Character[] {
+    get characters(): Character[] {
         return this._characters;
     }
 
-    public static addDistanceToTravelledDistance(distanceToAdd: number) {
-        Game._travelledDistance += distanceToAdd;
+    public addDistanceToTravelledDistance(distanceToAdd: number) {
+        this._travelledDistance += distanceToAdd;
     }
 
-    public static addDaysToCurrentDay (daysToAdd: number): void {
-        Game._currentDay += daysToAdd;
+    public addDaysToCurrentDay (daysToAdd: number): void {
+        this._currentDay += daysToAdd;
     }
 
-    static createAllCharacters(): void {
+    private createAllCharacters(): void {
         const initialHealth = 5;
         const initialHungry = 0;
-        Game._characters.push(new Character('Ethan', initialHealth, 'father', true, initialHungry, false));
-        Game._characters.push(new Character('Olivia', initialHealth, 'mother', false, initialHungry, true));
-        Game._characters.push(new Character('Michael', initialHealth, 'son', true, initialHungry, true));
-        Game._characters.push(new Character('Sophia', initialHealth, 'daughter', false, initialHungry, false));
-        Game._characters.push(new Character('Emma', initialHealth, 'grandmother', true, initialHungry, false));
+        this._characters.push(new Character('Ethan', initialHealth, 'father', true, initialHungry, 0, false));
+        this._characters.push(new Character('Olivia', initialHealth, 'mother', false, initialHungry, 0, true));
+        this._characters.push(new Character('Michael', initialHealth, 'son', true, initialHungry, 0, true));
+        this._characters.push(new Character('Sophia', initialHealth, 'daughter', false, initialHungry, 0, false));
+        this._characters.push(new Character('Emma', initialHealth, 'grandmother', true, initialHungry, 0, false));
     }
 
-    public static addItemsToBag(): void {
-        Game._bag.putItem(new Item("Food", "", 2));
+    public addItemsToBag(): void {
+        this._bag.putItem(new Item("Food", "", 2));
     }
 
-    public static goToState(state: GameStates): void {
-        Game._currentState = state;
+    public goToState(state: GameStates): void {
+        this._currentState = state;
         this.setState();
     }
 
-    public static showPage(page: HTMLElement): void {
+    public showPage(page: HTMLElement): void {
         page.style.display = "block";
     }
 
-    public static hidePage(page: HTMLElement): void {
+    public hidePage(page: HTMLElement): void {
         page.style.display = "none";
     }
 
-    static hideAllPages(): void {
-        this.hidePage(Game._travelPage);
-        this.hidePage(Game._logPage);
-        this.hidePage(Game._campPage);
-        this.hidePage(Game._statsPage);
-        this.hidePage(Game._eventPage);
-        this.hidePage(Game._gameOverPage);
-        this.hidePage(Game._bagPage);
+    private hideAllPages(): void {
+        this.hidePage(this._travelPage);
+        this.hidePage(this._logPage);
+        this.hidePage(this._campPage);
+        this.hidePage(this._statsPage);
+        this.hidePage(this._eventPage);
+        this.hidePage(this._gameOverPage);
+        this.hidePage(this._bagPage);
     }
 
-    public static setState(): void {
+    public setState(): void {
         this.hideAllPages();
 
-        switch(Game._currentState) {
+        switch(this._currentState) {
             case GameStates.TRAVEL: 
-                this.showPage(Game._travelPage);
-                Game._travel.start();
+                this.showPage(this._travelPage);
+                this._travel.start();
             break;
             case GameStates.CAMP: 
-                this.showPage(Game._campPage);
-                Game._camp.start();
+                this.showPage(this._campPage);
+                this._camp.start();
             break;
             case GameStates.STATS: 
-                this.showPage(Game._statsPage);
-                Game._stats.start();
+                this.showPage(this._statsPage);
+                this._stats.start();
             break;
             case GameStates.EVENT: 
-                this.showPage(Game._eventPage);
-                Game._events.start();
+                this.showPage(this._eventPage);
+                this._events.start();
             break;
             case GameStates.LOG:
-                this.showPage(Game._logPage);
-                Game._log.start();
+                this.showPage(this._logPage);
+                this._log.start();
             break;
             case GameStates.GAME_OVER:
-                this.showPage(Game._gameOverPage);
-                Game._gameOver.start();
+                this.showPage(this._gameOverPage);
+                this._gameOver.start();
             break;
             case GameStates.BAG:
-                this.showPage(Game._bagPage);
-                Game._bag.start();
+                this.showPage(this._bagPage);
+                this._bag.start();
             break;
         }
     }

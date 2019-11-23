@@ -9,6 +9,7 @@ export class EventManager {
     private _yesButton: HTMLElement;
     private _noButton: HTMLElement;
     private _currentEvent: Event;
+    private readonly _game: Game;
 
     constructor() {
         this._titleElement = document.getElementById("event-page-title");
@@ -19,6 +20,7 @@ export class EventManager {
 
         this._yesButton.addEventListener('click', () => { this.onEventPageYesBtn() });
         this._noButton.addEventListener('click', () => { this.onEventPageNoBtn() });
+        this._game = Game.getInstance();
     }
 
     start(): void {
@@ -64,12 +66,12 @@ export class EventManager {
     }
 
     onEventPageYesBtn(): void {
-        let randomCharacterIndex = this.getRandomArbitrary(Game.characters.length);
-        let randomCharacter = Game.characters[randomCharacterIndex];
+        let randomCharacterIndex = this.getRandomArbitrary(this._game.characters.length);
+        let randomCharacter = this._game.characters[randomCharacterIndex];
 
         switch (this._currentEvent.type) {
             case EventType.Exploration:
-                Game.log.addTempLog(randomCharacter.name + ' found food!');
+                this._game.log.addTempLog(randomCharacter.name + ' found food!');
                 break;
             case EventType.Combat:
                 randomCharacter.looseHealth(1);
@@ -78,23 +80,23 @@ export class EventManager {
 
         if(this._currentEvent.willGiveItems()) {
             for (let item of this._currentEvent.items) {
-                Game.bagManager.putItem(item);
+                this._game.bagManager.putItem(item);
             }
         }
 
-        if (Game.log.isThereAnyTemporaryLog()) {
-            Game.goToState(GameStates.LOG);
+        if (this._game.log.isThereAnyTemporaryLog()) {
+            this._game.goToState(GameStates.LOG);
         } else {
-            Game.goToState(GameStates.TRAVEL);
+            this._game.goToState(GameStates.TRAVEL);
         }
     }
 
     onEventPageNoBtn(): void {
 
-        if (Game.log.isThereAnyTemporaryLog()) {
-            Game.goToState(GameStates.LOG);
+        if (this._game.log.isThereAnyTemporaryLog()) {
+            this._game.goToState(GameStates.LOG);
         } else {
-            Game.goToState(GameStates.TRAVEL);
+            this._game.goToState(GameStates.TRAVEL);
         }
     }
 

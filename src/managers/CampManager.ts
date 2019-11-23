@@ -4,7 +4,8 @@ export class CampManager {
     private _campImg: Element;
     private _travelBtn: Element;
     private _bagBtn: Element;
-    
+    private readonly _game: Game;
+
     constructor() {
         this._campImg = document.querySelector('#camp-img');
         this._travelBtn = document.querySelector('#travel-btn');
@@ -12,16 +13,17 @@ export class CampManager {
 
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
         this._bagBtn.addEventListener('click', () => { this.onClickBag() });
+        this._game = Game.getInstance();
     }
 
     start() {
     } 
 
     onClickTravel() {
-        Game.goToState(GameStates.TRAVEL);
+        this._game.goToState(GameStates.TRAVEL);
     }
 
     onClickBag() {
-        Game.goToState(GameStates.BAG);
+        this._game.goToState(GameStates.BAG);
     }
 }

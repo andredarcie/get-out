@@ -8,6 +8,7 @@ export class BagManager {
     private _selectedItem: Item;
     private _bagCloseBtn: Element;
     private _bagThrowAwayBtn: HTMLElement;
+    private readonly _game: Game;
 
     constructor() {
         this._itemListElement = document.querySelector('#bag-item-list');
@@ -17,6 +18,7 @@ export class BagManager {
 
         this._bagCloseBtn.addEventListener('click', () => { this.onClickBagClose() });
         this._bagThrowAwayBtn.addEventListener('click', () => { this.onClickThrowAway() });
+        this._game = Game.getInstance();
     }
 
     start() {
@@ -26,7 +28,7 @@ export class BagManager {
     }
 
     onClickBagClose() {
-        Game.goToState(GameStates.CAMP);
+        this._game.goToState(GameStates.CAMP);
     }
 
     onClickThrowAway() {
@@ -75,11 +77,11 @@ export class BagManager {
     }
 
     showCharacters() {
-        for (let i = 0; i < Game.characters.length; i++) {
+        for (let i = 0; i < this._game.characters.length; i++) {
             const li = document.createElement("li");
             const button = document.createElement("input");
             button.type = "button";
-            button.value = Game.characters[i].name;
+            button.value = this._game.characters[i].name;
             button.addEventListener('click', () => this.useItem(i) );
             li.appendChild(button);
             this._itemListElement.appendChild(li);
@@ -99,7 +101,7 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
-        Game.characters[index].decreaseHungry(12);
+        this._game.characters[index].decreaseHungry(12);
         this._bagThrowAwayBtn.style.display = 'none';
     }
 

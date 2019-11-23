@@ -7,11 +7,13 @@ export class Character {
     private _isDead: boolean = false;
     private _sick: boolean = false;
     private _hungry: number;
+    private _thirst: number;
     private _cold: boolean = false;
     private _maxHealth: number;
     private readonly _limitForHungry = 18;
+    private readonly _game: Game;
 
-    constructor(name: string, health: number, kinship: string, sick: boolean, hungry: number, cold: boolean) {
+    constructor(name: string, health: number, kinship: string, sick: boolean, hungry: number, thirst: number, cold: boolean) {
         this._name = name;
         this._health = health;
         this._kinship = kinship;
@@ -20,6 +22,8 @@ export class Character {
         this._hungry = hungry;
         this._cold = cold;
         this._maxHealth = health;
+        this._thirst = thirst;
+        this._game = Game.getInstance();
     }
 
     get name() {
@@ -38,10 +42,14 @@ export class Character {
         return this._kinship;
     }
 
+    get maxHealth() {
+        return this._maxHealth;
+    }
+
     increaseHungry() {
         if (this._hungry >= this._limitForHungry) {
             if (!this._isDead) {
-                Game.log.addTempLog(this._name + ' is starving to death');
+                this._game.log.addTempLog(this._name + ' is starving to death');
             }
             this.looseHealth(1);
         } else {
@@ -81,14 +89,14 @@ export class Character {
                 this._health = 0;
 
                 if (this._hungry >= this._limitForHungry) {
-                    Game.log.addTempLog(this._name + ' starved to death at day ' + Game.currentDay);
+                    this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
                 } else {
-                    Game.log.addTempLog(this._name + ' died at day ' + Game.currentDay);
+                    this._game.log.addTempLog(this._name + ' died at day ' + this._game.currentDay);
                 }
                 
                 this._isDead = true;
             } else {
-                Game.log.addTempLog(this._name + ' lost -' + healthToLoose + ' health');
+                this._game.log.addTempLog(this._name + ' lost -' + healthToLoose + ' health');
             }
         }
     }

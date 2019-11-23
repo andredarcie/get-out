@@ -5,12 +5,14 @@ export class LogManager {
     private _travelBtn: Element;
     private _tempLogs: string[] = [];
     private _logs: string[] = [];
+    private readonly _game: Game;
 
     constructor() {
         this._logList = document.querySelector("#log-list");
         
         this._travelBtn = document.querySelector("#log-back-character-btn");
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
+        this._game = Game.getInstance();
     }
 
     start(): void {
@@ -42,7 +44,7 @@ export class LogManager {
     }
 
     onClickTravel() {
-        Game.goToState(GameStates.TRAVEL);
+        this._game.goToState(GameStates.TRAVEL);
     }
 
     isThereAnyTemporaryLog(): boolean {

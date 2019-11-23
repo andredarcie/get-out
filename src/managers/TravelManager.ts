@@ -10,7 +10,8 @@ export class TravelManager {
     private _campBtn: Element;
     private _statsBtn: Element;
     private _walking: boolean;
-    
+    private readonly _game: Game;
+
     constructor() {
         this._travelPage = document.querySelector("#travel-page");
         this._travelImage = document.querySelector("#travel-img");
@@ -26,6 +27,7 @@ export class TravelManager {
         this._statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
 
         this.showTravelledDistance();
+        this._game = Game.getInstance();
     }
 
     start(): void {
@@ -38,29 +40,29 @@ export class TravelManager {
         const foundEvent = this.checkEvent();
 
         if (foundEvent) {
-            Game.goToState(GameStates.EVENT);
-        } else if (Game.log.isThereAnyTemporaryLog()) {
-            Game.goToState(GameStates.LOG);
+            this._game.goToState(GameStates.EVENT);
+        } else if (this._game.log.isThereAnyTemporaryLog()) {
+            this._game.goToState(GameStates.LOG);
         }
     }
 
     onClickCampBtn(): void {
-        Game.goToState(GameStates.CAMP);
+        this._game.goToState(GameStates.CAMP);
     }
 
     onClickStatsBtn() {
-        Game.goToState(GameStates.STATS);
+        this._game.goToState(GameStates.STATS);
     }
 
     passOneHour(): void {
 
-        if (Game.clock.currentHour == 12 && Game.clock.anteMeridiem) {
+        if (this._game.clock.currentHour == 12 && this._game.clock.anteMeridiem) {
             this.gotoNextDay();
         }
 
-        Game.clock.nextHour();
+        this._game.clock.nextHour();
         this.walkOneHour();
-        Game.characterManager.increaseHungryOfAllCharacters();
+        this._game.characterManager.increaseHungryOfAllCharacters();
 
 
         this.showTime();
@@ -70,26 +72,26 @@ export class TravelManager {
         return this.getRandomArbitrary(1, 100) <= 25;
     }
 
-    getRandomArbitrary(min, max) {
+    getRandomArbitrary(min: number, max: number): number {
         return Math.random() * (max - min) + min;
     }
 
     gotoNextDay() {
-        Game.addDaysToCurrentDay(1);
+        this._game.addDaysToCurrentDay(1);
         this.showTime();
     }
 
     showTime() {
-        this._currentTimeField.innerHTML = Game.clock.showTime() + ' - day ' + Game.currentDay;
+        this._currentTimeField.innerHTML = this._game.clock.showTime() + ' - day ' + this._game.currentDay;
 
-        if (Game.clock.anteMeridiem) {
-            if (Game.clock.currentHour > 6 && Game.clock.currentHour < 12) {
+        if (this._game.clock.anteMeridiem) {
+            if (this._game.clock.currentHour > 6 && this._game.clock.currentHour < 12) {
                 this._currentTimeField.innerHTML += ' - daylight';
             } else {
                 this._currentTimeField.innerHTML += ' - night';
             }
         } else {
-            if (Game.clock.currentHour > 6 && Game.clock.currentHour < 12) {
+            if (this._game.clock.currentHour > 6 && this._game.clock.currentHour < 12) {
                 this._currentTimeField.innerHTML += ' - night';
             } else {
                 this._currentTimeField.innerHTML += ' - daylight';
@@ -98,36 +100,35 @@ export class TravelManager {
     }
 
     walkOneHour() {
-        Game.addDistanceToTravelledDistance(2);
+        this._game.addDistanceToTravelledDistance(2);
         this.increaseProgressBar();
 
         this.showTravelledDistance();
 
-        let allPlayerAreDead = Game.characterManager.checkIfAllCharactersAreDead();
+        let allPlayerAreDead = this._game.characterManager.checkIfAllCharactersAreDead();
         if (allPlayerAreDead) 
-            Game.goToState(GameStates.GAME_OVER);
+        this._game.goToState(GameStates.GAME_OVER);
         
-        if(Game.travelledDistance > Game.distanceToGoal) {
+        if(this._game.travelledDistance > this._game.distanceToGoal) {
             this.arrivedAtTheGoal();
         }
     }
 
     increaseProgressBar() {
         let progressBarFullWidth = 321;
-        let unity = progressBarFullWidth / Game.distanceToGoal;
-        this._progressBar.style.width = Game.travelledDistance * unity + 'px';
+        let unity = progressBarFullWidth / this._game.distanceToGoal;
+        this._progressBar.style.width = this._game.travelledDistance * unity + 'px';
     }
 
     getRandomCharacter() {
-        let x = Math.floor(Math.random() * (Game.characters.length));
-        return x;
+        return Math.floor(Math.random() * (this._game.characters.length));
     }
 
     showTravelledDistance() {
-        this._travelledDistanceField.innerHTML = 'Travelled distance: ' + Game.travelledDistance + ' miles';
+        this._travelledDistanceField.innerHTML = 'Travelled distance: ' + this._game.travelledDistance + ' miles';
     }
 
     arrivedAtTheGoal() {
-        Game.goToState(GameStates.GAME_OVER);
+        this._game.goToState(GameStates.GAME_OVER);
     }
 }

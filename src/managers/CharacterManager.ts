@@ -1,7 +1,10 @@
 import { Game } from '../Game';
 
 export class CharacterManager {
+    private readonly _game: Game;
+
     constructor() {
+        this._game = Game.getInstance();
     }
 
     start() {
@@ -9,19 +12,19 @@ export class CharacterManager {
     }
 
     checkIfAllCharactersAreDead(): boolean {
-        let characters = Game.characters;
+        let characters = this._game.characters;
 
         return characters.every((character) => character.isDead);
     }
 
     increaseHungryOfAllCharacters() {
-        let characters = Game.characters;
+        let characters = this._game.characters;
         for (let character of characters) {
             character.increaseHungry();
         }
     }
 
     getNumberOfCharactersAlive(): number {
-        return Game.characters.filter((character) => !character.isDead).length;
+        return this._game.characters.filter((character) => !character.isDead).length;
     }
 }

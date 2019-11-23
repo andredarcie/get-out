@@ -4,12 +4,14 @@ export class StatsManager {
     private _currentCharacterIndex: number;
     private _charactersList: any;
     private _backCharacterBtn: Element;
+    private readonly _game: Game;
 
     constructor() {
         this._currentCharacterIndex = 0;
         this._charactersList = [];
 
         this.getPageElements();
+        this._game = Game.getInstance();
     }
 
     start(): void {
@@ -48,7 +50,7 @@ export class StatsManager {
     }
 
     showCharacters(): void {
-        let characters = Game.characters;
+        let characters = this._game.characters;
 
         for (let i = 0; i < characters.length; i++){
             let character = characters[i];
@@ -65,6 +67,6 @@ export class StatsManager {
     }
 
     onClickBackCharacter(): void {
-        Game.goToState(GameStates.TRAVEL);
+        this._game.goToState(GameStates.TRAVEL);
     }
 }
