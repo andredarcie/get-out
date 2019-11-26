@@ -21,7 +21,7 @@ export enum GameStates {
 }
 
 export class Game {
-    private static readonly _instance: Game = new Game();
+    private static _instance: Game;
     private _states: GameStates;
     private _currentState = 1;
     private _currentDay = 1;
@@ -54,23 +54,28 @@ export class Game {
         this._eventPage = document.getElementById("event-page");
         this._gameOverPage = document.getElementById("game-over-page");
         this._bagPage = document.getElementById("bag-page");
+    }
 
+    static getInstance(): Game {
+        if (!Game._instance) {
+            Game._instance = new Game();
+        }
+        
+        return Game._instance;
+    }
+
+    public start(): void {
+
+        this._bag = new BagManager();
         this._camp = new CampManager();
         this._events = new EventManager();
         this._gameOver = new GameOverManager();
         this._stats = new StatsManager();
         this._travel = new TravelManager();
-        this._bag = new BagManager();
         this._characterManager = new CharacterManager();
-
         this._clock = new Clock(8, true);
-    }
+        this._log = new LogManager();
 
-    static getInstance(): Game {
-        return this._instance;
-    }
-
-    public start(): void {
         this.createAllCharacters();
         this.hideAllPages();
         this.addItemsToBag();

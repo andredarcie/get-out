@@ -8,11 +8,13 @@ export class LogManager {
     private readonly _game: Game;
 
     constructor() {
+        this._game = Game.getInstance();
+
         this._logList = document.querySelector("#log-list");
         
         this._travelBtn = document.querySelector("#log-back-character-btn");
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
-        this._game = Game.getInstance();
+        
     }
 
     start(): void {

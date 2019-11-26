@@ -10,9 +10,11 @@ export class TravelManager {
     private _campBtn: Element;
     private _statsBtn: Element;
     private _walking: boolean;
-    private readonly _game: Game;
+    private _game: Game;
 
     constructor() {
+        this._game = Game.getInstance();
+        
         this._travelPage = document.querySelector("#travel-page");
         this._travelImage = document.querySelector("#travel-img");
         this._travelledDistanceField = document.querySelector("#travelled-distance");
@@ -27,11 +29,12 @@ export class TravelManager {
         this._statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
 
         this.showTravelledDistance();
-        this._game = Game.getInstance();
+        
     }
 
     start(): void {
         this.showTime();
+        
     }
 
     onClickWalkBtn(): void {

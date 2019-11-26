@@ -11,6 +11,9 @@ export class BagManager {
     private readonly _game: Game;
 
     constructor() {
+        
+        this._game = Game.getInstance();
+
         this._itemListElement = document.querySelector('#bag-item-list');
         this._selectedItemElement = document.getElementById('bag-selected-item');
         this._bagCloseBtn = document.querySelector('#bag-close-btn');
@@ -18,7 +21,6 @@ export class BagManager {
 
         this._bagCloseBtn.addEventListener('click', () => { this.onClickBagClose() });
         this._bagThrowAwayBtn.addEventListener('click', () => { this.onClickThrowAway() });
-        this._game = Game.getInstance();
     }
 
     start() {

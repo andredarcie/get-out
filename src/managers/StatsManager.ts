@@ -7,11 +7,13 @@ export class StatsManager {
     private readonly _game: Game;
 
     constructor() {
+        this._game = Game.getInstance();
+
         this._currentCharacterIndex = 0;
         this._charactersList = [];
 
         this.getPageElements();
-        this._game = Game.getInstance();
+
     }
 
     start(): void {
