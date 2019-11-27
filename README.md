@@ -24,6 +24,10 @@ npm run test
 ## Deploy to Github Pages
 
 ```
+npm install gh-pages -g
+```
+
+```
 npm run deploy
 ```
 
