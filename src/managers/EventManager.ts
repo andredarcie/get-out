@@ -24,8 +24,7 @@ export class EventManager {
     }
 
     start(): void {
-        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration, [new Item('Food', '', 1)]), 
-                      new Event("Wild Wolf Appeared", "Fight with the wolf?", EventType.Combat)];
+        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration, [new Item('Food', '', 1)])];
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this._currentEvent = events[randomIndex];

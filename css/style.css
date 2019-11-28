@@ -4,12 +4,34 @@
 }
 
 body {
-    font-family: travelingTypewriter;
-    color: white;
     background-color: black;
 }
 
-img {
-    width: 0;
-    height: 0;
+#container {
+    font-family: travelingTypewriter;
+    color: white;
+    margin: 1%;
 }
+
+#stats-page {
+    font-size: 90%;
+}
+
+img {
+    border: 2px solid #2c3e50;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    button {
+      width: 95%;
+      margin: 1% 2.5% 0 2.5%;
+      height: 40px;
+      color: white;
+      border: 1px solid #2c3e50;
+      background-color: black;
+      outline: none;
+    }
+  }
