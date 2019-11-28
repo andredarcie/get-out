@@ -84,13 +84,23 @@ export class BagManager {
             const button = document.createElement("button");
 
             let buttonText = character.name;
-            switch (this._selectedItem.type) {
-                case ItemType.Food:
-                        buttonText += ' ' + character.getHungry();
-                    break;
+
+            var paragraph = document.createElement("p");
+            
+            if (character.isDead) {
+                button.disabled = true;
+                paragraph.classList.add('line');
+                paragraph.style.color = '#2c3e50';
+            } else {
+                switch (this._selectedItem.type) {
+                    case ItemType.Food:
+                            buttonText += ' ' + character.getHungry();
+                        break;
+                }
             }
 
-            button.appendChild(document.createTextNode(buttonText));
+            paragraph.appendChild(document.createTextNode(buttonText));
+            button.appendChild(paragraph);
 
             button.addEventListener('click', () => this.useItem(character) );
             li.appendChild(button);

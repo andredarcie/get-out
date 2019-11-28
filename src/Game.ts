@@ -141,7 +141,7 @@ export class Game {
     }
 
     public addItemsToBag(): void {
-        this._bag.putItem(new Item("Food", "", 2, ItemType.Food));
+        this._bag.putItem(new Item("Food", "", 3, ItemType.Food));
     }
 
     public goToState(state: GameStates): void {

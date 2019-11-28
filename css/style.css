@@ -124,3 +124,7 @@ p {
         width: 100%;
     }
 }
+
+.line {
+    text-decoration: line-through;
+}
