@@ -1,4 +1,4 @@
-import { Game } from '../Game';
+import { Game, GameStates } from '../Game';
 
 export class Character {
     private _name: string;
@@ -10,10 +10,10 @@ export class Character {
     private _thirst: number;
     private _cold: boolean = false;
     private _maxHealth: number;
-    private readonly _limitForHungry = 18;
+    private _limitForHungry: number;
     private readonly _game: Game;
 
-    constructor(name: string, health: number, kinship: string, sick: boolean, hungry: number, thirst: number, cold: boolean) {
+    constructor(name: string, health: number, kinship: string, sick: boolean, hungry: number, thirst: number, cold: boolean, maxHealth: number, limitForHungry: number) {
         this._name = name;
         this._health = health;
         this._kinship = kinship;
@@ -21,8 +21,9 @@ export class Character {
         this._sick = sick;
         this._hungry = hungry;
         this._cold = cold;
-        this._maxHealth = health;
+        this._maxHealth = maxHealth;
         this._thirst = thirst;
+        this._limitForHungry = limitForHungry;
         this._game = Game.getInstance();
     }
 
@@ -48,10 +49,14 @@ export class Character {
 
     increaseHungry() {
         if (this._hungry >= this._limitForHungry) {
+            this.looseHealth(1);
+
             if (!this._isDead) {
                 this._game.log.addTempLog(this._name + ' is starving to death');
+            } else if (this.isDead) {
+                this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
             }
-            this.looseHealth(1);
+            
         } else {
             this._hungry++;
         }
@@ -87,16 +92,11 @@ export class Character {
 
             if (this._health <= 0) {
                 this._health = 0;
-
-                if (this._hungry >= this._limitForHungry) {
-                    this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
-                } else {
-                    this._game.log.addTempLog(this._name + ' died at day ' + this._game.currentDay);
-                }
-                
                 this._isDead = true;
-            } else {
-                this._game.log.addTempLog(this._name + ' lost -' + healthToLoose + ' health');
+
+                if (this._kinship == 'you') {
+                    this._game.goToState(GameStates.GAME_OVER);
+                }
             }
         }
     }

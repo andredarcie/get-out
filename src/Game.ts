@@ -131,13 +131,12 @@ export class Game {
     }
 
     private createAllCharacters(): void {
-        const initialHealth = 5;
         const initialHungry = 0;
-        this._characters.push(new Character('Ethan', initialHealth, 'father', true, initialHungry, 0, false));
-        this._characters.push(new Character('Olivia', initialHealth, 'mother', false, initialHungry, 0, true));
-        this._characters.push(new Character('Michael', initialHealth, 'son', true, initialHungry, 0, true));
-        this._characters.push(new Character('Sophia', initialHealth, 'daughter', false, initialHungry, 0, false));
-        this._characters.push(new Character('Emma', initialHealth, 'grandmother', true, initialHungry, 0, false));
+        this._characters.push(new Character('Ethan', 5, 'you', true, initialHungry, 0, false, 5, 18));
+        this._characters.push(new Character('Olivia', 5, 'wife', false, initialHungry, 0, true, 5, 18));
+        this._characters.push(new Character('Michael', 3, 'son', true, initialHungry, 0, true, 3, 12));
+        this._characters.push(new Character('Sophia', 3, 'daughter', false, initialHungry, 0, false, 3, 12));
+        this._characters.push(new Character('Emma', 3, 'mother', true, initialHungry, 0, false, 3, 12));
     }
 
     public addItemsToBag(): void {
@@ -145,6 +144,8 @@ export class Game {
     }
 
     public goToState(state: GameStates): void {
+        if (this._currentState == GameStates.GAME_OVER) return;
+        
         this._currentState = state;
         this.setState();
     }

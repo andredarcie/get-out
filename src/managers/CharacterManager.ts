@@ -11,16 +11,12 @@ export class CharacterManager {
 
     }
 
-    checkIfAllCharactersAreDead(): boolean {
-        let characters = this._game.characters;
-
-        return characters.every((character) => character.isDead);
-    }
-
     increaseHungryOfAllCharacters() {
         let characters = this._game.characters;
         for (let character of characters) {
-            character.increaseHungry();
+            if (!character.isDead) {
+                character.increaseHungry();
+            }
         }
     }
 
