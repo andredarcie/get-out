@@ -3,35 +3,124 @@
     src: url(../TravelingTypewriter.ttf);
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+html,
 body {
-    background-color: black;
+    width: 100vw;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    display: flex;
 }
 
 #container {
+    font-size: 16px;
     font-family: travelingTypewriter;
-    color: white;
-    margin: 1%;
+    color: #ffffff;
+    padding: 5vw;
+    width: 100%;
+    height: 100%;
+    max-width: 380px;
+    max-height: 700px;
+    margin: auto;
+    background-color: #000000;
 }
 
-#stats-page {
-    font-size: 90%;
+#core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+#core > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+#core > div#game-over-page {
+    align-items: center;
+    justify-content: center;
+}
+
+#core > div#game-over-page > #game-over-message {
+    position: absolute;
+    bottom: 20px;
+}
+
+#core > div > .page-actions {
+    justify-self: flex-end;
+}
+
+#core > div > .travel-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 0;
+    overflow-y: auto;
+}
+
+#core > div > .stats-content,
+#core > div > .bag-content,
+#core > div > .log-content {
+    padding: 20px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+button {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    color: #ffffff;
+    border: 1px solid #2c3e50;
+    background-color: #000000;
+    cursor: pointer;
+}
+
+button + button {
+    margin-top: 15px;
+}
+
+button.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
+    animation: fill 2s;
 }
 
 img {
     border: 2px solid #2c3e50;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    margin: 0 auto;
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
-    button {
-      width: 95%;
-      margin: 1% 2.5% 0 2.5%;
-      height: 40px;
-      color: white;
-      border: 1px solid #2c3e50;
-      background-color: black;
-      outline: none;
+p {
+    margin: 10px 0;
+}
+
+@keyframes fill {
+    from {
+        width: 0;
     }
-  }
+    to {
+        width: 100%;
+    }
+}

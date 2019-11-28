@@ -150,7 +150,7 @@ export class Game {
     }
 
     public showPage(page: HTMLElement): void {
-        page.style.display = "block";
+        page.style.display = 'flex';
     }
 
     public hidePage(page: HTMLElement): void {
