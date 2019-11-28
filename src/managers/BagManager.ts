@@ -1,5 +1,6 @@
 import { Game, GameStates } from '../Game';
-import { Item } from '../entities/Item';
+import { Item, ItemType } from '../entities/Item';
+import { Character } from '../entities/Character';
 
 export class BagManager {
     private _items: Item[] = [];
@@ -59,9 +60,8 @@ export class BagManager {
 
         for (let i = 0; i < this._items.length; i++) {
             const li = document.createElement("li");
-            const button = document.createElement("input");
-            button.type = "button";
-            button.value = this._items[i].getNameWithAmount();
+            const button = document.createElement("button");
+            button.appendChild(document.createTextNode(this._items[i].getNameWithAmount()));
             button.addEventListener('click', () => this.selectItem(this._items[i]) );
             li.appendChild(button);
             this._itemListElement.appendChild(li);
@@ -79,12 +79,20 @@ export class BagManager {
     }
 
     showCharacters() {
-        for (let i = 0; i < this._game.characters.length; i++) {
+        for (const character of this._game.characters) {
             const li = document.createElement("li");
-            const button = document.createElement("input");
-            button.type = "button";
-            button.value = this._game.characters[i].name;
-            button.addEventListener('click', () => this.useItem(i) );
+            const button = document.createElement("button");
+
+            let buttonText = character.name;
+            switch (this._selectedItem.type) {
+                case ItemType.Food:
+                        buttonText += ' ' + character.getHungry();
+                    break;
+            }
+
+            button.appendChild(document.createTextNode(buttonText));
+
+            button.addEventListener('click', () => this.useItem(character) );
             li.appendChild(button);
             this._itemListElement.appendChild(li);
         }
@@ -99,11 +107,11 @@ export class BagManager {
         this._bagThrowAwayBtn.style.display = 'block';
     }
 
-    useItem(index: number) {
+    useItem(character: Character) {
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
-        this._game.characters[index].decreaseHungry(12);
+        character.decreaseHungry(12);
         this._bagThrowAwayBtn.style.display = 'none';
     }
 

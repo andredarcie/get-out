@@ -1,6 +1,6 @@
 import { Event, EventType } from '../entities/Event';
 import { Game, GameStates } from '../Game';
-import { Item } from '../entities/Item';
+import { Item, ItemType } from '../entities/Item';
 
 export class EventManager {
     private _titleElement: HTMLElement;
@@ -24,7 +24,7 @@ export class EventManager {
     }
 
     start(): void {
-        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration, [new Item('Food', '', 1)])];
+        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration, [new Item('Food', '', 1, ItemType.Food)])];
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this._currentEvent = events[randomIndex];

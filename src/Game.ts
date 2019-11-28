@@ -7,7 +7,7 @@ import { LogManager } from './managers/LogManager';
 import { BagManager } from './managers/BagManager';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
-import { Item } from './entities/Item';
+import { Item, ItemType } from './entities/Item';
 import { Clock } from './entities/Clock';
 
 export enum GameStates {
@@ -141,7 +141,7 @@ export class Game {
     }
 
     public addItemsToBag(): void {
-        this._bag.putItem(new Item("Food", "", 2));
+        this._bag.putItem(new Item("Food", "", 2, ItemType.Food));
     }
 
     public goToState(state: GameStates): void {
