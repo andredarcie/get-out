@@ -11,6 +11,7 @@ export class TravelManager {
     private _statsBtn: Element;
     private _walking: boolean;
     private _game: Game;
+    private readonly _animationDuration: number;
 
     constructor() {
         this._game = Game.getInstance();
@@ -29,7 +30,8 @@ export class TravelManager {
         this._statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
 
         this.showTravelledDistance();
-        
+
+        this._animationDuration = 2000;
     }
 
     start(): void {
@@ -38,15 +40,22 @@ export class TravelManager {
     }
 
     onClickWalkBtn(): void {
-        this.passOneHour();
+        this._walkBtn.setAttribute('disabled', 'disabled');
+        this._walkBtn.classList.add('loading');
 
-        const foundEvent = this.checkEvent();
+        setTimeout(() => {
+            this._walkBtn.classList.remove('loading');
+            this._walkBtn.removeAttribute('disabled');
 
-        if (foundEvent) {
-            this._game.goToState(GameStates.EVENT);
-        } else if (this._game.log.isThereAnyTemporaryLog()) {
-            this._game.goToState(GameStates.LOG);
-        }
+            this.passOneHour();
+            const foundEvent = this.checkEvent();
+
+            if (foundEvent) {
+                this._game.goToState(GameStates.EVENT);
+            } else if (this._game.log.isThereAnyTemporaryLog()) {
+                this._game.goToState(GameStates.LOG);
+            }
+        }, this._animationDuration);
     }
 
     onClickCampBtn(): void {
