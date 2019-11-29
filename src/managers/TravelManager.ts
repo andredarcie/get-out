@@ -9,7 +9,6 @@ export class TravelManager {
     private _walkBtn: Element;
     private _campBtn: Element;
     private _statsBtn: Element;
-    private _walking: boolean;
     private _game: Game;
     private readonly _animationDuration: number;
 
@@ -37,6 +36,11 @@ export class TravelManager {
     start(): void {
         this.showTime();
         
+        if (this._game.characterManager.isInDanger()) {
+            this._statsBtn.innerHTML = 'Your Family (!)';
+        } else {
+            this._statsBtn.innerHTML = 'Your Family';
+        }
     }
 
     onClickWalkBtn(): void {
@@ -112,24 +116,19 @@ export class TravelManager {
     }
 
     walkOneHour() {
-        this._game.addDistanceToTravelledDistance(2);
+        this._game.decreaseTheDistanceToTheBorder(2);
         this.increaseProgressBar();
 
         this.showTravelledDistance();
-
-        let allPlayerAreDead = this._game.characterManager.checkIfAllCharactersAreDead();
-        if (allPlayerAreDead) 
-        this._game.goToState(GameStates.GAME_OVER);
         
-        if(this._game.travelledDistance > this._game.distanceToGoal) {
-            this.arrivedAtTheGoal();
+        if(this._game.distanceToTheBorder <= 0) {
+            this.arrivedAtTheBorder();
         }
     }
 
     increaseProgressBar() {
-        let progressBarFullWidth = 321;
-        let unity = progressBarFullWidth / this._game.distanceToGoal;
-        this._progressBar.style.width = this._game.travelledDistance * unity + 'px';
+        let progressBarLevel = 300 - this._game.distanceToTheBorder;
+        this._progressBar.style.width = progressBarLevel * 1 + 'px';
     }
 
     getRandomCharacter() {
@@ -137,10 +136,10 @@ export class TravelManager {
     }
 
     showTravelledDistance() {
-        this._travelledDistanceField.innerHTML = 'Travelled distance: ' + this._game.travelledDistance + ' miles';
+        this._travelledDistanceField.innerHTML = this._game.distanceToTheBorder + ' miles to the border';
     }
 
-    arrivedAtTheGoal() {
+    arrivedAtTheBorder() {
         this._game.goToState(GameStates.GAME_OVER);
     }
 }
