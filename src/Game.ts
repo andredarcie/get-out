@@ -44,6 +44,7 @@ export class Game {
     private _log: LogManager;
     private _bag: BagManager;
     private _characterManager: CharacterManager;
+    private _currentTimeField: Element;
 
     private constructor() {
         this._travelPage = document.getElementById("travel-page");
@@ -53,6 +54,7 @@ export class Game {
         this._eventPage = document.getElementById("event-page");
         this._gameOverPage = document.getElementById("game-over-page");
         this._bagPage = document.getElementById("bag-page");
+        this._currentTimeField = document.querySelector("#current-time-field");
     }
 
     static getInstance(): Game {
@@ -77,9 +79,9 @@ export class Game {
         this._clock = new Clock(8, true);
         this._log = new LogManager();
 
+        this.showDataTime();
         this.createAllCharacters();
-        this.hideAllPages();
-        this.showPage(this._campPage);
+        this.goToState(GameStates.TRAVEL);
     }
 
     get log(): LogManager {
@@ -197,5 +199,32 @@ export class Game {
                 this._bag.start();
             break;
         }
+    }
+
+    showDataTime() {
+        this._currentTimeField.innerHTML = this._clock.showTime() + ' - day ' + this._currentDay;
+
+        if (this._clock.anteMeridiem) {
+            if (this._clock.currentHour > 6 && this._clock.currentHour < 12) {
+                this._currentTimeField.innerHTML += ' - daylight';
+            } else {
+                this._currentTimeField.innerHTML += ' - night';
+            }
+        } else {
+            if (this._clock.currentHour > 6 && this._clock.currentHour < 12) {
+                this._currentTimeField.innerHTML += ' - night';
+            } else {
+                this._currentTimeField.innerHTML += ' - daylight';
+            }
+        }
+    }
+
+    passOneHour(): void {
+        if (this._clock.currentHour == 12 && this._clock.anteMeridiem) {
+            this.addDaysToCurrentDay(1);
+        }
+
+        this._clock.nextHour();
+        this.showDataTime();
     }
 }

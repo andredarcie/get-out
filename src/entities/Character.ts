@@ -11,6 +11,8 @@ export class Character {
     private _cold: boolean = false;
     private _maxHealth: number;
     private _limitForHungry: number;
+    private _stamina: number;
+    private _maxStamina: number = 100;
     private readonly _game: Game;
 
     constructor(name: string, health: number, kinship: string, sick: boolean, hungry: number, thirst: number, cold: boolean, maxHealth: number, limitForHungry: number) {
@@ -24,6 +26,7 @@ export class Character {
         this._maxHealth = maxHealth;
         this._thirst = thirst;
         this._limitForHungry = limitForHungry;
+        this._stamina = this._maxStamina;
         this._game = Game.getInstance();
     }
 
@@ -39,6 +42,10 @@ export class Character {
         return this._health;
     }
 
+    get stamina() {
+        return this._stamina;
+    }
+
     get kinship() {
         return this._kinship;
     }
@@ -51,10 +58,10 @@ export class Character {
         if (this._hungry >= this._limitForHungry) {
             this.looseHealth(1);
 
-            if (!this._isDead) {
-                this._game.log.addTempLog(this._name + ' is starving to death');
-            } else if (this.isDead) {
+            if (this._isDead) {
                 this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
+            } else {
+                this._game.log.addTempLog(this._name + ' is starving to death');
             }
             
         } else {
@@ -62,9 +69,33 @@ export class Character {
         }
     }
 
+    increaseStaminaToMax() {
+        this._stamina = this._maxStamina;
+    }
+
+    decreaseStamina(staminaToDecrease: number) {
+        if (staminaToDecrease <= 0) {
+            throw new Error('Stamina value must be greater than zero');
+        }
+
+        this._stamina = this._stamina - staminaToDecrease;
+
+        if (this._stamina <= 0) {
+            this._stamina = 0;
+
+            this.looseHealth(1);
+
+            if (this._isDead) {
+                this._game.log.addTempLog(this._name + ' died of exhaustion at day ' + this._game.currentDay);
+            } else {
+                this._game.log.addTempLog(this._name + ' is dying of tiredness');
+            }
+        }
+    }
+
     decreaseHungry(hungryToDecrease: number) {
         if (hungryToDecrease < 0) {
-            throw new Error('Invalid value for hungryToDecrease');
+            throw new Error('Hungry value must be greater than zero');
         }
 
         if (this._hungry > 0) {
@@ -77,6 +108,16 @@ export class Character {
             return '[HUNGRY]';
         } else if (this._hungry >= 12) {
             return '[VERY HUNGRY]'
+        }
+
+        return '';
+    }
+
+    getStamina(): string {
+        if (this._stamina < (this._maxStamina / 3)) {
+            return '[VERY TIRED]';
+        } else if (this._stamina < ((this._maxStamina / 3) * 2)) {
+            return '[TIRED]';
         }
 
         return '';

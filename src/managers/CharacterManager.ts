@@ -13,11 +13,23 @@ export class CharacterManager {
     }
 
     increaseHungryOfAllCharacters() {
-        let characters = this._game.characters;
+        let characters = this.getCharactersAlive();
         for (let character of characters) {
-            if (!character.isDead) {
-                character.increaseHungry();
-            }
+            character.increaseHungry();
+        }
+    }
+
+    decreaseStaminaOfAllCharacters(staminToDecrease: number) {
+        let characters = this.getCharactersAlive();
+        for (let character of characters) {
+            character.decreaseStamina(staminToDecrease);
+        }
+    }
+
+    increaseStaminaOfAllCharacters(staminToDecrease: number) {
+        let characters = this.getCharactersAlive();
+        for (let character of characters) {
+            character.increaseStaminaToMax();
         }
     }
 

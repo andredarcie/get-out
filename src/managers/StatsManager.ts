@@ -76,8 +76,8 @@ export class StatsManager {
                 this._charactersList[i].healthField.innerHTML = 'Is Dead';
                 this._charactersList[i].atributesField.style.display = 'none';
             } else {
-                this._charactersList[i].healthField.innerHTML = 'Health: ' + character.health;
-                this._charactersList[i].atributesField.innerHTML = character.getHungry();
+                this._charactersList[i].healthField.innerHTML = 'Health: ' + character.health + ' - Stamina: ' + character.stamina;
+                this._charactersList[i].atributesField.innerHTML = character.getHungry() + ' ' + character.getStamina();
             }
         }
     }

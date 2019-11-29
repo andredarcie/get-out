@@ -4,11 +4,10 @@ export class TravelManager {
     private _travelPage: Element;
     private _travelImage: Element;
     private _travelledDistanceField: Element;
-    private _currentTimeField: Element;
     private _progressBar: HTMLElement;
-    private _walkBtn: Element;
-    private _campBtn: Element;
-    private _statsBtn: Element;
+    private _walkBtn: HTMLButtonElement;
+    private _campBtn: HTMLButtonElement;
+    private _statsBtn: HTMLButtonElement;
     private _game: Game;
     private readonly _animationDuration: number;
 
@@ -18,7 +17,6 @@ export class TravelManager {
         this._travelPage = document.querySelector("#travel-page");
         this._travelImage = document.querySelector("#travel-img");
         this._travelledDistanceField = document.querySelector("#travelled-distance");
-        this._currentTimeField = document.querySelector("#current-time-field");
         this._progressBar = document.getElementById("progress-bar");
         this._walkBtn = document.querySelector("#walk-btn");
         this._campBtn = document.querySelector("#camp-btn");
@@ -34,8 +32,6 @@ export class TravelManager {
     }
 
     start(): void {
-        this.showTime();
-        
         if (this._game.characterManager.isInDanger()) {
             this._statsBtn.innerHTML = 'Your Family (!)';
         } else {
@@ -44,14 +40,15 @@ export class TravelManager {
     }
 
     onClickWalkBtn(): void {
-        this._walkBtn.setAttribute('disabled', 'disabled');
+        this._walkBtn.disabled = true;
         this._walkBtn.classList.add('loading');
 
         setTimeout(() => {
             this._walkBtn.classList.remove('loading');
-            this._walkBtn.removeAttribute('disabled');
+            this._walkBtn.disabled = false;
 
-            this.passOneHour();
+            this._game.passOneHour();
+            this.walkOneHour();
             const foundEvent = this.checkEvent();
 
             if (foundEvent) {
@@ -63,25 +60,20 @@ export class TravelManager {
     }
 
     onClickCampBtn(): void {
-        this._game.goToState(GameStates.CAMP);
+        this._campBtn.disabled = true;
+        this._campBtn.classList.add('loading');
+
+        setTimeout(() => {
+            this._campBtn.classList.remove('loading');
+            this._campBtn.disabled = false;
+
+            this._game.passOneHour();
+            this._game.goToState(GameStates.CAMP);
+        }, this._animationDuration);
     }
 
     onClickStatsBtn() {
         this._game.goToState(GameStates.STATS);
-    }
-
-    passOneHour(): void {
-
-        if (this._game.clock.currentHour == 12 && this._game.clock.anteMeridiem) {
-            this.gotoNextDay();
-        }
-
-        this._game.clock.nextHour();
-        this.walkOneHour();
-        this._game.characterManager.increaseHungryOfAllCharacters();
-
-
-        this.showTime();
     }
 
     checkEvent() {
@@ -92,30 +84,9 @@ export class TravelManager {
         return Math.random() * (max - min) + min;
     }
 
-    gotoNextDay() {
-        this._game.addDaysToCurrentDay(1);
-        this.showTime();
-    }
-
-    showTime() {
-        this._currentTimeField.innerHTML = this._game.clock.showTime() + ' - day ' + this._game.currentDay;
-
-        if (this._game.clock.anteMeridiem) {
-            if (this._game.clock.currentHour > 6 && this._game.clock.currentHour < 12) {
-                this._currentTimeField.innerHTML += ' - daylight';
-            } else {
-                this._currentTimeField.innerHTML += ' - night';
-            }
-        } else {
-            if (this._game.clock.currentHour > 6 && this._game.clock.currentHour < 12) {
-                this._currentTimeField.innerHTML += ' - night';
-            } else {
-                this._currentTimeField.innerHTML += ' - daylight';
-            }
-        }
-    }
-
     walkOneHour() {
+        this._game.characterManager.decreaseStaminaOfAllCharacters(5);
+        this._game.characterManager.increaseHungryOfAllCharacters();
         this._game.decreaseTheDistanceToTheBorder(2);
         this.increaseProgressBar();
 
