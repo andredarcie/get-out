@@ -4,19 +4,33 @@ export class StatsManager {
     private _currentCharacterIndex: number;
     private _charactersList: any;
     private _backCharacterBtn: Element;
+    private _bagBtn: HTMLButtonElement;
     private readonly _game: Game;
 
     constructor() {
         this._game = Game.getInstance();
 
+        this._bagBtn = document.querySelector('#bag-btn');
+        this._bagBtn.addEventListener('click', () => { this.onClickBag() });
         this._currentCharacterIndex = 0;
         this._charactersList = [];
 
         this.getPageElements();
+    }
 
+    onClickBag() {
+        this._game.goToState(GameStates.BAG);
     }
 
     start(): void {
+        if (this._game.bagManager.isEmpty()) {
+            this._bagBtn.innerHTML = 'Bag is empty';
+            this._bagBtn.disabled = true;
+        } else {
+            this._bagBtn.disabled = false;
+            this._bagBtn.innerHTML = 'Open bag';
+        }
+        
         this.showCharacters();
     }
 

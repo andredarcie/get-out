@@ -28,8 +28,7 @@ export class Game {
     private _hours = 0;
     private _clock: Clock; 
     private _characters: Character[] = [];
-    private _travelledDistance = 0;
-    private _distanceToGoal = 300;
+    private _distanceToTheBorder = 300;
     private _travelPage: HTMLElement;
     private _logPage: HTMLElement;
     private _campPage: HTMLElement;
@@ -67,6 +66,8 @@ export class Game {
     public start(): void {
 
         this._bag = new BagManager();
+        this.addItemsToBag();
+
         this._camp = new CampManager();
         this._events = new EventManager();
         this._gameOver = new GameOverManager();
@@ -78,7 +79,6 @@ export class Game {
 
         this.createAllCharacters();
         this.hideAllPages();
-        this.addItemsToBag();
         this.showPage(this._campPage);
     }
 
@@ -110,20 +110,16 @@ export class Game {
         return this._currentDay;
     }
 
-    get distanceToGoal(): number {
-        return this._distanceToGoal;
-    }
-
-    get travelledDistance(): number {
-        return this._travelledDistance;
+    get distanceToTheBorder(): number {
+        return this._distanceToTheBorder;
     }
 
     get characters(): Character[] {
         return this._characters;
     }
-
-    public addDistanceToTravelledDistance(distanceToAdd: number) {
-        this._travelledDistance += distanceToAdd;
+    
+    public decreaseTheDistanceToTheBorder(distanceToDecrease: number) {
+        this._distanceToTheBorder -= distanceToDecrease;
     }
 
     public addDaysToCurrentDay (daysToAdd: number): void {
@@ -145,7 +141,7 @@ export class Game {
 
     public goToState(state: GameStates): void {
         if (this._currentState == GameStates.GAME_OVER) return;
-        
+
         this._currentState = state;
         this.setState();
     }

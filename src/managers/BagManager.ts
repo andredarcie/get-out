@@ -30,11 +30,11 @@ export class BagManager {
         this._bagThrowAwayBtn.style.display = 'none';
     }
 
-    onClickBagClose() {
-        this._game.goToState(GameStates.CAMP);
+    private onClickBagClose() {
+        this._game.goToState(GameStates.STATS);
     }
 
-    onClickThrowAway() {
+    private onClickThrowAway() {
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
@@ -42,16 +42,16 @@ export class BagManager {
         this._bagThrowAwayBtn.style.display = 'none';
     }
 
-    hideSelectedItem() {
+    private hideSelectedItem() {
         this._selectedItemElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
     }
 
-    showSelectedItem() {
+    private showSelectedItem() {
         this._selectedItemElement.style.display = 'block';
     }
 
-    showItems() {
+    private showItems() {
         this._itemListElement.innerHTML = '';
 
         if (this._items.length == 0) {
@@ -79,7 +79,7 @@ export class BagManager {
         }
     }
 
-    showCharacters() {
+    private showCharacters() {
         for (const character of this._game.characters) {
             const li = document.createElement("li");
             const button = document.createElement("button");
@@ -109,7 +109,7 @@ export class BagManager {
         }
     }
 
-    selectItem(selectedItem: Item) {
+    private selectItem(selectedItem: Item) {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.innerHTML = 'Give ' + this._selectedItem.name + ' to';
@@ -118,7 +118,7 @@ export class BagManager {
         this._bagThrowAwayBtn.style.display = 'block';
     }
 
-    useItem(character: Character) {
+    private useItem(character: Character) {
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
@@ -126,7 +126,7 @@ export class BagManager {
         this._bagThrowAwayBtn.style.display = 'none';
     }
 
-    removeOrDecreaseItem() {
+    private removeOrDecreaseItem() {
         if (this._selectedItem.amount > 1) {
             this._selectedItem.decreaseAmount();
         } else {
@@ -134,7 +134,11 @@ export class BagManager {
         }
     }
 
-    removeItem(itemToRemove: Item): void {
+    private removeItem(itemToRemove: Item): void {
         this._items = this._items.filter(item => item.name !== itemToRemove.name);
+    }
+
+    isEmpty(): boolean {
+        return this._items.length <= 0;
     }
 }
