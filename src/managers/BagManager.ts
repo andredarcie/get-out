@@ -37,6 +37,7 @@ export class BagManager {
     onClickThrowAway() {
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
+        this._selectedItemElement.style.display = 'none';
         this.showItems();
         this._bagThrowAwayBtn.style.display = 'none';
     }
