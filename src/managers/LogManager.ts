@@ -43,6 +43,7 @@ export class LogManager {
 
     log(text: string): void {
         this._tempLogs.push(text);
+        
     }
 
     onClickTravel() {
@@ -55,5 +56,6 @@ export class LogManager {
 
     addTempLog(log: string) {
         this._tempLogs.push(log);
+        this._game.addLogToFirebase(log);
     }
 }

@@ -89,6 +89,7 @@ export class TravelManager {
         this._game.characterManager.increaseHungryOfAllCharacters();
         this._game.decreaseTheDistanceToTheBorder(2);
         this.increaseProgressBar();
+        this._game.addLogToFirebase('Walk one hour');
 
         this.showTravelledDistance();
         

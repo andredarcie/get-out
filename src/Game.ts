@@ -9,6 +9,8 @@ import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
 import { Item, ItemType } from './entities/Item';
 import { Clock } from './entities/Clock';
+import * as firebase from 'firebase/app';
+require("firebase/database");
 
 export enum GameStates {
     TRAVEL,
@@ -45,6 +47,7 @@ export class Game {
     private _bag: BagManager;
     private _characterManager: CharacterManager;
     private _currentTimeField: Element;
+    private playerGuid: string;
 
     private constructor() {
         this._travelPage = document.getElementById("travel-page");
@@ -55,6 +58,7 @@ export class Game {
         this._gameOverPage = document.getElementById("game-over-page");
         this._bagPage = document.getElementById("bag-page");
         this._currentTimeField = document.querySelector("#current-time-field");
+        this.playerGuid = this.generateGuid();
     }
 
     static getInstance(): Game {
@@ -82,6 +86,37 @@ export class Game {
         this.showDataTime();
         this.createAllCharacters();
         this.goToState(GameStates.TRAVEL);
+        this.startFirebase();
+    }
+
+    private startFirebase(): void {
+        var firebaseConfig = {
+            apiKey: "AIzaSyBgdfo0fzhb_Meli1pcIhUb-qimpce-_WA",
+            authDomain: "getout-a2360.firebaseapp.com",
+            databaseURL: "https://getout-a2360.firebaseio.com",
+            projectId: "getout-a2360",
+            storageBucket: "getout-a2360.appspot.com",
+            messagingSenderId: "995739637479",
+            appId: "1:995739637479:web:fc4723344bae88ff317442",
+            measurementId: "G-D8S0K3NWFV"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    public addLogToFirebase(logToAdd: string): void {
+        const logsRef = firebase.database().ref('logs/' + this.playerGuid);
+        const newLogsRef = logsRef.push();
+        newLogsRef.set(
+            logToAdd
+        )
+        .then((docRef) => {
+            console.log("Document written with log");
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
     }
 
     get log(): LogManager {
@@ -226,5 +261,12 @@ export class Game {
 
         this._clock.nextHour();
         this.showDataTime();
+    }
+
+    generateGuid(): string {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
     }
 }
