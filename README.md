@@ -17,8 +17,14 @@ parcel index.html
 
 ## Testing
 
+Install Jest CLI
 ```
-npm run test
+npm install jest --global
+```
+
+Run all tests
+```
+jest
 ```
 
 ## Deploy to Github Pages
