@@ -5,15 +5,24 @@ export enum EventType {
     Combat
 }
 
+interface Choice {
+    buttonText: string;
+    callback: any;
+}
+
 export class Event {
     private _name: string;
     private _description: string;
+    private _onYes: Choice;
+    private _onNo: Choice;
     private _type: EventType;
     private _items: Item[] = [];
 
-    constructor(name: string, description: string, type: EventType, items?: Item[]) {
+    constructor(name: string, description: string, onYes: Choice, onNo: Choice, type: EventType, items?: Item[]) {
         this._name = name;
         this._description = description;
+        this._onYes = onYes;
+        this._onNo = onNo;
         this._type = type;
         this._items = items;
     }
@@ -24,6 +33,14 @@ export class Event {
 
     get description() {
         return this._description;
+    }
+
+    get onYes() {
+        return this._onYes;
+    }
+
+    get onNo() {
+        return this._onNo;
     }
 
     get type() {

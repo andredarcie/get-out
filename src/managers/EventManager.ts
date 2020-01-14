@@ -1,6 +1,7 @@
 import { Event, EventType } from '../entities/Event';
 import { Game, GameStates } from '../Game';
 import { Item, ItemType } from '../entities/Item';
+import { EventSeeds } from '../seeds/EventSeeds';
 
 export class EventManager {
     private _titleElement: HTMLElement;
@@ -24,7 +25,9 @@ export class EventManager {
     }
 
     start(): void {
-        let events = [new Event("Abandoned house", "No sign of life. Explore the house?", EventType.Exploration, [new Item('Food', '', 1, ItemType.Food)])];
+        const eventSeeds = new EventSeeds();
+        eventSeeds.start();
+        let events = eventSeeds.events;
         let randomIndex = this.getRandomArbitrary(events.length);
 
         this._currentEvent = events[randomIndex];
@@ -53,45 +56,23 @@ export class EventManager {
         this._yesButton.style.display = 'inline-block';
         this._noButton.style.display = 'inline-block';
 
-        switch (this._currentEvent.type) {
-            case EventType.Exploration: 
-                this._yesButton.innerHTML = 'Explore';
-                this._noButton.innerHTML = 'Ignore';
-                break;
-            case EventType.Combat:
-                this._yesButton.innerHTML = 'Fight';
-                this._noButton.innerHTML = 'Run away';
-        }
+        this._yesButton.innerHTML = this._currentEvent.onYes.buttonText;
+        this._noButton.innerHTML = this._currentEvent.onNo.buttonText;
     }
 
     onEventPageYesBtn(): void {
-        let randomCharacterIndex = this.getRandomArbitrary(this._game.characters.length);
-        let randomCharacter = this._game.characters[randomCharacterIndex];
+        this._currentEvent.onYes.callback();
 
-        switch (this._currentEvent.type) {
-            case EventType.Exploration:
-                this._game.log.addTempLog(randomCharacter.name + ' found food!');
-                break;
-            case EventType.Combat:
-                randomCharacter.looseHealth(1);
-                break;
-        }
-
-        if(this._currentEvent.willGiveItems()) {
-            for (let item of this._currentEvent.items) {
-                this._game.bagManager.putItem(item);
-            }
-        }
-
-        if (this._game.log.isThereAnyTemporaryLog()) {
-            this._game.goToState(GameStates.LOG);
-        } else {
-            this._game.goToState(GameStates.TRAVEL);
-        }
+        this.checkLogs();
     }
 
     onEventPageNoBtn(): void {
+        this._currentEvent.onNo.callback();
 
+        this.checkLogs();
+    }
+
+    checkLogs(): void {
         if (this._game.log.isThereAnyTemporaryLog()) {
             this._game.goToState(GameStates.LOG);
         } else {
@@ -100,6 +81,6 @@ export class EventManager {
     }
 
     getRandomArbitrary(max: number): number {
-        return Math.floor(Math.random() * max) 
+        return Math.floor(Math.random() * max);
     }
 }
