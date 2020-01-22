@@ -1,9 +1,5 @@
 export enum ItemType {
-    Food,
-    Drink,
-    Medical,
-    Tool,
-    Weapon
+    FirstAid,
 }
 
 export class Item {
