@@ -1,5 +1,6 @@
 import { Event, EventType } from '../entities/Event';
 import { Game, GameStates } from '../Game';
+import { ItemSeeds, ItemsNames } from '../seeds/ItemSeeds'
 
 export class EventSeeds {
     private _events: Event[];
@@ -37,6 +38,7 @@ export class EventSeeds {
                 buttonText: 'Explore',
                 callback: () => {
                     this._game.log.addTempLog('You have found supplies');
+                    this._game.bagManager.putItem(ItemSeeds.getItens(ItemsNames.Antibiotic, 1));
                 }
             },
             { 

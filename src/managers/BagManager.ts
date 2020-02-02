@@ -6,6 +6,7 @@ export class BagManager {
     private _items: Item[] = [];
     private _itemListElement: Element;
     private _selectedItemElement: any;
+    private _itemDescriptionElement: any;
     private _selectedItem: Item;
     private _bagCloseBtn: Element;
     private _bagThrowAwayBtn: HTMLElement;
@@ -17,6 +18,7 @@ export class BagManager {
 
         this._itemListElement = document.querySelector('#bag-item-list');
         this._selectedItemElement = document.getElementById('bag-selected-item');
+        this._itemDescriptionElement = document.getElementById('bag-description-item');
         this._bagCloseBtn = document.querySelector('#bag-close-btn');
         this._bagThrowAwayBtn = document.getElementById('bag-throw-away-btn');
 
@@ -38,17 +40,21 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
+        this._itemDescriptionElement.style.display = 'none';
         this.showItems();
         this._bagThrowAwayBtn.style.display = 'none';
     }
 
     private hideSelectedItem() {
         this._selectedItemElement.innerHTML = '';
+        this._itemDescriptionElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
+        this._itemDescriptionElement.style.display = 'none';
     }
 
     private showSelectedItem() {
         this._selectedItemElement.style.display = 'block';
+        this._itemDescriptionElement.style.display = 'block';
     }
 
     private showItems() {
@@ -69,13 +75,13 @@ export class BagManager {
         }
     }
 
-    putItem(item: Item): void {
-        let existingItemIndex = this._items.findIndex(item => item.name == item.name);
+    putItem(itemToPut: Item): void {
+        let existingItemIndex = this._items.findIndex(item => item.name == itemToPut.name);
 
         if (existingItemIndex >= 0) {
             this._items[existingItemIndex].increaseAmount();
         } else {
-            this._items.push(item);
+            this._items.push(itemToPut);
         }
     }
 
@@ -94,8 +100,14 @@ export class BagManager {
                 paragraph.style.color = '#2c3e50';
             } else {
                 switch (this._selectedItem.type) {
+                    case ItemType.FirstAid:
+                        buttonText += ' ' + character.health;
+                        break;
                     case ItemType.Food:
-                            buttonText += ' ' + character.getHungry();
+                        buttonText += ' ' + character.getHungry();
+                        break;
+                    case ItemType.Drink:
+                        buttonText += ' ' + character.thirst;
                         break;
                 }
             }
@@ -112,7 +124,8 @@ export class BagManager {
     private selectItem(selectedItem: Item) {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
-        this._selectedItemElement.innerHTML = 'Give ' + this._selectedItem.name + ' to';
+        this._selectedItemElement.innerHTML = 'Give to:';
+        this._itemDescriptionElement.innerHTML = this._selectedItem.name + ' - ' + this._selectedItem.description;
         this.showSelectedItem();
         this.showCharacters();
         this._bagThrowAwayBtn.style.display = 'block';
@@ -122,6 +135,18 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
+
+        switch (this._selectedItem.type) {
+            case ItemType.FirstAid:
+                character.increaseHealth(1);
+                break;
+            case ItemType.Food:
+                character.decreaseHungry(1);
+                break;
+            case ItemType.Drink:
+                character.decreaseThirst(1);
+                break;
+        }
         character.decreaseHungry(12);
         this._bagThrowAwayBtn.style.display = 'none';
     }

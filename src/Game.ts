@@ -10,6 +10,7 @@ import { CharacterManager } from './managers/CharacterManager';
 import { Item, ItemType } from './entities/Item';
 import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
+import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
 require("firebase/database");
 
 export enum GameStates {
@@ -173,7 +174,9 @@ export class Game {
     }
 
     public addItemsToBag(): void {
-        this._bag.putItem(new Item("Food", "", 3, ItemType.Food));
+        for(let i = 0; i < 10; i++) {
+            this._bag.putItem(ItemSeeds.getOneRandomItem());
+        }
     }
 
     public goToState(state: GameStates): void {

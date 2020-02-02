@@ -50,6 +50,10 @@ export class Character {
         return this._kinship;
     }
 
+    get thirst() {
+        return this._thirst;
+    }
+
     get maxHealth() {
         return this._maxHealth;
     }
@@ -95,11 +99,21 @@ export class Character {
 
     decreaseHungry(hungryToDecrease: number) {
         if (hungryToDecrease < 0) {
-            throw new Error('Hungry value must be greater than zero');
+            throw new Error('Hungry to decrease value must be greater than zero');
         }
 
         if (this._hungry > 0) {
             this._hungry = this._hungry - hungryToDecrease;
+        }
+    }
+
+    decreaseThirst(thirstToDecrease: number) {
+        if (thirstToDecrease < 0) {
+            throw new Error('Thirst to decrease value must be greater than zero');
+        }
+
+        if (this._thirst > 0) {
+            this._thirst = this._thirst - thirstToDecrease;
         }
     }
 
@@ -108,6 +122,16 @@ export class Character {
             return '[HUNGRY]';
         } else if (this._hungry >= 12) {
             return '[VERY HUNGRY]'
+        }
+
+        return '';
+    }
+
+    getHealth(): string {
+        if (this._health >= 6 && this._health < 12) {
+            return '[HEALTH]';
+        } else if (this._health >= 12) {
+            return '[VERY HEALTH]'
         }
 
         return '';
@@ -140,5 +164,9 @@ export class Character {
                 }
             }
         }
+    }
+
+    increaseHealth(healthToIncrease: number): void {
+        this._health += healthToIncrease;
     }
 }
