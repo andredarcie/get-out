@@ -6,23 +6,17 @@ export enum ItemType {
 
 export class Item {
     private _name: string;
-    private _description: string;
     private _amount: number;
     private _type: ItemType;
 
-    constructor(name: string, description: string, type: ItemType) {
+    constructor(name: string, type: ItemType) {
         this._name = name;
-        this._description = description;
         this._type = type;
         this._amount = 0;
     }
 
     get name(): string {
         return this._name;
-    }
-
-    get description(): string {
-        return this._description;
     }
 
     get amount(): number {

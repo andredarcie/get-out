@@ -6,7 +6,6 @@ export class BagManager {
     private _items: Item[] = [];
     private _itemListElement: Element;
     private _selectedItemElement: any;
-    private _itemDescriptionElement: any;
     private _selectedItem: Item;
     private _bagCloseBtn: Element;
     private _bagThrowAwayBtn: HTMLElement;
@@ -18,7 +17,6 @@ export class BagManager {
 
         this._itemListElement = document.querySelector('#bag-item-list');
         this._selectedItemElement = document.getElementById('bag-selected-item');
-        this._itemDescriptionElement = document.getElementById('bag-description-item');
         this._bagCloseBtn = document.querySelector('#bag-close-btn');
         this._bagThrowAwayBtn = document.getElementById('bag-throw-away-btn');
 
@@ -40,21 +38,17 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
-        this._itemDescriptionElement.style.display = 'none';
         this.showItems();
         this._bagThrowAwayBtn.style.display = 'none';
     }
 
     private hideSelectedItem() {
         this._selectedItemElement.innerHTML = '';
-        this._itemDescriptionElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
-        this._itemDescriptionElement.style.display = 'none';
     }
 
     private showSelectedItem() {
         this._selectedItemElement.style.display = 'block';
-        this._itemDescriptionElement.style.display = 'block';
     }
 
     private showItems() {
@@ -124,8 +118,7 @@ export class BagManager {
     private selectItem(selectedItem: Item) {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
-        this._selectedItemElement.innerHTML = 'Give to:';
-        this._itemDescriptionElement.innerHTML = this._selectedItem.name + ' - ' + this._selectedItem.description;
+        this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} to:`;
         this.showSelectedItem();
         this.showCharacters();
         this._bagThrowAwayBtn.style.display = 'block';
