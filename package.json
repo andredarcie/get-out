@@ -25,6 +25,12 @@
       "js/**/*.js"
     ]
   },
+  "cache": {
+    "inDev": true,
+    "strategy": "inject",
+    "swSrc": "src/service-worker-templates.js",
+    "swDest": "get-out-game-service-worker.js"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
@@ -36,6 +42,7 @@
     "gh-pages": "^2.0.1",
     "jest": "^24.9.0",
     "parcel": "^1.12.4",
+    "parcel-plugin-sw-cache": "^0.3.1",
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.4"
   },
