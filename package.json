@@ -26,10 +26,10 @@
     ]
   },
   "cache": {
+    "disablePlugin": false,
     "inDev": true,
-    "strategy": "inject",
-    "swSrc": "src/service-worker-templates.js",
-    "swDest": "get-out-game-service-worker.js"
+    "strategy": "default",
+    "importWorkboxFrom": "local"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -46,6 +46,9 @@
     "ts-jest": "^24.1.0",
     "typescript": "^3.7.4"
   },
+  "browserslist": [
+    "since 2017-06"
+  ],
   "dependencies": {
     "firebase": "^7.6.2"
   }

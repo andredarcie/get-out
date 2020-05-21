@@ -118,5 +118,14 @@
         </div>
     </div>
     <script src="src/index.ts"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            // small trick to avoid parcel compiling the sw.js file
+            var tmp = './sw.js'
+            navigator.serviceWorker.register(tmp);
+          });
+        }
+      </script>
 </body>
 </html>
