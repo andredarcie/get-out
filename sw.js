@@ -1,11 +1,29 @@
-importScripts(
-    'https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js'
-  )
-  
-  workbox.core.setCacheNameDetails({ prefix: 'get-out-game-cache-v1' })
-  
-  workbox.precaching.suppressWarnings()
-  workbox.precaching.precacheAndRoute([
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
+
+importScripts("workbox-v4.3.1/workbox-sw.js");
+workbox.setConfig({modulePathPrefix: "workbox-v4.3.1"});
+
+workbox.core.skipWaiting();
+
+workbox.core.clientsClaim();
+
+/**
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+self.__precacheManifest = [
   {
     "url": "camp.2289b279.jpg",
     "revision": "a47d34422e8940a081c35d0c8fe50731"
@@ -52,42 +70,25 @@ importScripts(
   },
   {
     "url": "index.html",
-    "revision": "ba63497fde6666234e5d8166c51ff238"
+    "revision": "e1c66f7fc7ad732520732cc6331ef06d"
   },
   {
     "url": "normalize.458d1ead.css",
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.a160d3a0.js",
-    "revision": "db28f8ff3f328c8419191ed7a7a8e52b"
+    "url": "src.ff392f51.js",
+    "revision": "5f4275165cc5a1156f85bb983f5ecd5d"
   },
   {
     "url": "style.ddedc358.css",
     "revision": "92319095c0e236b63b0a7620737d2fc0"
   },
   {
-    "url": "TravelingTypewriter.1ec4c246.ttf",
-    "revision": "1085a2aee20a01157165e248f7823a22"
-  },
-  {
     "url": "/",
-    "revision": "ed53cbfb9d287aa679c7833a821ff51d"
+    "revision": "7d2d4429daf0e3d4575a0061c5101d7f"
   }
-])
-  
-  // workbox.routing.registerNavigationRoute('/index.html', {
-  //   whitelist: [/\/(vowels|numbers|about|search|char\/)/],
-  // })
-  workbox.routing.registerNavigationRoute('/index.html')
-  
-  self.addEventListener('message', event => {
-    if (!event.data) return
-    switch (event.data) {
-      case 'skipWaiting':
-        self.skipWaiting()
-        break
-      default:
-        break
-    }
-  })
+].concat(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL(".//index.html"));
