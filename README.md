@@ -39,6 +39,6 @@ npm run deploy
 
 ## Live Demo
 
-[Play here](http://andredarcie.com/get-out-game/)
+[Play here](https://andredarcie.github.io/get-out-game/)
 
 Enjoy :)
