@@ -33,10 +33,6 @@ self.__precacheManifest = [
     "revision": "0ff432442d02bcbcf4125853cb54d9d2"
   },
   {
-    "url": "house.84ab4454.jpg",
-    "revision": "8686e1976a24ec1c8692d9343c6b4256"
-  },
-  {
     "url": "icon-128x128.8fad5fc0.png",
     "revision": "9ba208c19a6d23a9250880f35fd31f47"
   },
@@ -70,23 +66,23 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "e1c66f7fc7ad732520732cc6331ef06d"
+    "revision": "d558d6c8a60d61f91694cd655b78a219"
   },
   {
     "url": "normalize.458d1ead.css",
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.ff392f51.js",
-    "revision": "5f4275165cc5a1156f85bb983f5ecd5d"
+    "url": "src.13d4483d.js",
+    "revision": "ae9826e832e9eadfeda98fb47f708ceb"
   },
   {
-    "url": "style.ddedc358.css",
-    "revision": "92319095c0e236b63b0a7620737d2fc0"
+    "url": "style.590ac821.css",
+    "revision": "b4484cfca7e8c520a80cf5a93ee9301d"
   },
   {
     "url": "/",
-    "revision": "7d2d4429daf0e3d4575a0061c5101d7f"
+    "revision": "ab3d221189bcea84b5fb21a5c68ce71b"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
