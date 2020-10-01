@@ -50,4 +50,23 @@ export class CharacterManager {
 
         return false;
     }
+
+    picksACharacterAtRandom(): Character {
+        let characters = this.getCharactersAlive();
+        let randomNumber = this._game.getRandomArbitrary(characters.length - 1);
+        let character: Character = characters[randomNumber];
+        return character;
+    }
+
+    makeSomeoneInTheGroupSick(): Character {
+        let character: Character = this.picksACharacterAtRandom();
+        character.sicken();
+        return character;
+    }
+
+    decreasesTheHealthOfSomeoneInTheGroup(): Character {
+        let character: Character = this.picksACharacterAtRandom();
+        character.looseHealth(1);
+        return character;
+    }
 }

@@ -5,7 +5,6 @@ export class CampManager {
     private _restBtn: HTMLButtonElement;
     private _travelBtn: HTMLButtonElement;
     private readonly _game: Game;
-    private readonly _animationDuration: number;
 
     constructor() {
         this._campImg = document.querySelector('#camp-img');
@@ -16,8 +15,6 @@ export class CampManager {
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
         this._restBtn.addEventListener('click', () => { this.onClickRest() });
         this._game = Game.getInstance();
-
-        this._animationDuration = 2000;
     }
 
     start() {
@@ -28,18 +25,10 @@ export class CampManager {
     }
 
     onClickRest() {
-        this._restBtn.disabled = true;
-        this._restBtn.classList.add('loading');
+        for (let i = 0; i < 6; i++) {
+            this._game.passOneHour();
+        }
 
-        setTimeout(() => {
-            this._restBtn.classList.remove('loading');
-            this._restBtn.disabled = false;
-
-            for (let i = 0; i < 6; i++) {
-                this._game.passOneHour();
-            }
-
-            this._game.characterManager.increaseStaminaOfAllCharacters(100);
-        }, this._animationDuration);
+        this._game.characterManager.increaseStaminaOfAllCharacters(100);
     }
 }

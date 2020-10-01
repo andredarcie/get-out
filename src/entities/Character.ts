@@ -8,7 +8,6 @@ export class Character {
     private _sick: boolean = false;
     private _hungry: number;
     private _thirst: number;
-    private _cold: boolean = false;
     private _maxHealth: number;
     private _limitForHungry: number;
     private _stamina: number;
@@ -22,7 +21,6 @@ export class Character {
         this._isDead = false;
         this._sick = sick;
         this._hungry = hungry;
-        this._cold = cold;
         this._maxHealth = maxHealth;
         this._thirst = thirst;
         this._limitForHungry = limitForHungry;
@@ -117,34 +115,53 @@ export class Character {
         }
     }
 
-    getHungry(): string {
-        if (this._hungry >= 6 && this._hungry < 12) {
-            return '[HUNGRY]';
-        } else if (this._hungry >= 12) {
-            return '[VERY HUNGRY]'
+    getThirst(): string {
+        if (this._thirst >= 6 && this._thirst < 12) {
+            return 'Thirst';
+        } else if (this._thirst >= 12) {
+            return 'Very thirst'
         }
 
-        return '';
+        return 'Not thirst';
+    }
+
+    getHungry(): string {
+        if (this._hungry >= 6 && this._hungry < 12) {
+            return 'Hungry';
+        } else if (this._hungry >= 12) {
+            return 'Very hungry'
+        }
+
+        return 'Not hungry';
     }
 
     getHealth(): string {
         if (this._health >= 6 && this._health < 12) {
-            return '[HEALTH]';
+            return 'Healthy';
         } else if (this._health >= 12) {
-            return '[VERY HEALTH]'
+            return 'Very healthy'
         }
 
-        return '';
+        return 'Not healthy';
+    }
+
+    getSickness(): string {
+        return this._sick ? 'Sick' : 'Not sick'
+    }
+
+    
+    sicken(): void {
+        this._sick = true;
     }
 
     getStamina(): string {
         if (this._stamina < (this._maxStamina / 3)) {
-            return '[VERY TIRED]';
+            return 'Very tired';
         } else if (this._stamina < ((this._maxStamina / 3) * 2)) {
-            return '[TIRED]';
+            return 'Tired';
         }
 
-        return '';
+        return 'Not tired';
     }
 
     looseHealth(healthToLoose: number): void {

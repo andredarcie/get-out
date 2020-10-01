@@ -28,7 +28,7 @@ export class EventManager {
         const eventSeeds = new EventSeeds();
         eventSeeds.start();
         let events = eventSeeds.events;
-        let randomIndex = this.getRandomArbitrary(events.length);
+        let randomIndex = this._game.getRandomArbitrary(events.length);
 
         this._currentEvent = events[randomIndex];
         this.showWaitingMessage();
@@ -37,7 +37,6 @@ export class EventManager {
     showWaitingMessage(): void {
         this._titleElement.style.display = 'none';
         this._descriptionElement.innerHTML = 'Something happened!'
-        this._imageElement.style.display = 'none';
         this._yesButton.style.display = 'none';
         this._noButton.style.display = 'none';
 
@@ -48,7 +47,6 @@ export class EventManager {
         this._titleElement.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.name;
         this._descriptionElement.innerHTML = this._currentEvent.description;
-        this._imageElement.style.display = 'block';
         this.showButtons();
     }
 
@@ -78,9 +76,5 @@ export class EventManager {
         } else {
             this._game.goToState(GameStates.TRAVEL);
         }
-    }
-
-    getRandomArbitrary(max: number): number {
-        return Math.floor(Math.random() * max);
     }
 }

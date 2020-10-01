@@ -56,11 +56,6 @@ export class StatsManager {
         this._charactersList[3].healthField = document.querySelector("#fourth-character-health-field");
         this._charactersList[3].atributesField = document.querySelector("#fourth-character-atributes-field");
 
-        this._charactersList[4] = {};
-        this._charactersList[4].nameField = document.querySelector("#fifth-character-name-field");
-        this._charactersList[4].healthField = document.querySelector("#fifth-character-health-field");
-        this._charactersList[4].atributesField = document.querySelector("#fifth-character-atributes-field");
-
         this._backCharacterBtn = document.querySelector("#back-character-btn");
         this._backCharacterBtn.addEventListener('click', () => { this.onClickBackCharacter() });
     }
@@ -76,8 +71,8 @@ export class StatsManager {
                 this._charactersList[i].healthField.innerHTML = 'Is Dead';
                 this._charactersList[i].atributesField.style.display = 'none';
             } else {
-                this._charactersList[i].healthField.innerHTML = 'Health: ' + character.health + ' - Stamina: ' + character.stamina;
-                this._charactersList[i].atributesField.innerHTML = character.getHungry() + ' ' + character.getStamina();
+                this._charactersList[i].healthField.innerHTML = ' [ ' + character.getHealth() + ' ] [ ' + character.getThirst() + ' ] ';
+                this._charactersList[i].atributesField.innerHTML = ' [ ' + character.getHungry() + ' ] [ ' + character.getStamina() + ' ] [ ' + character.getSickness() + ' ] ';
             }
         }
     }

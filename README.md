@@ -6,11 +6,16 @@
 
 ## Getting Started
 
+> If you are using windows
+> Open powershell in administrative mode and run the following command
+> `Set-ExecutionPolicy RemoteSigned`
+
 Install Parcel using npm
 ```
 npm install -g parcel-bundler
 ```
 
+Run
 ```
 parcel index.html
 ```

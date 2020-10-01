@@ -73,7 +73,7 @@ export class Game {
     public start(): void {
 
         this._bag = new BagManager();
-        this.addItemsToBag();
+        //this.addItemsToBag();
 
         this._camp = new CampManager();
         this._events = new EventManager();
@@ -170,7 +170,6 @@ export class Game {
         this._characters.push(new Character('Olivia', 5, 'wife', false, initialHungry, 0, true, 5, 18));
         this._characters.push(new Character('Michael', 3, 'son', true, initialHungry, 0, true, 3, 12));
         this._characters.push(new Character('Sophia', 3, 'daughter', false, initialHungry, 0, false, 3, 12));
-        this._characters.push(new Character('Emma', 3, 'mother', true, initialHungry, 0, false, 3, 12));
     }
 
     public addItemsToBag(): void {
@@ -271,5 +270,9 @@ export class Game {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
           });
+    }
+
+    getRandomArbitrary(max: number): number {
+        return Math.floor(Math.random() * max);
     }
 }

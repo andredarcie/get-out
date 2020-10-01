@@ -1,11 +1,9 @@
 import { Item, ItemType } from '../entities/Item';
 
 export enum ItemsNames {
-    Antibiotic,
-    Antiseptic,
-    Bandage,
-    Painkillers,
-    BeefJerky
+    FirstAid,
+    Food,
+    Drink
 }
 
 export class ItemSeeds {

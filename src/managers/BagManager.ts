@@ -95,13 +95,13 @@ export class BagManager {
             } else {
                 switch (this._selectedItem.type) {
                     case ItemType.FirstAid:
-                        buttonText += ' ' + character.health;
+                        buttonText += ' - Health: ' + character.health + '/' + character.maxHealth;
                         break;
                     case ItemType.Food:
-                        buttonText += ' ' + character.getHungry();
+                        buttonText += ' - ' + character.getHungry();
                         break;
                     case ItemType.Drink:
-                        buttonText += ' ' + character.thirst;
+                        buttonText += ' - Thirst: ' + character.thirst;
                         break;
                 }
             }
@@ -148,12 +148,17 @@ export class BagManager {
         if (this._selectedItem.amount > 1) {
             this._selectedItem.decreaseAmount();
         } else {
-            this.removeItem(this._selectedItem);
+            this.removeItem(this._selectedItem.name);
         }
     }
 
-    private removeItem(itemToRemove: Item): void {
-        this._items = this._items.filter(item => item.name !== itemToRemove.name);
+    public removeItem(itemName: string): void {
+        this._items = this._items.filter(item => item.name !== itemName);
+    }
+
+    public checksIfAnItemExists(itemName: string): boolean {
+        let existingItemIndex = this._items.findIndex(item => item.name == itemName);
+        return existingItemIndex  != -1 ? true : false;
     }
 
     isEmpty(): boolean {
