@@ -2,7 +2,8 @@ import { Item } from './Item';
 
 export enum EventType {
     Exploration,
-    Combat
+    Combat,
+    Place
 }
 
 interface Choice {

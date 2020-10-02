@@ -28,9 +28,18 @@ export class EventManager {
         const eventSeeds = new EventSeeds();
         eventSeeds.start();
         let events = eventSeeds.events;
-        let randomIndex = this._game.getRandomArbitrary(events.length);
 
-        this._currentEvent = events[randomIndex];
+        let randomEventType: number = this._game.getRandomArbitrary(3);
+        randomEventType = 2;
+        switch (randomEventType) {
+            case EventType.Combat:
+            case EventType.Exploration:
+                var randomIndex: number = this._game.getRandomArbitrary(events.length);
+                this._currentEvent = events[randomIndex];
+            case EventType.Place:
+                this._currentEvent = eventSeeds.getPlaceEvent();
+        }
+
         this.showWaitingMessage();
     }
 

@@ -39,8 +39,7 @@ export class TravelManager {
     onClickWalkBtn(): void {
         this._game.passOneHour();
         this.walkOneHour();
-        const foundEvent = this.checkEvent();
-
+        let foundEvent = this.checkEvent();
         if (foundEvent) {
             this._game.goToState(GameStates.EVENT);
         } else if (this._game.log.isThereAnyTemporaryLog()) {
