@@ -171,5 +171,9 @@ export class Character {
 
     increaseHealth(healthToIncrease: number): void {
         this._health += healthToIncrease;
+
+        if (this._health > 100) {
+            this._health = 100;
+        }
     }
 }
