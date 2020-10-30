@@ -95,13 +95,13 @@ export class BagManager {
             } else {
                 switch (this._selectedItem.type) {
                     case ItemType.FirstAid:
-                        buttonText += ' - Health: ' + character.health + '/' + character.maxHealth;
+                        buttonText += character.getHealth();
                         break;
                     case ItemType.Food:
-                        buttonText += ' - ' + character.getHungry();
+                        buttonText += character.getHungry();
                         break;
                     case ItemType.Drink:
-                        buttonText += ' - Thirst: ' + character.thirst;
+                        buttonText += character.getThirst();
                         break;
                 }
             }
@@ -118,7 +118,7 @@ export class BagManager {
     private selectItem(selectedItem: Item) {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
-        this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} to:`;
+        this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.effect} to:`;
         this.showSelectedItem();
         this.showCharacters();
         this._bagThrowAwayBtn.style.display = 'block';
@@ -131,13 +131,13 @@ export class BagManager {
 
         switch (this._selectedItem.type) {
             case ItemType.FirstAid:
-                character.increaseHealth(1);
+                character.increaseHealth(50);
                 break;
             case ItemType.Food:
-                character.decreaseHungry(1);
+                character.decreaseHungry(50);
                 break;
             case ItemType.Drink:
-                character.decreaseThirst(1);
+                character.decreaseThirst(50);
                 break;
         }
         character.decreaseHungry(12);

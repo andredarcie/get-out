@@ -8,10 +8,12 @@ export class Item {
     private _name: string;
     private _amount: number;
     private _type: ItemType;
+    private _effect: string;
 
-    constructor(name: string, type: ItemType) {
+    constructor(name: string, type: ItemType, effect: string) {
         this._name = name;
         this._type = type;
+        this._effect = effect;
         this._amount = 0;
     }
 
@@ -25,6 +27,10 @@ export class Item {
 
     get type(): ItemType {
         return this._type;
+    }
+
+    get effect(): string {
+        return this._effect;
     }
 
     set amount(amount: number) {

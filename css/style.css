@@ -23,8 +23,12 @@ body {
     display: flex;
 }
 
+h1 {
+    margin: 0;
+}
+
 #container {
-    font-size: 16px;
+    font-size: 14px;
     font-family: travelingTypewriter;
     color: #ffffff;
     padding: 5vw;
@@ -77,7 +81,7 @@ body {
 #core > div > .bag-content,
 #core > div > .log-content {
     padding: 20px;
-    max-height: 350px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
@@ -131,7 +135,7 @@ p {
 
 #progress-bar {
     width: 0;
-    height: 1px;
+    height: 3px;
     background-color: #2c3e50;
 }
 

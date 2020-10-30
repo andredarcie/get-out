@@ -1,4 +1,5 @@
 import { Game, GameStates } from '../Game';
+import { Character } from '../entities/Character';
 
 export class TravelManager {
     private _travelPage: Element;
@@ -30,7 +31,7 @@ export class TravelManager {
 
     start(): void {
         if (this._game.characterManager.isInDanger()) {
-            this._statsBtn.innerHTML = 'Your Family (!)';
+            this._statsBtn.innerHTML = '⚠️Your Family';
         } else {
             this._statsBtn.innerHTML = 'Your Family';
         }
@@ -57,7 +58,7 @@ export class TravelManager {
     }
 
     checkEvent() {
-        return this.getRandomArbitrary(1, 100) <= 25;
+        return this.getRandomArbitrary(1, 100) <= 50;
     }
 
     getRandomArbitrary(min: number, max: number): number {
@@ -67,6 +68,14 @@ export class TravelManager {
     walkOneHour() {
         this._game.characterManager.decreaseStaminaOfAllCharacters(5);
         this._game.characterManager.increaseHungryOfAllCharacters();
+        this._game.characterManager.increaseThirstOfAllCharacters();
+
+        const characters: Character[] = this._game.characterManager.getCharactersAlive();
+        
+        for (let character of characters) {
+            this._game.log.addTempLog(character.name + ' 🥫 -5%  ⚡ -5% 💧 -10%');
+        }
+
         this._game.decreaseTheDistanceToTheBorder(2);
         this.increaseProgressBar();
         this._game.addLogToFirebase('Walk one hour');

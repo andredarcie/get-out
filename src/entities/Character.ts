@@ -45,16 +45,17 @@ export class Character {
         return this._thirst;
     }
 
+    get hungry() {
+        return this._hungry;
+    }
+
     increaseHungry() {
-        if (this._hungry >= 100) {
+        if (this._hungry <= 0) {
             this.looseHealth(10);
 
             if (this._isDead) {
                 this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
-            } else {
-                this._game.log.addTempLog(this._name + ' 🥫 -5%');
             }
-            
         } else {
             this._hungry = this._hungry - 5;
         }
@@ -89,18 +90,38 @@ export class Character {
             throw new Error('Hungry to decrease value must be greater than zero');
         }
 
-        if (this._hungry > 0) {
-            this._hungry = this._hungry - hungryToDecrease;
+        if (this._hungry < 100) {
+            this._hungry = this._hungry + hungryToDecrease;
+        }
+
+        if (this._hungry > 100) {
+            this._hungry = 100;
         }
     }
 
     decreaseThirst(thirstToDecrease: number) {
+        if (thirstToDecrease < 0) {
+            throw new Error('Hungry to decrease value must be greater than zero');
+        }
+
+        if (this._thirst < 100) {
+            this._thirst = this._thirst + thirstToDecrease;
+        }
+
+        if (this._thirst > 100) {
+            this._thirst = 100;
+        }
+    }
+
+    increaseThirst(thirstToDecrease: number) {
         if (thirstToDecrease < 0) {
             throw new Error('Thirst to decrease value must be greater than zero');
         }
 
         if (this._thirst > 0) {
             this._thirst = this._thirst - thirstToDecrease;
+        } else {
+            this.looseHealth(10);
         }
     }
 
