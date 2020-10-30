@@ -65,14 +65,16 @@ export class StatsManager {
 
         for (let i = 0; i < characters.length; i++){
             let character = characters[i];
-            this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
 
             if (character.isDead) {
-                this._charactersList[i].healthField.innerHTML = 'Is Dead';
+                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + '💀';
+                this._charactersList[i].healthField.style.display = 'none';
                 this._charactersList[i].atributesField.style.display = 'none';
             } else {
-                this._charactersList[i].healthField.innerHTML = ' [ ' + character.getHealth() + ' ] [ ' + character.getThirst() + ' ] ';
-                this._charactersList[i].atributesField.innerHTML = ' [ ' + character.getHungry() + ' ] [ ' + character.getStamina() + ' ] [ ' + character.getSickness() + ' ] ';
+                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
+                this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
+                this._charactersList[i].healthField.innerHTML = character.getHealth() + ' ' + character.getStamina();
+                this._charactersList[i].atributesField.innerHTML = character.getHungry() + ' ' + character.getThirst();
             }
         }
     }

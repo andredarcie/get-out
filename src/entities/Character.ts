@@ -2,29 +2,22 @@ import { Game, GameStates } from '../Game';
 
 export class Character {
     private _name: string;
-    private _health: number;
     private _kinship: string;
+
+    private _health: number = 100;
+    private _stamina: number = 100;
+    private _hungry: number = 100;
+    private _thirst: number = 100;
+
     private _isDead: boolean = false;
     private _sick: boolean = false;
-    private _hungry: number;
-    private _thirst: number;
-    private _maxHealth: number;
-    private _limitForHungry: number;
-    private _stamina: number;
-    private _maxStamina: number = 100;
+
     private readonly _game: Game;
 
-    constructor(name: string, health: number, kinship: string, sick: boolean, hungry: number, thirst: number, cold: boolean, maxHealth: number, limitForHungry: number) {
+    constructor(name: string, kinship: string) {
         this._name = name;
-        this._health = health;
         this._kinship = kinship;
-        this._isDead = false;
-        this._sick = sick;
-        this._hungry = hungry;
-        this._maxHealth = maxHealth;
-        this._thirst = thirst;
-        this._limitForHungry = limitForHungry;
-        this._stamina = this._maxStamina;
+
         this._game = Game.getInstance();
     }
 
@@ -52,27 +45,23 @@ export class Character {
         return this._thirst;
     }
 
-    get maxHealth() {
-        return this._maxHealth;
-    }
-
     increaseHungry() {
-        if (this._hungry >= this._limitForHungry) {
-            this.looseHealth(1);
+        if (this._hungry >= 100) {
+            this.looseHealth(10);
 
             if (this._isDead) {
                 this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
             } else {
-                this._game.log.addTempLog(this._name + ' is starving to death');
+                this._game.log.addTempLog(this._name + ' 🥫 -5%');
             }
             
         } else {
-            this._hungry++;
+            this._hungry = this._hungry - 5;
         }
     }
 
     increaseStaminaToMax() {
-        this._stamina = this._maxStamina;
+        this._stamina = 100;
     }
 
     decreaseStamina(staminaToDecrease: number) {
@@ -116,33 +105,19 @@ export class Character {
     }
 
     getThirst(): string {
-        if (this._thirst >= 6 && this._thirst < 12) {
-            return 'Thirst';
-        } else if (this._thirst >= 12) {
-            return 'Very thirst'
-        }
-
-        return 'Not thirst';
+        return '💧' + this._thirst + '%';
     }
 
     getHungry(): string {
-        if (this._hungry >= 6 && this._hungry < 12) {
-            return 'Hungry';
-        } else if (this._hungry >= 12) {
-            return 'Very hungry'
-        }
-
-        return 'Not hungry';
+        return '🥫' + this._hungry + '%';
     }
 
     getHealth(): string {
-        if (this._health >= 6 && this._health < 12) {
-            return 'Healthy';
-        } else if (this._health >= 12) {
-            return 'Very healthy'
-        }
+        return '❤️' + this._health + '%';
+    }
 
-        return 'Not healthy';
+    getStamina(): string {
+        return '⚡' + this._stamina + '%';
     }
 
     getSickness(): string {
@@ -154,18 +129,8 @@ export class Character {
         this._sick = true;
     }
 
-    getStamina(): string {
-        if (this._stamina < (this._maxStamina / 3)) {
-            return 'Very tired';
-        } else if (this._stamina < ((this._maxStamina / 3) * 2)) {
-            return 'Tired';
-        }
-
-        return 'Not tired';
-    }
-
     looseHealth(healthToLoose: number): void {
-        if (healthToLoose < 0 || healthToLoose > this._maxHealth) {
+        if (healthToLoose < 0 || healthToLoose > 100) {
             throw new Error('Invalid value for healthToLoose');
         }
 

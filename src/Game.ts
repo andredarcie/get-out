@@ -166,10 +166,10 @@ export class Game {
 
     private createAllCharacters(): void {
         const initialHungry = 0;
-        this._characters.push(new Character('Ethan', 5, 'you', true, initialHungry, 0, false, 5, 18));
-        this._characters.push(new Character('Olivia', 5, 'wife', false, initialHungry, 0, true, 5, 18));
-        this._characters.push(new Character('Michael', 3, 'son', true, initialHungry, 0, true, 3, 12));
-        this._characters.push(new Character('Sophia', 3, 'daughter', false, initialHungry, 0, false, 3, 12));
+        this._characters.push(new Character('Ethan', 'you'));
+        this._characters.push(new Character('Olivia', 'wife'));
+        this._characters.push(new Character('Michael', 'son'));
+        this._characters.push(new Character('Sophia', 'daughter'));
     }
 
     public addItemsToBag(): void {
