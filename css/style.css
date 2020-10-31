@@ -27,6 +27,10 @@ h1 {
     margin: 0;
 }
 
+h2 {
+    margin: 5%;
+}
+
 #container {
     font-size: 14px;
     font-family: travelingTypewriter;

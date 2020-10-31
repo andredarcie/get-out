@@ -3,6 +3,7 @@ import { Event, EventType } from '../entities/Event';
 import { Item } from '../entities/Item';
 import { Game, GameStates } from '../Game';
 import { ItemSeeds, ItemsNames } from '../seeds/ItemSeeds'
+import { LogType } from '../managers/LogManager';
 
 export class EventSeeds {
     private _events: Event[];
@@ -21,43 +22,13 @@ export class EventSeeds {
             { 
                 buttonText: 'Throw a stone',
                 callback: () => {
-                    this._game.log.addTempLog('You hit the rock and killed the wolf!');
+                    this._game.log.addTempLog('You hit the rock and killed the wolf!', LogType.Result);
                 }
             },
             { 
                 buttonText: 'Run like a chicken',
                 callback: () => {
-                    this._game.log.addTempLog('Did you get away');
-                }
-            },
-            EventType.Combat,
-            null
-        ),
-        new Event(
-            'Strange woman',
-            'She asks for some food', 
-            { 
-                buttonText: 'Give some food',
-                callback: () => {
-                    let itemExists: boolean = this._game.bagManager.checksIfAnItemExists('Food')
-
-                    console.log(itemExists)
-                    if (itemExists) {
-                        this._game.bagManager.removeItem('Food')
-                        this._game.log.addTempLog('She is very happy and thanks you');
-                    } else {
-                        this._game.log.addTempLog('You look for food in the bag and find nothing');
-                        this._game.log.addTempLog('The woman says you are a liar because you have no food');
-                        let character = this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                        character.looseHealth(1);
-                        this._game.log.addTempLog('The woman pulls out a gun and shoots ' + character.name);
-                    }
-                }
-            },
-            { 
-                buttonText: 'Give her nothing',
-                callback: () => {
-                    this._game.log.addTempLog('She is very sad and says she will starve');
+                    this._game.log.addTempLog('Did you get away', LogType.Result);
                 }
             },
             EventType.Combat,
@@ -118,12 +89,16 @@ export class EventSeeds {
                     let randomNumber: number = this._game.getRandomArbitrary(maxItems);
 
                     if (randomNumber <= 0) {
-                        this._game.log.addTempLog(messageWhenYouFoundNothing);  
+                        this._game.log._successResult.style.display = 'none';
+                        this._game.log._failureResult.style.display = 'inline';
+                        this._game.log.addTempLog(messageWhenYouFoundNothing, LogType.Result);  
                     } else {
+                        this._game.log._successResult.style.display = 'inline';
+                        this._game.log._failureResult.style.display = 'none';
                         for (let i = 0; i < randomNumber; i++) {
                             let itemFounded: Item = ItemSeeds.getOneRandomItem();
                             var character: Character = this._game.characterManager.picksACharacterAtRandom();
-                            this._game.log.addTempLog(character.name + ' have found ' + itemFounded.name);
+                            this._game.log.addTempLog(character.name + ' have found ' + itemFounded.name, LogType.Result);
                             this._game.bagManager.putItem(itemFounded);
                         }
                     }         
@@ -132,7 +107,7 @@ export class EventSeeds {
             { 
                 buttonText: 'Ignore',
                 callback: () => {
-                    this._game.log.addTempLog('You just ignored');
+                    this._game.log.addTempLog('You just ignored', LogType.Result);
                 }
             },
             EventType.Place,

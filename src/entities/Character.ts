@@ -1,4 +1,5 @@
 import { Game, GameStates } from '../Game';
+import { LogType } from '../managers/LogManager';
 
 export class Character {
     private _name: string;
@@ -54,7 +55,7 @@ export class Character {
             this.looseHealth(10);
 
             if (this._isDead) {
-                this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay);
+                this._game.log.addTempLog(this._name + ' starved to death at day ' + this._game.currentDay, LogType.StatusChange);
             }
         } else {
             this._hungry = this._hungry - 5;
@@ -78,9 +79,9 @@ export class Character {
             this.looseHealth(1);
 
             if (this._isDead) {
-                this._game.log.addTempLog(this._name + ' died of exhaustion at day ' + this._game.currentDay);
+                this._game.log.addTempLog(this._name + ' died of exhaustion at day ' + this._game.currentDay, LogType.StatusChange);
             } else {
-                this._game.log.addTempLog(this._name + ' is dying of tiredness');
+                this._game.log.addTempLog(this._name + ' is dying of tiredness', LogType.Result);
             }
         }
     }

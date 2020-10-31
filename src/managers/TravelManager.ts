@@ -1,5 +1,6 @@
 import { Game, GameStates } from '../Game';
 import { Character } from '../entities/Character';
+import { LogType } from '../managers/LogManager';
 
 export class TravelManager {
     private _travelPage: Element;
@@ -44,6 +45,20 @@ export class TravelManager {
         if (foundEvent) {
             this._game.goToState(GameStates.EVENT);
         } else if (this._game.log.isThereAnyTemporaryLog()) {
+
+            let randomCharacter = this._game.characterManager.picksACharacterAtRandom();
+            let walkMessages = [
+                randomCharacter.name + ' is feeling anxious...',
+                randomCharacter.name + ' is thoughtful...',
+                randomCharacter.name + ' feels a tightness in the heart...',
+                'The family continued walking...',
+                'The walk was smooth...',
+                'Nothing different...'
+            ];
+
+            const message: string = walkMessages[this._game.getRandomArbitrary(walkMessages.length - 1)];
+
+            this._game.log.addTempLog(message, LogType.Result);
             this._game.goToState(GameStates.LOG);
         }
     }
@@ -73,7 +88,7 @@ export class TravelManager {
         const characters: Character[] = this._game.characterManager.getCharactersAlive();
         
         for (let character of characters) {
-            this._game.log.addTempLog(character.name + ' 🥫 -5%  ⚡ -5% 💧 -10%');
+            this._game.log.addTempLog(character.name + ' 🥫 -5%  ⚡ -5% 💧 -10%', LogType.StatusChange);
         }
 
         this._game.decreaseTheDistanceToTheBorder(2);

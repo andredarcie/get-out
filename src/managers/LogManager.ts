@@ -1,17 +1,32 @@
 import { Game, GameStates } from '../Game';
 
+export enum LogType {
+    Result,
+    StatusChange
+}
+
 export class LogManager {
-    private _logList: Element;
+    private _logListResult: Element;
+    private _logListStatusChange: Element;
+    public _successResult: HTMLButtonElement;
+    public _failureResult: HTMLButtonElement;
     private _travelBtn: Element;
-    private _tempLogs: string[] = [];
+    private _tempResultLogs: string[] = [];
+    private _tempoStatusChangeLogs: string[] = []; 
     private _logs: string[] = [];
     private readonly _game: Game;
 
     constructor() {
         this._game = Game.getInstance();
 
-        this._logList = document.querySelector("#log-list");
-        
+        this._logListResult = document.querySelector("#log-list-result");
+        this._logListStatusChange = document.querySelector("#log-list-status-change");
+
+        this._successResult = document.querySelector("#success-result");
+        this._successResult.style.display = 'none';
+        this._failureResult = document.querySelector("#failure-result");
+        this._failureResult.style.display = 'none';
+
         this._travelBtn = document.querySelector("#log-back-character-btn");
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
         
@@ -22,40 +37,48 @@ export class LogManager {
     }
 
     showLogs(): void {
-        if(this._tempLogs.length <= 0) 
-            throw new Error('No logs found');
-
-        let logs = '';
-
-        for (let i = 0; i < this._tempLogs.length; i++) {
-            logs += '<li>' + this._tempLogs[i] + '</li>';
+        let result_logs = '';
+        for (let i = 0; i < this._tempResultLogs.length; i++) {
+            result_logs += '<li>' + this._tempResultLogs[i] + '</li>';
         }
 
-        this._logs = this._tempLogs;
-        this._tempLogs = [];
+        this._logs = this._tempResultLogs;
+        this._tempResultLogs = [];
+        this._logListResult.innerHTML = result_logs;
 
-        this._logList.innerHTML = logs;
+        let status_change_logs = '';
+        for (let i = 0; i < this._tempoStatusChangeLogs.length; i++) {
+            status_change_logs += '<li>' + this._tempoStatusChangeLogs[i] + '</li>';
+        }
+
+        this._logs = this._tempoStatusChangeLogs;
+        this._tempoStatusChangeLogs = [];
+        this._logListStatusChange.innerHTML = status_change_logs;
     }
 
     clearLogs(): void {
-        this._logList.innerHTML = '';
-    }
-
-    log(text: string): void {
-        this._tempLogs.push(text);
-        
+        this._logListResult.innerHTML = '';
+        this._logListStatusChange.innerHTML = '';
     }
 
     onClickTravel() {
+        this._successResult.style.display = 'none';
+        this._failureResult.style.display = 'none';
         this._game.goToState(GameStates.TRAVEL);
     }
 
     isThereAnyTemporaryLog(): boolean {
-        return this._tempLogs.length > 0;
+        return this._tempResultLogs.length > 0 || this._tempoStatusChangeLogs.length > 0;
     }
 
-    addTempLog(log: string) {
-        this._tempLogs.push(log);
+    addTempLog(log: string, logType: LogType) {
+        if (logType == LogType.Result) {
+            this._tempResultLogs.push(log);
+        } else if (logType == LogType.StatusChange) {
+            this._tempoStatusChangeLogs.push(log);
+        }
+
+        
         this._game.addLogToFirebase(log);
     }
 }
