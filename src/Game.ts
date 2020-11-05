@@ -1,7 +1,6 @@
 import { CampManager } from './managers/CampManager';
 import { EventManager } from './managers/EventManager';
 import { GameOverManager } from './managers/GameOverManager';
-import { StatsManager } from './managers/StatsManager';
 import { TravelManager } from './managers/TravelManager';
 import { LogManager } from './managers/LogManager';
 import { BagManager } from './managers/BagManager';
@@ -16,7 +15,6 @@ require("firebase/database");
 export enum GameStates {
     TRAVEL,
     CAMP,
-    STATS,
     EVENT,
     GAME_OVER,
     LOG,
@@ -35,14 +33,12 @@ export class Game {
     private _travelPage: HTMLElement;
     private _logPage: HTMLElement;
     private _campPage: HTMLElement;
-    private _statsPage: HTMLElement;
     private _eventPage: HTMLElement;
     private _gameOverPage: HTMLElement;
     private _bagPage: HTMLElement;
     private _camp: CampManager;
     private _events: EventManager;
     private _gameOver: GameOverManager;
-    private _stats: StatsManager;
     private _travel: TravelManager;
     private _log: LogManager;
     private _bag: BagManager;
@@ -54,7 +50,6 @@ export class Game {
         this._travelPage = document.getElementById("travel-page");
         this._logPage = document.getElementById("log-page");
         this._campPage = document.getElementById("camp-page");
-        this._statsPage = document.getElementById("stats-page");
         this._eventPage = document.getElementById("event-page");
         this._gameOverPage = document.getElementById("game-over-page");
         this._bagPage = document.getElementById("bag-page");
@@ -78,7 +73,6 @@ export class Game {
         this._camp = new CampManager();
         this._events = new EventManager();
         this._gameOver = new GameOverManager();
-        this._stats = new StatsManager();
         this._travel = new TravelManager();
         this._characterManager = new CharacterManager();
         this._clock = new Clock(8, true);
@@ -165,7 +159,6 @@ export class Game {
     }
 
     private createAllCharacters(): void {
-        const initialHungry = 0;
         this._characters.push(new Character('Ethan', 'you'));
         this._characters.push(new Character('Olivia', 'wife'));
         this._characters.push(new Character('Michael', 'son'));
@@ -197,7 +190,6 @@ export class Game {
         this.hidePage(this._travelPage);
         this.hidePage(this._logPage);
         this.hidePage(this._campPage);
-        this.hidePage(this._statsPage);
         this.hidePage(this._eventPage);
         this.hidePage(this._gameOverPage);
         this.hidePage(this._bagPage);
@@ -214,10 +206,6 @@ export class Game {
             case GameStates.CAMP: 
                 this.showPage(this._campPage);
                 this._camp.start();
-            break;
-            case GameStates.STATS: 
-                this.showPage(this._statsPage);
-                this._stats.start();
             break;
             case GameStates.EVENT: 
                 this.showPage(this._eventPage);

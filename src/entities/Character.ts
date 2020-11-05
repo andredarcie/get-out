@@ -76,7 +76,7 @@ export class Character {
         if (this._stamina <= 0) {
             this._stamina = 0;
 
-            this.looseHealth(1);
+            this.looseHealth(20);
 
             if (this._isDead) {
                 this._game.log.addTempLog(this._name + ' died of exhaustion at day ' + this._game.currentDay, LogType.StatusChange);

@@ -24,16 +24,35 @@
         <div id="core">
             <p id="current-time-field"></p>
             <div id="travel-page">
-                <h1>Travel</h1>
+                <h1>Your Family</h1>
                 <div class="travel-content">
-                    <img id="travel-img" src="img/forest.jpg" alt="Smiley face">
+                    <div class="stats-content">
+                        <ul>
+                            <li>
+                                <p id="first-character-name-field"></p>
+                                <p id="first-character-atributes-field"></p>
+                            </li>
+                            <li>
+                                <p id="second-character-name-field"></p>
+                                <p id="second-character-atributes-field"></p>
+                            </li>
+                            <li>
+                                <p id="third-character-name-field"></p>
+                                <p id="third-character-atributes-field"></p>
+                            </li>
+                            <li>
+                                <p id="fourth-character-name-field"></p>
+                                <p id="fourth-character-atributes-field"></p>
+                            </li>
+                        </ul>
+                    </div>
                     <p id="travelled-distance"></p>
                     <div id="progress-bar"></div>
                 </div>
                 <div class="page-actions">
                     <button id="walk-btn">Walk (+1 hour)</button>
                     <button id="camp-btn">Camp (+1 hour)</button>
-                    <button id="stats-btn">Your Family</button>
+                    <button id="bag-btn">Open bag</button>
                 </div>
             </div>
             <div id="log-page">
@@ -58,37 +77,6 @@
                     <button id="travel-btn">Back to travel</button>
                 </div>
             </div>
-            <div id="stats-page">
-                <h1>Your Family</h1>
-                <div class="stats-content">
-                    <ul>
-                        <li>
-                            <p id="first-character-name-field"></p>
-                            <p id="first-character-health-field"></p>
-                            <p id="first-character-atributes-field"></p>
-                        </li>
-                        <li>
-                            <p id="second-character-name-field"></p>
-                            <p id="second-character-health-field"></p>
-                            <p id="second-character-atributes-field"></p>
-                        </li>
-                        <li>
-                            <p id="third-character-name-field"></p>
-                            <p id="third-character-health-field"></p>
-                            <p id="third-character-atributes-field"></p>
-                        </li>
-                        <li>
-                            <p id="fourth-character-name-field"></p>
-                            <p id="fourth-character-health-field"></p>
-                            <p id="fourth-character-atributes-field"></p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="page-actions">
-                    <button id="bag-btn">Open bag</button>
-                    <button id="back-character-btn">Back to travel</button>
-                </div>
-            </div>
             <div id="event-page">
                 <h1 id="event-page-title">Frozen lake</h1>
                 <p id="event-page-description"></p>
@@ -111,6 +99,9 @@
             <div id="game-over-page">
                 <h1>Game over</h1>
                 <p id="game-over-message"></p>
+                <div class="page-actions">
+                    <button id="try-again-btn">Try again</button>
+                </div>
             </div>
         </div>
     </div>

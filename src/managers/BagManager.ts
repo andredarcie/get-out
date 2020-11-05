@@ -31,7 +31,7 @@ export class BagManager {
     }
 
     private onClickBagClose() {
-        this._game.goToState(GameStates.STATS);
+        this._game.goToState(GameStates.TRAVEL);
     }
 
     private onClickThrowAway() {
@@ -163,5 +163,15 @@ export class BagManager {
 
     isEmpty(): boolean {
         return this._items.length <= 0;
+    }
+
+    public showQuantityOfItems(): number {
+        let itemCount: number = 0;
+
+        for (let i = 0; i < this._items.length; i++) {
+            itemCount += this._items[i].amount == 0 ? 1 : this._items[i].amount;
+        }
+
+        return itemCount;
     }
 }

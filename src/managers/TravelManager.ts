@@ -11,6 +11,9 @@ export class TravelManager {
     private _campBtn: HTMLButtonElement;
     private _statsBtn: HTMLButtonElement;
     private _game: Game;
+    private _charactersList: any;
+    private _currentCharacterIndex: number;
+    private _bagBtn: HTMLButtonElement;
 
     constructor() {
         this._game = Game.getInstance();
@@ -21,21 +24,37 @@ export class TravelManager {
         this._progressBar = document.getElementById("progress-bar");
         this._walkBtn = document.querySelector("#walk-btn");
         this._campBtn = document.querySelector("#camp-btn");
-        this._statsBtn = document.querySelector("#stats-btn");
 
         this._walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
         this._campBtn.addEventListener('click', () => { this.onClickCampBtn() });
-        this._statsBtn.addEventListener('click', () => { this.onClickStatsBtn() });
 
         this.showTravelledDistance();
+
+        this._charactersList = [];
+
+        this._bagBtn = document.querySelector('#bag-btn');
+        this._bagBtn.addEventListener('click', () => { this.onClickBag() });
+        this._currentCharacterIndex = 0;
+        this.getAtributesPageElements();
     }
 
     start(): void {
+        /*
         if (this._game.characterManager.isInDanger()) {
             this._statsBtn.innerHTML = '⚠️Your Family';
         } else {
             this._statsBtn.innerHTML = 'Your Family';
+        }*/
+
+        if (this._game.bagManager.isEmpty()) {
+            this._bagBtn.innerHTML = 'Bag is empty';
+            this._bagBtn.disabled = true;
+        } else {
+            this._bagBtn.disabled = false;
+            this._bagBtn.innerHTML = 'Open bag (' + this._game.bagManager.showQuantityOfItems() + ') ';
         }
+        
+        this.showCharacters();
     }
 
     onClickWalkBtn(): void {
@@ -63,13 +82,49 @@ export class TravelManager {
         }
     }
 
+    onClickBag() {
+        this._game.goToState(GameStates.BAG);
+    }
+
     onClickCampBtn(): void {
         this._game.passOneHour();
         this._game.goToState(GameStates.CAMP);
     }
 
-    onClickStatsBtn() {
-        this._game.goToState(GameStates.STATS);
+    getAtributesPageElements(): void {
+        this._charactersList[0] = {};
+        this._charactersList[0].nameField = document.querySelector("#first-character-name-field");
+        this._charactersList[0].atributesField = document.querySelector("#first-character-atributes-field");
+
+        this._charactersList[1] = {};
+        this._charactersList[1].nameField = document.querySelector("#second-character-name-field");
+        this._charactersList[1].atributesField = document.querySelector("#second-character-atributes-field");
+
+        this._charactersList[2] = {};
+        this._charactersList[2].nameField = document.querySelector("#third-character-name-field");
+        this._charactersList[2].atributesField = document.querySelector("#third-character-atributes-field");
+
+        this._charactersList[3] = {};
+        this._charactersList[3].nameField = document.querySelector("#fourth-character-name-field");
+        this._charactersList[3].atributesField = document.querySelector("#fourth-character-atributes-field");
+    }
+
+    showCharacters(): void {
+        let characters = this._game.characters;
+
+        for (let i = 0; i < characters.length; i++){
+            let character = characters[i];
+
+            if (character.isDead) {
+                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + '💀';
+                this._charactersList[i].atributesField.style.display = 'none';
+            } else {
+                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
+                this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
+                this._charactersList[i].atributesField.innerHTML = character.getHealth() + ' ' + character.getStamina() + ' ' 
+                                                                 + character.getHungry() + ' ' + character.getThirst();
+            }
+        }
     }
 
     checkEvent() {
