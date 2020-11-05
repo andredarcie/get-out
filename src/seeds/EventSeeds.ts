@@ -8,9 +8,14 @@ import { LogType } from '../managers/LogManager';
 export class EventSeeds {
     private _events: Event[];
     private _game: Game;
+    private _imageUrlList: string[] = [];
 
     constructor() {
         this._game = Game.getInstance();
+
+        for (let i = 0; i < 7; i++) {
+            this._imageUrlList[i] = (document.getElementById("event-page-image-" + (i + 1)) as HTMLImageElement).src;
+        }
 
         this._events = [];
     }
@@ -19,6 +24,7 @@ export class EventSeeds {
         this.events.push(new Event(
             'Wild Wolf Appeared',
             'He jumps furiously wanting blood!', 
+            '',
             { 
                 buttonText: 'Throw a stone',
                 callback: () => {
@@ -73,15 +79,17 @@ export class EventSeeds {
             'Unfortunately this place was totally empty',
             'Looks like someone already got everything they had here',
             'All things are burned, nothing can be recovered'
-        ]
+        ];
 
         const eventName: string = names[this._game.getRandomArbitrary(names.length - 1)];
         const exploreButtonText: string = exploreSynonyms[this._game.getRandomArbitrary(exploreSynonyms.length - 1)];
         const messageWhenYouFoundNothing: string = messagesWhenYouFoundNothing[this._game.getRandomArbitrary(messagesWhenYouFoundNothing.length - 1)];
+        const imageUrl: string = this._imageUrlList[this._game.getRandomArbitrary(this._imageUrlList.length - 1)];
 
         return new Event(
             eventName,
             'No sign of life', 
+            imageUrl,
             { 
                 buttonText: exploreButtonText,
                 callback: () => {

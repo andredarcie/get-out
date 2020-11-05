@@ -6,7 +6,7 @@ import { EventSeeds } from '../seeds/EventSeeds';
 export class EventManager {
     private _titleElement: HTMLElement;
     private _descriptionElement: HTMLElement;
-    private _imageElement: HTMLElement;
+    private _imageElement: HTMLImageElement;
     private _yesButton: HTMLElement;
     private _noButton: HTMLElement;
     private _currentEvent: Event;
@@ -15,7 +15,7 @@ export class EventManager {
     constructor() {
         this._titleElement = document.getElementById("event-page-title");
         this._descriptionElement = document.getElementById("event-page-description");
-        this._imageElement = document.getElementById("event-page-image");
+        this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
         this._yesButton = document.getElementById("event-page-yes-btn");
         this._noButton = document.getElementById("event-page-no-btn");
 
@@ -46,6 +46,7 @@ export class EventManager {
     showWaitingMessage(): void {
         this._titleElement.style.display = 'none';
         this._descriptionElement.innerHTML = 'Something happened!'
+        this._imageElement.style.display = 'none';
         this._yesButton.style.display = 'none';
         this._noButton.style.display = 'none';
 
@@ -56,6 +57,8 @@ export class EventManager {
         this._titleElement.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.name;
         this._descriptionElement.innerHTML = this._currentEvent.description;
+        this._imageElement.src = this._currentEvent.image;
+        this._imageElement.style.display = 'block';
         this.showButtons();
     }
 
