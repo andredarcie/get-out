@@ -37,8 +37,8 @@ export class Item {
         this._amount = amount;
     }
 
-    getNameWithAmount(): string {
-        return this._name + (this._amount > 1 ? ' x ' + this._amount : '' );
+    showAmount(): string {
+        return (this._amount > 1 ? ' x ' + this._amount : '' );
     }
 
     decreaseAmount(): void {

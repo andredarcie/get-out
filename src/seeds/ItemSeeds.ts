@@ -7,8 +7,8 @@ export enum ItemsNames {
 
 export class ItemSeeds {
     public static items: Item[] = [
-        new Item('First Aid', ItemType.FirstAid, '❤️ +50%'),
-        new Item('Food', ItemType.Food, '🥫 +50%'),
+        new Item('First Aid', ItemType.FirstAid, '❤️+50%'),
+        new Item('Food', ItemType.Food, '🥫+50%'),
     ];
 
     public static getItens(name: ItemsNames, amount: number): Item {

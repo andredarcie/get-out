@@ -59,11 +59,11 @@ export class BagManager {
             return;
         }
 
-        for (let i = 0; i < this._items.length; i++) {
+        for (let item of this._items) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(this._items[i].getNameWithAmount()));
-            button.addEventListener('click', () => this.selectItem(this._items[i]) );
+            button.appendChild(document.createTextNode(item.name + ' (' + item.effect + ') ' + item.showAmount()));
+            button.addEventListener('click', () => this.selectItem(item));
             li.appendChild(button);
             this._itemListElement.appendChild(li);
         }
