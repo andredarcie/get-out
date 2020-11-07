@@ -122,7 +122,7 @@ export class TravelManager {
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
                 this._charactersList[i].atributesField.innerHTML = character.getHealth() + ' ' + character.getStamina() + ' ' 
-                                                                 + character.getHungry() + ' ' + character.getThirst();
+                                                                 + character.getHungry();
             }
         }
     }

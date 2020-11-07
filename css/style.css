@@ -32,7 +32,7 @@ h2 {
 }
 
 #container {
-    font-size: 14px;
+    font-size: 12px;
     font-family: travelingTypewriter;
     color: #ffffff;
     padding: 5vw;
@@ -92,15 +92,23 @@ h2 {
 button {
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 40px;
     color: #ffffff;
     border: 1px solid #2c3e50;
     background-color: #000000;
     cursor: pointer;
 }
 
+img#event-page-image {
+    width: 100%;
+}
+
+img {
+    border: 2px solid #2c3e50;
+}
+
 button + button {
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 button.loading::after {
@@ -112,12 +120,6 @@ button.loading::after {
     width: 100%;
     height: 100%;
     animation: fill 2s;
-}
-
-img {
-    border: 2px solid #2c3e50;
-    width: 100%;
-    margin: 0 auto;
 }
 
 p {
