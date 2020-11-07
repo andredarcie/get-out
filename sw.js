@@ -57,6 +57,10 @@ self.__precacheManifest = [
     "revision": "a47d34422e8940a081c35d0c8fe50731"
   },
   {
+    "url": "girl.f844d34c.jpg",
+    "revision": "3e04c4f87f36025235d1c92fef0e26a4"
+  },
+  {
     "url": "icon-128x128.8fad5fc0.png",
     "revision": "9ba208c19a6d23a9250880f35fd31f47"
   },
@@ -90,23 +94,35 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "8a5aea7f2bdb3aafcf1ef44203779faa"
+    "revision": "36b8b500c775015fdbc88c33cef27ef2"
+  },
+  {
+    "url": "kid.4c5d2dd8.jpg",
+    "revision": "998226c46c058ea5cba08e2c97d7ea04"
+  },
+  {
+    "url": "man.071b7a93.jpg",
+    "revision": "f85ecc7334f2b9c029ee86986e92fa24"
   },
   {
     "url": "normalize.458d1ead.css",
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.e68f3384.js",
-    "revision": "c748066bdaebeb2497f7aad61875b0f1"
+    "url": "src.2f4c1ba7.js",
+    "revision": "cfb347dee82e1d13c660841b934acb54"
   },
   {
-    "url": "style.8095b8f6.css",
-    "revision": "b8e8ad6221b63463f20b877da1d56f0e"
+    "url": "style.23fe61f8.css",
+    "revision": "e688c3c95e4cb020b8945875beb6eb32"
+  },
+  {
+    "url": "woman.d20d4f2a.jpg",
+    "revision": "834ff52d317420ec54e6066591c25446"
   },
   {
     "url": "/",
-    "revision": "280d3ee50f52d53fde4e636af46628d6"
+    "revision": "f709bb6364248b50c2fdd076269d3d83"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
