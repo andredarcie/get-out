@@ -94,7 +94,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "36b8b500c775015fdbc88c33cef27ef2"
+    "revision": "1acb54e9b5d0db92380e002cf57d6a31"
   },
   {
     "url": "kid.4c5d2dd8.jpg",
@@ -109,8 +109,8 @@ self.__precacheManifest = [
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.2f4c1ba7.js",
-    "revision": "cfb347dee82e1d13c660841b934acb54"
+    "url": "src.2266b3d6.js",
+    "revision": "9a49094c434727984a6aed10f4ecf2c5"
   },
   {
     "url": "style.23fe61f8.css",
@@ -122,7 +122,7 @@ self.__precacheManifest = [
   },
   {
     "url": "/",
-    "revision": "f709bb6364248b50c2fdd076269d3d83"
+    "revision": "b8b5ed1eefc1d4b387061a243c6ece46"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
