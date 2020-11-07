@@ -1,4 +1,4 @@
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
 
 export class GameOverManager {
     private _gameOverMessage: Element;

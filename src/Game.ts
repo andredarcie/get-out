@@ -6,7 +6,6 @@ import { LogManager } from './managers/LogManager';
 import { BagManager } from './managers/BagManager';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
-import { Item, ItemType } from './entities/Item';
 import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
@@ -23,7 +22,6 @@ export enum GameStates {
 
 export class Game {
     private static _instance: Game;
-    private _states: GameStates;
     private _currentState = 1;
     private _currentDay = 1;
     private _hours = 0;

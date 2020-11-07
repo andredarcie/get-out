@@ -1,6 +1,5 @@
 import { Event, EventType } from '../entities/Event';
 import { Game, GameStates } from '../Game';
-import { Item, ItemType } from '../entities/Item';
 import { EventSeeds } from '../seeds/EventSeeds';
 
 export class EventManager {

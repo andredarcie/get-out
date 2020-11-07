@@ -1,8 +1,8 @@
 import { Character } from '../entities/Character';
 import { Event, EventType } from '../entities/Event';
 import { Item } from '../entities/Item';
-import { Game, GameStates } from '../Game';
-import { ItemSeeds, ItemsNames } from '../seeds/ItemSeeds'
+import { Game } from '../Game';
+import { ItemSeeds } from '../seeds/ItemSeeds'
 import { LogType } from '../managers/LogManager';
 
 export class EventSeeds {
@@ -13,7 +13,7 @@ export class EventSeeds {
     constructor() {
         this._game = Game.getInstance();
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) {
             this._imageUrlList[i] = (document.getElementById("event-page-image-" + (i + 1)) as HTMLImageElement).src;
         }
 

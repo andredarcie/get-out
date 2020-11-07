@@ -100,9 +100,6 @@ export class BagManager {
                     case ItemType.Food:
                         buttonText += character.getHungry();
                         break;
-                    case ItemType.Drink:
-                        buttonText += character.getThirst();
-                        break;
                 }
             }
 
@@ -135,9 +132,6 @@ export class BagManager {
                 break;
             case ItemType.Food:
                 character.decreaseHungry(50);
-                break;
-            case ItemType.Drink:
-                character.decreaseThirst(50);
                 break;
         }
         character.decreaseHungry(12);

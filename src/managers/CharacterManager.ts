@@ -19,13 +19,6 @@ export class CharacterManager {
         }
     }
 
-    increaseThirstOfAllCharacters() {
-        let characters = this.getCharactersAlive();
-        for (let character of characters) {
-            character.increaseThirst(10);
-        }
-    }
-
     decreaseStaminaOfAllCharacters(staminToDecrease: number) {
         let characters = this.getCharactersAlive();
         for (let character of characters) {
@@ -52,7 +45,7 @@ export class CharacterManager {
         let characters = this.getCharactersAlive();
         for (let character of characters) {
             if (character.health <= 25 || character.stamina <= 25 ||
-                character.thirst <= 25 || character.hungry <= 25)
+                character.hungry <= 25)
                 return true;
         }
 

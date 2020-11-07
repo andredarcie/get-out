@@ -3,23 +3,17 @@ import { Character } from '../entities/Character';
 import { LogType } from '../managers/LogManager';
 
 export class TravelManager {
-    private _travelPage: Element;
-    private _travelImage: Element;
     private _travelledDistanceField: Element;
     private _progressBar: HTMLElement;
     private _walkBtn: HTMLButtonElement;
     private _campBtn: HTMLButtonElement;
-    private _statsBtn: HTMLButtonElement;
     private _game: Game;
     private _charactersList: any;
-    private _currentCharacterIndex: number;
     private _bagBtn: HTMLButtonElement;
 
     constructor() {
         this._game = Game.getInstance();
         
-        this._travelPage = document.querySelector("#travel-page");
-        this._travelImage = document.querySelector("#travel-img");
         this._travelledDistanceField = document.querySelector("#travelled-distance");
         this._progressBar = document.getElementById("progress-bar");
         this._walkBtn = document.querySelector("#walk-btn");
@@ -34,7 +28,6 @@ export class TravelManager {
 
         this._bagBtn = document.querySelector('#bag-btn');
         this._bagBtn.addEventListener('click', () => { this.onClickBag() });
-        this._currentCharacterIndex = 0;
         this.getAtributesPageElements();
     }
 
@@ -138,12 +131,11 @@ export class TravelManager {
     walkOneHour() {
         this._game.characterManager.decreaseStaminaOfAllCharacters(5);
         this._game.characterManager.increaseHungryOfAllCharacters();
-        this._game.characterManager.increaseThirstOfAllCharacters();
 
         const characters: Character[] = this._game.characterManager.getCharactersAlive();
         
         for (let character of characters) {
-            this._game.log.addTempLog(character.name + ' 🥫 -5%  ⚡ -5% 💧 -10%', LogType.StatusChange);
+            this._game.log.addTempLog(character.name + ' 🥫 -5%  ⚡ -5%', LogType.StatusChange);
         }
 
         this._game.decreaseTheDistanceToTheBorder(2);

@@ -9,7 +9,6 @@ export class Character {
     private _health: number = 100;
     private _stamina: number = 100;
     private _hungry: number = 100;
-    private _thirst: number = 100;
 
     private _isDead: boolean = false;
     private _sick: boolean = false;
@@ -41,10 +40,6 @@ export class Character {
 
     get kinship() {
         return this._kinship;
-    }
-
-    get thirst() {
-        return this._thirst;
     }
 
     get hungry() {
@@ -99,36 +94,6 @@ export class Character {
         if (this._hungry > 100) {
             this._hungry = 100;
         }
-    }
-
-    decreaseThirst(thirstToDecrease: number) {
-        if (thirstToDecrease < 0) {
-            throw new Error('Hungry to decrease value must be greater than zero');
-        }
-
-        if (this._thirst < 100) {
-            this._thirst = this._thirst + thirstToDecrease;
-        }
-
-        if (this._thirst > 100) {
-            this._thirst = 100;
-        }
-    }
-
-    increaseThirst(thirstToDecrease: number) {
-        if (thirstToDecrease < 0) {
-            throw new Error('Thirst to decrease value must be greater than zero');
-        }
-
-        if (this._thirst > 0) {
-            this._thirst = this._thirst - thirstToDecrease;
-        } else {
-            this.looseHealth(10);
-        }
-    }
-
-    getThirst(): string {
-        return '💧' + this._thirst + '%';
     }
 
     getHungry(): string {

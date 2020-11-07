@@ -1,14 +1,11 @@
 import { Game, GameStates } from '../Game';
 
 export class CampManager {
-    private _campImg: Element;
     private _restBtn: HTMLButtonElement;
     private _travelBtn: HTMLButtonElement;
     private readonly _game: Game;
 
     constructor() {
-        this._campImg = document.querySelector('#camp-img');
-
         this._travelBtn = document.querySelector('#travel-btn');
         this._restBtn = document.querySelector('#camp-rest-btn');
 
