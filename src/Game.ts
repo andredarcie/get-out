@@ -159,10 +159,10 @@ export class Game {
     }
 
     private createAllCharacters(): void {
-        this._characters.push(new Character('Ethan', 'you'));
-        this._characters.push(new Character('Olivia', 'wife'));
-        this._characters.push(new Character('Michael', 'son'));
-        this._characters.push(new Character('Sophia', 'daughter'));
+        this._characters.push(new Character('Ethan', 'you', '1985'));
+        this._characters.push(new Character('Olivia', 'wife', '1988'));
+        this._characters.push(new Character('Michael', 'son', '2003'));
+        this._characters.push(new Character('Sophia', 'daughter', '2005'));
     }
 
     public addItemsToBag(): void {

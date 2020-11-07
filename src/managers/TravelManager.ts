@@ -116,8 +116,8 @@ export class TravelManager {
             let character = characters[i];
 
             if (character.isDead) {
-                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + '💀';
-                this._charactersList[i].atributesField.style.display = 'none';
+                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + ' 💀';
+                this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020'
             } else {
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';

@@ -4,6 +4,7 @@ import { LogType } from '../managers/LogManager';
 export class Character {
     private _name: string;
     private _kinship: string;
+    private _dateOfBirth: string;
 
     private _health: number = 100;
     private _stamina: number = 100;
@@ -15,10 +16,10 @@ export class Character {
 
     private readonly _game: Game;
 
-    constructor(name: string, kinship: string) {
+    constructor(name: string, kinship: string, dateOfBirth: string) {
         this._name = name;
         this._kinship = kinship;
-
+        this._dateOfBirth = dateOfBirth;
         this._game = Game.getInstance();
     }
 
@@ -144,6 +145,10 @@ export class Character {
 
     getSickness(): string {
         return this._sick ? 'Sick' : 'Not sick'
+    }
+
+    getDateOfBirth(): string {
+        return this._dateOfBirth;
     }
 
     
