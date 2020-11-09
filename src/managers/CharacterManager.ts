@@ -9,7 +9,9 @@ export class CharacterManager {
     }
 
     start() {
-
+        for (let i = 0; i < this._game.characters.length; i++) {
+            this._game.characters[i].imageURL = (document.getElementById("rip-page-image-" + (i + 1)) as HTMLImageElement).src;
+        }
     }
 
     increaseHungryOfAllCharacters() {
@@ -40,6 +42,15 @@ export class CharacterManager {
     getCharactersAlive(): Character[] {
         return this._game.characters.filter((character) => !character.isDead);
     }
+
+    getCharactersDead(): Character[] {
+        return this._game.characters.filter((character) => character.isDead);
+    }
+
+    getFirstCharacterDeadAndNotBuried(): Character {
+        return this._game.characters.find((character) => character.isDead && !character.buried);
+    }
+
 
     isInDanger(): boolean {
         let characters = this.getCharactersAlive();

@@ -1,6 +1,7 @@
 import { CampManager } from './managers/CampManager';
 import { EventManager } from './managers/EventManager';
 import { GameOverManager } from './managers/GameOverManager';
+import { RipManager } from './managers/RipManager';
 import { TravelManager } from './managers/TravelManager';
 import { LogManager } from './managers/LogManager';
 import { BagManager } from './managers/BagManager';
@@ -16,6 +17,7 @@ export enum GameStates {
     CAMP,
     EVENT,
     GAME_OVER,
+    RIP,
     LOG,
     BAG,
 }
@@ -28,15 +30,19 @@ export class Game {
     private _clock: Clock; 
     private _characters: Character[] = [];
     private _distanceToTheBorder = 300;
+
     private _travelPage: HTMLElement;
     private _logPage: HTMLElement;
     private _campPage: HTMLElement;
     private _eventPage: HTMLElement;
     private _gameOverPage: HTMLElement;
+    private _ripPage: HTMLElement;
     private _bagPage: HTMLElement;
+
     private _camp: CampManager;
     private _events: EventManager;
     private _gameOver: GameOverManager;
+    private _ripManager: RipManager;
     private _travel: TravelManager;
     private _log: LogManager;
     private _bag: BagManager;
@@ -50,6 +56,7 @@ export class Game {
         this._campPage = document.getElementById("camp-page");
         this._eventPage = document.getElementById("event-page");
         this._gameOverPage = document.getElementById("game-over-page");
+        this._ripPage = document.getElementById("rip-page");
         this._bagPage = document.getElementById("bag-page");
         this._currentTimeField = document.querySelector("#current-time-field");
         this.playerGuid = this.generateGuid();
@@ -68,16 +75,19 @@ export class Game {
         this._bag = new BagManager();
         //this.addItemsToBag();
 
+        this.createAllCharacters();
+
+        this._characterManager = new CharacterManager();
+        this._characterManager.start();
         this._camp = new CampManager();
         this._events = new EventManager();
         this._gameOver = new GameOverManager();
+        this._ripManager = new RipManager();
         this._travel = new TravelManager();
-        this._characterManager = new CharacterManager();
         this._clock = new Clock(8, true);
         this._log = new LogManager();
 
         this.showDataTime();
-        this.createAllCharacters();
         this.goToState(GameStates.TRAVEL);
         this.startFirebase();
     }
@@ -157,10 +167,10 @@ export class Game {
     }
 
     private createAllCharacters(): void {
-        this._characters.push(new Character('Ethan', 'you', '1985'));
-        this._characters.push(new Character('Olivia', 'wife', '1988'));
-        this._characters.push(new Character('Michael', 'son', '2003'));
-        this._characters.push(new Character('Sophia', 'daughter', '2005'));
+        this._characters.push(new Character('Ethan', 'you', '1985', false));
+        this._characters.push(new Character('Olivia', 'wife', '1988', false));
+        this._characters.push(new Character('Michael', 'son', '2003', false));
+        this._characters.push(new Character('Sophia', 'daughter', '2005', false));
     }
 
     public addItemsToBag(): void {
@@ -191,6 +201,7 @@ export class Game {
         this.hidePage(this._eventPage);
         this.hidePage(this._gameOverPage);
         this.hidePage(this._bagPage);
+        this.hidePage(this._ripPage);
     }
 
     public setState(): void {
@@ -216,6 +227,10 @@ export class Game {
             case GameStates.GAME_OVER:
                 this.showPage(this._gameOverPage);
                 this._gameOver.start();
+            break;
+            case GameStates.RIP:
+                this.showPage(this._ripPage);
+                this._ripManager.start();
             break;
             case GameStates.BAG:
                 this.showPage(this._bagPage);

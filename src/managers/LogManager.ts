@@ -1,3 +1,4 @@
+import { Character } from '../entities/Character';
 import { Game, GameStates } from '../Game';
 
 export enum LogType {
@@ -62,6 +63,16 @@ export class LogManager {
     }
 
     onClickTravel() {
+        let characters: Character[] = this._game.characterManager.getCharactersDead();
+        console.log(characters);
+
+        for (let character of characters) {
+            if (character.isDead && !character.buried) {
+                this._game.goToState(GameStates.RIP);
+                return;
+            }
+        }
+
         this._successResult.style.display = 'none';
         this._failureResult.style.display = 'none';
         this._game.goToState(GameStates.TRAVEL);

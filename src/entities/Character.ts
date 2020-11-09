@@ -5,20 +5,22 @@ export class Character {
     private _name: string;
     private _kinship: string;
     private _dateOfBirth: string;
-
+    private _imageURL: string;
     private _health: number = 100;
     private _stamina: number = 100;
     private _hungry: number = 100;
 
     private _isDead: boolean = false;
+    private _buried: boolean = false;
     private _sick: boolean = false;
 
     private readonly _game: Game;
 
-    constructor(name: string, kinship: string, dateOfBirth: string) {
+    constructor(name: string, kinship: string, dateOfBirth: string, isDead: boolean) {
         this._name = name;
         this._kinship = kinship;
         this._dateOfBirth = dateOfBirth;
+        this._isDead = isDead;
         this._game = Game.getInstance();
     }
 
@@ -44,6 +46,22 @@ export class Character {
 
     get hungry() {
         return this._hungry;
+    }
+
+    get buried() {
+        return this._buried;
+    }
+
+    set buried(buried: boolean) {
+        this._buried = buried;
+    }
+
+    get imageURL() {
+        return this._imageURL;
+    }
+
+    set imageURL(imageURL: string) {
+        this._imageURL = imageURL;
     }
 
     increaseHungry() {
