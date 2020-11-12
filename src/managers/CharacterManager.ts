@@ -78,7 +78,7 @@ export class CharacterManager {
 
     decreasesTheHealthOfSomeoneInTheGroup(): Character {
         let character: Character = this.picksACharacterAtRandom();
-        character.looseHealth(1);
+        character.looseHealth(30);
         return character;
     }
 }

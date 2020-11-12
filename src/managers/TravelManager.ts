@@ -121,7 +121,7 @@ export class TravelManager {
     }
 
     checkEvent() {
-        return this.getRandomArbitrary(1, 100) <= 50;
+        return this.getRandomArbitrary(1, 100) <= 100;
     }
 
     getRandomArbitrary(min: number, max: number): number {

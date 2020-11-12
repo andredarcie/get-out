@@ -28,15 +28,12 @@ export class EventManager {
         eventSeeds.start();
         let events = eventSeeds.events;
 
-        let randomEventType: number = this._game.getRandomArbitrary(3);
-        randomEventType = 2;
-        switch (randomEventType) {
-            case EventType.Combat:
-            case EventType.Exploration:
-                var randomIndex: number = this._game.getRandomArbitrary(events.length);
-                this._currentEvent = events[randomIndex];
-            case EventType.Place:
-                this._currentEvent = eventSeeds.getPlaceEvent();
+        let randomEventType: number = this._game.getRandomArbitrary(2);
+
+        if (randomEventType == 0) {
+            this._currentEvent = eventSeeds.getCombatEvent();
+        } else {
+            this._currentEvent = eventSeeds.getPlaceEvent();
         }
 
         this.showWaitingMessage();
@@ -56,7 +53,11 @@ export class EventManager {
         this._titleElement.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.name;
         this._descriptionElement.innerHTML = this._currentEvent.description;
-        this._imageElement.src = this._currentEvent.image;
+        
+        if (this._currentEvent.image != '') {
+            this._imageElement.src = this._currentEvent.image;
+        }
+
         this._imageElement.style.display = 'block';
         this.showButtons();
     }

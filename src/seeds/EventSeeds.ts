@@ -4,6 +4,8 @@ import { Item } from '../entities/Item';
 import { Game } from '../Game';
 import { ItemSeeds } from '../seeds/ItemSeeds'
 import { LogType } from '../managers/LogManager';
+import { DiceManager } from '../managers/DiceManager';
+import { Dice } from '../entities/Dice';
 
 export class EventSeeds {
     private _events: Event[];
@@ -121,5 +123,74 @@ export class EventSeeds {
             EventType.Place,
             null
         )
+    }
+
+    public getCombatEvent() {
+        let enemies: string[] = [
+            'Wolf',
+            'Timberwolf',
+            'Bear',
+            'Mercenary',
+            'Bandit'
+        ];
+
+        const enemy: string = enemies[this._game.getRandomArbitrary(enemies.length - 1)];
+        let dice = new Dice();
+        let diceManager = new DiceManager();
+        let enemyDificultie = 10;
+        diceManager.getDifficultLevel(enemyDificultie);
+
+        return new Event(
+            enemy + ' appeared!',
+            'You are in trouble',
+            '',
+            {
+                buttonText: 'Fight [' + diceManager.getDifficultLevel(enemyDificultie) + ': ' + enemyDificultie + ']',
+                callback: () => {
+                    // Capacidade do ethan 2
+                    let ethanStrength = 2;
+
+                    let diceOneNumber = dice.roll();
+                    let diceTwoNumber = dice.roll();
+                    let final = diceOneNumber + diceTwoNumber + ethanStrength;
+
+                    if (diceOneNumber + diceTwoNumber == 12) {
+                        this._game.log.setCriticalSuccess();
+                        this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6)', LogType.Result);
+                        this._game.log.addTempLog('You defeated the enemy easily', LogType.Result);
+                        return;
+                    }
+
+                    if (diceOneNumber + diceTwoNumber == 2) {
+                        this._game.log.setCriticalFailure();
+                        this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6)', LogType.Result);
+                        this._game.log.addTempLog('The enemy left you devastated', LogType.Result);
+                        this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                        this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                        return;
+                    }
+                    
+                    this._game.log.addTempLog('Expected: ' + enemyDificultie, LogType.Result);
+                    this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6) + Strength: ' + ethanStrength + ' = ' + final, LogType.Result);
+
+                    if (final >= enemyDificultie) {
+                        this._game.log.setSuccess();
+                        this._game.log.addTempLog('With a lot of struggle you beat the enemy', LogType.Result);
+                    } else {
+                        this._game.log.setFailure();
+                        this._game.log.addTempLog('The enemy has hurt you', LogType.Result);
+                        this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                    }
+                }
+            },
+            {
+                buttonText: 'Try to escape',
+                callback: () => {
+                    this._game.log.addTempLog('You just ignored', LogType.Result);
+                }
+            },
+            EventType.Combat,
+            null
+        );
     }
 }

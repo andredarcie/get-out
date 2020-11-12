@@ -10,6 +10,7 @@ import { CharacterManager } from './managers/CharacterManager';
 import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
+import { DiceManager } from './managers/DiceManager';
 require("firebase/database");
 
 export enum GameStates {
@@ -71,7 +72,9 @@ export class Game {
     }
 
     public start(): void {
-
+        let dice = new DiceManager();
+        dice.start();
+        
         this._bag = new BagManager();
         //this.addItemsToBag();
 
