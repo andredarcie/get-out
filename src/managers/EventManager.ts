@@ -30,13 +30,23 @@ export class EventManager {
 
         let randomEventType: number = this._game.getRandomArbitrary(2);
 
-        if (randomEventType == 0) {
+        if (this.checkForMileStone()) {
+            this._currentEvent = eventSeeds.getMileStoneEvent();
+        } else if (randomEventType == 0) {
             this._currentEvent = eventSeeds.getCombatEvent();
         } else {
             this._currentEvent = eventSeeds.getPlaceEvent();
         }
 
         this.showWaitingMessage();
+    }
+
+    private checkForMileStone(): boolean {
+        return (this._game.distanceToTheBorder == 250 ||
+            this._game.distanceToTheBorder == 200 ||
+            this._game.distanceToTheBorder == 150 ||
+            this._game.distanceToTheBorder == 100 ||
+            this._game.distanceToTheBorder == 50);
     }
 
     showWaitingMessage(): void {

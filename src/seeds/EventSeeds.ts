@@ -15,7 +15,7 @@ export class EventSeeds {
     constructor() {
         this._game = Game.getInstance();
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 8; i++) {
             this._imageUrlList[i] = (document.getElementById("event-page-image-" + (i + 1)) as HTMLImageElement).src;
         }
 
@@ -86,7 +86,7 @@ export class EventSeeds {
         const eventName: string = names[this._game.getRandomArbitrary(names.length - 1)];
         const exploreButtonText: string = exploreSynonyms[this._game.getRandomArbitrary(exploreSynonyms.length - 1)];
         const messageWhenYouFoundNothing: string = messagesWhenYouFoundNothing[this._game.getRandomArbitrary(messagesWhenYouFoundNothing.length - 1)];
-        const imageUrl: string = this._imageUrlList[this._game.getRandomArbitrary(this._imageUrlList.length - 1)];
+        const imageUrl: string = this._imageUrlList[this._game.getRandomArbitrary(this._imageUrlList.length - 2)];
 
         return new Event(
             eventName,
@@ -141,14 +141,14 @@ export class EventSeeds {
         diceManager.getDifficultLevel(enemyDificultie);
 
         return new Event(
-            enemy + ' appeared!',
+            'Furious wolf appeared!',
             'You are in trouble',
-            '',
+            this._imageUrlList[6],
             {
                 buttonText: 'Fight [' + diceManager.getDifficultLevel(enemyDificultie) + ': ' + enemyDificultie + ']',
                 callback: () => {
                     // Capacidade do ethan 2
-                    let ethanStrength = 2;
+                    let ethanStrength = 6;
 
                     let diceOneNumber = dice.roll();
                     let diceTwoNumber = dice.roll();
@@ -157,14 +157,14 @@ export class EventSeeds {
                     if (diceOneNumber + diceTwoNumber == 12) {
                         this._game.log.setCriticalSuccess();
                         this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6)', LogType.Result);
-                        this._game.log.addTempLog('You defeated the enemy easily', LogType.Result);
+                        this._game.log.addTempLog('You defeated the wolf easily', LogType.Result);
                         return;
                     }
 
                     if (diceOneNumber + diceTwoNumber == 2) {
                         this._game.log.setCriticalFailure();
                         this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6)', LogType.Result);
-                        this._game.log.addTempLog('The enemy left you devastated', LogType.Result);
+                        this._game.log.addTempLog('The wolf left you devastated', LogType.Result);
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                         return;
@@ -175,10 +175,10 @@ export class EventSeeds {
 
                     if (final >= enemyDificultie) {
                         this._game.log.setSuccess();
-                        this._game.log.addTempLog('With a lot of struggle you beat the enemy', LogType.Result);
+                        this._game.log.addTempLog('With a lot of struggle you beat the wolf', LogType.Result);
                     } else {
                         this._game.log.setFailure();
-                        this._game.log.addTempLog('The enemy has hurt you', LogType.Result);
+                        this._game.log.addTempLog('The wolf has hurt you', LogType.Result);
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                     }
                 }
@@ -191,6 +191,22 @@ export class EventSeeds {
             },
             EventType.Combat,
             null
+        );
+    }
+
+    public getMileStoneEvent(): Event {
+        return new Event('Milestone Reached! ',
+        this._game.distanceToTheBorder + ' miles to the border',
+        this._imageUrlList[7],
+        {
+            buttonText: 'Back to travel',
+            callback: () => {}
+        },
+        {
+            buttonText: 'Back to travel',
+            callback: () => {}
+        },
+        EventType.Exploration, null
         );
     }
 }
