@@ -134,8 +134,9 @@ export class EventSeeds {
             'Bandit'
         ];
 
-        const enemy: string = enemies[this._game.getRandomArbitrary(enemies.length - 1)];
         let dice = new Dice();
+
+        const enemy: string = enemies[this._game.getRandomArbitrary(enemies.length - 1)];
         let diceManager = new DiceManager();
         let enemyDificultie = 10;
         diceManager.getDifficultLevel(enemyDificultie);
