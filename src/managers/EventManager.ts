@@ -41,6 +41,10 @@ export class EventManager {
         this.showWaitingMessage();
     }
 
+    get currentEvent(): Event {
+        return this._currentEvent;
+    }
+
     private checkForMileStone(): boolean {
         return (this._game.distanceToTheBorder == 250 ||
             this._game.distanceToTheBorder == 200 ||
@@ -81,8 +85,12 @@ export class EventManager {
     }
 
     onEventPageYesBtn(): void {
-        this._currentEvent.onYes.callback();
+        if (this._currentEvent.onYes.skillCheck) {
+            this._game.goToState(GameStates.SKILLCHECK);
+            return;
+        }
 
+        this._currentEvent.onYes.callback();
         this.checkLogs();
     }
 

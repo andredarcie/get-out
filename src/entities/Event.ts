@@ -8,6 +8,7 @@ export enum EventType {
 
 interface Choice {
     buttonText: string;
+    skillCheck: boolean;
     callback: any;
 }
 

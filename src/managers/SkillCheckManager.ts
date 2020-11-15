@@ -1,6 +1,13 @@
 import { Dice } from '../entities/Dice';
 import { Game, GameStates } from '../Game';
 
+export enum SkillCheckResults {
+    Success,
+    CriticialSuccess,
+    Failure,
+    CriticalFailure
+}
+
 export class SkillCheckManager {
     private readonly _game: Game;
     private _travelBtn: HTMLButtonElement;
@@ -37,7 +44,8 @@ export class SkillCheckManager {
     }
 
     onClickTravel() {
-        this._game.goToState(GameStates.TRAVEL);
+        this._game.events.currentEvent.onYes.callback();
+        this._game.goToState(GameStates.LOG);
     }
 
     private shakeDice(dice: Dice): void {
@@ -53,7 +61,7 @@ export class SkillCheckManager {
         let firstDiceValue = dice.roll();
         let secondDiceValue = dice.roll();
         let characterStrength = 3;
-        let expectedValue = 10;
+        let expectedValue = this._game.skillCheckDifficultie;
         let finalValue = firstDiceValue + secondDiceValue + characterStrength;
         this.showDiceValues(firstDiceValue, secondDiceValue);
 
@@ -63,21 +71,25 @@ export class SkillCheckManager {
 
         if (firstDiceValue + secondDiceValue == 12) {
             this.setCriticalSuccess();
+            this._game.skillCheckResult = SkillCheckResults.CriticialSuccess;
             return;
         }
 
         if (firstDiceValue + secondDiceValue == 2) {
             this.setCriticalFailure();
+            this._game.skillCheckResult = SkillCheckResults.CriticalFailure;
             return;
         }
 
         if (finalValue >= expectedValue) {
             this.setSuccess();
+            this._game.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (finalValue < expectedValue) {
             this.setFailure();
+            this._game.skillCheckResult = SkillCheckResults.Failure;
             return;
         }
     }

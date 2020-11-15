@@ -6,6 +6,7 @@ import { ItemSeeds } from '../seeds/ItemSeeds'
 import { LogType } from '../managers/LogManager';
 import { DiceManager } from '../managers/DiceManager';
 import { Dice } from '../entities/Dice';
+import { SkillCheckResults } from '../managers/SkillCheckManager';
 
 export class EventSeeds {
     private _events: Event[];
@@ -29,12 +30,14 @@ export class EventSeeds {
             '',
             { 
                 buttonText: 'Throw a stone',
+                skillCheck: false,
                 callback: () => {
                     this._game.log.addTempLog('You hit the rock and killed the wolf!', LogType.Result);
                 }
             },
             { 
                 buttonText: 'Run like a chicken',
+                skillCheck: false,
                 callback: () => {
                     this._game.log.addTempLog('Did you get away', LogType.Result);
                 }
@@ -94,17 +97,14 @@ export class EventSeeds {
             imageUrl,
             { 
                 buttonText: exploreButtonText,
+                skillCheck: false,
                 callback: () => {
                     const maxItems: number = 4;
                     let randomNumber: number = this._game.getRandomArbitrary(maxItems);
 
                     if (randomNumber <= 0) {
-                        this._game.log._successResult.style.display = 'none';
-                        this._game.log._failureResult.style.display = 'inline';
                         this._game.log.addTempLog(messageWhenYouFoundNothing, LogType.Result);  
                     } else {
-                        this._game.log._successResult.style.display = 'inline';
-                        this._game.log._failureResult.style.display = 'none';
                         for (let i = 0; i < randomNumber; i++) {
                             let itemFounded: Item = ItemSeeds.getOneRandomItem();
                             var character: Character = this._game.characterManager.picksACharacterAtRandom();
@@ -116,6 +116,7 @@ export class EventSeeds {
             },
             { 
                 buttonText: 'Ignore',
+                skillCheck: false,
                 callback: () => {
                     this._game.log.addTempLog('You just ignored', LogType.Result);
                 }
@@ -139,6 +140,7 @@ export class EventSeeds {
         const enemy: string = enemies[this._game.getRandomArbitrary(enemies.length - 1)];
         let diceManager = new DiceManager();
         let enemyDificultie = 10;
+        this._game.skillCheckDifficultie = enemyDificultie;
         diceManager.getDifficultLevel(enemyDificultie);
 
         return new Event(
@@ -147,45 +149,27 @@ export class EventSeeds {
             this._imageUrlList[6],
             {
                 buttonText: 'Fight [' + diceManager.getDifficultLevel(enemyDificultie) + ': ' + enemyDificultie + ']',
+                skillCheck: true,
                 callback: () => {
-                    // Capacidade do ethan 2
-                    let ethanStrength = 6;
 
-                    let diceOneNumber = dice.roll();
-                    let diceTwoNumber = dice.roll();
-                    let final = diceOneNumber + diceTwoNumber + ethanStrength;
-
-                    if (diceOneNumber + diceTwoNumber == 12) {
-                        this._game.log.setCriticalSuccess();
-                        this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6)', LogType.Result);
+                    let result = this._game.skillCheckResult;
+                    if (result == SkillCheckResults.Success) {
+                        this._game.log.addTempLog('With a lot of struggle you beat the wolf', LogType.Result);
+                    } else if (result == SkillCheckResults.Failure) {
+                        this._game.log.addTempLog('The wolf has hurt you', LogType.Result);
+                        this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                    } else if (result == SkillCheckResults.CriticialSuccess) {
                         this._game.log.addTempLog('You defeated the wolf easily', LogType.Result);
-                        return;
-                    }
-
-                    if (diceOneNumber + diceTwoNumber == 2) {
-                        this._game.log.setCriticalFailure();
-                        this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6)', LogType.Result);
+                    } else if (result = SkillCheckResults.CriticalFailure) {
                         this._game.log.addTempLog('The wolf left you devastated', LogType.Result);
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                        this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                        return;
-                    }
-                    
-                    this._game.log.addTempLog('Expected: ' + enemyDificultie, LogType.Result);
-                    this._game.log.addTempLog('Dices: (' + diceOneNumber + '/6) + (' + diceTwoNumber + '/6) + Strength: ' + ethanStrength + ' = ' + final, LogType.Result);
-
-                    if (final >= enemyDificultie) {
-                        this._game.log.setSuccess();
-                        this._game.log.addTempLog('With a lot of struggle you beat the wolf', LogType.Result);
-                    } else {
-                        this._game.log.setFailure();
-                        this._game.log.addTempLog('The wolf has hurt you', LogType.Result);
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                     }
                 }
             },
             {
                 buttonText: 'Try to escape',
+                skillCheck: true,
                 callback: () => {
                     this._game.log.addTempLog('You just ignored', LogType.Result);
                 }
@@ -201,10 +185,12 @@ export class EventSeeds {
         this._imageUrlList[7],
         {
             buttonText: 'Back to travel',
+            skillCheck: false,
             callback: () => {}
         },
         {
             buttonText: 'Back to travel',
+            skillCheck: false,
             callback: () => {}
         },
         EventType.Exploration, null

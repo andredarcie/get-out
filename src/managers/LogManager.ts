@@ -9,8 +9,6 @@ export enum LogType {
 export class LogManager {
     private _logListResult: Element;
     private _logListStatusChange: Element;
-    public _successResult: HTMLButtonElement;
-    public _failureResult: HTMLButtonElement;
     private _travelBtn: Element;
     private _tempResultLogs: string[] = [];
     private _tempoStatusChangeLogs: string[] = []; 
@@ -22,11 +20,6 @@ export class LogManager {
 
         this._logListResult = document.querySelector("#log-list-result");
         this._logListStatusChange = document.querySelector("#log-list-status-change");
-
-        this._successResult = document.querySelector("#success-result");
-        this._successResult.style.display = 'none';
-        this._failureResult = document.querySelector("#failure-result");
-        this._failureResult.style.display = 'none';
 
         this._travelBtn = document.querySelector("#log-back-character-btn");
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
@@ -64,7 +57,6 @@ export class LogManager {
 
     onClickTravel() {
         let characters: Character[] = this._game.characterManager.getCharactersDead();
-        console.log(characters);
 
         for (let character of characters) {
             if (character.isDead && !character.buried) {
@@ -73,8 +65,6 @@ export class LogManager {
             }
         }
 
-        this._successResult.style.display = 'none';
-        this._failureResult.style.display = 'none';
         this._game.goToState(GameStates.TRAVEL);
     }
 

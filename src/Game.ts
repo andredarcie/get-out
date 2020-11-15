@@ -11,7 +11,7 @@ import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
 import { DiceManager } from './managers/DiceManager';
-import { SkillCheckManager } from './managers/SkillCheckManager';
+import { SkillCheckManager, SkillCheckResults } from './managers/SkillCheckManager';
 require("firebase/database");
 
 export enum GameStates {
@@ -55,6 +55,9 @@ export class Game {
     private _currentTimeField: Element;
     private playerGuid: string;
 
+    public skillCheckDifficultie: number;
+    public skillCheckResult: SkillCheckResults;
+
     private constructor() {
         this._travelPage = document.getElementById("travel-page");
         this._logPage = document.getElementById("log-page");
@@ -97,8 +100,12 @@ export class Game {
         this._log = new LogManager();
 
         this.showDataTime();
-        this.goToState(GameStates.SKILLCHECK);
+        this.goToState(GameStates.TRAVEL);
         this.startFirebase();
+    }
+
+    get events() {
+        return this._events;
     }
 
     private startFirebase(): void {
