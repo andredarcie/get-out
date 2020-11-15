@@ -4,11 +4,12 @@ import { Game, GameStates } from '../Game';
 export class SkillCheckManager {
     private readonly _game: Game;
     private _travelBtn: HTMLButtonElement;
-    private _firstDice: HTMLButtonElement;
-    private _secondDice: HTMLButtonElement;
-    private _skillCheckExpected: HTMLButtonElement;
-    private _skillCheckResultValue: HTMLButtonElement;
-    public _resultLabel: HTMLButtonElement;
+    private _firstDice: HTMLElement;
+    private _secondDice: HTMLElement;
+    private _skillCheckExpected: HTMLElement;
+    private _skillCheckResultValue: HTMLElement;
+    private _skillCheckResultValueLabel: HTMLElement;
+    public _resultLabel: HTMLElement;
     private _diceTimer: any; 
 
     constructor() {
@@ -16,6 +17,7 @@ export class SkillCheckManager {
 
         this._resultLabel = document.querySelector("#skill-check-result-label");
         this._skillCheckResultValue = document.querySelector("#skill-check-result-value");
+        this._skillCheckResultValueLabel = document.querySelector("#skill-check-result-value-label");
 
         this._travelBtn = document.querySelector("#skill-check-back-btn");
         this._firstDice = document.querySelector("#first-dice");
@@ -56,7 +58,7 @@ export class SkillCheckManager {
         this.showDiceValues(firstDiceValue, secondDiceValue);
 
         this._skillCheckResultValue.style.textAlign = 'center';
-        this._skillCheckResultValue.innerHTML = 'Result: ' + finalValue.toString();
+        this._skillCheckResultValue.innerHTML = finalValue.toString();
         this._skillCheckExpected.innerHTML = 'Expected: ' + expectedValue.toString();
 
         if (firstDiceValue + secondDiceValue == 12) {
@@ -87,8 +89,14 @@ export class SkillCheckManager {
 
     public setCriticalSuccess(): void {
         this._skillCheckResultValue.style.visibility = 'hidden';
+        this._skillCheckResultValueLabel.style.visibility = 'hidden';
         this._skillCheckResultValue.classList.remove('red-color');
         this._skillCheckResultValue.classList.add('green-color');
+
+        this._firstDice.classList.add('green-color');
+        this._secondDice.classList.add('green-color');
+        this._firstDice.classList.remove('red-color');
+        this._secondDice.classList.remove('red-color');
 
         this._resultLabel.innerHTML = '[ CRITICIAL SUCCESS ]';
         this._resultLabel.style.fontSize = '1.3em';
@@ -98,8 +106,14 @@ export class SkillCheckManager {
 
     public setSuccess(): void {
         this._skillCheckResultValue.style.visibility = 'visible';
+        this._skillCheckResultValueLabel.style.visibility = 'visible';
         this._skillCheckResultValue.classList.remove('red-color');
         this._skillCheckResultValue.classList.add('green-color');
+
+        this._firstDice.classList.remove('green-color');
+        this._secondDice.classList.remove('green-color');
+        this._firstDice.classList.remove('red-color');
+        this._secondDice.classList.remove('red-color');
         
         this._resultLabel.innerHTML = '[ SUCCESS ]';
         this._resultLabel.style.fontSize = '2.5em';
@@ -109,8 +123,14 @@ export class SkillCheckManager {
 
     public setCriticalFailure(): void {
         this._skillCheckResultValue.style.visibility = 'hidden';
+        this._skillCheckResultValueLabel.style.visibility = 'hidden';
         this._skillCheckResultValue.classList.add('red-color');
         this._skillCheckResultValue.classList.remove('green-color');
+
+        this._firstDice.classList.remove('green-color');
+        this._secondDice.classList.remove('green-color');
+        this._firstDice.classList.add('red-color');
+        this._secondDice.classList.add('red-color');
 
         this._resultLabel.innerHTML = '[ CRITICIAL FAILURE ]';
         this._resultLabel.style.fontSize = '1.3em';
@@ -120,8 +140,14 @@ export class SkillCheckManager {
 
     public setFailure(): void {
         this._skillCheckResultValue.style.visibility = 'visible';
+        this._skillCheckResultValueLabel.style.visibility = 'visible';
         this._skillCheckResultValue.classList.add('red-color');
         this._skillCheckResultValue.classList.remove('green-color');
+
+        this._firstDice.classList.remove('green-color');
+        this._secondDice.classList.remove('green-color');
+        this._firstDice.classList.remove('red-color');
+        this._secondDice.classList.remove('red-color');
 
         this._resultLabel.innerHTML = '[ FAILURE ]';
         this._resultLabel.style.fontSize = '2.5em';
