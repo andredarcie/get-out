@@ -11,12 +11,14 @@ import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
 import { DiceManager } from './managers/DiceManager';
+import { SkillCheckManager } from './managers/SkillCheckManager';
 require("firebase/database");
 
 export enum GameStates {
     TRAVEL,
     CAMP,
     EVENT,
+    SKILLCHECK,
     GAME_OVER,
     RIP,
     LOG,
@@ -36,12 +38,14 @@ export class Game {
     private _logPage: HTMLElement;
     private _campPage: HTMLElement;
     private _eventPage: HTMLElement;
+    private _skillCheckPage: HTMLElement;
     private _gameOverPage: HTMLElement;
     private _ripPage: HTMLElement;
     private _bagPage: HTMLElement;
 
     private _camp: CampManager;
     private _events: EventManager;
+    private _skillCheckManager: SkillCheckManager;
     private _gameOver: GameOverManager;
     private _ripManager: RipManager;
     private _travel: TravelManager;
@@ -56,6 +60,7 @@ export class Game {
         this._logPage = document.getElementById("log-page");
         this._campPage = document.getElementById("camp-page");
         this._eventPage = document.getElementById("event-page");
+        this._skillCheckPage = document.getElementById("skill-check-page");
         this._gameOverPage = document.getElementById("game-over-page");
         this._ripPage = document.getElementById("rip-page");
         this._bagPage = document.getElementById("bag-page");
@@ -85,13 +90,14 @@ export class Game {
         this._camp = new CampManager();
         this._events = new EventManager();
         this._gameOver = new GameOverManager();
+        this._skillCheckManager = new SkillCheckManager();
         this._ripManager = new RipManager();
         this._travel = new TravelManager();
         this._clock = new Clock(8, true);
         this._log = new LogManager();
 
         this.showDataTime();
-        this.goToState(GameStates.TRAVEL);
+        this.goToState(GameStates.SKILLCHECK);
         this.startFirebase();
     }
 
@@ -202,6 +208,7 @@ export class Game {
         this.hidePage(this._logPage);
         this.hidePage(this._campPage);
         this.hidePage(this._eventPage);
+        this.hidePage(this._skillCheckPage);
         this.hidePage(this._gameOverPage);
         this.hidePage(this._bagPage);
         this.hidePage(this._ripPage);
@@ -222,6 +229,10 @@ export class Game {
             case GameStates.EVENT: 
                 this.showPage(this._eventPage);
                 this._events.start();
+            break;
+            case GameStates.SKILLCHECK:
+                this.showPage(this._skillCheckPage);
+                this._skillCheckManager.start();
             break;
             case GameStates.LOG:
                 this.showPage(this._logPage);

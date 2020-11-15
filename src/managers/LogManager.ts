@@ -91,28 +91,4 @@ export class LogManager {
 
         this._game.addLogToFirebase(log);
     }
-
-    public setCriticalSuccess(): void {
-        this._game.log._successResult.style.display = 'inline';
-        this._successResult.innerHTML = ' [ CRITICAL SUCCESS ] ';
-        this._failureResult.style.display = 'none';
-    }
-
-    public setSuccess(): void {
-        this._game.log._successResult.style.display = 'inline';
-        this._successResult.innerHTML = ' [ SUCCESS ] ';
-        this._failureResult.style.display = 'none';
-    }
-
-    public setCriticalFailure(): void {
-        this._game.log._failureResult.style.display = 'inline';
-        this._failureResult.innerHTML = '  [ CRITICIAL FAILURE ] ';
-        this._successResult.style.display = 'none';
-    }
-
-    public setFailure(): void {
-        this._game.log._failureResult.style.display = 'inline';
-        this._failureResult.innerHTML = '  [ FAILURE ] ';
-        this._successResult.style.display = 'none';
-    }
 }

@@ -148,3 +148,15 @@ p {
 button:disabled {
     color: #2c3e50;
 }
+
+.green-color {
+    color: green;
+}
+
+.red-color {
+    color: red;
+}
+
+.yellow-color {
+    color: yellow;
+}
