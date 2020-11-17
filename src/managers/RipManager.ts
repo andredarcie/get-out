@@ -1,5 +1,6 @@
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
 import { Character } from '../entities/Character';
+import { GameStates } from '../enums/GameStates';
 
 export class RipManager {
     private _ripPageImageElement: HTMLImageElement;
@@ -45,7 +46,7 @@ export class RipManager {
             this.showCharater(character);
             character.buried = true;
         } else {
-            this._game.goToState(GameStates.TRAVEL);
+            this._game.stateManager.goToState(GameStates.TRAVEL);
         }
     }
 }

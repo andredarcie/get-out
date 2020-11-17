@@ -1,5 +1,6 @@
 import { Character } from '../entities/Character';
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
+import { GameStates } from '../enums/GameStates';
 
 export enum LogType {
     Result,
@@ -60,12 +61,12 @@ export class LogManager {
 
         for (let character of characters) {
             if (character.isDead && !character.buried) {
-                this._game.goToState(GameStates.RIP);
+                this._game.stateManager.goToState(GameStates.RIP);
                 return;
             }
         }
 
-        this._game.goToState(GameStates.TRAVEL);
+        this._game.stateManager.goToState(GameStates.TRAVEL);
     }
 
     isThereAnyTemporaryLog(): boolean {

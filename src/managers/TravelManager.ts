@@ -1,4 +1,5 @@
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
+import { GameStates } from '../enums/GameStates';
 import { Character } from '../entities/Character';
 import { LogType } from '../managers/LogManager';
 
@@ -55,7 +56,7 @@ export class TravelManager {
         this.walkOneHour();
         let foundEvent = this.checkEvent();
         if (foundEvent) {
-            this._game.goToState(GameStates.EVENT);
+            this._game.stateManager.goToState(GameStates.EVENT);
         } else if (this._game.log.isThereAnyTemporaryLog()) {
 
             let randomCharacter = this._game.characterManager.picksACharacterAtRandom();
@@ -71,17 +72,17 @@ export class TravelManager {
             const message: string = walkMessages[this._game.getRandomArbitrary(walkMessages.length - 1)];
 
             this._game.log.addTempLog(message, LogType.Result);
-            this._game.goToState(GameStates.LOG);
+            this._game.stateManager.goToState(GameStates.LOG);
         }
     }
 
     onClickBag() {
-        this._game.goToState(GameStates.BAG);
+        this._game.stateManager.goToState(GameStates.BAG);
     }
 
     onClickCampBtn(): void {
         this._game.passOneHour();
-        this._game.goToState(GameStates.CAMP);
+        this._game.stateManager.goToState(GameStates.CAMP);
     }
 
     getAtributesPageElements(): void {
@@ -163,6 +164,6 @@ export class TravelManager {
     }
 
     arrivedAtTheBorder() {
-        this._game.goToState(GameStates.GAME_OVER);
+        this._game.stateManager.goToState(GameStates.GAME_OVER);
     }
 }

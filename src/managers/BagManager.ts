@@ -1,6 +1,7 @@
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
 import { Item, ItemType } from '../entities/Item';
 import { Character } from '../entities/Character';
+import { GameStates } from '../enums/GameStates';
 
 export class BagManager {
     private _items: Item[] = [];
@@ -31,7 +32,7 @@ export class BagManager {
     }
 
     private onClickBagClose() {
-        this._game.goToState(GameStates.TRAVEL);
+        this._game.stateManager.goToState(GameStates.TRAVEL);
     }
 
     private onClickThrowAway() {

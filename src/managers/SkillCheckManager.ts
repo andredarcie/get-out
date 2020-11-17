@@ -1,5 +1,6 @@
 import { Dice } from '../entities/Dice';
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
+import { GameStates } from '../enums/GameStates';
 
 export enum SkillCheckResults {
     Success,
@@ -45,7 +46,7 @@ export class SkillCheckManager {
 
     onClickTravel() {
         this._game.events.currentEvent.onYes.callback();
-        this._game.goToState(GameStates.LOG);
+        this._game.stateManager.goToState(GameStates.LOG);
     }
 
     private shakeDice(dice: Dice): void {

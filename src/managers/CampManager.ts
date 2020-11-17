@@ -1,4 +1,5 @@
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
+import { GameStates } from '../enums/GameStates';
 
 export class CampManager {
     private _restBtn: HTMLButtonElement;
@@ -18,7 +19,7 @@ export class CampManager {
     } 
 
     onClickTravel() {
-        this._game.goToState(GameStates.TRAVEL);
+        this._game.stateManager.goToState(GameStates.TRAVEL);
     }
 
     onClickRest() {

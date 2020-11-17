@@ -1,5 +1,6 @@
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
+import { GameStates } from '../enums/GameStates';
 
 export class Character {
     private _name: string;
@@ -152,7 +153,7 @@ export class Character {
                 this._isDead = true;
 
                 if (this._kinship == 'you') {
-                    this._game.goToState(GameStates.GAME_OVER);
+                    this._game.stateManager.goToState(GameStates.GAME_OVER);
                 }
             }
         }

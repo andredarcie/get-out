@@ -1,6 +1,7 @@
 import { Event, EventType } from '../entities/Event';
-import { Game, GameStates } from '../Game';
+import { Game } from '../Game';
 import { EventSeeds } from '../seeds/EventSeeds';
+import { GameStates } from '../enums/GameStates';
 
 export class EventManager {
     private _titleElement: HTMLElement;
@@ -86,7 +87,7 @@ export class EventManager {
 
     onEventPageYesBtn(): void {
         if (this._currentEvent.onYes.skillCheck) {
-            this._game.goToState(GameStates.SKILLCHECK);
+            this._game.stateManager.goToState(GameStates.SKILLCHECK);
             return;
         }
 
@@ -102,9 +103,9 @@ export class EventManager {
 
     checkLogs(): void {
         if (this._game.log.isThereAnyTemporaryLog()) {
-            this._game.goToState(GameStates.LOG);
+            this._game.stateManager.goToState(GameStates.LOG);
         } else {
-            this._game.goToState(GameStates.TRAVEL);
+            this._game.stateManager.goToState(GameStates.TRAVEL);
         }
     }
 }

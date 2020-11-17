@@ -5,6 +5,8 @@ import { RipManager } from './managers/RipManager';
 import { TravelManager } from './managers/TravelManager';
 import { LogManager } from './managers/LogManager';
 import { BagManager } from './managers/BagManager';
+import { StateManager } from './managers/StateManager';
+import { GameStates } from './enums/GameStates';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
 import { Clock } from './entities/Clock';
@@ -14,44 +16,34 @@ import { DiceManager } from './managers/DiceManager';
 import { SkillCheckManager, SkillCheckResults } from './managers/SkillCheckManager';
 require("firebase/database");
 
-export enum GameStates {
-    TRAVEL,
-    CAMP,
-    EVENT,
-    SKILLCHECK,
-    GAME_OVER,
-    RIP,
-    LOG,
-    BAG,
-}
-
 export class Game {
     private static _instance: Game;
-    private _currentState = 1;
     private _currentDay = 1;
     private _hours = 0;
     private _clock: Clock; 
     private _characters: Character[] = [];
     private _distanceToTheBorder = 300;
 
-    private _travelPage: HTMLElement;
-    private _logPage: HTMLElement;
-    private _campPage: HTMLElement;
-    private _eventPage: HTMLElement;
-    private _skillCheckPage: HTMLElement;
-    private _gameOverPage: HTMLElement;
-    private _ripPage: HTMLElement;
-    private _bagPage: HTMLElement;
+    public travelPage: HTMLElement;
+    public logPage: HTMLElement;
+    public campPage: HTMLElement;
+    public eventPage: HTMLElement;
+    public skillCheckPage: HTMLElement;
+    public gameOverPage: HTMLElement;
+    public ripPage: HTMLElement;
+    public bagPage: HTMLElement;
 
-    private _camp: CampManager;
-    private _events: EventManager;
-    private _skillCheckManager: SkillCheckManager;
-    private _gameOver: GameOverManager;
-    private _ripManager: RipManager;
-    private _travel: TravelManager;
-    private _log: LogManager;
-    private _bag: BagManager;
-    private _characterManager: CharacterManager;
+    public campManager: CampManager;
+    public eventManager: EventManager;
+    public skillCheckManager: SkillCheckManager;
+    public gameOverManager: GameOverManager;
+    public ripManager: RipManager;
+    public travelManager: TravelManager;
+    public logManager: LogManager;
+    public bagManager: BagManager;
+    public characterManager: CharacterManager;
+    public stateManager: StateManager;
+
     private _currentTimeField: Element;
     private playerGuid: string;
 
@@ -59,14 +51,14 @@ export class Game {
     public skillCheckResult: SkillCheckResults;
 
     private constructor() {
-        this._travelPage = document.getElementById("travel-page");
-        this._logPage = document.getElementById("log-page");
-        this._campPage = document.getElementById("camp-page");
-        this._eventPage = document.getElementById("event-page");
-        this._skillCheckPage = document.getElementById("skill-check-page");
-        this._gameOverPage = document.getElementById("game-over-page");
-        this._ripPage = document.getElementById("rip-page");
-        this._bagPage = document.getElementById("bag-page");
+        this.travelPage = document.getElementById("travel-page");
+        this.logPage = document.getElementById("log-page");
+        this.campPage = document.getElementById("camp-page");
+        this.eventPage = document.getElementById("event-page");
+        this.skillCheckPage = document.getElementById("skill-check-page");
+        this.gameOverPage = document.getElementById("game-over-page");
+        this.ripPage = document.getElementById("rip-page");
+        this.bagPage = document.getElementById("bag-page");
         this._currentTimeField = document.querySelector("#current-time-field");
         this.playerGuid = this.generateGuid();
     }
@@ -83,32 +75,33 @@ export class Game {
         let dice = new DiceManager();
         dice.start();
         
-        this._bag = new BagManager();
+        this.bagManager = new BagManager();
         //this.addItemsToBag();
 
         this.createAllCharacters();
 
-        this._characterManager = new CharacterManager();
-        this._characterManager.start();
-        this._camp = new CampManager();
-        this._events = new EventManager();
-        this._gameOver = new GameOverManager();
-        this._skillCheckManager = new SkillCheckManager();
-        this._ripManager = new RipManager();
-        this._travel = new TravelManager();
+        this.characterManager = new CharacterManager();
+        this.characterManager.start();
+        this.campManager = new CampManager();
+        this.eventManager = new EventManager();
+        this.gameOverManager = new GameOverManager();
+        this.skillCheckManager = new SkillCheckManager();
+        this.ripManager = new RipManager();
+        this.travelManager = new TravelManager();
         this._clock = new Clock(8, true);
-        this._log = new LogManager();
+        this.logManager = new LogManager();
+        this.stateManager = new StateManager();
 
         this.showDataTime();
-        this.goToState(GameStates.TRAVEL);
+        this.stateManager.goToState(GameStates.TRAVEL);
         this.startFirebase();
     }
 
     get events() {
-        return this._events;
+        return this.eventManager;
     }
 
-    private startFirebase(): void {
+    public startFirebase(): void {
         var firebaseConfig = {
             apiKey: "AIzaSyBgdfo0fzhb_Meli1pcIhUb-qimpce-_WA",
             authDomain: "getout-a2360.firebaseapp.com",
@@ -139,19 +132,11 @@ export class Game {
     }
 
     get log(): LogManager {
-        return this._log;
+        return this.logManager;
     }
 
     get clock(): Clock {
         return this._clock;
-    }
-
-    get characterManager(): CharacterManager {
-        return this._characterManager;
-    }
-
-    get bagManager(): BagManager {
-        return this._bag;
     }
 
     get hours(): number {
@@ -191,15 +176,8 @@ export class Game {
 
     public addItemsToBag(): void {
         for(let i = 0; i < 10; i++) {
-            this._bag.putItem(ItemSeeds.getOneRandomItem());
+            this.bagManager.putItem(ItemSeeds.getOneRandomItem());
         }
-    }
-
-    public goToState(state: GameStates): void {
-        if (this._currentState == GameStates.GAME_OVER) return;
-
-        this._currentState = state;
-        this.setState();
     }
 
     public showPage(page: HTMLElement): void {
@@ -210,54 +188,15 @@ export class Game {
         page.style.display = "none";
     }
 
-    private hideAllPages(): void {
-        this.hidePage(this._travelPage);
-        this.hidePage(this._logPage);
-        this.hidePage(this._campPage);
-        this.hidePage(this._eventPage);
-        this.hidePage(this._skillCheckPage);
-        this.hidePage(this._gameOverPage);
-        this.hidePage(this._bagPage);
-        this.hidePage(this._ripPage);
-    }
-
-    public setState(): void {
-        this.hideAllPages();
-
-        switch(this._currentState) {
-            case GameStates.TRAVEL: 
-                this.showPage(this._travelPage);
-                this._travel.start();
-            break;
-            case GameStates.CAMP: 
-                this.showPage(this._campPage);
-                this._camp.start();
-            break;
-            case GameStates.EVENT: 
-                this.showPage(this._eventPage);
-                this._events.start();
-            break;
-            case GameStates.SKILLCHECK:
-                this.showPage(this._skillCheckPage);
-                this._skillCheckManager.start();
-            break;
-            case GameStates.LOG:
-                this.showPage(this._logPage);
-                this._log.start();
-            break;
-            case GameStates.GAME_OVER:
-                this.showPage(this._gameOverPage);
-                this._gameOver.start();
-            break;
-            case GameStates.RIP:
-                this.showPage(this._ripPage);
-                this._ripManager.start();
-            break;
-            case GameStates.BAG:
-                this.showPage(this._bagPage);
-                this._bag.start();
-            break;
-        }
+    public hideAllPages(): void {
+        this.hidePage(this.travelPage);
+        this.hidePage(this.logPage);
+        this.hidePage(this.campPage);
+        this.hidePage(this.eventPage);
+        this.hidePage(this.skillCheckPage);
+        this.hidePage(this.gameOverPage);
+        this.hidePage(this.bagPage);
+        this.hidePage(this.ripPage);
     }
 
     showDataTime() {
