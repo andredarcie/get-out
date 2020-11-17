@@ -41,14 +41,58 @@ export class LogManager {
         this._tempResultLogs = [];
         this._logListResult.innerHTML = result_logs;
 
-        let status_change_logs = '';
-        for (let i = 0; i < this._tempoStatusChangeLogs.length; i++) {
-            status_change_logs += '<li>' + this._tempoStatusChangeLogs[i] + '</li>';
-        }
-
         this._logs = this._tempoStatusChangeLogs;
         this._tempoStatusChangeLogs = [];
-        this._logListStatusChange.innerHTML = status_change_logs;
+        this._logListStatusChange.innerHTML = this.createLogsForStatusChange();
+        this._game.characterManager.savePreviousCharacters();
+    }
+
+    createLogsForStatusChange(): string {
+        let previousCharacters = this._game.characterManager.previousCharacters;
+        let currentCharacters = this._game.characterManager.characters;
+
+        let status_change_logs = '';
+        
+        for (let i = 0; i < previousCharacters.length; i++) {
+            let previousCharacter = previousCharacters[i];
+            let currentCharacter = currentCharacters[i];
+
+            if (!currentCharacter.isDead) {
+                if (previousCharacter.health != currentCharacter.health || 
+                    previousCharacter.hungry != currentCharacter.hungry ||
+                    previousCharacter.stamina != currentCharacter.stamina) {
+                    status_change_logs += '<li> ' + currentCharacter.name + ' ';
+
+                    if (previousCharacter.health != currentCharacter.health) {
+                        if (previousCharacter.health > currentCharacter.health) {
+                            status_change_logs += '❤️ -' + (previousCharacter.health - currentCharacter.health) + '% ';
+                        } else {
+                            status_change_logs += '❤️ +' + (currentCharacter.health - previousCharacter.health) + '% ';
+                        }
+                    }
+
+                    if (previousCharacter.hungry != currentCharacter.hungry) {
+                        if (previousCharacter.hungry > currentCharacter.hungry) {
+                            status_change_logs += '🥫 -' + (previousCharacter.hungry - currentCharacter.hungry) + '% ';
+                        } else {
+                            status_change_logs += '🥫 +' + (currentCharacter.hungry - previousCharacter.hungry) + '% ';
+                        }
+                    }
+
+                    if (previousCharacter.stamina != currentCharacter.stamina) {
+                        if (previousCharacter.stamina > currentCharacter.stamina) {
+                            status_change_logs += '⚡ -' + (previousCharacter.stamina - currentCharacter.stamina) + '% ';
+                        } else {
+                            status_change_logs += '⚡ +' + (currentCharacter.stamina - previousCharacter.stamina) + '% ';
+                        }
+                    }
+
+                    status_change_logs += '</li>';
+                }
+            }
+        }
+
+        return status_change_logs;
     }
 
     clearLogs(): void {

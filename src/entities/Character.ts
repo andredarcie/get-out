@@ -17,9 +17,12 @@ export class Character {
 
     private readonly _game: Game;
 
-    constructor(name: string, kinship: string, dateOfBirth: string, isDead: boolean) {
+    constructor(name: string, kinship: string, health: number = 100, stamina: number = 100, hungry: number = 100, dateOfBirth: string, isDead: boolean) {
         this._name = name;
         this._kinship = kinship;
+        this._health = health;
+        this._stamina = stamina;
+        this._hungry = hungry;
         this._dateOfBirth = dateOfBirth;
         this._isDead = isDead;
         this._game = Game.getInstance();

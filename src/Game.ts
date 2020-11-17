@@ -21,7 +21,6 @@ export class Game {
     private _currentDay = 1;
     private _hours = 0;
     private _clock: Clock; 
-    private _characters: Character[] = [];
     private _distanceToTheBorder = 300;
 
     public travelPage: HTMLElement;
@@ -77,8 +76,6 @@ export class Game {
         
         this.bagManager = new BagManager();
         //this.addItemsToBag();
-
-        this.createAllCharacters();
 
         this.characterManager = new CharacterManager();
         this.characterManager.start();
@@ -156,7 +153,7 @@ export class Game {
     }
 
     get characters(): Character[] {
-        return this._characters;
+        return this.characterManager.characters;
     }
     
     public decreaseTheDistanceToTheBorder(distanceToDecrease: number) {
@@ -165,13 +162,6 @@ export class Game {
 
     public addDaysToCurrentDay (daysToAdd: number): void {
         this._currentDay += daysToAdd;
-    }
-
-    private createAllCharacters(): void {
-        this._characters.push(new Character('Ethan', 'you', '1985', false));
-        this._characters.push(new Character('Olivia', 'wife', '1988', false));
-        this._characters.push(new Character('Michael', 'son', '2003', false));
-        this._characters.push(new Character('Sophia', 'daughter', '2005', false));
     }
 
     public addItemsToBag(): void {
