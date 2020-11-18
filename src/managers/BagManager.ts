@@ -129,10 +129,10 @@ export class BagManager {
 
         switch (this._selectedItem.type) {
             case ItemType.FirstAid:
-                character.increaseHealth(50);
+                character.increaseHealth(this._selectedItem.effectValue);
                 break;
             case ItemType.Food:
-                character.decreaseHungry(50);
+                character.decreaseHungry(this._selectedItem.effectValue);
                 break;
         }
         character.decreaseHungry(12);
