@@ -14,6 +14,7 @@ import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
 import { DiceManager } from './managers/DiceManager';
 import { SkillCheckManager, SkillCheckResults } from './managers/SkillCheckManager';
+import { ItemPickerManager } from './managers/ItemPickerManager';
 require("firebase/database");
 
 export class Game {
@@ -31,6 +32,7 @@ export class Game {
     public gameOverPage: HTMLElement;
     public ripPage: HTMLElement;
     public bagPage: HTMLElement;
+    public itemPickerPage: HTMLElement;
 
     public campManager: CampManager;
     public eventManager: EventManager;
@@ -42,6 +44,7 @@ export class Game {
     public bagManager: BagManager;
     public characterManager: CharacterManager;
     public stateManager: StateManager;
+    public itemPickerManager: ItemPickerManager;
 
     private _currentTimeField: Element;
     private playerGuid: string;
@@ -58,6 +61,7 @@ export class Game {
         this.gameOverPage = document.getElementById("game-over-page");
         this.ripPage = document.getElementById("rip-page");
         this.bagPage = document.getElementById("bag-page");
+        this.itemPickerPage = document.getElementById("item-picker-page");
         this._currentTimeField = document.querySelector("#current-time-field");
         this.playerGuid = this.generateGuid();
     }
@@ -88,6 +92,7 @@ export class Game {
         this._clock = new Clock(8, true);
         this.logManager = new LogManager();
         this.stateManager = new StateManager();
+        this.itemPickerManager = new ItemPickerManager();
 
         this.showDataTime();
         this.stateManager.goToState(GameStates.TRAVEL);
@@ -187,6 +192,7 @@ export class Game {
         this.hidePage(this.gameOverPage);
         this.hidePage(this.bagPage);
         this.hidePage(this.ripPage);
+        this.hidePage(this.itemPickerPage);
     }
 
     showDataTime() {

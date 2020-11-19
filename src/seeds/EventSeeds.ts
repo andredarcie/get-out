@@ -2,11 +2,12 @@ import { Character } from '../entities/Character';
 import { Event, EventType } from '../entities/Event';
 import { Item } from '../entities/Item';
 import { Game } from '../Game';
-import { ItemSeeds } from '../seeds/ItemSeeds'
+import { ItemSeeds } from '../seeds/ItemSeeds';
 import { LogType } from '../managers/LogManager';
 import { DiceManager } from '../managers/DiceManager';
 import { Dice } from '../entities/Dice';
 import { SkillCheckResults } from '../managers/SkillCheckManager';
+import { GameStates } from '../enums/GameStates';
 
 export class EventSeeds {
     private _events: Event[];
@@ -99,19 +100,7 @@ export class EventSeeds {
                 buttonText: exploreButtonText,
                 skillCheck: false,
                 callback: () => {
-                    const maxItems: number = 4;
-                    let randomNumber: number = this._game.getRandomArbitrary(maxItems);
-
-                    if (randomNumber <= 0) {
-                        this._game.log.addTempLog(messageWhenYouFoundNothing, LogType.Result);  
-                    } else {
-                        for (let i = 0; i < randomNumber; i++) {
-                            let itemFounded: Item = ItemSeeds.getOneRandomItem();
-                            var character: Character = this._game.characterManager.picksACharacterAtRandom();
-                            this._game.log.addTempLog(character.name + ' have found ' + itemFounded.name, LogType.Result);
-                            this._game.bagManager.putItem(itemFounded);
-                        }
-                    }         
+                    this._game.stateManager.goToState(GameStates.ITEM_PICKER);
                 }
             },
             { 

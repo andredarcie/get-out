@@ -48,6 +48,9 @@ export class StateManager {
                 this._game.showPage(this._game.bagPage);
                 this._game.bagManager.start();
             break;
+            case GameStates.ITEM_PICKER:
+                this._game.showPage(this._game.itemPickerPage);
+                this._game.itemPickerManager.start();
         }
     }
 

@@ -7,4 +7,5 @@ export enum GameStates {
     RIP,
     LOG,
     BAG,
+    ITEM_PICKER
 }
