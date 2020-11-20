@@ -1,4 +1,5 @@
 import { Item, ItemType } from '../entities/Item';
+import { Afflictions } from '../enums/Afflictions';
 
 export enum ItemsNames {
     FirstAid,
@@ -7,25 +8,27 @@ export enum ItemsNames {
 
 export class ItemSeeds {
     public static items: Item[] = [
-        new Item('Bandages', ItemType.FirstAid, '❤️+50%', 10),
-        new Item('Herbal Meds', ItemType.FirstAid, '❤️+50%', 5),
-        new Item('Medications', ItemType.FirstAid, '❤️+50%', 15),
-        new Item('Raw Food', ItemType.Food, '❤️+50%', 10),
-        new Item('Vegetables', ItemType.Food, '❤️+50%', 5),
-        new Item('Canned Food', ItemType.Food, '❤️+50%', 10),
-        new Item('Herbs', ItemType.FirstAid, '❤️+50%', 15),
-        new Item('Cigarette', ItemType.Food, '❤️+50%', 15),
-        new Item('Beef jerky', ItemType.Food, '❤️+50%', 15),
-        new Item('Bear meat', ItemType.Food, '❤️+50%', 15),
-        new Item('Chocolate Bar', ItemType.Food, '❤️+50%', 20),
-        new Item('Condensed milk', ItemType.Food, '❤️+50%', 15),
-        new Item('Cup of coffee', ItemType.Food, '❤️+50%', 10),
-        new Item('Cup of herbal tea', ItemType.Food, '❤️+50%', 10),
-        new Item('Dog food', ItemType.Food, '❤️+50%', 15),
-        new Item('Energy bar', ItemType.Food, '❤️+50%', 25),
-        new Item('Water (unsafe)', ItemType.Food, '❤️+50%', 10),
-        new Item('Granola bar', ItemType.Food, '❤️+50%', 15),
-        new Item('Orange soda', ItemType.Food, '❤️+50%', 20)
+        new Item('Bandages', ItemType.FirstAid, 10, [Afflictions.BloodLoss, Afflictions.BrokenRibs]),
+        new Item('Herbal Meds', ItemType.FirstAid, 5, [Afflictions.Anxiety]),
+        new Item('Antibiotics', ItemType.FirstAid, 15, [Afflictions.Infection, Afflictions.FoodPoisoning, Afflictions.Dysentery]),
+        new Item('Antiseptic', ItemType.FirstAid, 15, [Afflictions.Wounds]),
+        new Item('Painkillers', ItemType.FirstAid, 15, [Afflictions.Pain, Afflictions.BrokenRibs]),
+
+        new Item('Raw Food', ItemType.Food, 10),
+        new Item('Vegetables', ItemType.Food, 5),
+        new Item('Canned Food', ItemType.Food, 10),
+        new Item('Cigarette', ItemType.Food, 15),
+        new Item('Beef jerky', ItemType.Food, 15),
+        new Item('Bear meat', ItemType.Food, 15),
+        new Item('Chocolate Bar', ItemType.Food, 20),
+        new Item('Condensed milk', ItemType.Food, 15),
+        new Item('Cup of coffee', ItemType.Food, 10),
+        new Item('Cup of herbal tea', ItemType.Food, 10),
+        new Item('Dog food', ItemType.Food, 15),
+        new Item('Energy bar', ItemType.Food, 25),
+        new Item('Water (unsafe)', ItemType.Food, 10),
+        new Item('Granola bar', ItemType.Food, 15),
+        new Item('Orange soda', ItemType.Food, 20)
     ];
 
     public static getItens(name: ItemsNames, amount: number): Item {

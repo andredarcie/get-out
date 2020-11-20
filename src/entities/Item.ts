@@ -1,3 +1,5 @@
+import { Afflictions } from '../enums/Afflictions';
+
 export enum ItemType {
     FirstAid,
     Food,
@@ -8,15 +10,15 @@ export class Item {
     private _name: string;
     private _amount: number;
     private _type: ItemType;
-    private _effect: string;
     private _effectValue: number;
-
-    constructor(name: string, type: ItemType, effect: string, effectValue: number) {
+    private _afflictions: Afflictions[] = [];
+ 
+    constructor(name: string, type: ItemType, effectValue: number, afflictions: Afflictions[] = []) {
         this._name = name;
         this._type = type;
-        this._effect = effect;
         this._amount = 0;
         this._effectValue = effectValue;
+        this._afflictions = afflictions;
     }
 
     get name(): string {
@@ -29,6 +31,10 @@ export class Item {
 
     get type(): ItemType {
         return this._type;
+    }
+
+    get afflictions(): Afflictions[] {
+        return this._afflictions;
     }
 
     get effect(): string {

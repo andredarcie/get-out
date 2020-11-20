@@ -92,6 +92,7 @@ export class EventManager {
         }
 
         if (this._currentEvent.type == EventType.Place) {
+            this._currentEvent.onYes.callback();
             this._game.stateManager.goToState(GameStates.ITEM_PICKER);
             return;
         }

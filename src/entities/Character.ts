@@ -1,6 +1,7 @@
 import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { GameStates } from '../enums/GameStates';
+import { Afflictions } from '../enums/Afflictions';
 
 export class Character {
     private _name: string;
@@ -10,6 +11,7 @@ export class Character {
     private _health: number = 100;
     private _stamina: number = 100;
     private _hungry: number = 100;
+    private _afflictions: Afflictions[] = [];
 
     private _isDead: boolean = false;
     private _buried: boolean = false;
@@ -66,6 +68,53 @@ export class Character {
 
     set imageURL(imageURL: string) {
         this._imageURL = imageURL;
+    }
+
+    public addAffliction(affliction: Afflictions) {
+        this._game.logManager.addTempLog(this._name + ' got: ' + this.getAfflictionText(affliction), LogType.Result);
+        this._afflictions.push(affliction);
+    }
+
+    public removeAffliction(afflictionToRemove: Afflictions) {
+        this._afflictions = this._afflictions.filter(affliction => affliction !== afflictionToRemove);
+    }
+
+    public showAfflictions(): string {
+        if (this._afflictions.length == 0) {
+            return '';
+        }
+
+        let afflictions: string = '';
+        for (let affliction of this._afflictions) {
+            afflictions += this.getAfflictionText(affliction);
+        }
+
+        return afflictions;
+    }
+
+    private getAfflictionText(affliction: Afflictions): string {
+        switch(affliction) {
+            case Afflictions.Anxiety:
+                return ' [ Anxiety ] ';
+            case Afflictions.BloodLoss:
+                return ' [ Blood Loss ] ';
+            case Afflictions.BrokenRibs:
+                return ' [ Broken Ribs ] ';
+            case Afflictions.Depressed:
+                return ' [ Depressed ] ';
+            case Afflictions.Dysentery:
+                return ' [ Dysentery ] ';
+            case Afflictions.Fear:
+                return ' [ Fear ]';
+            case Afflictions.FoodPoisoning:
+                return ' [ Food Poisoning ] ';
+            case Afflictions.Infection:
+                return ' [ Infection ] ';
+            case Afflictions.Pain:
+                return ' [ Pain ] ';    
+            case Afflictions.Wounds:
+                return ' [ Wounds ] ';
+        }
     }
 
     increaseHungry() {

@@ -89,18 +89,22 @@ export class TravelManager {
         this._charactersList[0] = {};
         this._charactersList[0].nameField = document.querySelector("#first-character-name-field");
         this._charactersList[0].atributesField = document.querySelector("#first-character-atributes-field");
+        this._charactersList[0].afflictionsField = document.querySelector("#first-character-afflictions-field");
 
         this._charactersList[1] = {};
         this._charactersList[1].nameField = document.querySelector("#second-character-name-field");
         this._charactersList[1].atributesField = document.querySelector("#second-character-atributes-field");
+        this._charactersList[1].afflictionsField = document.querySelector("#second-character-afflictions-field");
 
         this._charactersList[2] = {};
         this._charactersList[2].nameField = document.querySelector("#third-character-name-field");
         this._charactersList[2].atributesField = document.querySelector("#third-character-atributes-field");
+        this._charactersList[2].afflictionsField = document.querySelector("#third-character-afflictions-field");
 
         this._charactersList[3] = {};
         this._charactersList[3].nameField = document.querySelector("#fourth-character-name-field");
         this._charactersList[3].atributesField = document.querySelector("#fourth-character-atributes-field");
+        this._charactersList[3].afflictionsField = document.querySelector("#fourth-character-afflictions-field");
     }
 
     showCharacters(): void {
@@ -117,6 +121,7 @@ export class TravelManager {
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
                 this._charactersList[i].atributesField.innerHTML = character.getHealth() + ' ' + character.getStamina() + ' ' 
                                                                  + character.getHungry();
+                this._charactersList[i].afflictionsField.innerHTML = character.showAfflictions();
             }
         }
     }
