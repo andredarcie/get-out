@@ -72,4 +72,17 @@ export class Item {
     increaseAmount(): void {
         this._amount++;
     }
+
+    public showAfflictions(): string {
+        if (this._afflictions.length == 0) {
+            return '';
+        }
+
+        let afflictions: string = '';
+        for (let affliction of this._afflictions) {
+            afflictions += ' [ ' + affliction.name + ' ] ';
+        }
+
+        return afflictions;
+    }
 }

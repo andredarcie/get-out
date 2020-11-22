@@ -7,6 +7,7 @@ export class BagManager {
     private _items: Item[] = [];
     private _itemListElement: Element;
     private _selectedItemElement: any;
+    private _selectedItemDescriptionElement: any;
     private _selectedItem: Item;
     private _bagCloseBtn: Element;
     private _bagThrowAwayBtn: HTMLElement;
@@ -18,6 +19,7 @@ export class BagManager {
 
         this._itemListElement = document.querySelector('#bag-item-list');
         this._selectedItemElement = document.getElementById('bag-selected-item');
+        this._selectedItemDescriptionElement = document.getElementById('bag-selected-item-description');
         this._bagCloseBtn = document.querySelector('#bag-close-btn');
         this._bagThrowAwayBtn = document.getElementById('bag-throw-away-btn');
 
@@ -39,6 +41,7 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
+        this._selectedItemDescriptionElement.style.display = 'none';
         this.showItems();
         this._bagThrowAwayBtn.style.display = 'none';
     }
@@ -46,10 +49,14 @@ export class BagManager {
     private hideSelectedItem() {
         this._selectedItemElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
+        this._selectedItemDescriptionElement.style.display = 'none';
     }
 
     private showSelectedItem() {
         this._selectedItemElement.style.display = 'block';
+        if (this._selectedItem.type == ItemType.FirstAid) {
+            this._selectedItemDescriptionElement.style.display = 'block';
+        }
     }
 
     private showItems() {
@@ -97,6 +104,7 @@ export class BagManager {
                 switch (this._selectedItem.type) {
                     case ItemType.FirstAid:
                         buttonText += character.getHealth();
+                        buttonText += character.showAfflictions();
                         break;
                     case ItemType.Food:
                         buttonText += character.getHungry();
@@ -117,6 +125,9 @@ export class BagManager {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.effect} to:`;
+        if (this._selectedItem.type == ItemType.FirstAid) {
+            this._selectedItemDescriptionElement.innerHTML = this._selectedItem.showAfflictions();
+        }
         this.showSelectedItem();
         this.showCharacters();
         this._bagThrowAwayBtn.style.display = 'block';
