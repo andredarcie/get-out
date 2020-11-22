@@ -135,7 +135,11 @@ export class BagManager {
                 character.decreaseHungry(this._selectedItem.effectValue);
                 break;
         }
-        character.decreaseHungry(12);
+
+        for (let affliction of this._selectedItem.afflictions) {
+            character.removeAffliction(affliction);
+        }
+
         this._bagThrowAwayBtn.style.display = 'none';
     }
 
