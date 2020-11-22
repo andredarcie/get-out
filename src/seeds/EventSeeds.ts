@@ -8,7 +8,7 @@ import { DiceManager } from '../managers/DiceManager';
 import { Dice } from '../entities/Dice';
 import { SkillCheckResults } from '../managers/SkillCheckManager';
 import { GameStates } from '../enums/GameStates';
-import { Afflictions } from '../enums/Afflictions';
+import { AfflictionSeeds } from './AfflictionSeeds';
 
 export class EventSeeds {
     private _events: Event[];
@@ -92,7 +92,6 @@ export class EventSeeds {
         const exploreButtonText: string = exploreSynonyms[this._game.getRandomArbitrary(exploreSynonyms.length - 1)];
         const messageWhenYouFoundNothing: string = messagesWhenYouFoundNothing[this._game.getRandomArbitrary(messagesWhenYouFoundNothing.length - 1)];
         const imageUrl: string = this._imageUrlList[this._game.getRandomArbitrary(this._imageUrlList.length - 2)];
-        const affliction: Afflictions = this.randomEnum(Afflictions);
 
         return new Event(
             eventName,
@@ -103,7 +102,7 @@ export class EventSeeds {
                 skillCheck: false,
                 callback: () => {
                     let character = this._game.characterManager.picksACharacterAtRandom();
-                    character.addAffliction(affliction);
+                    character.addAffliction(AfflictionSeeds.getOneRandomAffliction());
                 }
             },
             { 
@@ -116,15 +115,6 @@ export class EventSeeds {
             EventType.Place,
             null
         )
-    }
-
-    private randomEnum<T>(anEnum: T): T[keyof T] {
-        const enumValues = Object.keys(anEnum)
-          .map(n => Number.parseInt(n))
-          .filter(n => !Number.isNaN(n)) as unknown as T[keyof T][]
-        const randomIndex = Math.floor(Math.random() * enumValues.length)
-        const randomEnumValue = enumValues[randomIndex]
-        return randomEnumValue;
     }
 
     public getCombatEvent() {

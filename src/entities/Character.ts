@@ -1,7 +1,7 @@
 import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { GameStates } from '../enums/GameStates';
-import { Afflictions } from '../enums/Afflictions';
+import { Affliction } from '../entities/Affliction';
 
 export class Character {
     private _name: string;
@@ -11,7 +11,7 @@ export class Character {
     private _health: number = 100;
     private _stamina: number = 100;
     private _hungry: number = 100;
-    private _afflictions: Afflictions[] = [];
+    private _afflictions: Affliction[] = [];
 
     private _isDead: boolean = false;
     private _buried: boolean = false;
@@ -70,12 +70,26 @@ export class Character {
         this._imageURL = imageURL;
     }
 
-    public addAffliction(affliction: Afflictions) {
-        this._game.logManager.addTempLog(this._name + ' got: ' + this.getAfflictionText(affliction), LogType.Result);
-        this._afflictions.push(affliction);
+    public walkOneHour(): void {
+        for (let affliction of this._afflictions) {
+            this.looseHealth(affliction.healthPerHour);
+            this._game.logManager.addTempLog(this._name + ' has ' + affliction.name, LogType.Result);
+        }
     }
 
-    public removeAffliction(afflictionToRemove: Afflictions) {
+    private checksIfAnAfflictionExists(afflictionName: string): boolean {
+        let existingAfflictionIndex = this._afflictions.findIndex(affliction => affliction.name == afflictionName);
+        return existingAfflictionIndex  != -1 ? true : false;
+    }
+
+    public addAffliction(affliction: Affliction) {
+        if (!this.checksIfAnAfflictionExists(affliction.name)) {
+            this._game.logManager.addTempLog(this._name + ' got: ' + affliction.name, LogType.Result);
+            this._afflictions.push(affliction);
+        }
+    }
+
+    public removeAffliction(afflictionToRemove: Affliction) {
         this._afflictions = this._afflictions.filter(affliction => affliction !== afflictionToRemove);
     }
 
@@ -86,35 +100,10 @@ export class Character {
 
         let afflictions: string = '';
         for (let affliction of this._afflictions) {
-            afflictions += this.getAfflictionText(affliction);
+            afflictions += ' [ ' + affliction.name + ' ] ';
         }
 
         return afflictions;
-    }
-
-    private getAfflictionText(affliction: Afflictions): string {
-        switch(affliction) {
-            case Afflictions.Anxiety:
-                return ' [ Anxiety ] ';
-            case Afflictions.BloodLoss:
-                return ' [ Blood Loss ] ';
-            case Afflictions.BrokenRibs:
-                return ' [ Broken Ribs ] ';
-            case Afflictions.Depressed:
-                return ' [ Depressed ] ';
-            case Afflictions.Dysentery:
-                return ' [ Dysentery ] ';
-            case Afflictions.Fear:
-                return ' [ Fear ]';
-            case Afflictions.FoodPoisoning:
-                return ' [ Food Poisoning ] ';
-            case Afflictions.Infection:
-                return ' [ Infection ] ';
-            case Afflictions.Pain:
-                return ' [ Pain ] ';    
-            case Afflictions.Wounds:
-                return ' [ Wounds ] ';
-        }
     }
 
     increaseHungry() {

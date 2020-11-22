@@ -115,7 +115,8 @@ export class TravelManager {
 
             if (character.isDead) {
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + ' 💀';
-                this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020'
+                this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020';
+                this._charactersList[i].afflictionsField.innerHTML = '';
             } else {
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
@@ -141,7 +142,7 @@ export class TravelManager {
         const characters: Character[] = this._game.characterManager.getCharactersAlive();
         
         for (let character of characters) {
-            this._game.log.addTempLog(character.name + ' 🥫 -5%  ⚡ -5%', LogType.StatusChange);
+            character.walkOneHour();
         }
 
         this._game.decreaseTheDistanceToTheBorder(2);

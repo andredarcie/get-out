@@ -1,5 +1,5 @@
 import { Item, ItemType } from '../entities/Item';
-import { Afflictions } from '../enums/Afflictions';
+import { AfflictionSeeds } from './AfflictionSeeds';
 
 export enum ItemsNames {
     FirstAid,
@@ -8,12 +8,15 @@ export enum ItemsNames {
 
 export class ItemSeeds {
     public static items: Item[] = [
-        new Item('Bandages', ItemType.FirstAid, 10, [Afflictions.BloodLoss, Afflictions.BrokenRibs]),
-        new Item('Herbal Meds', ItemType.FirstAid, 5, [Afflictions.Anxiety]),
-        new Item('Antibiotics', ItemType.FirstAid, 15, [Afflictions.Infection, Afflictions.FoodPoisoning, Afflictions.Dysentery]),
-        new Item('Antiseptic', ItemType.FirstAid, 15, [Afflictions.Wounds]),
-        new Item('Painkillers', ItemType.FirstAid, 15, [Afflictions.Pain, Afflictions.BrokenRibs]),
-
+        new Item('Bandages', ItemType.FirstAid, 10, [AfflictionSeeds.getAfflictionByName('Blood ribs'), 
+                                                     AfflictionSeeds.getAfflictionByName('Broken ribs')]),
+        new Item('Herbal Meds', ItemType.FirstAid, 5, [AfflictionSeeds.getAfflictionByName('Anxiety')]),
+        new Item('Antibiotics', ItemType.FirstAid, 15, [AfflictionSeeds.getAfflictionByName('Infection'), 
+                                                        AfflictionSeeds.getAfflictionByName('Food poisoning'), 
+                                                        AfflictionSeeds.getAfflictionByName('Dysentery')]),
+        new Item('Antiseptic', ItemType.FirstAid, 15, [AfflictionSeeds.getAfflictionByName('Wounds')]),
+        new Item('Painkillers', ItemType.FirstAid, 15, [AfflictionSeeds.getAfflictionByName('Pain'), 
+                                                        AfflictionSeeds.getAfflictionByName('Broken ribs')]),
         new Item('Raw Food', ItemType.Food, 10),
         new Item('Vegetables', ItemType.Food, 5),
         new Item('Canned Food', ItemType.Food, 10),
