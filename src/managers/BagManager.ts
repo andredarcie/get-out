@@ -91,6 +91,7 @@ export class BagManager {
         for (const character of this._game.characters) {
             const li = document.createElement("li");
             const button = document.createElement("button");
+            button.classList.add('bag-item');
 
             let buttonText = character.name;
 
@@ -126,7 +127,7 @@ export class BagManager {
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.effect} to:`;
         if (this._selectedItem.type == ItemType.FirstAid) {
-            this._selectedItemDescriptionElement.innerHTML = this._selectedItem.showAfflictions();
+            this._selectedItemDescriptionElement.innerHTML = 'Can help with ' + this._selectedItem.showAfflictions();
         }
         this.showSelectedItem();
         this.showCharacters();

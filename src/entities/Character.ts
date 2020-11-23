@@ -77,6 +77,15 @@ export class Character {
         }
     }
 
+    public showHealthLostPerHourDueToAllAfflictions(): number {
+        let totalHealth: number = 0;
+        for (let affliction of this._afflictions) {
+            totalHealth += affliction.healthPerHour;
+        }
+
+        return totalHealth;
+    }
+
     private checksIfAnAfflictionExists(afflictionName: string): boolean {
         let existingAfflictionIndex = this._afflictions.findIndex(affliction => affliction.name == afflictionName);
         return existingAfflictionIndex  != -1 ? true : false;
@@ -100,7 +109,9 @@ export class Character {
 
         let afflictions: string = '';
         for (let affliction of this._afflictions) {
-            afflictions += ' [ ' + affliction.name + ' ❤️ -' + affliction.healthPerHour + '% ] ';
+            if (affliction) {
+                afflictions += ' -' + affliction.name;
+            }
         }
 
         return afflictions;

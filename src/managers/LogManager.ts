@@ -10,7 +10,7 @@ export enum LogType {
 export class LogManager {
     private _logListResult: Element;
     private _logListStatusChange: Element;
-    private _travelBtn: Element;
+    private _travelBtn: HTMLButtonElement;
     private _tempResultLogs: string[] = [];
     private _tempoStatusChangeLogs: string[] = []; 
     private _logs: string[] = [];
@@ -24,27 +24,39 @@ export class LogManager {
 
         this._travelBtn = document.querySelector("#log-back-character-btn");
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
-        
     }
 
     start(): void {
+        this._travelBtn.disabled = true;
         this.showLogs();
     }
 
     showLogs(): void {
-        let result_logs = '';
-        for (let i = 0; i < this._tempResultLogs.length; i++) {
-            result_logs += '<li>' + this._tempResultLogs[i] + '</li>';
-        }
-
-        this._logs = this._tempResultLogs;
-        this._tempResultLogs = [];
-        this._logListResult.innerHTML = result_logs;
-
         this._logs = this._tempoStatusChangeLogs;
         this._tempoStatusChangeLogs = [];
-        this._logListStatusChange.innerHTML = this.createLogsForStatusChange();
-        this._game.characterManager.savePreviousCharacters();
+        this._logListResult.innerHTML = '';
+        this._logListStatusChange.innerHTML = '';
+        this.showResultLogs();
+    }
+
+    private showResultLogs(): void {
+        let count: number = 0;
+        let result_logs = '';
+
+        let stop = setInterval(() => {
+            if (count < this._tempResultLogs.length) {
+                result_logs += '<li>' + this._tempResultLogs[count] + '</li>';
+                this._logListResult.innerHTML = result_logs;
+                count++;
+            } else {
+                clearInterval(stop);
+                this._logs = this._tempResultLogs;
+                this._tempResultLogs = [];
+                this._logListStatusChange.innerHTML = this.createLogsForStatusChange();
+                this._game.characterManager.savePreviousCharacters();
+                this._travelBtn.disabled = false;
+            }
+        }, 800);
     }
 
     createLogsForStatusChange(): string {

@@ -118,9 +118,12 @@ export class TravelManager {
                 this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020';
                 this._charactersList[i].afflictionsField.innerHTML = '';
             } else {
+                let healthPerHour: number = character.showHealthLostPerHourDueToAllAfflictions();
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
-                this._charactersList[i].atributesField.innerHTML = character.getHealth() + ' ' + character.getStamina() + ' ' 
+                this._charactersList[i].atributesField.innerHTML = character.getHealth() + 
+                                                                   (healthPerHour == 0 ? ' ' : (' -' + character.showHealthLostPerHourDueToAllAfflictions() + '% ')) + 
+                                                                   character.getStamina() + ' ' 
                                                                  + character.getHungry();
                 this._charactersList[i].afflictionsField.innerHTML = character.showAfflictions();
             }

@@ -38,7 +38,7 @@ export class SkillCheckManager {
 
     start(): void {
         let dice = new Dice();
-
+        this._travelBtn.disabled = true;
         this._resultLabel.style.visibility = 'hidden';
         this._diceTimer = setInterval(() => { this.shakeDice(dice) }, 50);
         setTimeout(() => { this.stopShakeDice(dice) }, 500);
@@ -69,6 +69,8 @@ export class SkillCheckManager {
         this._skillCheckResultValue.style.textAlign = 'center';
         this._skillCheckResultValue.innerHTML = finalValue.toString();
         this._skillCheckExpected.innerHTML = 'Expected: ' + expectedValue.toString();
+
+        this._travelBtn.disabled = false;
 
         if (firstDiceValue + secondDiceValue == 12) {
             this.setCriticalSuccess();

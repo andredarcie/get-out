@@ -80,7 +80,9 @@ export class Item {
 
         let afflictions: string = '';
         for (let affliction of this._afflictions) {
-            afflictions += ' [ ' + affliction.name + ' ] ';
+            if (affliction) {
+                afflictions += ' -' + affliction.name;
+            }
         }
 
         return afflictions;
