@@ -1,6 +1,7 @@
 import { Dice } from '../entities/Dice';
 import { Game } from '../Game';
 import { GameStates } from '../enums/GameStates';
+import { Choice } from '../entities/Event';
 
 export enum SkillCheckResults {
     Success,
@@ -45,7 +46,18 @@ export class SkillCheckManager {
     }
 
     onClickTravel() {
-        this._game.events.currentEvent.onYes.callback();
+        let choice: Choice = this._game.eventManager.currentChoice;
+
+        if (this._game.skillCheckResult == SkillCheckResults.Success) {
+            choice.skillCheckResultPath.success();
+        } else if (this._game.skillCheckResult == SkillCheckResults.CriticialSuccess) {
+            choice.skillCheckResultPath.criticalSuccess();
+        } else if (this._game.skillCheckResult == SkillCheckResults.Failure) {
+            choice.skillCheckResultPath.failure();
+        } else if (this._game.skillCheckResult == SkillCheckResults.CriticalFailure) {
+            choice.skillCheckResultPath.criticalFailure();
+        }
+
         this._game.stateManager.goToState(GameStates.LOG);
     }
 

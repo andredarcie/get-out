@@ -1,4 +1,4 @@
-import { Event, EventType } from '../entities/Event';
+import { Event, EventType, Choice } from '../entities/Event';
 import { Game } from '../Game';
 import { EventSeeds } from '../seeds/EventSeeds';
 import { GameStates } from '../enums/GameStates';
@@ -6,25 +6,22 @@ import { GameStates } from '../enums/GameStates';
 export class EventManager {
     private _titleElement: HTMLElement;
     private _descriptionElement: HTMLElement;
+    private _eventPageChoicesBtnListElement: HTMLElement;
     private _imageElement: HTMLImageElement;
-    private _yesButton: HTMLElement;
-    private _noButton: HTMLElement;
     private _currentEvent: Event;
+    public currentChoice: Choice;
     private readonly _game: Game;
 
     constructor() {
         this._titleElement = document.getElementById("event-page-title");
         this._descriptionElement = document.getElementById("event-page-description");
+        this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list");
         this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
-        this._yesButton = document.getElementById("event-page-yes-btn");
-        this._noButton = document.getElementById("event-page-no-btn");
-
-        this._yesButton.addEventListener('click', () => { this.onEventPageYesBtn() });
-        this._noButton.addEventListener('click', () => { this.onEventPageNoBtn() });
         this._game = Game.getInstance();
     }
 
     start(): void {
+        this._eventPageChoicesBtnListElement.innerHTML = '';
         const eventSeeds = new EventSeeds();
         eventSeeds.start();
         let events = eventSeeds.events;
@@ -40,6 +37,34 @@ export class EventManager {
         }
 
         this.showWaitingMessage();
+    }
+
+    private showChoices() {
+        this._eventPageChoicesBtnListElement.innerHTML = '';
+
+        for (let choice of this.currentEvent.choices) {
+            const button = document.createElement("button");
+            button.appendChild(document.createTextNode(choice.buttonText));
+            button.addEventListener('click', () => this.selectChoice(choice));
+            this._eventPageChoicesBtnListElement.appendChild(button);
+        }
+    }
+
+    private selectChoice(choice: Choice) {
+        this.currentChoice = choice;
+
+        if (this.currentChoice.skillCheck) {
+            this._game.stateManager.goToState(GameStates.SKILLCHECK);
+            return;
+        }
+
+        if (this.currentEvent.type == EventType.Place && choice.buttonText == 'Investigate (Exploration)') {
+            this._game.stateManager.goToState(GameStates.ITEM_PICKER);
+            return;
+        }
+
+        this.currentChoice.normalResultPath();
+        this.checkLogs();
     }
 
     get currentEvent(): Event {
@@ -58,8 +83,6 @@ export class EventManager {
         this._titleElement.style.display = 'none';
         this._descriptionElement.innerHTML = 'Something happened!'
         this._imageElement.style.display = 'none';
-        this._yesButton.style.display = 'none';
-        this._noButton.style.display = 'none';
 
         setTimeout(() => this.showEvent(), 1000);
     }
@@ -74,37 +97,7 @@ export class EventManager {
         }
 
         this._imageElement.style.display = 'block';
-        this.showButtons();
-    }
-
-    showButtons(): void {
-        this._yesButton.style.display = 'inline-block';
-        this._noButton.style.display = 'inline-block';
-
-        this._yesButton.innerHTML = this._currentEvent.onYes.buttonText;
-        this._noButton.innerHTML = this._currentEvent.onNo.buttonText;
-    }
-
-    onEventPageYesBtn(): void {
-        if (this._currentEvent.onYes.skillCheck) {
-            this._game.stateManager.goToState(GameStates.SKILLCHECK);
-            return;
-        }
-
-        if (this._currentEvent.type == EventType.Place) {
-            this._currentEvent.onYes.callback();
-            this._game.stateManager.goToState(GameStates.ITEM_PICKER);
-            return;
-        }
-
-        this._currentEvent.onYes.callback();
-        this.checkLogs();
-    }
-
-    onEventPageNoBtn(): void {
-        this._currentEvent.onNo.callback();
-
-        this.checkLogs();
+        this.showChoices();
     }
 
     checkLogs(): void {

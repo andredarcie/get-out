@@ -30,20 +30,22 @@ export class EventSeeds {
             'Wild Wolf Appeared',
             'He jumps furiously wanting blood!', 
             '',
-            { 
+            [{ 
                 buttonText: 'Throw a stone',
                 skillCheck: false,
-                callback: () => {
+                skillCheckResultPath: null,
+                normalResultPath: () => {
                     this._game.log.addTempLog('You hit the rock and killed the wolf!', LogType.Result);
                 }
             },
             { 
                 buttonText: 'Run like a chicken',
                 skillCheck: false,
-                callback: () => {
+                skillCheckResultPath: null,
+                normalResultPath: () => {
                     this._game.log.addTempLog('Did you get away', LogType.Result);
                 }
-            },
+            }],
             EventType.Combat,
             null
         ));
@@ -71,14 +73,6 @@ export class EventSeeds {
             'Abandoned Police Station'
         ];
 
-        let exploreSynonyms: string[] = [
-            'Explore',
-            'Inspect',
-            'Investigate',
-            'Search',
-            'Take a look at'
-        ];
-
         let messagesWhenYouFoundNothing: string[] = [
             'You didnt find anything useful',
             'You find a lot of useless garbage',
@@ -89,29 +83,53 @@ export class EventSeeds {
         ];
 
         const eventName: string = names[this._game.getRandomArbitrary(names.length - 1)];
-        const exploreButtonText: string = exploreSynonyms[this._game.getRandomArbitrary(exploreSynonyms.length - 1)];
         const messageWhenYouFoundNothing: string = messagesWhenYouFoundNothing[this._game.getRandomArbitrary(messagesWhenYouFoundNothing.length - 1)];
         const imageUrl: string = this._imageUrlList[this._game.getRandomArbitrary(this._imageUrlList.length - 2)];
+
+        let enemyDificultie = 10;
+        this._game.skillCheckDifficultie = enemyDificultie;
 
         return new Event(
             eventName,
             'No sign of life', 
             imageUrl,
-            { 
-                buttonText: exploreButtonText,
+            [{ 
+                buttonText: 'Investigate (Exploration)',
                 skillCheck: false,
-                callback: () => {
+                skillCheckResultPath: null,
+                normalResultPath: () => {
                     let character = this._game.characterManager.picksACharacterAtRandom();
                     character.addAffliction(AfflictionSeeds.getOneRandomAffliction());
                 }
             },
+            {
+                buttonText: 'Spy for possible dangers (Stealth)',
+                skillCheck: true,
+                skillCheckResultPath: {
+                    success: () => {
+                        this._game.log.addTempLog('Spy sucess', LogType.Result);
+                    },
+                    criticalSuccess: () => {
+                        this._game.log.addTempLog('Spy critical success', LogType.Result);
+                    },
+                    failure: () => {
+                        this._game.log.addTempLog('You tried to spy more, it made a lot of noise, theres someone in the house and heard you', LogType.Result);
+                        this._game.log.addTempLog('You think it was better to run away to avoid problems', LogType.Result);
+                    },
+                    criticalFailure: () => {
+                        this._game.log.addTempLog('Spy critical failure', LogType.Result);
+                    }
+                },
+                normalResultPath: null
+            },
             { 
                 buttonText: 'Ignore',
                 skillCheck: false,
-                callback: () => {
+                skillCheckResultPath: null,
+                normalResultPath: () => {
                     this._game.log.addTempLog('You just ignored', LogType.Result);
                 }
-            },
+            }],
             EventType.Place,
             null
         )
@@ -138,33 +156,36 @@ export class EventSeeds {
             'Furious wolf appeared!',
             'You are in trouble',
             this._imageUrlList[6],
-            {
+            [{
                 buttonText: 'Fight [' + diceManager.getDifficultLevel(enemyDificultie) + ': ' + enemyDificultie + ']',
                 skillCheck: true,
-                callback: () => {
-
-                    let result = this._game.skillCheckResult;
-                    if (result == SkillCheckResults.Success) {
+                skillCheckResultPath: {
+                    success: () => {
                         this._game.log.addTempLog('With a lot of struggle you beat the wolf', LogType.Result);
-                    } else if (result == SkillCheckResults.Failure) {
+                    },
+                    criticalSuccess: () => {
+                        this._game.log.addTempLog('You defeated the wolf easily', LogType.Result);
+                    },
+                    failure: () => {
                         this._game.log.addTempLog('The wolf has hurt you', LogType.Result);
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                    } else if (result == SkillCheckResults.CriticialSuccess) {
-                        this._game.log.addTempLog('You defeated the wolf easily', LogType.Result);
-                    } else if (result = SkillCheckResults.CriticalFailure) {
+                    },
+                    criticalFailure: () => {
                         this._game.log.addTempLog('The wolf left you devastated', LogType.Result);
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                         this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                     }
-                }
+                },
+                normalResultPath: null
             },
             {
                 buttonText: 'Try to escape',
-                skillCheck: true,
-                callback: () => {
+                skillCheck: false,
+                skillCheckResultPath: null,
+                normalResultPath: () => {
                     this._game.log.addTempLog('You just ignored', LogType.Result);
                 }
-            },
+            }],
             EventType.Combat,
             null
         );
@@ -174,16 +195,18 @@ export class EventSeeds {
         return new Event('Milestone Reached! ',
         this._game.distanceToTheBorder + ' miles to the border',
         this._imageUrlList[7],
-        {
+        [{
             buttonText: 'Back to travel',
             skillCheck: false,
-            callback: () => {}
+            skillCheckResultPath: null,
+            normalResultPath: () => {}
         },
         {
             buttonText: 'Back to travel',
             skillCheck: false,
-            callback: () => {}
-        },
+            skillCheckResultPath: null,
+            normalResultPath: () => {}
+        }],
         EventType.Exploration, null
         );
     }

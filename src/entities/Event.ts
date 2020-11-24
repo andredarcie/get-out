@@ -6,27 +6,33 @@ export enum EventType {
     Place
 }
 
-interface Choice {
+export interface Choice {
     buttonText: string;
     skillCheck: boolean;
-    callback: any;
+    skillCheckResultPath: SkillCheckResult | null,
+    normalResultPath: any | null;
+}
+
+interface SkillCheckResult {
+    success: any,
+    criticialSuccess: any,
+    failure: any,
+    criticalFailure: any
 }
 
 export class Event {
     private _name: string;
     private _description: string;
     private _image: string;
-    private _onYes: Choice;
-    private _onNo: Choice;
+    private _choices: Choice[] = [];
     private _type: EventType;
     private _items: Item[] = [];
 
-    constructor(name: string, description: string, image: string, onYes: Choice, onNo: Choice, type: EventType, items?: Item[]) {
+    constructor(name: string, description: string, image: string, choices: Choice[], type: EventType, items?: Item[]) {
         this._name = name;
         this._description = description;
         this._image = image;
-        this._onYes = onYes;
-        this._onNo = onNo;
+        this._choices = choices;
         this._type = type;
         this._items = items;
     }
@@ -43,12 +49,8 @@ export class Event {
         return this._image;
     }
 
-    get onYes() {
-        return this._onYes;
-    }
-
-    get onNo() {
-        return this._onNo;
+    get choices() {
+        return this._choices;
     }
 
     get type() {
