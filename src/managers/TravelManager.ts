@@ -8,6 +8,7 @@ export class TravelManager {
     private _progressBar: HTMLElement;
     private _walkBtn: HTMLButtonElement;
     private _campBtn: HTMLButtonElement;
+    private _yourFamily: HTMLButtonElement;
     private _game: Game;
     private _charactersList: any;
     private _bagBtn: HTMLButtonElement;
@@ -19,6 +20,7 @@ export class TravelManager {
         this._progressBar = document.getElementById("progress-bar");
         this._walkBtn = document.querySelector("#walk-btn");
         this._campBtn = document.querySelector("#camp-btn");
+        this._yourFamily = document.querySelector('#your-family');
 
         this._walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
         this._campBtn.addEventListener('click', () => { this.onClickCampBtn() });
@@ -33,6 +35,9 @@ export class TravelManager {
     }
 
     start(): void {
+        this._walkBtn.innerHTML = this._game.loc.l('walk-one-hour');
+        this._yourFamily.innerHTML = this._game.loc.l('your-family');
+        this._campBtn.innerHTML = this._game.loc.l('camp-one-hour');
         /*
         if (this._game.characterManager.isInDanger()) {
             this._statsBtn.innerHTML = '⚠️Your Family';
@@ -41,7 +46,7 @@ export class TravelManager {
         }*/
 
         if (this._game.bagManager.isEmpty()) {
-            this._bagBtn.innerHTML = 'Bag is empty';
+            this._bagBtn.innerHTML = this._game.loc.l('bag-is-empty');
             this._bagBtn.disabled = true;
         } else {
             this._bagBtn.disabled = false;
@@ -169,7 +174,7 @@ export class TravelManager {
     }
 
     showTravelledDistance() {
-        this._travelledDistanceField.innerHTML = this._game.distanceToTheBorder + ' miles to the border';
+        this._travelledDistanceField.innerHTML = this._game.distanceToTheBorder + ' ' + this._game.loc.l('miles-to-the-border');
     }
 
     arrivedAtTheBorder() {

@@ -9,6 +9,7 @@ import { StateManager } from './managers/StateManager';
 import { GameStates } from './enums/GameStates';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
+import { Language, LocalizationManager } from './managers/LocalizationManager';
 import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
@@ -45,6 +46,7 @@ export class Game {
     public characterManager: CharacterManager;
     public stateManager: StateManager;
     public itemPickerManager: ItemPickerManager;
+    public loc: LocalizationManager;
 
     private _currentTimeField: Element;
     private playerGuid: string;
@@ -75,12 +77,12 @@ export class Game {
     }
 
     public start(): void {
+        this.loc = new LocalizationManager(Language.PtBr);
         let dice = new DiceManager();
         dice.start();
         
         this.bagManager = new BagManager();
         //this.addItemsToBag();
-
         this.characterManager = new CharacterManager();
         this.characterManager.start();
         this.campManager = new CampManager();
@@ -93,6 +95,7 @@ export class Game {
         this.logManager = new LogManager();
         this.stateManager = new StateManager();
         this.itemPickerManager = new ItemPickerManager();
+        
 
         this.showDataTime();
         this.stateManager.goToState(GameStates.TRAVEL);

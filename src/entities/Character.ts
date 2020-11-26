@@ -47,7 +47,7 @@ export class Character {
     }
 
     get kinship() {
-        return this._kinship;
+        return this._game.loc.l(this._kinship);
     }
 
     get hungry() {

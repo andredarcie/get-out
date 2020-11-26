@@ -15,7 +15,7 @@ export interface Choice {
 
 interface SkillCheckResult {
     success: any,
-    criticialSuccess: any,
+    criticalSuccess: any,
     failure: any,
     criticalFailure: any
 }
