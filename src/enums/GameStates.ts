@@ -7,5 +7,8 @@ export enum GameStates {
     RIP,
     LOG,
     BAG,
-    ITEM_PICKER
+    ITEM_PICKER,
+    DIALOG,
+    MAP,
+    SKILL_UP
 }

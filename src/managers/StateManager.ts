@@ -51,6 +51,18 @@ export class StateManager {
             case GameStates.ITEM_PICKER:
                 this._game.showPage(this._game.itemPickerPage);
                 this._game.itemPickerManager.start();
+            break;
+            case GameStates.SKILL_UP:
+                this._game.showPage(this._game.skillUpPage);
+                this._game.skillUpManager.start();
+            break;
+            case GameStates.DIALOG:
+                this._game.showPage(this._game.dialogPage);
+                this._game.dialogManager.start();
+            break;
+            case GameStates.MAP:
+                this._game.showPage(this._game.mapPage);
+                this._game.mapManager.start();
         }
     }
 

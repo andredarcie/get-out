@@ -10,6 +10,9 @@ import { GameStates } from './enums/GameStates';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
 import { Language, LocalizationManager } from './managers/LocalizationManager';
+import { DialogManager } from './managers/DialogManager';
+import { MapManager } from './managers/MapManager';
+import { SkillUpManager } from './managers/SkillUpManager';
 import { Clock } from './entities/Clock';
 import * as firebase from 'firebase/app';
 import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
@@ -34,6 +37,9 @@ export class Game {
     public ripPage: HTMLElement;
     public bagPage: HTMLElement;
     public itemPickerPage: HTMLElement;
+    public dialogPage: HTMLElement;
+    public mapPage: HTMLElement;
+    public skillUpPage: HTMLElement;
 
     public campManager: CampManager;
     public eventManager: EventManager;
@@ -47,6 +53,9 @@ export class Game {
     public stateManager: StateManager;
     public itemPickerManager: ItemPickerManager;
     public loc: LocalizationManager;
+    public dialogManager: DialogManager;
+    public mapManager: MapManager;
+    public skillUpManager: SkillUpManager;
 
     private _currentTimeField: Element;
     private playerGuid: string;
@@ -64,6 +73,10 @@ export class Game {
         this.ripPage = document.getElementById("rip-page");
         this.bagPage = document.getElementById("bag-page");
         this.itemPickerPage = document.getElementById("item-picker-page");
+        this.dialogPage = document.querySelector("#dialog-page");
+        this.mapPage = document.querySelector("#map-page");
+        this.skillUpPage = document.querySelector("#skill-up-page");
+
         this._currentTimeField = document.querySelector("#current-time-field");
         this.playerGuid = this.generateGuid();
     }
@@ -95,10 +108,12 @@ export class Game {
         this.logManager = new LogManager();
         this.stateManager = new StateManager();
         this.itemPickerManager = new ItemPickerManager();
-        
+        this.dialogManager = new DialogManager();
+        this.mapManager = new MapManager();
+        this.skillUpManager = new SkillUpManager();
 
         this.showDataTime();
-        this.stateManager.goToState(GameStates.TRAVEL);
+        this.stateManager.goToState(GameStates.SKILL_UP);
         this.startFirebase();
     }
 
@@ -196,6 +211,9 @@ export class Game {
         this.hidePage(this.bagPage);
         this.hidePage(this.ripPage);
         this.hidePage(this.itemPickerPage);
+        this.hidePage(this.skillUpPage);
+        this.hidePage(this.dialogPage);
+        this.hidePage(this.mapPage);
     }
 
     showDataTime() {
