@@ -161,6 +161,18 @@ button:disabled {
     color: yellow;
 }
 
+.green-color-border {
+    color: #27ae60;
+}
+
+.red-color-border {
+    color: #c0392b;
+}
+
+.yellow-color-border {
+    color:#f1c40f;
+}
+
 .character-atributes-box {
     display: inline-block; margin-top: 8px; position: absolute; padding-left: 10px;
 }

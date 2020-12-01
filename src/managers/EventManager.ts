@@ -47,12 +47,18 @@ export class EventManager {
             const button = document.createElement("button");
 
             if (choice.skillCheck) {
-                button.appendChild(document.createTextNode(choice.buttonText + ' [' + 
-                diceManager.getDifficultLevel(choice.skillCheckFields.difficulty) + ': ' + choice.skillCheckFields.difficulty + ']'));
+                let difficulty: number = choice.skillCheckFields.difficulty;
+                let buttonText: string = choice.buttonText + ' [' +
+                                         diceManager.getDifficultLevel(difficulty) + ': ' + difficulty + 
+                                         ' - ' + diceManager.calculateProbabilityFrom((difficulty - 3)) + ']';
+
+                button.appendChild(document.createTextNode(buttonText));
+                button.classList.add(diceManager.getDifficultColor(difficulty));
             } else {
                 button.appendChild(document.createTextNode(choice.buttonText));
             }
 
+            
             button.addEventListener('click', () => this.selectChoice(choice));
             this._eventPageChoicesBtnListElement.appendChild(button);
         }
@@ -66,7 +72,7 @@ export class EventManager {
             return;
         }
 
-        if (this.currentEvent.type == EventType.Place && choice.buttonText == 'Investigate (Exploration)') {
+        if (this.currentEvent.type == EventType.Place && choice.buttonText == 'Investigate') {
             this._game.stateManager.goToState(GameStates.ITEM_PICKER);
             return;
         }
