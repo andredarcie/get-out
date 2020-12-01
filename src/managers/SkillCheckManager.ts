@@ -20,6 +20,7 @@ export class SkillCheckManager {
     private _skillCheckResultValueLabel: HTMLElement;
     public _resultLabel: HTMLElement;
     private _diceTimer: any; 
+    private _currentChoice: Choice;
 
     constructor() {
         this._game = Game.getInstance();
@@ -43,19 +44,18 @@ export class SkillCheckManager {
         this._resultLabel.style.visibility = 'hidden';
         this._diceTimer = setInterval(() => { this.shakeDice(dice) }, 50);
         setTimeout(() => { this.stopShakeDice(dice) }, 500);
+        this._currentChoice = this._game.eventManager.currentChoice;
     }
 
     onClickTravel() {
-        let choice: Choice = this._game.eventManager.currentChoice;
-
         if (this._game.skillCheckResult == SkillCheckResults.Success) {
-            choice.skillCheckResultPath.success();
+            this._currentChoice.skillCheckFields.resultPath.success();
         } else if (this._game.skillCheckResult == SkillCheckResults.CriticialSuccess) {
-            choice.skillCheckResultPath.criticalSuccess();
+            this._currentChoice.skillCheckFields.resultPath.criticalSuccess();
         } else if (this._game.skillCheckResult == SkillCheckResults.Failure) {
-            choice.skillCheckResultPath.failure();
+            this._currentChoice.skillCheckFields.resultPath.failure();
         } else if (this._game.skillCheckResult == SkillCheckResults.CriticalFailure) {
-            choice.skillCheckResultPath.criticalFailure();
+            this._currentChoice.skillCheckFields.resultPath.criticalFailure();
         }
 
         this._game.stateManager.goToState(GameStates.LOG);
@@ -74,7 +74,7 @@ export class SkillCheckManager {
         let firstDiceValue = dice.roll();
         let secondDiceValue = dice.roll();
         let characterStrength = 3;
-        let expectedValue = this._game.skillCheckDifficultie;
+        let expectedValue = this._currentChoice.skillCheckFields.difficulty;
         let finalValue = firstDiceValue + secondDiceValue + characterStrength;
         this.showDiceValues(firstDiceValue, secondDiceValue);
 

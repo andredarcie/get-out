@@ -1,4 +1,5 @@
 import { Item } from './Item';
+import { Skills } from '../enums/Skills';
 
 export enum EventType {
     Exploration,
@@ -9,8 +10,14 @@ export enum EventType {
 export interface Choice {
     buttonText: string;
     skillCheck: boolean;
-    skillCheckResultPath: SkillCheckResult | null,
+    skillCheckFields: SkillCheckFields | null;
     normalResultPath: any | null;
+}
+
+export interface SkillCheckFields {
+    difficulty: number;
+    skillToCheck: Skills;
+    resultPath: SkillCheckResult | null,
 }
 
 interface SkillCheckResult {

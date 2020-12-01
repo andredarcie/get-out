@@ -60,7 +60,6 @@ export class Game {
     private _currentTimeField: Element;
     private playerGuid: string;
 
-    public skillCheckDifficultie: number;
     public skillCheckResult: SkillCheckResults;
 
     private constructor() {
@@ -90,7 +89,7 @@ export class Game {
     }
 
     public start(): void {
-        this.loc = new LocalizationManager(Language.PtBr);
+        this.loc = new LocalizationManager(Language.EnUs);
         let dice = new DiceManager();
         dice.start();
         
@@ -113,7 +112,7 @@ export class Game {
         this.skillUpManager = new SkillUpManager();
 
         this.showDataTime();
-        this.stateManager.goToState(GameStates.SKILL_UP);
+        this.stateManager.goToState(GameStates.TRAVEL);
         this.startFirebase();
     }
 

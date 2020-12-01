@@ -2,6 +2,7 @@ import { Event, EventType, Choice } from '../entities/Event';
 import { Game } from '../Game';
 import { EventSeeds } from '../seeds/EventSeeds';
 import { GameStates } from '../enums/GameStates';
+import { DiceManager } from './DiceManager';
 
 export class EventManager {
     private _titleElement: HTMLElement;
@@ -41,10 +42,17 @@ export class EventManager {
 
     private showChoices() {
         this._eventPageChoicesBtnListElement.innerHTML = '';
-
+        let diceManager = new DiceManager();
         for (let choice of this.currentEvent.choices) {
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(choice.buttonText));
+
+            if (choice.skillCheck) {
+                button.appendChild(document.createTextNode(choice.buttonText + ' [' + 
+                diceManager.getDifficultLevel(choice.skillCheckFields.difficulty) + ': ' + choice.skillCheckFields.difficulty + ']'));
+            } else {
+                button.appendChild(document.createTextNode(choice.buttonText));
+            }
+
             button.addEventListener('click', () => this.selectChoice(choice));
             this._eventPageChoicesBtnListElement.appendChild(button);
         }
