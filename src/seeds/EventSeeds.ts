@@ -3,6 +3,7 @@ import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { AfflictionSeeds } from './AfflictionSeeds';
 import { Skills } from '../enums/Skills';
+import { Difficulties } from '../enums/Difficulties';
 
 export class EventSeeds {
     private _events: Event[];
@@ -97,7 +98,57 @@ export class EventSeeds {
                 buttonText: 'Spy',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: 10,
+                    difficulty: Difficulties.TRIVIAL,
+                    skillToCheck: Skills.STEALTH,
+                    resultPath: {
+                        success: () => {
+                            this._game.log.addTempLog('Spy success', LogType.Result);
+                        },
+                        criticalSuccess: () => {
+                            this._game.log.addTempLog('Spy critical success', LogType.Result);
+                        },
+                        failure: () => {
+                            this._game.log.addTempLog('You tried to spy more, it made a lot of noise, theres someone in the house and heard you', LogType.Result);
+                            this._game.log.addTempLog('You think it was better to run away to avoid problems', LogType.Result);
+                        },
+                        criticalFailure: () => {
+                            this._game.log.addTempLog('Spy critical failure', LogType.Result);
+                        }
+                    
+                    },
+                },
+                normalResultPath: null,
+            },
+            {
+                buttonText: 'Spy 2',
+                skillCheck: true,
+                skillCheckFields: {
+                    difficulty: Difficulties.EASY,
+                    skillToCheck: Skills.STEALTH,
+                    resultPath: {
+                        success: () => {
+                            this._game.log.addTempLog('Spy success', LogType.Result);
+                        },
+                        criticalSuccess: () => {
+                            this._game.log.addTempLog('Spy critical success', LogType.Result);
+                        },
+                        failure: () => {
+                            this._game.log.addTempLog('You tried to spy more, it made a lot of noise, theres someone in the house and heard you', LogType.Result);
+                            this._game.log.addTempLog('You think it was better to run away to avoid problems', LogType.Result);
+                        },
+                        criticalFailure: () => {
+                            this._game.log.addTempLog('Spy critical failure', LogType.Result);
+                        }
+                    
+                    },
+                },
+                normalResultPath: null,
+            },
+            {
+                buttonText: 'Spy 3',
+                skillCheck: true,
+                skillCheckFields: {
+                    difficulty: Difficulties.MEDIUM,
                     skillToCheck: Skills.STEALTH,
                     resultPath: {
                         success: () => {
@@ -140,7 +191,7 @@ export class EventSeeds {
                 buttonText: 'Fight',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: 10,
+                    difficulty: Difficulties.VERY_HARD,
                     skillToCheck: Skills.STRENGTH,
                     resultPath: {
                         success: () => {
@@ -166,7 +217,7 @@ export class EventSeeds {
                 buttonText: 'Try to escape',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: 8,
+                    difficulty: Difficulties.CHALLENGING,
                     skillToCheck: Skills.STEALTH,
                     resultPath: {
                         success: () => {

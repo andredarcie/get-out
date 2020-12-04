@@ -2,6 +2,7 @@ import { Dice } from '../entities/Dice';
 import { Game } from '../Game';
 import { GameStates } from '../enums/GameStates';
 import { Choice } from '../entities/Event';
+import { DiceManager } from './DiceManager';
 
 export enum SkillCheckResults {
     Success,
@@ -20,6 +21,7 @@ export class SkillCheckManager {
     private _skillCheckResultValueLabel: HTMLElement;
     public _resultLabel: HTMLElement;
     private _diceTimer: any; 
+    private _diceManager: DiceManager;
     private _currentChoice: Choice;
 
     constructor() {
@@ -35,7 +37,7 @@ export class SkillCheckManager {
         this._skillCheckExpected = document.querySelector("#skill-check-expected");
 
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
-        
+        this._diceManager = new DiceManager();
     }
 
     start(): void {
@@ -74,7 +76,7 @@ export class SkillCheckManager {
         let firstDiceValue = dice.roll();
         let secondDiceValue = dice.roll();
         let characterStrength = 3;
-        let expectedValue = this._currentChoice.skillCheckFields.difficulty;
+        let expectedValue = this._currentChoice.skillCheckFields.difficult.value;
         let finalValue = firstDiceValue + secondDiceValue + characterStrength;
         this.showDiceValues(firstDiceValue, secondDiceValue);
 

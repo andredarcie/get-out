@@ -2,7 +2,8 @@ import { Event, EventType, Choice } from '../entities/Event';
 import { Game } from '../Game';
 import { EventSeeds } from '../seeds/EventSeeds';
 import { GameStates } from '../enums/GameStates';
-import { DiceManager } from './DiceManager';
+import { DiceManager, Difficult } from './DiceManager';
+import { Difficulties } from '../enums/Difficulties';
 
 export class EventManager {
     private _titleElement: HTMLElement;
@@ -47,13 +48,15 @@ export class EventManager {
             const button = document.createElement("button");
 
             if (choice.skillCheck) {
-                let difficulty: number = choice.skillCheckFields.difficulty;
+                choice.skillCheckFields.difficult = diceManager.getDifficult(choice.skillCheckFields.difficulty);
+
                 let buttonText: string = choice.buttonText + ' [' +
-                                         diceManager.getDifficultLevel(difficulty) + ': ' + difficulty + 
-                                         ' - ' + diceManager.calculateProbabilityFrom((difficulty - 3)) + ']';
+                                         choice.skillCheckFields.difficult.text + ': ' + 
+                                         choice.skillCheckFields.difficult.value + 
+                                         ' - ' + diceManager.calculateProbabilityFrom((choice.skillCheckFields.difficult.value - 3)) + ']';
 
                 button.appendChild(document.createTextNode(buttonText));
-                button.classList.add(diceManager.getDifficultColor(difficulty));
+                button.classList.add(choice.skillCheckFields.difficult.class);
             } else {
                 button.appendChild(document.createTextNode(choice.buttonText));
             }

@@ -1,5 +1,7 @@
 import { Item } from './Item';
 import { Skills } from '../enums/Skills';
+import { Difficulties } from '../enums/Difficulties';
+import { Difficult } from '../managers/DiceManager';
 
 export enum EventType {
     Exploration,
@@ -15,7 +17,8 @@ export interface Choice {
 }
 
 export interface SkillCheckFields {
-    difficulty: number;
+    difficulty: Difficulties;
+    difficult?: Difficult;
     skillToCheck: Skills;
     resultPath: SkillCheckResult | null,
 }
