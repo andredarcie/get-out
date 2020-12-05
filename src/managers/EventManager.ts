@@ -3,7 +3,6 @@ import { Game } from '../Game';
 import { EventSeeds } from '../seeds/EventSeeds';
 import { GameStates } from '../enums/GameStates';
 import { DiceManager, Difficult } from './DiceManager';
-import { Difficulties } from '../enums/Difficulties';
 
 export class EventManager {
     private _titleElement: HTMLElement;

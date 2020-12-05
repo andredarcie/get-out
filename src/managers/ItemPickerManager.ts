@@ -11,7 +11,9 @@ export class ItemPickerManager {
     private _myItemsListElement: any;
     private _itemsToPick: Item[] = [];
     private _myItems: Item[] = [];
+    private _itemsFoundTitle: HTMLElement;
     private _yourItemsTitle: HTMLElement;
+    private _pageMessageElement: HTMLElement;
     private _myItemsMax: number = 2;
     private _takeAllBtn: HTMLButtonElement;
     public itemsFound: number = 4;
@@ -24,12 +26,15 @@ export class ItemPickerManager {
         this._continueBtn = document.querySelector('#item-picker-page-continue-btn');
         this._continueBtn.addEventListener('click', () => { this.onContinueBtn() });
         this._itemsToPickListElement = document.querySelector('#item-picker-page-items-to-pick');
+        this._itemsFoundTitle = document.querySelector('#items-found-title');
+        this._pageMessageElement = document.querySelector('#item-picker-page-message');
         this._myItemsListElement = document.querySelector('#item-picker-page-item-my-items');
         this._yourItemsTitle = document.querySelector('#your-items-title');
         this._takeAllBtn = document.querySelector('#item-picker-page-take-all-btn');
     }
 
     public start(): void {
+        this.showPageMessage();
         this._itemsToPick = [];
         this._myItems = [];
         
@@ -41,6 +46,30 @@ export class ItemPickerManager {
         }
 
         this.showItems();
+    }
+
+    private showPageMessage() {
+        this._itemsFoundTitle.style.display = 'none';
+        this._continueBtn.style.display = 'none';
+        this._itemsToPickListElement.style.display = 'none';
+        this._myItemsListElement.style.display = 'none';
+        this._yourItemsTitle.style.display = 'none';
+        this._takeAllBtn.style.display = 'none';
+
+        this._pageMessageElement.style.display = 'block';
+
+        setTimeout(() => this.showPageElements(), 1500);
+    }
+
+    private showPageElements() {
+        this._itemsFoundTitle.style.display = 'block';
+        this._continueBtn.style.display = 'block';
+        this._itemsToPickListElement.style.display = 'block';
+        this._myItemsListElement.style.display = 'block';
+        this._yourItemsTitle.style.display = 'block';
+        this._takeAllBtn.style.display = 'block';
+
+        this._pageMessageElement.style.display = 'none';
     }
 
     private showItems() {
