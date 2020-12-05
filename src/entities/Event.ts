@@ -31,24 +31,35 @@ interface SkillCheckResult {
 }
 
 export class Event {
-    private _name: string;
+    private _title: string;
+    private _subtitle: string;
     private _description: string;
     private _image: string;
     private _choices: Choice[] = [];
     private _type: EventType;
     private _items: Item[] = [];
 
-    constructor(name: string, description: string, image: string, choices: Choice[], type: EventType, items?: Item[]) {
-        this._name = name;
+    constructor(title: string, subtitle: string, description: string, image: string, choices: Choice[], type: EventType, items?: Item[]) {
+        this._title = title;
+        this._subtitle = subtitle;
         this._description = description;
         this._image = image;
+
+        if (choices.length > 4) {
+            throw new RangeError('Four is the limit of choices per event');
+        }
+
         this._choices = choices;
         this._type = type;
         this._items = items;
     }
 
-    get name() {
-        return this._name;
+    get title() {
+        return this._title;
+    }
+
+    get subtitle() {
+        return this._subtitle;
     }
 
     get description() {

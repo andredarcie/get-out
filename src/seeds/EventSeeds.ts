@@ -23,6 +23,7 @@ export class EventSeeds {
     start() {
         this.events.push(new Event(
             'Wild Wolf Appeared',
+            'Something that catches your eye',
             'He jumps furiously wanting blood!', 
             '',
             [{ 
@@ -83,7 +84,10 @@ export class EventSeeds {
 
         return new Event(
             eventName,
-            'No sign of life', 
+            'Something that catches your eye',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies, ' +
+            'lorem semper scelerisque interdum, neque felis tincidunt enim, at iaculis elit dolor ut libero. ' +
+            'Fusce a odio pellentesque, pretium ipsum non, scelerisque mi. Vivamus quis arcu vel sapien ultricies varius. Pellentesque elementum lobortis convallis.', 
             imageUrl,
             [{ 
                 buttonText: 'Investigate',
@@ -168,14 +172,6 @@ export class EventSeeds {
                     },
                 },
                 normalResultPath: null,
-            },
-            { 
-                buttonText: 'Ignore',
-                skillCheck: false,
-                skillCheckFields: null,
-                normalResultPath: () => {
-                    this._game.log.addTempLog('You just ignored', LogType.Result);
-                }
             }],
             EventType.Place,
             null
@@ -185,7 +181,10 @@ export class EventSeeds {
     public getCombatEvent() {
         return new Event(
             'Furious wolf appeared!',
-            'You are in trouble',
+            'Something that catches your eye',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies, ' +
+            'lorem semper scelerisque interdum, neque felis tincidunt enim, at iaculis elit dolor ut libero. ' +
+            'Fusce a odio pellentesque, pretium ipsum non, scelerisque mi. Vivamus quis arcu vel sapien ultricies varius. Pellentesque elementum lobortis convallis.',
             this._imageUrlList[6],
             [{
                 buttonText: 'Fight',
@@ -246,6 +245,7 @@ export class EventSeeds {
 
     public getMileStoneEvent(): Event {
         return new Event('Milestone Reached! ',
+        'Something that catches your eye',
         this._game.distanceToTheBorder + ' miles to the border',
         this._imageUrlList[7],
         [

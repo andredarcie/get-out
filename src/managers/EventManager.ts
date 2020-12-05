@@ -7,6 +7,7 @@ import { Difficulties } from '../enums/Difficulties';
 
 export class EventManager {
     private _titleElement: HTMLElement;
+    private _subtitleElement: HTMLElement;
     private _descriptionElement: HTMLElement;
     private _eventPageChoicesBtnListElement: HTMLElement;
     private _imageElement: HTMLImageElement;
@@ -18,6 +19,7 @@ export class EventManager {
         this._titleElement = document.getElementById("event-page-title");
         this._descriptionElement = document.getElementById("event-page-description");
         this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list");
+        this._subtitleElement = document.getElementById("event-page-subtitle");
         this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
         this._game = Game.getInstance();
     }
@@ -98,6 +100,7 @@ export class EventManager {
 
     showWaitingMessage(): void {
         this._titleElement.style.display = 'none';
+        this._subtitleElement.style.display = 'none';
         this._descriptionElement.innerHTML = 'Something happened!'
         this._imageElement.style.display = 'none';
 
@@ -106,7 +109,9 @@ export class EventManager {
 
     showEvent(): void {
         this._titleElement.style.display = 'block';
-        this._titleElement.innerHTML = this._currentEvent.name;
+        this._subtitleElement.style.display = 'block';
+        this._titleElement.innerHTML = this._currentEvent.title;
+        this._subtitleElement.innerHTML = this._currentEvent.subtitle;
         this._descriptionElement.innerHTML = this._currentEvent.description;
         
         if (this._currentEvent.image != '') {
