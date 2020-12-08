@@ -52,130 +52,36 @@ export class EventSeeds {
     }
 
     public getPlaceEvent() {
-        let names: string[] = [
-            'Abandoned warehouse',
-            'Strange building',
-            'Very old house',
-            'Abandoned supermarket',
-            'Bus stop',
-            'Abandoned hospital',
-            'Abandoned Department Store',
-            'Strange Fire department',
-            'Musem',
-            'Very old Mall',
-            'School',
-            'Movie Theater',
-            'Very old Video Store',
-            'Abandoned Police Station'
+        const events: Event[] = [
+            new Event(
+                'Ferris wheel',
+                'When you look up you feel a chill in your belly',
+                'It seems like it’s not been used for a long time,' +
+                ' a time when having fun still made sense',
+                this._imageUrlList[0],
+                [{
+                    buttonText: 'Investigate',
+                    skillCheck: false,
+                    skillCheckFields: null,
+                    normalResultPath: () => {
+                        this._game.log.addTempLog("You don't find anything interesting", LogType.Result);
+                        this._game.log.addTempLog("Just look at the ferris wheel for a while, take a deep breath and walk away", LogType.Result);
+                    }
+                },
+                {
+                    buttonText: 'Continue the walk',
+                    skillCheck: false,
+                    skillCheckFields: null,
+                    normalResultPath: () => {
+                        this._game.log.addTempLog("You just go by the ferris wheel and go away, without looking back", LogType.Result);
+                    }
+                }],
+                EventType.Combat,
+                null
+            )
         ];
 
-        let messagesWhenYouFoundNothing: string[] = [
-            'You didnt find anything useful',
-            'You find a lot of useless garbage',
-            'Nothing important was found',
-            'Unfortunately this place was totally empty',
-            'Looks like someone already got everything they had here',
-            'All things are burned, nothing can be recovered'
-        ];
-
-        const eventName: string = names[this._game.getRandomArbitrary(names.length - 1)];
-        const messageWhenYouFoundNothing: string = messagesWhenYouFoundNothing[this._game.getRandomArbitrary(messagesWhenYouFoundNothing.length - 1)];
-        const imageUrl: string = this._imageUrlList[this._game.getRandomArbitrary(this._imageUrlList.length - 2)];
-
-        return new Event(
-            eventName,
-            'Something that catches your eye',
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies, ' +
-            'lorem semper scelerisque interdum, neque felis tincidunt enim, at iaculis elit dolor ut libero. ' +
-            'Fusce a odio pellentesque, pretium ipsum non, scelerisque mi. Vivamus quis arcu vel sapien ultricies varius. Pellentesque elementum lobortis convallis.', 
-            imageUrl,
-            [{ 
-                buttonText: 'Investigate',
-                skillCheck: false,
-                skillCheckFields: null,
-                normalResultPath: () => {
-                    let character = this._game.characterManager.picksACharacterAtRandom();
-                    character.addAffliction(AfflictionSeeds.getOneRandomAffliction());
-                }
-            },
-            {
-                buttonText: 'Spy',
-                skillCheck: true,
-                skillCheckFields: {
-                    difficulty: Difficulties.TRIVIAL,
-                    skillToCheck: Skills.STEALTH,
-                    resultPath: {
-                        success: () => {
-                            this._game.log.addTempLog('Spy success', LogType.Result);
-                        },
-                        criticalSuccess: () => {
-                            this._game.log.addTempLog('Spy critical success', LogType.Result);
-                        },
-                        failure: () => {
-                            this._game.log.addTempLog('You tried to spy more, it made a lot of noise, theres someone in the house and heard you', LogType.Result);
-                            this._game.log.addTempLog('You think it was better to run away to avoid problems', LogType.Result);
-                        },
-                        criticalFailure: () => {
-                            this._game.log.addTempLog('Spy critical failure', LogType.Result);
-                        }
-                    
-                    },
-                },
-                normalResultPath: null,
-            },
-            {
-                buttonText: 'Spy 2',
-                skillCheck: true,
-                skillCheckFields: {
-                    difficulty: Difficulties.EASY,
-                    skillToCheck: Skills.STEALTH,
-                    resultPath: {
-                        success: () => {
-                            this._game.log.addTempLog('Spy success', LogType.Result);
-                        },
-                        criticalSuccess: () => {
-                            this._game.log.addTempLog('Spy critical success', LogType.Result);
-                        },
-                        failure: () => {
-                            this._game.log.addTempLog('You tried to spy more, it made a lot of noise, theres someone in the house and heard you', LogType.Result);
-                            this._game.log.addTempLog('You think it was better to run away to avoid problems', LogType.Result);
-                        },
-                        criticalFailure: () => {
-                            this._game.log.addTempLog('Spy critical failure', LogType.Result);
-                        }
-                    
-                    },
-                },
-                normalResultPath: null,
-            },
-            {
-                buttonText: 'Spy 3',
-                skillCheck: true,
-                skillCheckFields: {
-                    difficulty: Difficulties.MEDIUM,
-                    skillToCheck: Skills.STEALTH,
-                    resultPath: {
-                        success: () => {
-                            this._game.log.addTempLog('Spy success', LogType.Result);
-                        },
-                        criticalSuccess: () => {
-                            this._game.log.addTempLog('Spy critical success', LogType.Result);
-                        },
-                        failure: () => {
-                            this._game.log.addTempLog('You tried to spy more, it made a lot of noise, theres someone in the house and heard you', LogType.Result);
-                            this._game.log.addTempLog('You think it was better to run away to avoid problems', LogType.Result);
-                        },
-                        criticalFailure: () => {
-                            this._game.log.addTempLog('Spy critical failure', LogType.Result);
-                        }
-                    
-                    },
-                },
-                normalResultPath: null,
-            }],
-            EventType.Place,
-            null
-        )
+        return events[0];
     }
 
     public getCombatEvent() {
