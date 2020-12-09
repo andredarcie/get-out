@@ -25,8 +25,8 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "1.4f022b7a.jpg",
-    "revision": "29d1ad4532617e122e2f53b09b75fbb1"
+    "url": "1.3c70dc7b.jpg",
+    "revision": "c6ab5004accccfd0d3bb04a43ae81fa7"
   },
   {
     "url": "2.a2c87685.jpg",
@@ -90,7 +90,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "94d22898d5c692aa05e70becdd958947"
+    "revision": "cccc89e4029a6a02206c1674c2f7d6dd"
   },
   {
     "url": "kid.4c5d2dd8.jpg",
@@ -109,12 +109,12 @@ self.__precacheManifest = [
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.dae70831.js",
-    "revision": "80fcb78d4dfa8b6b71072c438ca990d3"
+    "url": "src.b76e1aaf.js",
+    "revision": "819d47a31e1d71b838111abcbe24dae9"
   },
   {
-    "url": "style.a7833d4a.css",
-    "revision": "62500e8d2f1cb60022e6e71dd3ff4a5f"
+    "url": "style.af811891.css",
+    "revision": "4c371df703ab2e0c2132bc9f4f93ff4d"
   },
   {
     "url": "wolf.5ef3de5f.jpg",
@@ -126,7 +126,7 @@ self.__precacheManifest = [
   },
   {
     "url": "/",
-    "revision": "fef26634f4cf0900494bb2e1af396c01"
+    "revision": "1a4399b908278554829f5e2e896166ca"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
