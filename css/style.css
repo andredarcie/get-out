@@ -94,7 +94,8 @@ button {
     width: 100%;
     height: 40px;
     color: #ffffff;
-    border: 1px solid #2c3e50;
+    border: 2px solid #2c3e50;
+    border-radius: 3px;
     background-color: #000000;
     cursor: pointer;
 }
@@ -105,6 +106,20 @@ img#event-page-image {
 
 img {
     border: 2px solid #2c3e50;
+}
+
+.photography-border {
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    padding-bottom: 30px;
+    border-radius: 1px;
+    background-color: white;
+}
+
+.photography {
+    filter:sepia(100%);
+    border: none;
 }
 
 button + button {
@@ -200,4 +215,36 @@ button {
 
 #log-list-status-change {
     height: 9em;
+}
+
+.fade-in {
+    animation: fadeIn ease 5s;
+    -webkit-animation: fadeIn ease 5s;
+    -moz-animation: fadeIn ease 5s;
+    -o-animation: fadeIn ease 5s;
+    -ms-animation: fadeIn ease 5s;
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
 }

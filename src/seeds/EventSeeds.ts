@@ -60,6 +60,15 @@ export class EventSeeds {
                 ' a time when having fun still made sense',
                 this._imageUrlList[0],
                 [{
+                    buttonText: 'Talk',
+                    skillCheck: false,
+                    skillCheckFields: null,
+                    normalResultPath: () => {
+                        this._game.log.addTempLog("You don't find anything interesting", LogType.Result);
+                        this._game.log.addTempLog("Just look at the ferris wheel for a while, take a deep breath and walk away", LogType.Result);
+                    }
+                },
+                {
                     buttonText: 'Investigate',
                     skillCheck: false,
                     skillCheckFields: null,
