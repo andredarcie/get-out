@@ -4,6 +4,20 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/eaf4ecfa16f94e68be398f82f2e4a5e0)](https://www.codacy.com/manual/andrendarcie/get-out-game?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=andredarcie/get-out-game&amp;utm_campaign=Badge_Grade)
 
+## Tags
+ - Choices that matter
+ - Story Rich
+ - Text based
+ - Tabletop role-playing game elements
+ - Minimalist
+ - Survival
+ - Roguelike
+ - Finish in one sitting
+ - Indie
+ - Procedural Generation
+ - Multiple Endings
+ - Open-source
+
 ## Getting Started
 
 > If you are using windows
