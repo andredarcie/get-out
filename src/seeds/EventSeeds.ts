@@ -1,7 +1,6 @@
 import { Event, EventType } from '../entities/Event';
 import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
-import { AfflictionSeeds } from './AfflictionSeeds';
 import { Skills } from '../enums/Skills';
 import { Difficulties } from '../enums/Difficulties';
 
@@ -66,16 +65,27 @@ export class EventSeeds {
                     normalResultPath: () => {
                         this._game.log.addTempLog("You don't find anything interesting", LogType.Result);
                         this._game.log.addTempLog("Just look at the ferris wheel for a while, take a deep breath and walk away", LogType.Result);
+                        this._game.characterManager.makeSomeoneInTheGroupGetAffliction();
                     }
                 },
                 {
                     buttonText: 'Investigate',
-                    skillCheck: false,
-                    skillCheckFields: null,
-                    normalResultPath: () => {
-                        this._game.log.addTempLog("You don't find anything interesting", LogType.Result);
-                        this._game.log.addTempLog("Just look at the ferris wheel for a while, take a deep breath and walk away", LogType.Result);
-                    }
+                    skillCheck: true,
+                    skillCheckFields: {
+                        difficulty: Difficulties.MEDIUM,
+                        skillToCheck: Skills.STRENGTH,
+                        canGiveItems: true,
+                        resultPath: {
+                            success: () => {
+                                this._game.log.addTempLog('You found some things of value', LogType.Result);
+                            },
+                            failure: () => {
+                                this._game.log.addTempLog("You couldn't find anything", LogType.Result);
+                                this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                            }
+                        }
+                    },
+                    normalResultPath: null
                 },
                 {
                     buttonText: 'Continue the walk',
@@ -107,22 +117,15 @@ export class EventSeeds {
                 skillCheckFields: {
                     difficulty: Difficulties.VERY_HARD,
                     skillToCheck: Skills.STRENGTH,
+                    canGiveItems: true,
                     resultPath: {
                         success: () => {
                             this._game.log.addTempLog('With a lot of struggle you beat the wolf', LogType.Result);
-                        },
-                        criticalSuccess: () => {
-                            this._game.log.addTempLog('You defeated the wolf easily', LogType.Result);
                         },
                         failure: () => {
                             this._game.log.addTempLog('The wolf has hurt you', LogType.Result);
                             this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                         },
-                        criticalFailure: () => {
-                            this._game.log.addTempLog('The wolf left you devastated', LogType.Result);
-                            this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                            this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                        }
                     }
                 },
                 normalResultPath: null
@@ -133,22 +136,15 @@ export class EventSeeds {
                 skillCheckFields: {
                     difficulty: Difficulties.CHALLENGING,
                     skillToCheck: Skills.STEALTH,
+                    canGiveItems: true,
                     resultPath: {
                         success: () => {
                             this._game.log.addTempLog('You managed to escape the wolf', LogType.Result);
-                        },
-                        criticalSuccess: () => {
-                            this._game.log.addTempLog('You managed to escape with some ease', LogType.Result);
                         },
                         failure: () => {
                             this._game.log.addTempLog('You didnt get away', LogType.Result);
                             this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                         },
-                        criticalFailure: () => {
-                            this._game.log.addTempLog('You try to escape but fall to the ground', LogType.Result);
-                            this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                            this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                        }
                     }
                 },
                 normalResultPath: null

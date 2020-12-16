@@ -20,14 +20,13 @@ export interface SkillCheckFields {
     difficulty: Difficulties;
     difficult?: Difficult;
     skillToCheck: Skills;
-    resultPath: SkillCheckResult | null,
+    canGiveItems: boolean;
+    resultPath: SkillCheckResult | null;
 }
 
 interface SkillCheckResult {
     success: any,
-    criticalSuccess: any,
-    failure: any,
-    criticalFailure: any
+    failure: any
 }
 
 export class Event {

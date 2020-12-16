@@ -6,9 +6,7 @@ import { DiceManager } from './DiceManager';
 
 export enum SkillCheckResults {
     Success,
-    CriticialSuccess,
-    Failure,
-    CriticalFailure
+    Failure
 }
 
 export class SkillCheckManager {
@@ -52,12 +50,14 @@ export class SkillCheckManager {
     onClickTravel() {
         if (this._game.skillCheckResult == SkillCheckResults.Success) {
             this._currentChoice.skillCheckFields.resultPath.success();
-        } else if (this._game.skillCheckResult == SkillCheckResults.CriticialSuccess) {
-            this._currentChoice.skillCheckFields.resultPath.criticalSuccess();
+
+            if (this._currentChoice.skillCheckFields.canGiveItems) {
+                this._game.stateManager.goToState(GameStates.ITEM_PICKER);
+                return;
+            }
+
         } else if (this._game.skillCheckResult == SkillCheckResults.Failure) {
             this._currentChoice.skillCheckFields.resultPath.failure();
-        } else if (this._game.skillCheckResult == SkillCheckResults.CriticalFailure) {
-            this._currentChoice.skillCheckFields.resultPath.criticalFailure();
         }
 
         this._game.stateManager.goToState(GameStates.LOG);
@@ -88,13 +88,13 @@ export class SkillCheckManager {
 
         if (firstDiceValue + secondDiceValue == 12) {
             this.setCriticalSuccess();
-            this._game.skillCheckResult = SkillCheckResults.CriticialSuccess;
+            this._game.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (firstDiceValue + secondDiceValue == 2) {
             this.setCriticalFailure();
-            this._game.skillCheckResult = SkillCheckResults.CriticalFailure;
+            this._game.skillCheckResult = SkillCheckResults.Failure;
             return;
         }
 

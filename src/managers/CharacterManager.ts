@@ -1,5 +1,6 @@
 import { Game } from '../Game';
 import { Character } from '../entities/Character';
+import { AfflictionSeeds } from '../seeds/AfflictionSeeds';
 
 export class CharacterManager {
     public previousCharacters: Character[] = [];
@@ -93,9 +94,9 @@ export class CharacterManager {
         return character;
     }
 
-    makeSomeoneInTheGroupSick(): Character {
+    makeSomeoneInTheGroupGetAffliction(): Character {
         let character: Character = this.picksACharacterAtRandom();
-        character.sicken();
+        character.addAffliction(AfflictionSeeds.getOneRandomAffliction());
         return character;
     }
 
