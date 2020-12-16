@@ -49,8 +49,12 @@ self.__precacheManifest = [
     "revision": "d8941adb0a020cbb58d44760477adda0"
   },
   {
-    "url": "camp.2289b279.jpg",
+    "url": "camp.jpg",
     "revision": "a47d34422e8940a081c35d0c8fe50731"
+  },
+  {
+    "url": "forest.37cdeff2.jpg",
+    "revision": "0ff432442d02bcbcf4125853cb54d9d2"
   },
   {
     "url": "girl.f844d34c.jpg",
@@ -90,7 +94,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "b72273ed5862a584eb0b645587997905"
+    "revision": "a5501d7c93167c65d85b3e6d77131211"
   },
   {
     "url": "kid.4c5d2dd8.jpg",
@@ -109,8 +113,8 @@ self.__precacheManifest = [
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.e3eb3f93.js",
-    "revision": "13e558d5f9ad2d961f4d978e912d0d8e"
+    "url": "src.d69d8c38.js",
+    "revision": "76198b91d30e963d2b56e254f63f18ff"
   },
   {
     "url": "style.05896bd6.css",
@@ -126,7 +130,7 @@ self.__precacheManifest = [
   },
   {
     "url": "/",
-    "revision": "9e73fdbb449e81decd42326ec6a5f7a8"
+    "revision": "68749c5fd169d4a74d7f6b0362e2739f"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
