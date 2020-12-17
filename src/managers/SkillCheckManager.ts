@@ -48,6 +48,7 @@ export class SkillCheckManager {
     }
 
     onClickTravel() {
+        this._game.playButtonSound();
         if (this._game.skillCheckResult == SkillCheckResults.Success) {
             this._currentChoice.skillCheckFields.resultPath.success();
 
@@ -64,6 +65,7 @@ export class SkillCheckManager {
     }
 
     private shakeDice(dice: Dice): void {
+        this._game.playDiceSound();
         let firstDiceValue = dice.roll();
         let secondDiceValue = dice.roll();
         this.showDiceValues(firstDiceValue, secondDiceValue);
@@ -87,24 +89,28 @@ export class SkillCheckManager {
         this._travelBtn.disabled = false;
 
         if (firstDiceValue + secondDiceValue == 12) {
+            this._game.playSuccessSound();
             this.setCriticalSuccess();
             this._game.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (firstDiceValue + secondDiceValue == 2) {
+            this._game.playFailSound();
             this.setCriticalFailure();
             this._game.skillCheckResult = SkillCheckResults.Failure;
             return;
         }
 
         if (finalValue >= expectedValue) {
+            this._game.playSuccessSound();
             this.setSuccess();
             this._game.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (finalValue < expectedValue) {
+            this._game.playFailSound();
             this.setFailure();
             this._game.skillCheckResult = SkillCheckResults.Failure;
             return;

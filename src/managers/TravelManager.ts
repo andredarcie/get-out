@@ -57,6 +57,11 @@ export class TravelManager {
     }
 
     onClickWalkBtn(): void {
+        if (this._game.distanceToTheBorder == 300) {
+            this._game.playRainSound();
+        }
+        
+        this._game.playButtonSound();
         this._game.passOneHour();
         this.walkOneHour();
         let foundEvent = this.checkEvent();
@@ -82,10 +87,12 @@ export class TravelManager {
     }
 
     onClickBag() {
+        this._game.playButtonSound();
         this._game.stateManager.goToState(GameStates.BAG);
     }
 
     onClickCampBtn(): void {
+        this._game.playButtonSound();
         this._game.passOneHour();
         this._game.stateManager.goToState(GameStates.CAMP);
     }
@@ -155,7 +162,6 @@ export class TravelManager {
 
         this._game.decreaseTheDistanceToTheBorder(2);
         this.increaseProgressBar();
-        this._game.addLogToFirebase('Walk one hour');
 
         this.showTravelledDistance();
         

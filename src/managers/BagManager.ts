@@ -34,10 +34,12 @@ export class BagManager {
     }
 
     private onClickBagClose() {
+        this._game.playButtonSound();
         this._game.stateManager.goToState(GameStates.TRAVEL);
     }
 
     private onClickThrowAway() {
+        this._game.playButtonSound();
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';

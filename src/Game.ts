@@ -131,23 +131,6 @@ export class Game {
             appId: "1:995739637479:web:fc4723344bae88ff317442",
             measurementId: "G-D8S0K3NWFV"
         };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    }
-
-    public addLogToFirebase(logToAdd: string): void {
-        const logsRef = firebase.database().ref('logs/' + this.playerGuid);
-        const newLogsRef = logsRef.push();
-        newLogsRef.set(
-            logToAdd
-        )
-        .then((docRef) => {
-            console.log("Document written with log");
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
     }
 
     get log(): LogManager {
@@ -251,5 +234,64 @@ export class Game {
 
     getRandomArbitrary(max: number): number {
         return Math.floor(Math.random() * max);
+    }
+
+    public playButtonSound(): void {
+        this.playSound('button1.wav');
+    }
+
+    public playDiceSound(): void {
+        this.playSound('dice.mp3');
+    }
+
+    public playSuccessSound(): void {
+        this.playSound('success.wav');
+    }
+
+    public playFailSound(): void {
+        this.playSound('fail.mp3');
+    }
+
+    public playTakeItemSound(): void {
+        this.playSound('take-item.wav');
+    }
+
+    public playWriteSound(): void {
+        this.playSound('write.wav');
+    }
+
+    public playThrowSound(): void {
+        this.playSound('throw.wav');
+    }
+
+    public playDingSound(): void {
+        this.playSound('ding.wav');
+    }
+
+    public playRainSound(): void {
+        this.playAudioLoop('walk.mpeg');
+    }
+
+    private playSound(soundName: string): void {
+        const audio = new Audio(soundName);
+        audio.play();
+    }
+
+    private playAudioLoop(soundName: string): void {
+        const audio = new Audio(soundName); 
+        audio.volume = 0.2;
+        if (typeof audio.loop == 'boolean')
+        {
+            audio.loop = true;
+        }
+        else
+        {
+            audio.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+                console.log('loop');
+            }, false);
+        }
+        audio.play();
     }
 }

@@ -45,10 +45,12 @@ export class LogManager {
 
         let stop = setInterval(() => {
             if (count < this._tempResultLogs.length) {
+                this._game.playWriteSound();
                 result_logs += '<li>' + this._tempResultLogs[count] + '</li>';
                 this._logListResult.innerHTML = result_logs;
                 count++;
             } else {
+                this._game.playDingSound();
                 clearInterval(stop);
                 this._logs = this._tempResultLogs;
                 this._tempResultLogs = [];
@@ -113,6 +115,7 @@ export class LogManager {
     }
 
     onClickTravel() {
+        this._game.playButtonSound();
         let characters: Character[] = this._game.characterManager.getCharactersDead();
 
         for (let character of characters) {
@@ -135,7 +138,5 @@ export class LogManager {
         } else if (logType == LogType.StatusChange) {
             this._tempoStatusChangeLogs.push(log);
         }
-
-        this._game.addLogToFirebase(log);
     }
 }

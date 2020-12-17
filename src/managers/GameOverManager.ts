@@ -17,6 +17,7 @@ export class GameOverManager {
     }
 
     private onClickTryAgainBtn() {
+        this._game.playButtonSound();
         location.reload();
     }
 
