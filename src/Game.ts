@@ -62,6 +62,9 @@ export class Game {
 
     public skillCheckResult: SkillCheckResults;
 
+    private audioEffects: HTMLAudioElement;
+    private audioBackground: HTMLAudioElement;
+
     private constructor() {
         this.travelPage = document.getElementById("travel-page");
         this.logPage = document.getElementById("log-page");
@@ -78,6 +81,9 @@ export class Game {
 
         this._currentTimeField = document.querySelector("#current-time-field");
         this.playerGuid = this.generateGuid();
+
+        this.audioEffects = new Audio();
+        this.audioBackground = new Audio();
     }
 
     static getInstance(): Game {
@@ -237,61 +243,61 @@ export class Game {
     }
 
     public playButtonSound(): void {
-        this.playSound('button1.wav');
+        this.playAudioEffect('button1.wav');
     }
 
     public playDiceSound(): void {
-        this.playSound('dice.mp3');
+        this.playAudioEffect('dice.mp3');
     }
 
     public playSuccessSound(): void {
-        this.playSound('success.wav');
+        this.playAudioEffect('success.wav');
     }
 
     public playFailSound(): void {
-        this.playSound('fail.mp3');
+        this.playAudioEffect('fail.mp3');
     }
 
     public playTakeItemSound(): void {
-        this.playSound('take-item.wav');
+        this.playAudioEffect('take-item.wav');
     }
 
     public playWriteSound(): void {
-        this.playSound('write.wav');
+        this.playAudioEffect('write.wav');
     }
 
     public playThrowSound(): void {
-        this.playSound('throw.wav');
+        this.playAudioEffect('throw.wav');
     }
 
     public playDingSound(): void {
-        this.playSound('ding.wav');
+        this.playAudioEffect('ding.wav');
     }
 
     public playRainSound(): void {
         this.playAudioLoop('walk.mpeg');
     }
 
-    private playSound(soundName: string): void {
-        const audio = new Audio(soundName);
-        audio.play();
+    private playAudioEffect(soundName: string): void {
+        this.audioEffects.src = soundName;
+        this.audioEffects.play();
     }
 
     private playAudioLoop(soundName: string): void {
-        const audio = new Audio(soundName); 
-        audio.volume = 0.2;
-        if (typeof audio.loop == 'boolean')
+        this.audioBackground.src = soundName;
+        this.audioBackground.volume = 0.2;
+        if (typeof this.audioBackground.loop == 'boolean')
         {
-            audio.loop = true;
+            this.audioBackground.loop = true;
         }
         else
         {
-            audio.addEventListener('ended', function() {
+            this.audioBackground.addEventListener('ended', function() {
                 this.currentTime = 0;
                 this.play();
                 console.log('loop');
             }, false);
         }
-        audio.play();
+        this.audioBackground.play();
     }
 }

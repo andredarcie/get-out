@@ -39,9 +39,14 @@ export class SkillCheckManager {
     }
 
     start(): void {
-        let dice = new Dice();
         this._travelBtn.disabled = true;
         this._resultLabel.style.visibility = 'hidden';
+        setTimeout(() => { this.startDiceRoll() }, 100);
+    }
+
+    startDiceRoll() {
+        let dice = new Dice();
+        this._game.playDiceSound();
         this._diceTimer = setInterval(() => { this.shakeDice(dice) }, 50);
         setTimeout(() => { this.stopShakeDice(dice) }, 500);
         this._currentChoice = this._game.eventManager.currentChoice;
@@ -65,7 +70,6 @@ export class SkillCheckManager {
     }
 
     private shakeDice(dice: Dice): void {
-        this._game.playDiceSound();
         let firstDiceValue = dice.roll();
         let secondDiceValue = dice.roll();
         this.showDiceValues(firstDiceValue, secondDiceValue);
