@@ -120,7 +120,7 @@ export class EventManager {
         this._descriptionElement.innerHTML = this._currentEvent.description;
         
         if (this._currentEvent.image != '') {
-            this._imageElement.src = this._currentEvent.image;
+            this._imageElement.src = 'img\\places\\' + this._currentEvent.image + '.jpg';
         }
 
         this._imageElement.style.display = 'block';

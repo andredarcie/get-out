@@ -7,15 +7,9 @@ import { Difficulties } from '../enums/Difficulties';
 export class EventSeeds {
     private _events: Event[];
     private _game: Game;
-    private _imageUrlList: string[] = [];
 
     constructor() {
         this._game = Game.getInstance();
-
-        for (let i = 0; i < 8; i++) {
-            this._imageUrlList[i] = (document.getElementById("event-page-image-" + (i + 1)) as HTMLImageElement).src;
-        }
-
         this._events = [];
     }
 
@@ -57,7 +51,7 @@ export class EventSeeds {
                 'When you look up you feel a chill in your belly',
                 'It seems like it’s not been used for a long time,' +
                 ' a time when having fun still made sense',
-                this._imageUrlList[0],
+                'ferris-wheel',
                 [{
                     buttonText: 'Talk',
                     skillCheck: false,
@@ -81,7 +75,6 @@ export class EventSeeds {
                             },
                             failure: () => {
                                 this._game.log.addTempLog("You couldn't find anything", LogType.Result);
-                                this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                             }
                         }
                     },
@@ -97,10 +90,82 @@ export class EventSeeds {
                 }],
                 EventType.Combat,
                 null
+            ),
+            new Event(
+                'Abandoned Barn',
+                'Just a normal place',
+                'There is something unsettling about this place',
+                'barn-abandoned-farm-homestead',
+                [
+                    {
+                        buttonText: 'Continue',
+                        skillCheck: false,
+                        skillCheckFields: null,
+                        normalResultPath: () => {
+                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                        }
+                    }
+                ],
+                EventType.Combat,
+                null
+            ),
+            new Event(
+                'Theme Park',
+                'Just a normal place',
+                'There is something unsettling about this place',
+                'theme-park',
+                [
+                    {
+                        buttonText: 'Continue',
+                        skillCheck: false,
+                        skillCheckFields: null,
+                        normalResultPath: () => {
+                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                        }
+                    }
+                ],
+                EventType.Combat,
+                null
+            ),
+            new Event(
+                'Forest Fog',
+                'Just a normal place',
+                'There is something unsettling about this place',
+                'forest-fog',
+                [
+                    {
+                        buttonText: 'Continue',
+                        skillCheck: false,
+                        skillCheckFields: null,
+                        normalResultPath: () => {
+                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                        }
+                    }
+                ],
+                EventType.Combat,
+                null
+            ),
+            new Event(
+                'Geyser',
+                'Just a normal place',
+                'There is something unsettling about this place',
+                'geyser',
+                [
+                    {
+                        buttonText: 'Continue',
+                        skillCheck: false,
+                        skillCheckFields: null,
+                        normalResultPath: () => {
+                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                        }
+                    }
+                ],
+                EventType.Combat,
+                null
             )
         ];
 
-        return events[0];
+        return events[Math.floor(Math.random() * events.length)];
     }
 
     public getCombatEvent() {
@@ -110,7 +175,7 @@ export class EventSeeds {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies, ' +
             'lorem semper scelerisque interdum, neque felis tincidunt enim, at iaculis elit dolor ut libero. ' +
             'Fusce a odio pellentesque, pretium ipsum non, scelerisque mi. Vivamus quis arcu vel sapien ultricies varius. Pellentesque elementum lobortis convallis.',
-            this._imageUrlList[6],
+            '2',
             [{
                 buttonText: 'Fight',
                 skillCheck: true,
@@ -158,7 +223,7 @@ export class EventSeeds {
         return new Event('Milestone Reached! ',
         'Something that catches your eye',
         this._game.distanceToTheBorder + ' miles to the border',
-        this._imageUrlList[7],
+        'milestone',
         [
         {
             buttonText: 'Back to travel',
