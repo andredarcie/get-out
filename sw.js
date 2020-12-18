@@ -25,30 +25,6 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "1.3c70dc7b.jpg",
-    "revision": "c6ab5004accccfd0d3bb04a43ae81fa7"
-  },
-  {
-    "url": "2.a2c87685.jpg",
-    "revision": "ef18a8e162e940b76c33bbbe75c7adab"
-  },
-  {
-    "url": "4.88fbf1a9.jpg",
-    "revision": "514d3f2a5fb8fd9998486ded99ecf816"
-  },
-  {
-    "url": "5.92f49589.jpg",
-    "revision": "423b7ef2d072a5cc5abd2c9beda4bc8d"
-  },
-  {
-    "url": "6.28c06797.jpg",
-    "revision": "bec4b3e984e323172649addf293d5e84"
-  },
-  {
-    "url": "7.c19e343f.jpg",
-    "revision": "d8941adb0a020cbb58d44760477adda0"
-  },
-  {
     "url": "camp.jpg",
     "revision": "a47d34422e8940a081c35d0c8fe50731"
   },
@@ -93,8 +69,52 @@ self.__precacheManifest = [
     "revision": "d13bbec9f23fc92c49739cb22c81b66f"
   },
   {
+    "url": "img/places/2.jpg",
+    "revision": "ef18a8e162e940b76c33bbbe75c7adab"
+  },
+  {
+    "url": "img/places/4.jpg",
+    "revision": "514d3f2a5fb8fd9998486ded99ecf816"
+  },
+  {
+    "url": "img/places/5.jpg",
+    "revision": "423b7ef2d072a5cc5abd2c9beda4bc8d"
+  },
+  {
+    "url": "img/places/6.jpg",
+    "revision": "bec4b3e984e323172649addf293d5e84"
+  },
+  {
+    "url": "img/places/7.jpg",
+    "revision": "d8941adb0a020cbb58d44760477adda0"
+  },
+  {
+    "url": "img/places/c.jpg",
+    "revision": "294915333664bb8cc15c760e7206c1e5"
+  },
+  {
+    "url": "img/places/ferris-wheel.jpg",
+    "revision": "c6ab5004accccfd0d3bb04a43ae81fa7"
+  },
+  {
+    "url": "img/places/forest-fog.jpg",
+    "revision": "fcf0fa9b6201d91c89cb4033776ec761"
+  },
+  {
+    "url": "img/places/geyser.jpg",
+    "revision": "e4e01b8e9dc8ff192bb6b680266f0c09"
+  },
+  {
+    "url": "img/places/milestone.jpg",
+    "revision": "47f194cb73e50b61bcc32001d349f831"
+  },
+  {
+    "url": "img/places/theme-park.jpg",
+    "revision": "36eb4c33c285330518860f68bb0e2b16"
+  },
+  {
     "url": "index.html",
-    "revision": "6aa524e8f08ff86aaeb5171d0d00ff92"
+    "revision": "a02de953ddb2614066df317c7d4b3b04"
   },
   {
     "url": "kid.4c5d2dd8.jpg",
@@ -105,24 +125,16 @@ self.__precacheManifest = [
     "revision": "f85ecc7334f2b9c029ee86986e92fa24"
   },
   {
-    "url": "milestone.404ddb98.jpg",
-    "revision": "47f194cb73e50b61bcc32001d349f831"
-  },
-  {
     "url": "normalize.458d1ead.css",
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.a35b5260.js",
-    "revision": "717a0ce76c95f7148fb3f8c1cbdb7551"
+    "url": "src.f91eec00.js",
+    "revision": "10d36c8fe95e5b537c78b522a834a55b"
   },
   {
     "url": "style.05896bd6.css",
     "revision": "89eb414e18430fd5cc65500165ef199b"
-  },
-  {
-    "url": "wolf.5ef3de5f.jpg",
-    "revision": "054b8c4588eeded90c9be9b5ee5f0c7c"
   },
   {
     "url": "woman.d20d4f2a.jpg",
@@ -130,7 +142,7 @@ self.__precacheManifest = [
   },
   {
     "url": "/",
-    "revision": "9dbf5cb1bde0df7193e70900f8cb41c3"
+    "revision": "96967b987ca8b58dd2b7351b972bf785"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
