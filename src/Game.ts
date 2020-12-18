@@ -279,12 +279,12 @@ export class Game {
     }
 
     private playAudioEffect(soundName: string): void {
-        this.audioEffects.src = soundName;
+        this.audioEffects.src = 'audio/' + soundName;
         this.audioEffects.play();
     }
 
     private playAudioLoop(soundName: string): void {
-        this.audioBackground.src = soundName;
+        this.audioBackground.src = 'audio/' + soundName;
         this.audioBackground.volume = 0.2;
         if (typeof this.audioBackground.loop == 'boolean')
         {
