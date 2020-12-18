@@ -89,6 +89,10 @@ self.__precacheManifest = [
     "revision": "d8941adb0a020cbb58d44760477adda0"
   },
   {
+    "url": "img/places/barn-abandoned-farm-homestead.jpg",
+    "revision": "294915333664bb8cc15c760e7206c1e5"
+  },
+  {
     "url": "img/places/c.jpg",
     "revision": "294915333664bb8cc15c760e7206c1e5"
   },
