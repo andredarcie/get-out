@@ -58,10 +58,10 @@ export class TravelManager {
 
     onClickWalkBtn(): void {
         if (this._game.distanceToTheBorder == 300) {
-            this._game.playRainSound();
+            this._game.audioManager.playRainSound();
         }
         
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this._game.passOneHour();
         this.walkOneHour();
         let foundEvent = this.checkEvent();
@@ -87,12 +87,12 @@ export class TravelManager {
     }
 
     onClickBag() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this._game.stateManager.goToState(GameStates.BAG);
     }
 
     onClickCampBtn(): void {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this._game.passOneHour();
         this._game.stateManager.goToState(GameStates.CAMP);
     }
@@ -130,11 +130,11 @@ export class TravelManager {
                 this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020';
                 this._charactersList[i].afflictionsField.innerHTML = '';
             } else {
-                let healthPerHour: number = character.showHealthLostPerHourDueToAllAfflictions();
+                let healthPerHour: number = character.showHealthLostPerHourDueToAllStatus();
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
                 this._charactersList[i].atributesField.innerHTML = character.getHealth() + 
-                                                                   (healthPerHour == 0 ? ' ' : (' -' + character.showHealthLostPerHourDueToAllAfflictions() + '% ')) + 
+                                                                   (healthPerHour == 0 ? ' ' : (' <span class="character-afflictions-field">(-' + character.showHealthLostPerHourDueToAllStatus() + '%) </span>')) + 
                                                                    character.getStamina() + ' ' 
                                                                  + character.getHungry();
                 this._charactersList[i].afflictionsField.innerHTML = character.showAfflictions();

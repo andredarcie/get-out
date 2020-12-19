@@ -1,4 +1,4 @@
-export class Affliction {
+export class Status {
     private _name: string;
     private _healthPerHour: number;
 

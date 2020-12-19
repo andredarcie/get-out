@@ -1,6 +1,6 @@
 import { Game } from '../Game';
 import { Character } from '../entities/Character';
-import { AfflictionSeeds } from '../seeds/AfflictionSeeds';
+import { StatusSeeds } from '../seeds/AfflictionSeeds';
 
 export class CharacterManager {
     public previousCharacters: Character[] = [];
@@ -94,9 +94,9 @@ export class CharacterManager {
         return character;
     }
 
-    makeSomeoneInTheGroupGetAffliction(): Character {
+    makeSomeoneInTheGroupGetStatus(): Character {
         let character: Character = this.picksACharacterAtRandom();
-        character.addAffliction(AfflictionSeeds.getOneRandomAffliction());
+        character.addStatus(StatusSeeds.getOneRandomStatus());
         return character;
     }
 

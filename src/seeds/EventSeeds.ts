@@ -59,7 +59,7 @@ export class EventSeeds {
                     normalResultPath: () => {
                         this._game.log.addTempLog("You don't find anything interesting", LogType.Result);
                         this._game.log.addTempLog("Just look at the ferris wheel for a while, take a deep breath and walk away", LogType.Result);
-                        this._game.characterManager.makeSomeoneInTheGroupGetAffliction();
+                        this._game.characterManager.makeSomeoneInTheGroupGetStatus();
                     }
                 },
                 {
@@ -165,7 +165,8 @@ export class EventSeeds {
             )
         ];
 
-        return events[Math.floor(Math.random() * events.length)];
+        //return events[Math.floor(Math.random() * events.length)];
+        return events[0];
     }
 
     public getCombatEvent() {

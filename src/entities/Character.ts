@@ -1,7 +1,7 @@
 import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { GameStates } from '../enums/GameStates';
-import { Affliction } from '../entities/Affliction';
+import { Status } from './Status';
 
 export class Character {
     private _name: string;
@@ -11,7 +11,7 @@ export class Character {
     private _health: number = 100;
     private _stamina: number = 100;
     private _hungry: number = 100;
-    private _afflictions: Affliction[] = [];
+    private _status: Status[] = [];
 
     private _isDead: boolean = false;
     private _buried: boolean = false;
@@ -71,44 +71,44 @@ export class Character {
     }
 
     public walkOneHour(): void {
-        for (let affliction of this._afflictions) {
+        for (let affliction of this._status) {
             this.looseHealth(affliction.healthPerHour);
             this._game.logManager.addTempLog(this._name + ' has ' + affliction.name, LogType.Result);
         }
     }
 
-    public showHealthLostPerHourDueToAllAfflictions(): number {
+    public showHealthLostPerHourDueToAllStatus(): number {
         let totalHealth: number = 0;
-        for (let affliction of this._afflictions) {
-            totalHealth += affliction.healthPerHour;
+        for (let status of this._status) {
+            totalHealth += status.healthPerHour;
         }
 
         return totalHealth;
     }
 
-    private checksIfAnAfflictionExists(afflictionName: string): boolean {
-        let existingAfflictionIndex = this._afflictions.findIndex(affliction => affliction.name == afflictionName);
-        return existingAfflictionIndex  != -1 ? true : false;
+    private checksIfAnStatusExists(statusName: string): boolean {
+        let existingStatusIndex = this._status.findIndex(status => status.name == statusName);
+        return existingStatusIndex  != -1 ? true : false;
     }
 
-    public addAffliction(affliction: Affliction) {
-        if (!this.checksIfAnAfflictionExists(affliction.name)) {
+    public addStatus(affliction: Status) {
+        if (!this.checksIfAnStatusExists(affliction.name)) {
             this._game.logManager.addTempLog(this._name + ' got: ' + affliction.name, LogType.Result);
-            this._afflictions.push(affliction);
+            this._status.push(affliction);
         }
     }
 
-    public removeAffliction(afflictionToRemove: Affliction) {
-        this._afflictions = this._afflictions.filter(affliction => affliction !== afflictionToRemove);
+    public removeStatus(statusToRemove: Status) {
+        this._status = this._status.filter(status => status !== statusToRemove);
     }
 
     public showAfflictions(): string {
-        if (this._afflictions.length == 0) {
+        if (this._status.length == 0) {
             return '';
         }
 
         let afflictions: string = '';
-        for (let affliction of this._afflictions) {
+        for (let affliction of this._status) {
             if (affliction) {
                 afflictions += ' -' + affliction.name;
             }

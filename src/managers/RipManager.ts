@@ -41,7 +41,7 @@ export class RipManager {
     }
 
     onClickTravel() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         const character: Character = this._game.characterManager.getFirstCharacterDeadAndNotBuried();
         if (character != null) {
             this.showCharater(character);

@@ -34,12 +34,12 @@ export class BagManager {
     }
 
     private onClickBagClose() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this._game.stateManager.goToState(GameStates.TRAVEL);
     }
 
     private onClickThrowAway() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
@@ -129,7 +129,7 @@ export class BagManager {
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.effect} to:`;
         if (this._selectedItem.type == ItemType.FirstAid) {
-            this._selectedItemDescriptionElement.innerHTML = 'Can help with ' + this._selectedItem.showAfflictions();
+            this._selectedItemDescriptionElement.innerHTML = 'Can help with ' + this._selectedItem.showStatus();
         }
         this.showSelectedItem();
         this.showCharacters();
@@ -150,8 +150,8 @@ export class BagManager {
                 break;
         }
 
-        for (let affliction of this._selectedItem.afflictions) {
-            character.removeAffliction(affliction);
+        for (let status of this._selectedItem.status) {
+            character.removeStatus(status);
         }
 
         this._bagThrowAwayBtn.style.display = 'none';

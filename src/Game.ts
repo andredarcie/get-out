@@ -19,6 +19,7 @@ import { ItemSeeds, ItemsNames } from './seeds/ItemSeeds';
 import { DiceManager } from './managers/DiceManager';
 import { SkillCheckManager, SkillCheckResults } from './managers/SkillCheckManager';
 import { ItemPickerManager } from './managers/ItemPickerManager';
+import { AudioManager } from './managers/AudioManager';
 require("firebase/database");
 
 export class Game {
@@ -56,14 +57,12 @@ export class Game {
     public dialogManager: DialogManager;
     public mapManager: MapManager;
     public skillUpManager: SkillUpManager;
+    public audioManager: AudioManager;
 
     private _currentTimeField: Element;
     private playerGuid: string;
 
     public skillCheckResult: SkillCheckResults;
-
-    private audioEffects: HTMLAudioElement;
-    private audioBackground: HTMLAudioElement;
 
     private constructor() {
         this.travelPage = document.getElementById("travel-page");
@@ -81,9 +80,6 @@ export class Game {
 
         this._currentTimeField = document.querySelector("#current-time-field");
         this.playerGuid = this.generateGuid();
-
-        this.audioEffects = new Audio();
-        this.audioBackground = new Audio();
     }
 
     static getInstance(): Game {
@@ -116,6 +112,7 @@ export class Game {
         this.dialogManager = new DialogManager();
         this.mapManager = new MapManager();
         this.skillUpManager = new SkillUpManager();
+        this.audioManager = new AudioManager();
 
         this.showDataTime();
         this.stateManager.goToState(GameStates.TRAVEL);
@@ -240,64 +237,5 @@ export class Game {
 
     getRandomArbitrary(max: number): number {
         return Math.floor(Math.random() * max);
-    }
-
-    public playButtonSound(): void {
-        this.playAudioEffect('button1.wav');
-    }
-
-    public playDiceSound(): void {
-        this.playAudioEffect('dice.mp3');
-    }
-
-    public playSuccessSound(): void {
-        this.playAudioEffect('success.wav');
-    }
-
-    public playFailSound(): void {
-        this.playAudioEffect('fail.mp3');
-    }
-
-    public playTakeItemSound(): void {
-        this.playAudioEffect('take-item.wav');
-    }
-
-    public playWriteSound(): void {
-        this.playAudioEffect('write.wav');
-    }
-
-    public playThrowSound(): void {
-        this.playAudioEffect('throw.wav');
-    }
-
-    public playDingSound(): void {
-        this.playAudioEffect('ding.wav');
-    }
-
-    public playRainSound(): void {
-        this.playAudioLoop('walk.mpeg');
-    }
-
-    private playAudioEffect(soundName: string): void {
-        this.audioEffects.src = 'audio/' + soundName;
-        this.audioEffects.play();
-    }
-
-    private playAudioLoop(soundName: string): void {
-        this.audioBackground.src = 'audio/' + soundName;
-        this.audioBackground.volume = 0.2;
-        if (typeof this.audioBackground.loop == 'boolean')
-        {
-            this.audioBackground.loop = true;
-        }
-        else
-        {
-            this.audioBackground.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-                console.log('loop');
-            }, false);
-        }
-        this.audioBackground.play();
     }
 }

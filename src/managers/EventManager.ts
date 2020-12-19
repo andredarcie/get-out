@@ -72,7 +72,7 @@ export class EventManager {
     }
 
     private selectChoice(choice: Choice) {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this.currentChoice = choice;
 
         if (this.currentChoice.skillCheck) {

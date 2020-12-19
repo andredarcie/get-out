@@ -23,12 +23,12 @@ export class CampManager {
     } 
 
     onClickTravel() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         this._game.stateManager.goToState(GameStates.TRAVEL);
     }
 
     onClickRest() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         for (let i = 0; i < 6; i++) {
             this._game.passOneHour();
         }

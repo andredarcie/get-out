@@ -116,14 +116,14 @@ export class ItemPickerManager {
     }
 
     private selectItemToPick(selectedItem: Item) {
-        this._game.playTakeItemSound();
+        this._game.audioManager.playTakeItemSound();
         this.removeItemToPick(selectedItem.name);
         this.addMyItem(selectedItem);
         this.showItems();
     }
 
     private selectItemMyItem(selectedItem: Item) {
-        this._game.playThrowSound();
+        this._game.audioManager.playThrowSound();
         this.removeMyItem(selectedItem.name);
         this.addItemToPick(selectedItem);
         this.showItems();
@@ -158,7 +158,7 @@ export class ItemPickerManager {
     }
 
     private onContinueBtn() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         for (let i = 0; i < this._myItems.length; i++) {
             this._game.bagManager.putItem(this._myItems[i]);
             this._game.log.addTempLog(this.character.name + ' picked up ' + this._myItems[i].name, LogType.Result);

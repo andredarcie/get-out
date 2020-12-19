@@ -46,14 +46,14 @@ export class SkillCheckManager {
 
     startDiceRoll() {
         let dice = new Dice();
-        this._game.playDiceSound();
+        this._game.audioManager.playDiceSound();
         this._diceTimer = setInterval(() => { this.shakeDice(dice) }, 50);
         setTimeout(() => { this.stopShakeDice(dice) }, 500);
         this._currentChoice = this._game.eventManager.currentChoice;
     }
 
     onClickTravel() {
-        this._game.playButtonSound();
+        this._game.audioManager.playButtonSound();
         if (this._game.skillCheckResult == SkillCheckResults.Success) {
             this._currentChoice.skillCheckFields.resultPath.success();
 
@@ -93,28 +93,28 @@ export class SkillCheckManager {
         this._travelBtn.disabled = false;
 
         if (firstDiceValue + secondDiceValue == 12) {
-            this._game.playSuccessSound();
+            this._game.audioManager.playSuccessSound();
             this.setCriticalSuccess();
             this._game.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (firstDiceValue + secondDiceValue == 2) {
-            this._game.playFailSound();
+            this._game.audioManager.playFailSound();
             this.setCriticalFailure();
             this._game.skillCheckResult = SkillCheckResults.Failure;
             return;
         }
 
         if (finalValue >= expectedValue) {
-            this._game.playSuccessSound();
+            this._game.audioManager.playSuccessSound();
             this.setSuccess();
             this._game.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (finalValue < expectedValue) {
-            this._game.playFailSound();
+            this._game.audioManager.playFailSound();
             this.setFailure();
             this._game.skillCheckResult = SkillCheckResults.Failure;
             return;

@@ -1,4 +1,4 @@
-import { Affliction } from '../entities/Affliction';
+import { Status } from './Status';
 
 export enum ItemType {
     FirstAid,
@@ -11,14 +11,14 @@ export class Item {
     private _amount: number;
     private _type: ItemType;
     private _effectValue: number;
-    private _afflictions: Affliction[] = [];
+    private _status: Status[] = [];
  
-    constructor(name: string, type: ItemType, effectValue: number, afflictions: Affliction[] = []) {
+    constructor(name: string, type: ItemType, effectValue: number, status: Status[] = []) {
         this._name = name;
         this._type = type;
         this._amount = 0;
         this._effectValue = effectValue;
-        this._afflictions = afflictions;
+        this._status = status;
     }
 
     get name(): string {
@@ -33,8 +33,8 @@ export class Item {
         return this._type;
     }
 
-    get afflictions(): Affliction[] {
-        return this._afflictions;
+    get status(): Status[] {
+        return this._status;
     }
 
     get effect(): string {
@@ -73,13 +73,13 @@ export class Item {
         this._amount++;
     }
 
-    public showAfflictions(): string {
-        if (this._afflictions.length == 0) {
+    public showStatus(): string {
+        if (this._status.length == 0) {
             return '';
         }
 
         let afflictions: string = '';
-        for (let affliction of this._afflictions) {
+        for (let affliction of this._status) {
             if (affliction) {
                 afflictions += ' -' + affliction.name;
             }
