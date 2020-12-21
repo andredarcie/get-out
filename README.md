@@ -1,10 +1,12 @@
 # Get Out
 
-> A Minimalist Survival Text Game 🕹️
+> A Minimalist PWA Survival Text Game 🕹️
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/eaf4ecfa16f94e68be398f82f2e4a5e0)](https://www.codacy.com/manual/andrendarcie/get-out-game?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=andredarcie/get-out-game&amp;utm_campaign=Badge_Grade)
 
 ## Tags
+ - Progressive Web App
+ - Works offline
  - Choices that matter
  - Story Rich
  - Text based
