@@ -25,6 +25,46 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
+    "url": "audio/button1.wav",
+    "revision": "779604989b40d105025f206a27370f6c"
+  },
+  {
+    "url": "audio/dice.mp3",
+    "revision": "c902feb245d694876a33f9a6a0c2a37a"
+  },
+  {
+    "url": "audio/ding.wav",
+    "revision": "ff189adb8bd44a2eeaedc7b83e09d6ae"
+  },
+  {
+    "url": "audio/fail.mp3",
+    "revision": "5acd1a089942ad6d903b600a76ef063c"
+  },
+  {
+    "url": "audio/rain.mp3",
+    "revision": "963bd84bd1b05b07f476aee29e0bcd26"
+  },
+  {
+    "url": "audio/success.wav",
+    "revision": "619655f9a6327ed52257af4daa081468"
+  },
+  {
+    "url": "audio/take-item.wav",
+    "revision": "78b1298d7bd49ae81f2ffe399b795349"
+  },
+  {
+    "url": "audio/throw.wav",
+    "revision": "3e6c61d3ebe82d9e95a2a284b94c4369"
+  },
+  {
+    "url": "audio/walk.mpeg",
+    "revision": "78172c41a3bc966fcf0ebf8c9d039929"
+  },
+  {
+    "url": "audio/write.wav",
+    "revision": "fbb420e7ef763a2c9da908a99d103bde"
+  },
+  {
     "url": "camp.jpg",
     "revision": "a47d34422e8940a081c35d0c8fe50731"
   },
@@ -118,7 +158,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "9a281b495a42adec38e2f29a524f7326"
+    "revision": "e3b094c2732cec4a465534129e3a1c4a"
   },
   {
     "url": "kid.4c5d2dd8.jpg",
@@ -133,12 +173,16 @@ self.__precacheManifest = [
     "revision": "a3e6ec9214680b9ca6634914d899ef02"
   },
   {
-    "url": "src.7dfeba0b.js",
-    "revision": "19882cb0ce9d76685d5bad996cef6b59"
+    "url": "src.9d836e7e.js",
+    "revision": "4edfff1d6188d0eb2c5e59803ccd79f4"
   },
   {
     "url": "style.05896bd6.css",
     "revision": "89eb414e18430fd5cc65500165ef199b"
+  },
+  {
+    "url": "TravelingTypewriter.1ec4c246.ttf",
+    "revision": "1085a2aee20a01157165e248f7823a22"
   },
   {
     "url": "woman.d20d4f2a.jpg",
@@ -146,7 +190,7 @@ self.__precacheManifest = [
   },
   {
     "url": "/",
-    "revision": "c2335de83c7813959886cfa4cb665b9c"
+    "revision": "7781e95a52930396a021985a17076322"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
