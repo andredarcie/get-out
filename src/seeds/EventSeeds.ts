@@ -165,8 +165,8 @@ export class EventSeeds {
             )
         ];
 
-        //return events[Math.floor(Math.random() * events.length)];
-        return events[0];
+        return events[Math.floor(Math.random() * events.length)];
+        //return events[0];
     }
 
     public getCombatEvent() {

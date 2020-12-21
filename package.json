@@ -29,7 +29,10 @@
     "disablePlugin": false,
     "inDev": true,
     "strategy": "default",
-    "importWorkboxFrom": "local"
+    "importWorkboxFrom": "local",
+    "globPatterns": [
+      "**/*.{html,js,css,jpg,png,wav,mp3,mpeg,ttf}"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
