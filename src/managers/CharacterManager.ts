@@ -94,9 +94,13 @@ export class CharacterManager {
         return character;
     }
 
-    makeSomeoneInTheGroupGetStatus(): Character {
+    makeSomeoneInTheGroupGetStatus(status?: string): Character {
         let character: Character = this.picksACharacterAtRandom();
-        character.addStatus(StatusSeeds.getOneRandomStatus());
+        if (status != null) {
+            character.addStatus(StatusSeeds.getStatusByName(status));
+        } else {
+            character.addStatus(StatusSeeds.getOneRandomStatus());
+        }
         return character;
     }
 

@@ -96,7 +96,25 @@ export class EventSeeds {
                 'Just a normal place',
                 'There is something unsettling about this place',
                 'barn-abandoned-farm-homestead',
-                [
+                [                
+                    {
+                        buttonText: 'Investigate',
+                        skillCheck: true,
+                        skillCheckFields: {
+                            difficulty: Difficulties.CHALLENGING,
+                            skillToCheck: Skills.STRENGTH,
+                            canGiveItems: true,
+                            resultPath: {
+                                success: () => {
+                                    this._game.log.addTempLog('You found some things of value', LogType.Result);
+                                },
+                                failure: () => {
+                                    this._game.log.addTempLog("You couldn't find anything", LogType.Result);
+                                }
+                            }
+                        },
+                        normalResultPath: null
+                    },
                     {
                         buttonText: 'Continue',
                         skillCheck: false,
@@ -112,11 +130,29 @@ export class EventSeeds {
             new Event(
                 'Theme Park',
                 'Just a normal place',
-                'There is something unsettling about this place',
+                'This place brings you strange memories, about sad things',
                 'theme-park',
                 [
                     {
-                        buttonText: 'Continue',
+                        buttonText: 'Forget memory',
+                        skillCheck: true,
+                        skillCheckFields: {
+                            difficulty: Difficulties.MEDIUM,
+                            skillToCheck: Skills.STRENGTH,
+                            canGiveItems: false,
+                            resultPath: {
+                                success: () => {
+                                    this._game.log.addTempLog('You managed to overcome the negative memories', LogType.Result);
+                                },
+                                failure: () => {
+                                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Depressed');
+                                }
+                            }
+                        },
+                        normalResultPath: null
+                    },
+                    {
+                        buttonText: 'Just ignore.',
                         skillCheck: false,
                         skillCheckFields: null,
                         normalResultPath: () => {
@@ -166,7 +202,7 @@ export class EventSeeds {
         ];
 
         return events[Math.floor(Math.random() * events.length)];
-        //return events[0];
+        //return events[1];
     }
 
     public getCombatEvent() {
