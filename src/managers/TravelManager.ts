@@ -5,7 +5,8 @@ import { LogType } from '../managers/LogManager';
 
 export class TravelManager {
     private _travelledDistanceField: Element;
-    private _progressBar: HTMLElement;
+    private _progressBarCanvasElement: HTMLCanvasElement;
+    private _progressBarCanvasContext: CanvasRenderingContext2D;
     private _walkBtn: HTMLButtonElement;
     private _campBtn: HTMLButtonElement;
     private _yourFamily: HTMLButtonElement;
@@ -17,7 +18,7 @@ export class TravelManager {
         this._game = Game.getInstance();
         
         this._travelledDistanceField = document.querySelector("#travelled-distance");
-        this._progressBar = document.getElementById("progress-bar");
+        this._progressBarCanvasElement = document.getElementById("progress-bar") as HTMLCanvasElement;
         this._walkBtn = document.querySelector("#walk-btn");
         this._campBtn = document.querySelector("#camp-btn");
         this._yourFamily = document.querySelector('#your-family');
@@ -35,6 +36,7 @@ export class TravelManager {
     }
 
     start(): void {
+        this.showProgressBarCanvas();
         this._walkBtn.innerHTML = this._game.loc.l('walk-one-hour');
         this._yourFamily.innerHTML = this._game.loc.l('your-family');
         this._campBtn.innerHTML = this._game.loc.l('camp-one-hour');
@@ -54,6 +56,68 @@ export class TravelManager {
         }
         
         this.showCharacters();
+    }
+
+    private showProgressBarCanvas(): void {
+        this._progressBarCanvasElement.width = 300;
+        this._progressBarCanvasElement.height = 8;
+        this._progressBarCanvasContext = this._progressBarCanvasElement.getContext("2d");
+        this.drawBackground();
+        console.log(this._game.distanceToTheBorder);
+        this.drawPlayerPositionOnProgressBarCanvas(300 - this._game.distanceToTheBorder);
+    }
+
+    private drawBackground(): void {
+        this._progressBarCanvasContext.clearRect(0, 0, this._progressBarCanvasElement.width, this._progressBarCanvasElement.height);
+        this._progressBarCanvasContext.beginPath();
+        
+        this._progressBarCanvasContext.fillStyle = 'black';
+        this._progressBarCanvasContext.fillRect(0,0, this._progressBarCanvasElement.width, this._progressBarCanvasElement.height);
+      
+        this._progressBarCanvasContext.strokeStyle = "#2c3e50";
+        this._progressBarCanvasContext.lineWidth = 1;
+      
+        this._progressBarCanvasContext.moveTo(10, this._progressBarCanvasElement.height / 2);
+        this._progressBarCanvasContext.lineTo(300 - 10, this._progressBarCanvasElement.height / 2);
+        this._progressBarCanvasContext.stroke();
+      
+        this._progressBarCanvasContext.moveTo(10, (this._progressBarCanvasElement.height / 2) - 5);
+        this._progressBarCanvasContext.lineTo(10, (this._progressBarCanvasElement.height / 2) + 5);
+        this._progressBarCanvasContext.stroke();
+      
+        this._progressBarCanvasContext.moveTo(this._progressBarCanvasElement.width / 2, (this._progressBarCanvasElement.height / 2) - 5);
+        this._progressBarCanvasContext.lineTo(this._progressBarCanvasElement.width / 2, (this._progressBarCanvasElement.height / 2) + 5);
+        this._progressBarCanvasContext.stroke();
+
+        this._progressBarCanvasContext.moveTo(this._progressBarCanvasElement.width / 4, (this._progressBarCanvasElement.height / 2) - 5);
+        this._progressBarCanvasContext.lineTo(this._progressBarCanvasElement.width / 4, (this._progressBarCanvasElement.height / 2) + 5);
+        this._progressBarCanvasContext.stroke();
+        
+        this._progressBarCanvasContext.moveTo((this._progressBarCanvasElement.width / 4) * 3, (this._progressBarCanvasElement.height / 2) - 5);
+        this._progressBarCanvasContext.lineTo((this._progressBarCanvasElement.width / 4) * 3, (this._progressBarCanvasElement.height / 2) + 5);
+        this._progressBarCanvasContext.stroke();
+      
+        this._progressBarCanvasContext.moveTo(this._progressBarCanvasElement.width - 10, (this._progressBarCanvasElement.height / 2) - 5);
+        this._progressBarCanvasContext.lineTo(this._progressBarCanvasElement.width - 10, (this._progressBarCanvasElement.height / 2) + 5);
+        this._progressBarCanvasContext.stroke();
+      
+        this._progressBarCanvasContext.beginPath();
+        this._progressBarCanvasContext.moveTo(this._progressBarCanvasElement.width - 10, (this._progressBarCanvasElement.height / 2) - 5);
+        this._progressBarCanvasContext.lineTo(this._progressBarCanvasElement.width - 10, (this._progressBarCanvasElement.height / 2) + 5);
+        this._progressBarCanvasContext.stroke();
+        this._progressBarCanvasContext.closePath();
+    }
+
+    private drawPlayerPositionOnProgressBarCanvas(mile: number): void {
+        const lineSize = this._progressBarCanvasElement.width - 20;
+        const unit = lineSize / 300;
+        const unitsToWalk = mile * unit;
+        
+        this._progressBarCanvasContext.beginPath();
+        this._progressBarCanvasContext.arc(unitsToWalk + 10, this._progressBarCanvasElement.height / 2, 3.5, 0, 2 * Math.PI);
+        this._progressBarCanvasContext.lineWidth = 0;
+        this._progressBarCanvasContext.fillStyle = "#27ae60";
+        this._progressBarCanvasContext.fill();
     }
 
     onClickWalkBtn(): void {
@@ -161,18 +225,12 @@ export class TravelManager {
         }
 
         this._game.decreaseTheDistanceToTheBorder(2);
-        this.increaseProgressBar();
 
         this.showTravelledDistance();
         
         if(this._game.distanceToTheBorder <= 0) {
             this.arrivedAtTheBorder();
         }
-    }
-
-    increaseProgressBar() {
-        let progressBarLevel = 300 - this._game.distanceToTheBorder;
-        this._progressBar.style.width = progressBarLevel * 1 + 'px';
     }
 
     getRandomCharacter() {
