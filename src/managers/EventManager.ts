@@ -37,9 +37,8 @@ export class EventManager {
             this._currentEvent = eventSeeds.getMileStoneEvent();
         } else if (randomEventType == 0) {
             this._currentEvent = eventSeeds.getPlaceEvent();
-            //this._currentEvent = eventSeeds.getCombatEvent();
         } else {
-            this._currentEvent = eventSeeds.getPlaceEvent();
+            this._currentEvent = eventSeeds.getCombatEvent();
         }
 
         this.showWaitingMessage();

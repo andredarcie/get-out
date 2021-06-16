@@ -53,7 +53,7 @@ export class EventSeeds {
                 ' a time when having fun still made sense',
                 'ferris-wheel',
                 [{
-                    buttonText: 'Talk',
+                    buttonText: 'Take a deep breath',
                     skillCheck: false,
                     skillCheckFields: null,
                     normalResultPath: () => {
@@ -207,14 +207,12 @@ export class EventSeeds {
 
     public getCombatEvent() {
         return new Event(
-            'Furious wolf appeared!',
-            'Something that catches your eye',
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies, ' +
-            'lorem semper scelerisque interdum, neque felis tincidunt enim, at iaculis elit dolor ut libero. ' +
-            'Fusce a odio pellentesque, pretium ipsum non, scelerisque mi. Vivamus quis arcu vel sapien ultricies varius. Pellentesque elementum lobortis convallis.',
+            'Eyeless creature',
+            'Just silence',
+            'A black figure in human form without eyes, looks at you coldly in the distance.',
             '2',
             [{
-                buttonText: 'Fight',
+                buttonText: 'Look directly',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.VERY_HARD,
@@ -222,10 +220,10 @@ export class EventSeeds {
                     canGiveItems: true,
                     resultPath: {
                         success: () => {
-                            this._game.log.addTempLog('With a lot of struggle you beat the wolf', LogType.Result);
+                            this._game.log.addTempLog('You were successful', LogType.Result);
                         },
                         failure: () => {
-                            this._game.log.addTempLog('The wolf has hurt you', LogType.Result);
+                            this._game.log.addTempLog('You failed miserably', LogType.Result);
                             this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                         },
                     }
@@ -233,23 +231,13 @@ export class EventSeeds {
                 normalResultPath: null
             },
             {
-                buttonText: 'Try to escape',
-                skillCheck: true,
-                skillCheckFields: {
-                    difficulty: Difficulties.CHALLENGING,
-                    skillToCheck: Skills.STEALTH,
-                    canGiveItems: true,
-                    resultPath: {
-                        success: () => {
-                            this._game.log.addTempLog('You managed to escape the wolf', LogType.Result);
-                        },
-                        failure: () => {
-                            this._game.log.addTempLog('You didnt get away', LogType.Result);
-                            this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
-                        },
-                    }
-                },
-                normalResultPath: null
+                buttonText: 'Look away',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: () => {
+                    this._game.log.addTempLog('Did you get away', LogType.Result);
+                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Fear');
+                }
             }],
             EventType.Combat,
             null
