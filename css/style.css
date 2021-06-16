@@ -242,3 +242,8 @@ button {
     0% {opacity:0;}
     100% {opacity:1;}
 }
+
+.character-name-field {
+    padding: 0.3em;
+    font-size: larger;
+}

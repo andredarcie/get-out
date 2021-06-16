@@ -8,7 +8,6 @@ export class TravelManager {
     private _progressBarCanvasElement: HTMLCanvasElement;
     private _progressBarCanvasContext: CanvasRenderingContext2D;
     private _walkBtn: HTMLButtonElement;
-    private _campBtn: HTMLButtonElement;
     private _yourFamily: HTMLButtonElement;
     private _game: Game;
     private _charactersList: any;
@@ -20,11 +19,9 @@ export class TravelManager {
         this._travelledDistanceField = document.querySelector("#travelled-distance");
         this._progressBarCanvasElement = document.getElementById("progress-bar") as HTMLCanvasElement;
         this._walkBtn = document.querySelector("#walk-btn");
-        this._campBtn = document.querySelector("#camp-btn");
         this._yourFamily = document.querySelector('#your-family');
 
         this._walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
-        this._campBtn.addEventListener('click', () => { this.onClickCampBtn() });
 
         this.showTravelledDistance();
 
@@ -39,7 +36,6 @@ export class TravelManager {
         this.showProgressBarCanvas();
         this._walkBtn.innerHTML = this._game.loc.l('walk-one-hour');
         this._yourFamily.innerHTML = this._game.loc.l('your-family');
-        this._campBtn.innerHTML = this._game.loc.l('camp-one-hour');
         /*
         if (this._game.characterManager.isInDanger()) {
             this._statsBtn.innerHTML = '⚠️Your Family';
@@ -155,12 +151,6 @@ export class TravelManager {
         this._game.stateManager.goToState(GameStates.BAG);
     }
 
-    onClickCampBtn(): void {
-        this._game.audioManager.playButtonSound();
-        this._game.passOneHour();
-        this._game.stateManager.goToState(GameStates.CAMP);
-    }
-
     getAtributesPageElements(): void {
         this._charactersList[0] = {};
         this._charactersList[0].nameField = document.querySelector("#first-character-name-field");
@@ -207,7 +197,7 @@ export class TravelManager {
     }
 
     checkEvent() {
-        return this.getRandomArbitrary(1, 100) <= 100;
+        return this.getRandomArbitrary(1, 100) <= 50;
     }
 
     getRandomArbitrary(min: number, max: number): number {

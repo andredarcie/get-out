@@ -20,10 +20,6 @@ export class StateManager {
                 this._game.showPage(this._game.travelPage);
                 this._game.travelManager.start();
             break;
-            case GameStates.CAMP: 
-                this._game.showPage(this._game.campPage);
-                this._game.campManager.start();
-            break;
             case GameStates.EVENT: 
                 this._game.showPage(this._game.eventPage);
                 this._game.eventManager.start();

@@ -1,4 +1,3 @@
-import { CampManager } from './managers/CampManager';
 import { EventManager } from './managers/EventManager';
 import { GameOverManager } from './managers/GameOverManager';
 import { RipManager } from './managers/RipManager';
@@ -31,7 +30,6 @@ export class Game {
 
     public travelPage: HTMLElement;
     public logPage: HTMLElement;
-    public campPage: HTMLElement;
     public eventPage: HTMLElement;
     public skillCheckPage: HTMLElement;
     public gameOverPage: HTMLElement;
@@ -42,7 +40,6 @@ export class Game {
     public mapPage: HTMLElement;
     public skillUpPage: HTMLElement;
 
-    public campManager: CampManager;
     public eventManager: EventManager;
     public skillCheckManager: SkillCheckManager;
     public gameOverManager: GameOverManager;
@@ -67,7 +64,6 @@ export class Game {
     private constructor() {
         this.travelPage = document.getElementById("travel-page");
         this.logPage = document.getElementById("log-page");
-        this.campPage = document.getElementById("camp-page");
         this.eventPage = document.getElementById("event-page");
         this.skillCheckPage = document.getElementById("skill-check-page");
         this.gameOverPage = document.getElementById("game-over-page");
@@ -99,7 +95,6 @@ export class Game {
         //this.addItemsToBag();
         this.characterManager = new CharacterManager();
         this.characterManager.start();
-        this.campManager = new CampManager();
         this.eventManager = new EventManager();
         this.gameOverManager = new GameOverManager();
         this.skillCheckManager = new SkillCheckManager();
@@ -189,7 +184,6 @@ export class Game {
     public hideAllPages(): void {
         this.hidePage(this.travelPage);
         this.hidePage(this.logPage);
-        this.hidePage(this.campPage);
         this.hidePage(this.eventPage);
         this.hidePage(this.skillCheckPage);
         this.hidePage(this.gameOverPage);
