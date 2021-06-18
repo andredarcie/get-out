@@ -5,7 +5,7 @@ export class AudioManager {
     private audioEffects: HTMLAudioElement;
     private audioBackground: HTMLAudioElement;
     private audioLoaded: number;
-    private noSound: boolean = true;
+    private noSound: boolean = false;
     private readonly _game: Game;
 
     constructor() {
