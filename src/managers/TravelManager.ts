@@ -8,10 +8,13 @@ export class TravelManager {
     private _progressBarCanvasElement: HTMLCanvasElement;
     private _progressBarCanvasContext: CanvasRenderingContext2D;
     private _walkBtn: HTMLButtonElement;
+    private _campBtn: HTMLButtonElement;
     private _yourFamily: HTMLButtonElement;
     private _game: Game;
     private _charactersList: any;
     private _bagBtn: HTMLButtonElement;
+    private _hoursSleeping: number;
+    private _sleepIntervalId: any;
 
     constructor() {
         this._game = Game.getInstance();
@@ -19,9 +22,11 @@ export class TravelManager {
         this._travelledDistanceField = document.querySelector("#travelled-distance");
         this._progressBarCanvasElement = document.getElementById("progress-bar") as HTMLCanvasElement;
         this._walkBtn = document.querySelector("#walk-btn");
+        this._campBtn = document.querySelector("#camp-btn");
         this._yourFamily = document.querySelector('#your-family');
 
         this._walkBtn.addEventListener('click', () => { this.onClickWalkBtn() });
+        this._campBtn.addEventListener('click', () => { this.onClickCampBtn() });
 
         this.showTravelledDistance();
 
@@ -114,6 +119,33 @@ export class TravelManager {
         this._progressBarCanvasContext.lineWidth = 0;
         this._progressBarCanvasContext.fillStyle = "#27ae60";
         this._progressBarCanvasContext.fill();
+    }
+
+    onClickCampBtn(): void {
+        this._hoursSleeping = 0;
+        this._sleepIntervalId = window.setInterval(() => this.sleeping(), 500);
+    }
+
+    sleeping(): void {
+        if (this._hoursSleeping <= 6) {
+            let characters = this._game.characters;
+
+            for (let i = 0; i < characters.length; i++){
+                let character = characters[i];
+    
+                if (!character.isDead) {
+                    const randomNumber = this._game.getRandomArbitrary(3);
+                    this._charactersList[i].atributesField.innerHTML = randomNumber == 0 ? "Zzz" : randomNumber == 1 ? "zZz" : "zzZ";
+                }
+            }
+
+            this._game.passOneHour();
+            this._hoursSleeping++;
+        } else {
+            this._game.characterManager.increaseStaminaOfAllCharactersToMax();
+            this.showCharacters();
+            clearInterval(this._sleepIntervalId);
+        }
     }
 
     onClickWalkBtn(): void {

@@ -133,6 +133,10 @@ export class Character {
         this._stamina = 100;
     }
 
+    increaseStamina() {
+        this._stamina = 20;
+    }
+
     decreaseStamina(staminaToDecrease: number) {
         if (staminaToDecrease <= 0) {
             throw new Error('Stamina value must be greater than zero');

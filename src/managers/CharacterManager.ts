@@ -52,10 +52,17 @@ export class CharacterManager {
         }
     }
 
-    increaseStaminaOfAllCharacters(staminToDecrease: number) {
+    increaseStaminaOfAllCharactersToMax() {
         let characters = this.getCharactersAlive();
         for (let character of characters) {
             character.increaseStaminaToMax();
+        }
+    }
+
+    increaseStaminaOfAllCharacters() {
+        let characters = this.getCharactersAlive();
+        for (let character of characters) {
+            character.increaseStamina();
         }
     }
 
