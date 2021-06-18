@@ -198,17 +198,25 @@ export class Game {
     showDataTime() {
         this._currentTimeField.innerHTML = this._clock.showTime() + ' - day ' + this._currentDay;
 
+        if (this.isDayLight()) {
+            this._currentTimeField.innerHTML += ' - daylight';
+        } else {
+            this._currentTimeField.innerHTML += ' - night';
+        }
+    }
+
+    isDayLight(): boolean {
         if (this._clock.anteMeridiem) {
             if (this._clock.currentHour > 6 && this._clock.currentHour < 12) {
-                this._currentTimeField.innerHTML += ' - daylight';
+                return true;
             } else {
-                this._currentTimeField.innerHTML += ' - night';
+                return false;
             }
         } else {
             if (this._clock.currentHour > 6 && this._clock.currentHour < 12) {
-                this._currentTimeField.innerHTML += ' - night';
+                return false;
             } else {
-                this._currentTimeField.innerHTML += ' - daylight';
+                return true;
             }
         }
     }

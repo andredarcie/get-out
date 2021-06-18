@@ -5,6 +5,7 @@ export class AudioManager {
     private audioEffects: HTMLAudioElement;
     private audioBackground: HTMLAudioElement;
     private audioLoaded: number;
+    private noSound: boolean = true;
     private readonly _game: Game;
 
     constructor() {
@@ -84,11 +85,17 @@ export class AudioManager {
     }
 
     private playAudioEffect(soundName: string): void {
+        if (this.noSound) 
+            return
+
         this.audioEffects.src = 'audio/' + soundName;
         this.audioEffects.play();
     }
 
     private playAudioLoop(soundName: string): void {
+        if (this.noSound) 
+            return
+
         this.audioBackground.src = 'audio/' + soundName;
         this.audioBackground.volume = 0.2;
         if (typeof this.audioBackground.loop == 'boolean')

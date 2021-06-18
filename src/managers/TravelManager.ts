@@ -57,6 +57,7 @@ export class TravelManager {
         }
         
         this.showCharacters();
+        this.checkCampBtn();
     }
 
     private showProgressBarCanvas(): void {
@@ -122,6 +123,10 @@ export class TravelManager {
     }
 
     onClickCampBtn(): void {
+        this._bagBtn.disabled = true;
+        this._campBtn.disabled = true;
+        this._walkBtn.disabled = true;
+        this._yourFamily.innerHTML = 'Camping...';
         this._hoursSleeping = 0;
         this._sleepIntervalId = window.setInterval(() => this.sleeping(), 500);
     }
@@ -144,6 +149,10 @@ export class TravelManager {
         } else {
             this._game.characterManager.increaseStaminaOfAllCharactersToMax();
             this.showCharacters();
+            this._bagBtn.disabled = false;
+            this._campBtn.disabled = false;
+            this._walkBtn.disabled = false;
+            this._yourFamily.innerHTML = this._game.loc.l('your-family');
             clearInterval(this._sleepIntervalId);
         }
     }
@@ -156,6 +165,7 @@ export class TravelManager {
         this._game.audioManager.playButtonSound();
         this._game.passOneHour();
         this.walkOneHour();
+
         let foundEvent = this.checkEvent();
         if (foundEvent) {
             this._game.stateManager.goToState(GameStates.EVENT);
@@ -175,6 +185,18 @@ export class TravelManager {
 
             this._game.log.addTempLog(message, LogType.Result);
             this._game.stateManager.goToState(GameStates.LOG);
+        }
+
+        this.checkCampBtn();
+    }
+
+    checkCampBtn(): void {
+        if (this._game.isDayLight()) {
+            this._campBtn.disabled = true;
+            this._campBtn.innerHTML = "It's not safe to camp";
+        } else {
+            this._campBtn.disabled = false;
+            this._campBtn.innerHTML = 'Camp (+6 hour)';
         }
     }
 
