@@ -3,6 +3,8 @@ import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { Skills } from '../enums/Skills';
 import { Difficulties } from '../enums/Difficulties';
+import { EnemySeeds } from './EnemySeeds';
+import { Enemy } from '../entities/Enemy';
 
 export class EventSeeds {
     private _events: Event[];
@@ -206,31 +208,7 @@ export class EventSeeds {
     }
 
     public getCombatEvent() {
-        const possibleEnemies = [
-            'Mad Dog',
-            'Wild dog',
-            'Pack of hounds',
-            'Hungry wild wolf',
-            'Swarm of bees',
-            'Cloud of insects',
-            'Sick human',
-            'Hungry fox',
-            'Dark figure',
-            'Woman with two faces',
-            'Thief with ax',
-            'Militia hunter',
-            'Two militia hunters',
-            'Deformed rats',
-            'Flock of crows',
-            'Pack of wolves',
-            'Locust cloud',
-            'Swarm of flies',
-            'Pigs with worms in the body',
-            'Eyeless creature',
-            'Man crawling with a knife'
-        ];
-
-        const enemy = possibleEnemies[Math.floor(Math.random() * possibleEnemies.length)];
+        const enemy: Enemy = EnemySeeds.getOneRandomEnemy();
 
         const possibleQuotes = [
             'Approaches more and more with an aggressive posture.',
@@ -244,7 +222,7 @@ export class EventSeeds {
         const quote = possibleQuotes[Math.floor(Math.random() * possibleQuotes.length)];
 
         return new Event(
-            enemy,
+            enemy.name,
             'Conflict',
             quote,
             '2',
@@ -252,12 +230,12 @@ export class EventSeeds {
                 buttonText: 'Attack',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: this._game.getRandomArbitrary(6),
+                    difficulty: enemy.attack,
                     skillToCheck: Skills.STRENGTH,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.log.addTempLog('You managed to scare the ' + enemy.toLowerCase() + ' and run away.', LogType.Result);
+                            this._game.log.addTempLog('You managed to scare the ' + enemy.name.toLowerCase() + ' and run away.', LogType.Result);
                         },
                         failure: () => {
                             this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
@@ -272,7 +250,7 @@ export class EventSeeds {
                 buttonText: 'Run away',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: this._game.getRandomArbitrary(6),
+                    difficulty: enemy.runAway,
                     skillToCheck: Skills.STRENGTH,
                     canGiveItems: false,
                     resultPath: {
@@ -282,7 +260,7 @@ export class EventSeeds {
                         failure: () => {
                             this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
                             this._game.characterManager.makeSomeoneInTheGroupGetStatus('Fear');
-                            this._game.log.addTempLog('You escaped but got hurt by the ' + enemy.toLowerCase(), LogType.Result);
+                            this._game.log.addTempLog('You escaped but got hurt by the ' + enemy.name.toLowerCase(), LogType.Result);
                         },
                     }
                 },
