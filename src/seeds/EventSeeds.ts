@@ -206,38 +206,87 @@ export class EventSeeds {
     }
 
     public getCombatEvent() {
-        return new Event(
+        const possibleEnemies = [
+            'Mad Dog',
+            'Wild dog',
+            'Pack of hounds',
+            'Hungry wild wolf',
+            'Swarm of bees',
+            'Cloud of insects',
+            'Sick human',
+            'Hungry fox',
+            'Dark figure',
+            'Woman with two faces',
+            'Thief with ax',
+            'Militia hunter',
+            'Two militia hunters',
+            'Deformed rats',
+            'Flock of crows',
+            'Pack of wolves',
+            'Locust cloud',
+            'Swarm of flies',
+            'Pigs with worms in the body',
             'Eyeless creature',
-            'Just silence',
-            'A black figure in human form without eyes, looks at you coldly in the distance.',
+            'Man crawling with a knife'
+        ];
+
+        const enemy = possibleEnemies[Math.floor(Math.random() * possibleEnemies.length)];
+
+        const possibleQuotes = [
+            'Approaches more and more with an aggressive posture.',
+            'Closer and closer, making avoiding conflict almost impossible',
+            'Appears suddenly scaring everyone',
+            'Appears from the dark in a sadistic way',
+            'An inevitable encounter in this place',
+            'Hard to avoid conflict'
+        ]
+
+        const quote = possibleQuotes[Math.floor(Math.random() * possibleQuotes.length)];
+
+        return new Event(
+            enemy,
+            'Conflict',
+            quote,
             '2',
             [{
-                buttonText: 'Look directly',
+                buttonText: 'Attack',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: Difficulties.VERY_HARD,
+                    difficulty: this._game.getRandomArbitrary(6),
                     skillToCheck: Skills.STRENGTH,
-                    canGiveItems: true,
+                    canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.log.addTempLog('You were successful', LogType.Result);
+                            this._game.log.addTempLog('You managed to scare the ' + enemy.toLowerCase() + ' and run away.', LogType.Result);
                         },
                         failure: () => {
-                            this._game.log.addTempLog('You failed miserably', LogType.Result);
                             this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Wounds');
+                            this._game.log.addTempLog('You were attacked but managed to escape.', LogType.Result);
                         },
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Look away',
-                skillCheck: false,
-                skillCheckFields: null,
-                normalResultPath: () => {
-                    this._game.log.addTempLog('Did you get away', LogType.Result);
-                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Fear');
-                }
+                buttonText: 'Run away',
+                skillCheck: true,
+                skillCheckFields: {
+                    difficulty: this._game.getRandomArbitrary(6),
+                    skillToCheck: Skills.STRENGTH,
+                    canGiveItems: false,
+                    resultPath: {
+                        success: () => {
+                            this._game.log.addTempLog('You managed to escape.', LogType.Result);
+                        },
+                        failure: () => {
+                            this._game.characterManager.decreasesTheHealthOfSomeoneInTheGroup();
+                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Fear');
+                            this._game.log.addTempLog('You escaped but got hurt by the ' + enemy.toLowerCase(), LogType.Result);
+                        },
+                    }
+                },
+                normalResultPath: null
             }],
             EventType.Combat,
             null
