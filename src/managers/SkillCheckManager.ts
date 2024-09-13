@@ -137,7 +137,7 @@ export class SkillCheckManager {
         this._firstDice.classList.remove('red-color');
         this._secondDice.classList.remove('red-color');
 
-        this._resultLabel.innerHTML = '[ CRITICIAL SUCCESS ]';
+        this._resultLabel.innerHTML = ' CRITICIAL SUCCESS ';
         this._resultLabel.style.fontSize = '1.3em';
         this._resultLabel.classList.remove('red-color');
         this._resultLabel.classList.add('green-color');
@@ -154,7 +154,7 @@ export class SkillCheckManager {
         this._firstDice.classList.remove('red-color');
         this._secondDice.classList.remove('red-color');
         
-        this._resultLabel.innerHTML = '[ SUCCESS ]';
+        this._resultLabel.innerHTML = ' SUCCESS ';
         this._resultLabel.style.fontSize = '2.5em';
         this._resultLabel.classList.remove('red-color');
         this._resultLabel.classList.add('green-color');
@@ -171,7 +171,7 @@ export class SkillCheckManager {
         this._firstDice.classList.add('red-color');
         this._secondDice.classList.add('red-color');
 
-        this._resultLabel.innerHTML = '[ CRITICIAL FAILURE ]';
+        this._resultLabel.innerHTML = ' CRITICIAL FAILURE ';
         this._resultLabel.style.fontSize = '1.3em';
         this._resultLabel.classList.add('red-color');
         this._resultLabel.classList.remove('green-color');
@@ -188,7 +188,7 @@ export class SkillCheckManager {
         this._firstDice.classList.remove('red-color');
         this._secondDice.classList.remove('red-color');
 
-        this._resultLabel.innerHTML = '[ FAILURE ]';
+        this._resultLabel.innerHTML = ' FAILURE ';
         this._resultLabel.style.fontSize = '2.5em';
         this._resultLabel.classList.add('red-color');
         this._resultLabel.classList.remove('green-color');

@@ -1,6 +1,6 @@
-@font-face {
-    font-family: travelingTypewriter;
-    src: url(../TravelingTypewriter.ttf);
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.8em;
 }
 
 * {
@@ -32,8 +32,6 @@ h2 {
 }
 
 #container {
-    font-size: 12px;
-    font-family: travelingTypewriter;
     color: #ffffff;
     padding: 0.7em;
     width: 100%;
