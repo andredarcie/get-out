@@ -1,0 +1,47 @@
+# Este é um workflow para construir e fazer o deploy do projeto no GitHub Pages usando Parcel
+
+name: Build and Deploy
+
+# Controla quando o workflow será executado
+on:
+  # Aciona o workflow em push ou pull request na branch "master"
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Permite executar este workflow manualmente a partir da aba Actions
+  workflow_dispatch:
+
+# Um workflow é composto por um ou mais jobs que podem ser executados sequencialmente ou em paralelo
+jobs:
+  build:
+    # O tipo de runner onde o job será executado
+    runs-on: ubuntu-latest
+
+    # Passos representam a sequência de tarefas que serão executadas como parte do job
+    steps:
+      # Faz o checkout do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Configura o Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Altere para a versão do Node.js que você está utilizando
+
+      # Instala as dependências do projeto
+      - name: Install dependencies
+        run: npm install
+
+      # Constrói o projeto usando Parcel
+      - name: Build project with Parcel
+        run: npm run build
+
+      # Faz o deploy para o GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist # A pasta onde o Parcel gera os arquivos construídos
