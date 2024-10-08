@@ -17,27 +17,27 @@ export class EventSeeds {
 
     start() {
         this.events.push(new Event(
-            'Wild Wolf Appeared',
-            'Something that catches your eye',
-            'He jumps furiously wanting blood!', 
+            'Overwhelming Anxiety',
+            'A sudden wave of anxiety hits you',
+            'You feel your heart pounding and your breath becomes shallow',
             '',
             [{ 
-                buttonText: 'Throw a stone',
+                buttonText: 'Take deep breaths',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.log.addTempLog('You hit the rock and killed the wolf!', LogType.Result);
+                    this._game.log.addTempLog('You manage to calm yourself a bit, but the unease lingers.', LogType.Result);
                 }
             },
             { 
-                buttonText: 'Run like a chicken',
+                buttonText: 'Ignore it',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.log.addTempLog('Did you get away', LogType.Result);
+                    this._game.log.addTempLog('The anxiety remains, gnawing at the back of your mind.', LogType.Result);
                 }
             }],
-            EventType.Combat,
+            EventType.Psychological,
             null
         ));
     }
@@ -49,162 +49,190 @@ export class EventSeeds {
     public getPlaceEvent() {
         const events: Event[] = [
             new Event(
-                'Ferris wheel',
-                'When you look up you feel a chill in your belly',
-                'It seems like it’s not been used for a long time,' +
-                ' a time when having fun still made sense',
-                'ferris-wheel',
+                'Old Memories',
+                'You come across a place that feels strangely familiar',
+                'Memories of a happier time flood your mind, mixed with sadness',
+                'memories-place',
                 [{
-                    buttonText: 'Take a deep breath',
+                    buttonText: 'Embrace the memories',
                     skillCheck: false,
                     skillCheckFields: null,
                     normalResultPath: () => {
-                        this._game.log.addTempLog("You don't find anything interesting", LogType.Result);
-                        this._game.log.addTempLog("Just look at the ferris wheel for a while, take a deep breath and walk away", LogType.Result);
-                        this._game.characterManager.makeSomeoneInTheGroupGetStatus();
+                        this._game.log.addTempLog("You allow yourself to feel the sadness, and it gives you a strange sense of comfort.", LogType.Result);
                     }
                 },
                 {
-                    buttonText: 'Investigate',
+                    buttonText: 'Push the memories away',
                     skillCheck: true,
                     skillCheckFields: {
-                        difficulty: Difficulties.MEDIUM,
-                        skillToCheck: Skills.STRENGTH,
-                        canGiveItems: true,
+                        difficulty: Difficulties.HARD,
+                        skillToCheck: Skills.WILLPOWER,
+                        canGiveItems: false,
                         resultPath: {
                             success: () => {
-                                this._game.log.addTempLog('You found some things of value', LogType.Result);
+                                this._game.log.addTempLog('You manage to suppress the emotions, feeling a bit numb.', LogType.Result);
                             },
                             failure: () => {
-                                this._game.log.addTempLog("You couldn't find anything", LogType.Result);
+                                this._game.characterManager.makeSomeoneInTheGroupGetStatus('Depressed');
+                                this._game.log.addTempLog("You fail to suppress the memories, and they overwhelm you with sadness.", LogType.Result);
                             }
                         }
                     },
                     normalResultPath: null
-                },
-                {
-                    buttonText: 'Continue the walk',
-                    skillCheck: false,
-                    skillCheckFields: null,
-                    normalResultPath: () => {
-                        this._game.log.addTempLog("You just go by the ferris wheel and go away, without looking back", LogType.Result);
-                    }
                 }],
-                EventType.Combat,
+                EventType.Psychological,
                 null
             ),
             new Event(
-                'Abandoned Barn',
-                'Just a normal place',
-                'There is something unsettling about this place',
-                'barn-abandoned-farm-homestead',
+                'Abandoned House',
+                'A house that seems to hold many stories',
+                'The silence inside is almost deafening, and you feel a chill run down your spine',
+                'abandoned-house',
                 [                
                     {
-                        buttonText: 'Investigate',
+                        buttonText: 'Search for clues',
                         skillCheck: true,
                         skillCheckFields: {
                             difficulty: Difficulties.CHALLENGING,
-                            skillToCheck: Skills.STRENGTH,
-                            canGiveItems: true,
-                            resultPath: {
-                                success: () => {
-                                    this._game.log.addTempLog('You found some things of value', LogType.Result);
-                                },
-                                failure: () => {
-                                    this._game.log.addTempLog("You couldn't find anything", LogType.Result);
-                                }
-                            }
-                        },
-                        normalResultPath: null
-                    },
-                    {
-                        buttonText: 'Continue',
-                        skillCheck: false,
-                        skillCheckFields: null,
-                        normalResultPath: () => {
-                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
-                        }
-                    }
-                ],
-                EventType.Combat,
-                null
-            ),
-            new Event(
-                'Theme Park',
-                'Just a normal place',
-                'This place brings you strange memories, about sad things',
-                'theme-park',
-                [
-                    {
-                        buttonText: 'Forget memory',
-                        skillCheck: true,
-                        skillCheckFields: {
-                            difficulty: Difficulties.MEDIUM,
-                            skillToCheck: Skills.STRENGTH,
+                            skillToCheck: Skills.INTUITION,
                             canGiveItems: false,
                             resultPath: {
                                 success: () => {
-                                    this._game.log.addTempLog('You managed to overcome the negative memories', LogType.Result);
+                                    this._game.log.addTempLog('You find an old photograph that makes you think about lost connections.', LogType.Result);
                                 },
                                 failure: () => {
-                                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Depressed');
+                                    this._game.log.addTempLog("You couldn't find anything, but the emptiness of the place fills you with unease.", LogType.Result);
                                 }
                             }
                         },
                         normalResultPath: null
                     },
                     {
-                        buttonText: 'Just ignore.',
+                        buttonText: 'Leave the house',
                         skillCheck: false,
                         skillCheckFields: null,
                         normalResultPath: () => {
-                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                            this._game.log.addTempLog("You decide it's better to leave before the unsettling feeling grows stronger.", LogType.Result);
                         }
                     }
                 ],
-                EventType.Combat,
+                EventType.Psychological,
                 null
             ),
             new Event(
-                'Forest Fog',
-                'Just a normal place',
-                'There is something unsettling about this place',
-                'forest-fog',
+                'Haunted Theme Park',
+                'A place that once brought joy now feels empty and eerie',
+                'The broken rides and faded colors remind you of forgotten dreams',
+                'haunted-theme-park',
                 [
                     {
-                        buttonText: 'Continue',
+                        buttonText: 'Confront the feeling of loss',
+                        skillCheck: true,
+                        skillCheckFields: {
+                            difficulty: Difficulties.MEDIUM,
+                            skillToCheck: Skills.COURAGE,
+                            canGiveItems: false,
+                            resultPath: {
+                                success: () => {
+                                    this._game.log.addTempLog('You face the sadness and find a sense of closure.', LogType.Result);
+                                },
+                                failure: () => {
+                                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Depressed');
+                                    this._game.log.addTempLog('The memories are too painful, and you feel overwhelmed.', LogType.Result);
+                                }
+                            }
+                        },
+                        normalResultPath: null
+                    },
+                    {
+                        buttonText: 'Ignore the feeling',
                         skillCheck: false,
                         skillCheckFields: null,
                         normalResultPath: () => {
-                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                            this._game.log.addTempLog("You try to ignore the feelings, but they linger as you walk away.", LogType.Result);
                         }
                     }
                 ],
-                EventType.Combat,
+                EventType.Psychological,
                 null
             ),
             new Event(
-                'Geyser',
-                'Just a normal place',
-                'There is something unsettling about this place',
-                'geyser',
+                'Thick Forest',
+                'The foggy forest seems to reflect your inner thoughts',
+                'The deeper you go, the more lost you feel',
+                'thick-forest',
                 [
                     {
-                        buttonText: 'Continue',
+                        buttonText: 'Find your way through',
+                        skillCheck: true,
+                        skillCheckFields: {
+                            difficulty: Difficulties.HARD,
+                            skillToCheck: Skills.WILLPOWER,
+                            canGiveItems: false,
+                            resultPath: {
+                                success: () => {
+                                    this._game.log.addTempLog('You push through the fog, feeling a sense of determination.', LogType.Result);
+                                },
+                                failure: () => {
+                                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Lost');
+                                    this._game.log.addTempLog('You lose your way and feel a growing sense of panic.', LogType.Result);
+                                }
+                            }
+                        },
+                        normalResultPath: null
+                    },
+                    {
+                        buttonText: 'Sit and gather your thoughts',
                         skillCheck: false,
                         skillCheckFields: null,
                         normalResultPath: () => {
-                            this._game.log.addTempLog("You just continue walking...", LogType.Result);
+                            this._game.log.addTempLog("You sit down, trying to make sense of your thoughts in the oppressive fog.", LogType.Result);
                         }
                     }
                 ],
-                EventType.Combat,
+                EventType.Psychological,
+                null
+            ),
+            new Event(
+                'Geyser of Emotions',
+                'A geyser erupts nearby, mirroring your turbulent feelings',
+                'The power of nature reminds you of emotions you’ve tried to suppress',
+                'emotional-geyser',
+                [
+                    {
+                        buttonText: 'Let the emotions flow',
+                        skillCheck: false,
+                        skillCheckFields: null,
+                        normalResultPath: () => {
+                            this._game.log.addTempLog("You let yourself feel everything, and it leaves you both exhausted and relieved.", LogType.Result);
+                        }
+                    },
+                    {
+                        buttonText: 'Hold it all in',
+                        skillCheck: true,
+                        skillCheckFields: {
+                            difficulty: Difficulties.CHALLENGING,
+                            skillToCheck: Skills.WILLPOWER,
+                            canGiveItems: false,
+                            resultPath: {
+                                success: () => {
+                                    this._game.log.addTempLog('You manage to contain your emotions, but at a cost.', LogType.Result);
+                                },
+                                failure: () => {
+                                    this._game.characterManager.makeSomeoneInTheGroupGetStatus('Fear');
+                                    this._game.log.addTempLog('You fail to contain it, and emotions burst out uncontrollably.', LogType.Result);
+                                }
+                            }
+                        },
+                        normalResultPath: null
+                    }
+                ],
+                EventType.Psychological,
                 null
             )
         ];
 
         return events[Math.floor(Math.random() * events.length)];
-        //return events[1];
     }
 
     public getCombatEvent() {

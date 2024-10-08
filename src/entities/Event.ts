@@ -6,7 +6,8 @@ import { Difficult } from '../managers/DiceManager';
 export enum EventType {
     Exploration,
     Combat,
-    Place
+    Place,
+    Psychological
 }
 
 export interface Choice {
