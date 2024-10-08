@@ -1,11 +1,12 @@
 {
   "devDependencies": {
     "cssnano": "^7.0.6",
+    "parcel": "^2.12.0",
     "postcss": "^8.4.47",
     "typescript": "^5.6.2"
   },
   "scripts": {
     "deploy": "gh-pages -d dist",
-    "build": "npx parcel index.html"
+    "build": "npx parcel build index.html"
   }
 }
