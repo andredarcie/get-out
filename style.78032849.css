@@ -1,0 +1,240 @@
+html, body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.8em;
+    margin: auto;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+h1 {
+    margin: 0;
+}
+
+h2 {
+    margin: 5%;
+}
+
+#container {
+    color: #ffffff;
+    padding: 0.7em;
+    max-width: 300px;
+    max-height: 750px;
+    margin: auto;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra para destaque */
+}
+
+#core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#core > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+#core > div#game-over-page {
+    align-items: center;
+    justify-content: center;
+}
+
+#core > div#game-over-page > #game-over-message {
+    position: absolute;
+    bottom: 20px;
+}
+
+#core > div > .page-actions {
+    justify-self: flex-end;
+}
+
+#core > div > .travel-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 0;
+    overflow-y: auto;
+}
+
+#core > div > .stats-content,
+#core > div > .bag-content,
+#core > div > .log-content {
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+button {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    color: #ffffff;
+    border: 2px solid #2c3e50;
+    border-radius: 3px;
+    background-color: #000000;
+    cursor: pointer;
+}
+
+img#event-page-image {
+    width: 100%;
+}
+
+img {
+    border: 2px solid #2c3e50;
+}
+
+.photography-border {
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    padding-bottom: 30px;
+    border-radius: 1px;
+    background-color: white;
+}
+
+.photography {
+    filter:sepia(100%);
+    border: none;
+}
+
+button + button {
+    margin-top: 10px;
+}
+
+button.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
+    animation: fill 2s;
+}
+
+p {
+    margin: 10px 0;
+}
+
+@keyframes fill {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.line {
+    text-decoration: line-through;
+}
+
+button:disabled {
+    color: #2c3e50;
+}
+
+.green-color {
+    color: green;
+}
+
+.red-color {
+    color: red;
+}
+
+.yellow-color {
+    color: yellow;
+}
+
+.green-color-border {
+    color: #27ae60;
+}
+
+.red-color-border {
+    color: #c0392b;
+}
+
+.yellow-color-border {
+    color:#f1c40f;
+}
+
+.character-atributes-box {
+    display: inline-block; margin-top: 8px; position: absolute; padding-left: 10px;
+}
+
+.character-content {
+    position: relative;
+    height: 7.5em;
+}
+
+.character-afflictions-field {
+    color: #e74c3c;
+}
+
+.bag-item {
+    height: 6em;
+}
+
+button {
+    height: 3.5em;
+}
+
+#log-list-result {
+    height: 10em;
+}
+
+#log-list-status-change {
+    height: 9em;
+}
+
+.fade-in {
+    animation: fadeIn ease 5s;
+    -webkit-animation: fadeIn ease 5s;
+    -moz-animation: fadeIn ease 5s;
+    -o-animation: fadeIn ease 5s;
+    -ms-animation: fadeIn ease 5s;
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+.character-name-field {
+    padding: 0.3em;
+    font-size: larger;
+}
+
+/*# sourceMappingURL=/style.78032849.css.map */
