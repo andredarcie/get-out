@@ -37,7 +37,7 @@ jobs:
 
       # Instala as dependências do projeto
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # Constrói o projeto usando Parcel
       - name: Build project with Parcel
