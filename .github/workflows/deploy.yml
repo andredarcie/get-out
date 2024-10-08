@@ -4,22 +4,26 @@ name: Build and Deploy
 
 # Controla quando o workflow será executado
 on:
-  # Aciona o workflow em push ou pull request na branch "master"
+  # Aciona o workflow em push ou pull request na branch "main"
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
   # Permite executar este workflow manualmente a partir da aba Actions
   workflow_dispatch:
 
-# Um workflow é composto por um ou mais jobs que podem ser executados sequencialmente ou em paralelo
+# Define as permissões necessárias para o deploy no GitHub Pages
+permissions:
+  pages: write
+  id-token: write
+
+# Job de build
 jobs:
   build:
     # O tipo de runner onde o job será executado
     runs-on: ubuntu-latest
 
-    # Passos representam a sequência de tarefas que serão executadas como parte do job
     steps:
       # Faz o checkout do repositório
       - name: Checkout repository
@@ -29,19 +33,34 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.18.0' # Altere para a versão do Node.js que você está utilizando
+          node-version: '20' # Use a versão mais recente do Node.js 20.x
 
       # Instala as dependências do projeto
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # Constrói o projeto usando Parcel
       - name: Build project with Parcel
         run: npx parcel build src/index.html
 
+      # Faz upload dos artefatos para serem usados no job de deploy
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist # A pasta onde o Parcel gera os arquivos construídos
+
+  # Job de deploy
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       # Faz o deploy para o GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # A pasta onde o Parcel gera os arquivos construídos
+        id: deployment
+        uses: actions/deploy-pages@v1
