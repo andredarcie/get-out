@@ -37,7 +37,7 @@ jobs:
 
       # Constrói o projeto usando Parcel
       - name: Build project with Parcel
-        run: npm run build
+        run: npx parcel build src/index.html
 
       # Faz o deploy para o GitHub Pages
       - name: Deploy to GitHub Pages
