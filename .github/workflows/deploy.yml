@@ -4,11 +4,11 @@ name: Build and Deploy
 
 # Controla quando o workflow será executado
 on:
-  # Aciona o workflow em push ou pull request na branch "main"
+  # Aciona o workflow em push ou pull request na branch "master"
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
   # Permite executar este workflow manualmente a partir da aba Actions
   workflow_dispatch:
