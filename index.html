@@ -1,0 +1,206 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Get Out Game Teste</title>
+  <meta name="description" content="Get out game">
+  <meta name="author" content="game">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+  <meta name="theme-color" content="black"/>
+  <!--<link rel="stylesheet" href="css/style.css?v=1.0">-->
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <div id="container">
+        <div id="core">
+            <p id="current-time-field"></p>
+            <div id="travel-page">
+                <h1 id="your-family">Your Family</h1>
+                <div class="travel-content">
+                    <div class="stats-content">
+                        <ul>
+                            <li class="character-content">
+                                <img style="display: inline-block; margin: 2px" src="img/characters/man.jpg" height="60" width="60"></img>
+                                <div class="character-atributes-box">
+                                    <div id="first-character-name-field" class="character-name-field"></div>
+                                    <div id="first-character-atributes-field"></div>
+                                    <div class="character-afflictions-field" id="first-character-afflictions-field"></div>
+                                </div>
+                            </li>
+                            <li class="character-content">
+                                <img style="display: inline-block; margin: 2px" src="img/characters/woman.jpg" height="60" width="60"></img>
+                                <div class="character-atributes-box">
+                                    <div id="second-character-name-field" class="character-name-field"></div>
+                                    <div id="second-character-atributes-field"></div>
+                                    <div class="character-afflictions-field" id="second-character-afflictions-field"></div>
+                                </div>
+                            </li>
+                            <li class="character-content">
+                                <img style="display: inline-block; margin: 2px" src="img/characters/kid.jpg" height="60" width="60"></img>
+                                <div class="character-atributes-box">
+                                    <div id="third-character-name-field" class="character-name-field"></div>
+                                    <div id="third-character-atributes-field"></div>
+                                    <div class="character-afflictions-field" id="third-character-afflictions-field"></div>
+                                </div>
+                            </li>
+                            <li class="character-content">
+                                <img style="display: inline-block; margin: 2px" src="img/characters/girl.jpg" height="60" width="60"></img>
+                                <div class="character-atributes-box">
+                                    <div id="fourth-character-name-field" class="character-name-field"></div>
+                                    <div id="fourth-character-atributes-field"></div>
+                                    <div class="character-afflictions-field" id="fourth-character-afflictions-field"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <p id="travelled-distance"></p>
+                    <canvas id="progress-bar" width="300" height="30"></canvas>
+                </div>
+                <div class="page-actions">
+                    <button id="walk-btn">Walk (+1 hour)</button>
+                    <button id="camp-btn">Camp (+6 hour)</button>
+                    <button id="bag-btn">Open bag</button>
+                </div>
+            </div>
+            <div id="log-page">
+                <h1>Log</h1>
+                <div class="log-content">
+                    <h2>Result</h2>
+                    <ul id="log-list-result"></ul>
+                    <h2>Status Change</h2>
+                    <ul id="log-list-status-change"></ul>
+                </div>
+                <div class="page-actions">
+                    <button id="log-back-character-btn">Back to travel</button>
+                </div>
+            </div>
+            <div id="skill-check-page">
+                <div class="header">
+                    <h1>Skill Check</h1>
+                    <p>Strength - Medium</p>
+                </div>
+                <div class="skill-check-content">
+                    <div style="text-align: center;">- Dices -</div>
+                    <div style="margin: 0 auto; margin: 0 auto; text-align: center;">
+                        <div style="padding: 2em; display: inline-block; margin: 0 auto;">
+                            <div id="first-dice" style="font-size: 4em; margin: 0 auto; display: inline-block;">6</div>
+                            <div style="display: inline-block">/ 6</div>
+                        </div>
+                        <div style="display: inline-block; font-size: 4em;"> + </div>
+                        <div style="padding: 2em; display: inline-block; margin: 0 auto;">
+                            <div id="second-dice" style="font-size: 350%; margin: 0 auto; display: inline-block;">6</div>
+                            <div style="display: inline-block">/ 6</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 1.2em; text-align: center;">+ Character Strength: 3</div>
+                    <div id="skill-check-expected" style="font-size: 1.5em; text-align: center;">Expected: 10</div>
+                    <div id="skill-check-result-value-label" style="font-size: 1.5em; text-align: center;">Result: <div style="display: inline-block; font-weight: bold;" id="skill-check-result-value">0</div></div>
+                    <h2 style="text-align: center; width: 15em; height: 5em; margin: 0 auto;">
+                        <span id="skill-check-result-label" style="font-size: 2.5em;">SUCCESS</span>
+                    </h2>
+                </div>
+                <div class="page-actions">
+                    <button id="skill-check-back-btn">Continue</button>
+                </div>
+            </div>
+            <div id="event-page">
+                <div class="page-header">
+                    <h1 id="event-page-title">Frozen lake</h1>
+                    <p id="event-page-subtitle"></p>
+                </div>
+                <div class="page-content">
+                    <div class="photography-border">
+                        <img class="photography fade-in" id="event-page-image" src="img/forest.jpg" alt="Some place" height="260" width="321" style="display: none;">
+                    </div>
+                    <p id="event-page-description"></p>
+                </div>
+                <div class="page-actions">
+                    <div id="event-page-choices-btn-list"></div>
+                </div>
+            </div>
+            <div id="bag-page">
+                <div class="page-header">
+                    <h1 id="bag-page-title">Bag</h1>
+                    <p id="bag-selected-item"></p>
+                    <p id="bag-selected-item-description"></p>
+                </div>
+                <div class="bag-content">
+                    <ul id="bag-item-list"></ul>
+                </div>
+                <div class="page-actions">
+                    <button id="bag-throw-away-btn">Throw away</button>
+                    <button id="bag-close-btn">Close Bag</button>
+                </div>
+            </div>
+            <div id="item-picker-page">
+                <h1 id="item-picker-page-title">Item picker</h1>
+                <div class="item-picker-page-content">
+                    <p id="item-picker-page-message">Did you find something!</p>
+                    <h2 id="items-found-title">Items found</h2>
+                    <ul id="item-picker-page-items-to-pick"></ul>
+                    <button style="margin-top:10px" id="item-picker-page-take-all-btn">Take All</button>
+                    <h2 id="your-items-title">Your items</h2>
+                    <ul id="item-picker-page-item-my-items"></ul>
+                </div>
+                <div class="page-actions">
+                    <button id="item-picker-page-continue-btn">Continue</button>
+                </div>
+            </div>
+            <div id="rip-page">
+                <h1 id="rip-page-title">Rest in peace</h1>
+                <div class="page-content" style="margin: 0 auto !important; text-align: center;">
+                    <img id="rip-page-image" style="margin-right: auto; margin-left: auto;" src="img/characters/man.jpg" height="60" width="60"></img>
+                    <h2 id="rip-page-name"></h2>
+                    <p id="rip-page-dates"></p>
+                    <p id="rip-page-quote"></p>
+                    <p id="rip-page-status"></p>
+                </div>
+                <div class="page-actions">
+                    <button id="rip-page-back-btn">Back to travel</button>
+                </div>
+            </div>
+            <div id="game-over-page">
+                <h1>Game over</h1>
+                <p id="game-over-message"></p>
+                <div class="page-actions">
+                    <button id="try-again-btn">Try again</button>
+                </div>
+            </div>
+            <div id="dialog-page">
+                <h1 id="dialog-page-title">Dialog Page</h1>
+                <div class="page-content">
+                </div>
+                <div class="page-actions">
+                </div>
+            </div>
+            <div id="map-page">
+                <h1 id="map-page-title">Map Page</h1>
+                <div class="page-content">
+                </div>
+                <div class="page-actions">
+                </div>
+            </div>
+            <div id="skill-up-page">
+                <h1 id="´skill-up-page-title">Skill Up Page</h1>
+                <div class="page-content">
+                </div>
+                <div class="page-actions">
+                </div>
+            </div>
+        </div>
+        <img id="rip-page-image-1" style="display: none;" src="img/characters/man.jpg" height="60" width="60"></img>
+        <img id="rip-page-image-2" style="display: none;" src="img/characters/woman.jpg" height="60" width="60"></img>
+        <img id="rip-page-image-3" style="display: none;" src="img/characters/kid.jpg" height="60" width="60"></img>
+        <img id="rip-page-image-4" style="display: none;" src="img/characters/girl.jpg" height="60" width="60"></img>
+    </div>
+    <script type="module" src="/src/index.ts"></script>
+</body>
+</html>

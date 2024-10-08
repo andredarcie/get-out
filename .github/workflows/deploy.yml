@@ -41,7 +41,7 @@ jobs:
 
       # Constrói o projeto usando Parcel
       - name: Build project with Parcel
-        run: npx parcel build src/index.html --public-url ./
+        run: npx parcel build index.html --public-url ./
 
       # Faz upload dos artefatos para serem usados no job de deploy
       - name: Upload artifact
