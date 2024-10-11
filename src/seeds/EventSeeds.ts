@@ -5,6 +5,7 @@ import { Skills } from '../enums/Skills';
 import { Difficulties } from '../enums/Difficulties';
 import { EnemySeeds } from './EnemySeeds';
 import { Enemy } from '../entities/Enemy';
+import { ItemSeeds } from './ItemSeeds';
 
 export class EventSeeds {
     private _events: Event[];
@@ -82,7 +83,43 @@ export class EventSeeds {
                 }],
                 EventType.Psychological,
                 null
-            )
+            ),
+            new Event(
+                'Haunting Echoes',
+                'You hear a distant sound, faint but familiar, like someone calling your name from far away.',
+                'An eerie sensation creeps up your spine, making you feel as though you are not alone.',
+                'geysir',
+                [{
+                    buttonText: 'Follow the sound',
+                    skillCheck: true,
+                    skillCheckFields: {
+                        difficulty: Difficulties.EASY,
+                        skillToCheck: Skills.EXPLORATION,
+                        canGiveItems: true,
+                        resultPath: {
+                            success: () => {
+                                this._game.log.addTempLog('You carefully follow the sound, discovering an itme hidden among the trees.', LogType.Result);
+                                this._game.itemPickerManager.addItemToPick(ItemSeeds.getOneRandomItem());
+                            },
+                            failure: () => {
+                                this._game.characterManager.makeSomeoneInTheGroupGetStatus('Paranoid');
+                                this._game.log.addTempLog('You become lost in the forest, hearing whispers all around you but finding nothing.', LogType.Result);
+                            }
+                        }
+                    },
+                    normalResultPath: null
+                },
+                {
+                    buttonText: 'Ignore the sound',
+                    skillCheck: false,
+                    skillCheckFields: null,
+                    normalResultPath: () => {
+                        this._game.log.addTempLog("You decide to ignore the sound, but it lingers in the back of your mind, leaving you uneasy.", LogType.Result);
+                    }
+                }],
+                EventType.Psychological,
+                null
+            )            
         ];
 
         return events[Math.floor(Math.random() * events.length)];

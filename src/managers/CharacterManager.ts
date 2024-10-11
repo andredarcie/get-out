@@ -20,10 +20,10 @@ export class CharacterManager {
     }
 
     private createAllCharacters(): void {
-        this.characters.push(new Character('Ethan', 'you', 100, 100, 100, '1985', false));
-        this.characters.push(new Character('Olivia', 'wife', 100, 100, 100, '1988', false));
-        this.characters.push(new Character('Michael', 'son', 100, 100, 100, '2003', false));
-        this.characters.push(new Character('Sophia', 'daughter', 100, 100, 100, '2005', false));
+        this.characters.push(new Character('Dmytro', 'you', 100, 100, 100, '1985', false));
+        this.characters.push(new Character('Olena', 'wife', 100, 100, 100, '1988', false));
+        this.characters.push(new Character('Mykola', 'son', 100, 100, 100, '2003', false));
+        this.characters.push(new Character('Sofiia', 'daughter', 100, 100, 100, '2005', false));
     }
 
     public savePreviousCharacters() {
