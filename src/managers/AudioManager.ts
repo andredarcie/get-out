@@ -1,115 +1,107 @@
-import { Game } from '../Game';
-
 export class AudioManager {
-    private audioFiles: string[] = [];
     private audioEffects: HTMLAudioElement;
     private audioBackground: HTMLAudioElement;
-    private audioLoaded: number;
     private noSound: boolean = false;
-    private readonly _game: Game;
+
+    // Mapa para armazenar os sons
+    private sounds: Map<string, string>;
 
     constructor() {
-        this._game = Game.getInstance();
-
-        this.audioFiles = [
-            'success.wav',
-            'button1.wav',
-            'dice.mp3',
-            'fail.mp3',
-            'take-item.wav',
-            'write.wav',
-            'throw.wav',
-            'ding.wav',
-            'walk.mpeg'
-        ];
-
         this.audioEffects = new Audio();
         this.audioBackground = new Audio();
+        this.sounds = new Map<string, string>([
+            ['button', new URL('../audio/button1.wav', import.meta.url).toString()],
+            ['dice', new URL('../audio/dice.mp3', import.meta.url).toString()],
+            ['ding', new URL('../audio/ding.wav', import.meta.url).toString()],
+            ['fail', new URL('../audio/fail.mp3', import.meta.url).toString()],
+            ['rain', new URL('../audio/rain.mp3', import.meta.url).toString()],
+            ['success', new URL('../audio/success.wav', import.meta.url).toString()],
+            ['takeItem', new URL('../audio/take-item.wav', import.meta.url).toString()],
+            ['throw', new URL('../audio/throw.wav', import.meta.url).toString()],
+            ['walk', new URL('../audio/walk.mpeg', import.meta.url).toString()],
+            ['write', new URL('../audio/write.wav', import.meta.url).toString()],
+        ]);
+    }
 
-        for (const i in this.audioFiles) {
-            this.preloadAudio(this.audioFiles[i]);
+    // Método para tocar efeitos sonoros
+    public playSound(soundName: string, loop: boolean = false): void {
+        const soundSource = this.sounds.get(soundName);
+        if (!soundSource) {
+            console.error(`Sound ${soundName} not found.`);
+            return;
+        }
+
+        if (loop) {
+            this.playAudioLoop(soundSource);
+        } else {
+            this.playAudioEffect(soundSource);
         }
     }
 
-    private preloadAudio(url: string): void {
-        let audio = new Audio();
-        audio.addEventListener('canplaythrough', this.loadedAudio, false);
-        audio.src = url;
-    }
-
-    private loadedAudio() {
-        this.audioLoaded++;
-        if (this.audioLoaded == (this.audioFiles.length -1)){
-            this.allAudioHaveBeenLoaded();
-        }
-    }
-
-    private allAudioHaveBeenLoaded() {
-        console.log('load all audios');
-    }
-
+    // Métodos públicos para tocar sons específicos
     public playButtonSound(): void {
-        this.playAudioEffect('button1.wav');
+        this.playSound('button');
     }
 
     public playDiceSound(): void {
-        this.playAudioEffect('dice.mp3');
-    }
-
-    public playSuccessSound(): void {
-        this.playAudioEffect('success.wav');
-    }
-
-    public playFailSound(): void {
-        this.playAudioEffect('fail.mp3');
-    }
-
-    public playTakeItemSound(): void {
-        this.playAudioEffect('take-item.wav');
-    }
-
-    public playWriteSound(): void {
-        this.playAudioEffect('write.wav');
-    }
-
-    public playThrowSound(): void {
-        this.playAudioEffect('throw.wav');
+        this.playSound('dice');
     }
 
     public playDingSound(): void {
-        this.playAudioEffect('ding.wav');
+        this.playSound('ding');
+    }
+
+    public playFailSound(): void {
+        this.playSound('fail');
     }
 
     public playRainSound(): void {
-        this.playAudioLoop('walk.mpeg');
+        this.playSound('rain', true);
     }
 
-    private playAudioEffect(soundName: string): void {
-        if (this.noSound) 
-            return
-
-        this.audioEffects.src = 'audio/' + soundName;
-        this.audioEffects.play();
+    public playSuccessSound(): void {
+        this.playSound('success');
     }
 
-    private playAudioLoop(soundName: string): void {
-        if (this.noSound) 
-            return
+    public playTakeItemSound(): void {
+        this.playSound('takeItem');
+    }
 
-        this.audioBackground.src = 'audio/' + soundName;
-        this.audioBackground.volume = 0.2;
-        if (typeof this.audioBackground.loop == 'boolean')
-        {
+    public playThrowSound(): void {
+        this.playSound('throw');
+    }
+
+    public playWalkSound(): void {
+        this.playSound('walk', true);
+    }
+
+    public playWriteSound(): void {
+        this.playSound('write');
+    }
+
+    // Métodos privados para tocar os sons
+    private async playAudioEffect(soundSource: string): Promise<void> {
+        if (this.noSound) return;
+
+        try {
+            this.audioEffects.src = soundSource;
+            await this.audioEffects.play();
+        } catch (error) {
+            console.error('Error playing audio effect:', soundSource, error);
+        }
+    }
+
+    private async playAudioLoop(soundSource: string): Promise<void> {
+        if (this.noSound) return;
+
+        try {
+            this.audioBackground.src = soundSource;
+            this.audioBackground.volume = 0.2;
             this.audioBackground.loop = true;
+
+            await this.audioBackground.play();
+        } catch (error) {
+            console.error('Error playing audio loop:', soundSource, error);
         }
-        else
-        {
-            this.audioBackground.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-                console.log('loop');
-            }, false);
-        }
-        this.audioBackground.play();
     }
 }
