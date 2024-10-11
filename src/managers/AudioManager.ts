@@ -32,7 +32,7 @@ export class AudioManager {
         }
 
         if (loop) {
-            this.playAudioLoop(soundSource);
+            //this.playAudioLoop(soundSource);
         } else {
             this.playAudioEffect(soundSource);
         }

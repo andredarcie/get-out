@@ -65,8 +65,8 @@ export class EventSeeds {
                     buttonText: 'Push the memories away',
                     skillCheck: true,
                     skillCheckFields: {
-                        difficulty: Difficulties.HARD,
-                        skillToCheck: Skills.WILLPOWER,
+                        difficulty: Difficulties.MEDIUM,
+                        skillToCheck: Skills.STRENGTH,
                         canGiveItems: false,
                         resultPath: {
                             success: () => {
