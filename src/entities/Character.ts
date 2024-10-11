@@ -172,15 +172,15 @@ export class Character {
     }
 
     getHungry(): string {
-        return '🥫' + this._hungry + '%';
+        return 'H' + this._hungry + '%';
     }
 
     getHealth(): string {
-        return '❤️' + this._health + '%';
+        return 'L' + this._health + '%';
     }
 
     getStamina(): string {
-        return '⚡' + this._stamina + '%';
+        return 'S' + this._stamina + '%';
     }
 
     getSickness(): string {

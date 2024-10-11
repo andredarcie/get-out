@@ -42,10 +42,10 @@ export class Item {
 
         switch(this._type) {
             case ItemType.FirstAid:
-                effect += '❤️';
+                effect += 'L';
                 break;
             case ItemType.Food:
-                effect += '🥫';
+                effect += 'H';
                 break;
         }
 

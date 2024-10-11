@@ -6,7 +6,6 @@ import { DiceManager, Difficult } from './DiceManager';
 
 export class EventManager {
     private _titleElement: HTMLElement;
-    private _subtitleElement: HTMLElement;
     private _descriptionElement: HTMLElement;
     private _eventPageChoicesBtnListElement: HTMLElement;
     private _photographyBorder: HTMLElement;
@@ -21,7 +20,6 @@ export class EventManager {
         this._descriptionElement = document.getElementById("event-page-description");
         this._photographyBorder = document.querySelector(".photography-border");
         this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list");
-        this._subtitleElement = document.getElementById("event-page-subtitle");
         this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
 
         this._images = new Map<string, string>([
@@ -40,7 +38,7 @@ export class EventManager {
         eventSeeds.start();
         let events = eventSeeds.events;
 
-        let randomEventType: number = this._game.getRandomArbitrary(2);
+        let randomEventType: number = this._game.getRandomArbitrary(1);
 
         if (this.checkForMileStone()) {
             this._currentEvent = eventSeeds.getMileStoneEvent();
@@ -111,7 +109,6 @@ export class EventManager {
 
     showWaitingMessage(): void {
         this._titleElement.style.display = 'none';
-        this._subtitleElement.style.display = 'none';
         this._photographyBorder.style.display = 'none';
         this._descriptionElement.innerHTML = 'Something happened!'
         this._imageElement.style.display = 'none';
@@ -130,10 +127,8 @@ export class EventManager {
 
     showEvent(): void {
         this._titleElement.style.display = 'block';
-        this._subtitleElement.style.display = 'block';
         this._photographyBorder.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.title;
-        this._subtitleElement.innerHTML = this._currentEvent.subtitle;
         this._descriptionElement.innerHTML = this._currentEvent.description;
         
         if (this._currentEvent.image != '') {

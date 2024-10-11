@@ -79,25 +79,25 @@ export class LogManager {
 
                     if (previousCharacter.health != currentCharacter.health) {
                         if (previousCharacter.health > currentCharacter.health) {
-                            status_change_logs += '❤️ -' + (previousCharacter.health - currentCharacter.health) + '% ';
+                            status_change_logs += 'L -' + (previousCharacter.health - currentCharacter.health) + '% ';
                         } else {
-                            status_change_logs += '❤️ +' + (currentCharacter.health - previousCharacter.health) + '% ';
+                            status_change_logs += 'L +' + (currentCharacter.health - previousCharacter.health) + '% ';
                         }
                     }
 
                     if (previousCharacter.hungry != currentCharacter.hungry) {
                         if (previousCharacter.hungry > currentCharacter.hungry) {
-                            status_change_logs += '🥫 -' + (previousCharacter.hungry - currentCharacter.hungry) + '% ';
+                            status_change_logs += 'H -' + (previousCharacter.hungry - currentCharacter.hungry) + '% ';
                         } else {
-                            status_change_logs += '🥫 +' + (currentCharacter.hungry - previousCharacter.hungry) + '% ';
+                            status_change_logs += 'H +' + (currentCharacter.hungry - previousCharacter.hungry) + '% ';
                         }
                     }
 
                     if (previousCharacter.stamina != currentCharacter.stamina) {
                         if (previousCharacter.stamina > currentCharacter.stamina) {
-                            status_change_logs += '⚡ -' + (previousCharacter.stamina - currentCharacter.stamina) + '% ';
+                            status_change_logs += 'S -' + (previousCharacter.stamina - currentCharacter.stamina) + '% ';
                         } else {
-                            status_change_logs += '⚡ +' + (currentCharacter.stamina - previousCharacter.stamina) + '% ';
+                            status_change_logs += 'S +' + (currentCharacter.stamina - previousCharacter.stamina) + '% ';
                         }
                     }
 
