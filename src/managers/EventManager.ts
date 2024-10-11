@@ -13,6 +13,7 @@ export class EventManager {
     private _imageElement: HTMLImageElement;
     private _currentEvent: Event;
     public currentChoice: Choice;
+    private _images: Map<string, string>;
     private readonly _game: Game;
 
     constructor() {
@@ -22,6 +23,14 @@ export class EventManager {
         this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list");
         this._subtitleElement = document.getElementById("event-page-subtitle");
         this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
+
+        this._images = new Map<string, string>([
+            ['ferrisWheel', new URL('../../img/places/ferris-wheel.jpg', import.meta.url).toString()],
+            ['geysir', new URL('../../img/places/geyser.jpg', import.meta.url).toString()],
+            ['themePark', new URL('../../img/places/theme-park.jpg', import.meta.url).toString()],
+            ['barn', new URL('../../img/places/barn-abandoned-farm-homestead.jpg', import.meta.url).toString()],            
+        ]);
+
         this._game = Game.getInstance();
     }
 
@@ -110,6 +119,15 @@ export class EventManager {
         setTimeout(() => this.showEvent(), 1000);
     }
 
+    public getImagePath(imageName: string): string {
+        const imagePath = this._images.get(imageName);
+        if (!imagePath) {
+            console.error(`Image ${imageName} not found.`);
+            return '';
+        }
+        return imagePath;
+    }
+
     showEvent(): void {
         this._titleElement.style.display = 'block';
         this._subtitleElement.style.display = 'block';
@@ -120,6 +138,7 @@ export class EventManager {
         
         if (this._currentEvent.image != '') {
             this._imageElement.src = 'img\\places\\' + this._currentEvent.image + '.jpg';
+            this._imageElement.src = this.getImagePath(this._currentEvent.image);
         }
 
         this._imageElement.style.display = 'block';

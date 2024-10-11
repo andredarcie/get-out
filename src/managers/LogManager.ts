@@ -58,7 +58,7 @@ export class LogManager {
                 this._game.characterManager.savePreviousCharacters();
                 this._travelBtn.disabled = false;
             }
-        }, 800);
+        }, 300);
     }
 
     createLogsForStatusChange(): string {
