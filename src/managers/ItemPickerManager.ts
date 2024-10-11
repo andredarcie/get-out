@@ -23,14 +23,14 @@ export class ItemPickerManager {
     constructor() {
         this._game = Game.getInstance();
 
-        this._continueBtn = document.querySelector('#item-picker-page-continue-btn');
+        this._continueBtn = document.querySelector('#item-picker-page-continue-btn')!;
         this._continueBtn.addEventListener('click', () => { this.onContinueBtn() });
         this._itemsToPickListElement = document.querySelector('#item-picker-page-items-to-pick');
-        this._itemsFoundTitle = document.querySelector('#items-found-title');
-        this._pageMessageElement = document.querySelector('#item-picker-page-message');
+        this._itemsFoundTitle = document.querySelector('#items-found-title')!;
+        this._pageMessageElement = document.querySelector('#item-picker-page-message')!;
         this._myItemsListElement = document.querySelector('#item-picker-page-item-my-items');
-        this._yourItemsTitle = document.querySelector('#your-items-title');
-        this._takeAllBtn = document.querySelector('#item-picker-page-take-all-btn');
+        this._yourItemsTitle = document.querySelector('#your-items-title')!;
+        this._takeAllBtn = document.querySelector('#item-picker-page-take-all-btn')!;
     }
 
     public start(): void {
@@ -89,7 +89,7 @@ export class ItemPickerManager {
         for (let item of this._itemsToPick) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(item.name + ' (' + item.effect + ') ' + item.showAmount()));
+            button.appendChild(document.createTextNode(item.name + ' (' + item.status.name + ') ' + item.showAmount()));
             button.addEventListener('click', () => this.selectItemToPick(item));
 
             if (this._myItems.length >= this._myItemsMax) {
@@ -108,7 +108,7 @@ export class ItemPickerManager {
         for (let item of this._myItems) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(item.name + ' (' + item.effect + ') ' + item.showAmount()));
+            button.appendChild(document.createTextNode(item.name + ' (' + item.status.name + ') ' + item.showAmount()));
             button.addEventListener('click', () => this.selectItemMyItem(item));
             li.appendChild(button);
             this._myItemsListElement.appendChild(li);

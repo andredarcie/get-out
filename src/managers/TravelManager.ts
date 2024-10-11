@@ -241,10 +241,7 @@ export class TravelManager {
                 let healthPerHour: number = character.showHealthLostPerHourDueToAllStatus();
                 this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
                 this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
-                this._charactersList[i].atributesField.innerHTML = character.getHealth() + 
-                                                                   (healthPerHour == 0 ? ' ' : (' <span class="character-afflictions-field">(-' + character.showHealthLostPerHourDueToAllStatus() + '%) </span>')) + 
-                                                                   character.getStamina() + ' ' 
-                                                                 + character.getHungry();
+                this._charactersList[i].atributesField.innerHTML = character.getSanity();
                 this._charactersList[i].afflictionsField.innerHTML = character.showAfflictions();
             }
         }
@@ -259,9 +256,6 @@ export class TravelManager {
     }
 
     walkOneHour() {
-        this._game.characterManager.decreaseStaminaOfAllCharacters(5);
-        this._game.characterManager.increaseHungryOfAllCharacters();
-
         const characters: Character[] = this._game.characterManager.getCharactersAlive();
         
         for (let character of characters) {

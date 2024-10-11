@@ -8,31 +8,31 @@ export enum ItemsNames {
 
 export class ItemSeeds {
     public static items: Item[] = [
-        new Item('Bandages', ItemType.FirstAid, 10, [StatusSeeds.getStatusByName('Blood ribs'), 
-                                                     StatusSeeds.getStatusByName('Broken ribs')]),
-        new Item('Herbal Meds', ItemType.FirstAid, 5, [StatusSeeds.getStatusByName('Anxiety')]),
-        new Item('Antibiotics', ItemType.FirstAid, 15, [StatusSeeds.getStatusByName('Infection'), 
-                                                        StatusSeeds.getStatusByName('Food poisoning'), 
-                                                        StatusSeeds.getStatusByName('Dysentery')]),
-        new Item('Antiseptic', ItemType.FirstAid, 15, [StatusSeeds.getStatusByName('Wounds')]),
-        new Item('Painkillers', ItemType.FirstAid, 15, [StatusSeeds.getStatusByName('Pain'), 
-                                                        StatusSeeds.getStatusByName('Broken ribs')]),
-        new Item('Raw Food', ItemType.Food, 10),
-        new Item('Vegetables', ItemType.Food, 5),
-        new Item('Canned Food', ItemType.Food, 10),
-        new Item('Cigarette', ItemType.Food, 15),
-        new Item('Beef jerky', ItemType.Food, 15),
-        new Item('Bear meat', ItemType.Food, 15),
-        new Item('Chocolate Bar', ItemType.Food, 20),
-        new Item('Condensed milk', ItemType.Food, 15),
-        new Item('Cup of coffee', ItemType.Food, 10),
-        new Item('Cup of herbal tea', ItemType.Food, 10),
-        new Item('Dog food', ItemType.Food, 15),
-        new Item('Energy bar', ItemType.Food, 25),
-        new Item('Water (unsafe)', ItemType.Food, 10),
-        new Item('Granola bar', ItemType.Food, 15),
-        new Item('Orange soda', ItemType.Food, 20)
+        // Itens para Status Negativos (diminuição da sanidade)
+        new Item('Pílulas de Ansiedade', ItemType.FirstAid, StatusSeeds.getStatusByName('Ansiedade')),
+        new Item('Fita Cassete de Meditação', ItemType.FirstAid, StatusSeeds.getStatusByName('Paranoia')),
+        new Item('Café Enlatado', ItemType.Food, StatusSeeds.getStatusByName('Desespero')),
+        new Item('Diário Antigo', ItemType.FirstAid, StatusSeeds.getStatusByName('Culpa')),
+        new Item('Amuleto Protetor', ItemType.FirstAid, StatusSeeds.getStatusByName('Medo')),
+        new Item('Fotografia Antiga', ItemType.FirstAid, StatusSeeds.getStatusByName('Alucinações')),
+        new Item('Carta Velha', ItemType.FirstAid, StatusSeeds.getStatusByName('Isolamento')),
+        new Item('Barra de Chocolate', ItemType.Food, StatusSeeds.getStatusByName('Depressão')),
+        new Item('Kit de Primeiros Socorros', ItemType.FirstAid, StatusSeeds.getStatusByName('Trauma')),
+        new Item('Barra Energética', ItemType.Food, StatusSeeds.getStatusByName('Pânico')),
+    
+        // Itens para Status Positivos (aumento da sanidade)
+        new Item('Bilhete de Esperança', ItemType.FirstAid, StatusSeeds.getStatusByName('Esperança')),
+        new Item('Caderno de Anotações', ItemType.FirstAid, StatusSeeds.getStatusByName('Resiliência')),
+        new Item('Espelho de Bolso', ItemType.FirstAid, StatusSeeds.getStatusByName('Clareza Mental')),
+        new Item('Amuleto de Ferro', ItemType.FirstAid, StatusSeeds.getStatusByName('Determinação')),
+        new Item('Manual de Autoajuda', ItemType.FirstAid, StatusSeeds.getStatusByName('Autoconfiança')),
+        new Item('Foto de uma Família', ItemType.FirstAid, StatusSeeds.getStatusByName('Ligação Familiar')),
+        new Item('Amuleto da Superação', ItemType.FirstAid, StatusSeeds.getStatusByName('Superação do Medo')),
+        new Item('Boneca de Pano', ItemType.FirstAid, StatusSeeds.getStatusByName('Oásis Mental')),
+        new Item('Caixa de Suprimentos', ItemType.FirstAid, StatusSeeds.getStatusByName('Companheirismo')),
+        new Item('Álbum de Fotos', ItemType.FirstAid, StatusSeeds.getStatusByName('Gratidão'))
     ];
+    
 
     public static getItens(name: ItemsNames, amount: number): Item {
         this.items[name].amount = amount;

@@ -17,11 +17,11 @@ export class BagManager {
         
         this._game = Game.getInstance();
 
-        this._itemListElement = document.querySelector('#bag-item-list');
+        this._itemListElement = document.querySelector('#bag-item-list')!;
         this._selectedItemElement = document.getElementById('bag-selected-item');
         this._selectedItemDescriptionElement = document.getElementById('bag-selected-item-description');
-        this._bagCloseBtn = document.querySelector('#bag-close-btn');
-        this._bagThrowAwayBtn = document.getElementById('bag-throw-away-btn');
+        this._bagCloseBtn = document.querySelector('#bag-close-btn')!;
+        this._bagThrowAwayBtn = document.getElementById('bag-throw-away-btn')!;
 
         this._bagCloseBtn.addEventListener('click', () => { this.onClickBagClose() });
         this._bagThrowAwayBtn.addEventListener('click', () => { this.onClickThrowAway() });
@@ -72,7 +72,7 @@ export class BagManager {
         for (let item of this._items) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(item.name + ' (' + item.effect + ') ' + item.showAmount()));
+            button.appendChild(document.createTextNode(item.name + ' (' + item.status.name + ') ' + item.showAmount()));
             button.addEventListener('click', () => this.selectItem(item));
             li.appendChild(button);
             this._itemListElement.appendChild(li);
@@ -106,11 +106,8 @@ export class BagManager {
             } else {
                 switch (this._selectedItem.type) {
                     case ItemType.FirstAid:
-                        buttonText += character.getHealth();
+                        buttonText += character.getSanity();
                         buttonText += character.showAfflictions();
-                        break;
-                    case ItemType.Food:
-                        buttonText += character.getHungry();
                         break;
                 }
             }
@@ -127,9 +124,9 @@ export class BagManager {
     private selectItem(selectedItem: Item) {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
-        this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.effect} to:`;
+        this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.status.name} to:`;
         if (this._selectedItem.type == ItemType.FirstAid) {
-            this._selectedItemDescriptionElement.innerHTML = 'Can help with ' + this._selectedItem.showStatus();
+            this._selectedItemDescriptionElement.innerHTML = 'Can help with ' + this._selectedItem.status.name;
         }
         this.showSelectedItem();
         this.showCharacters();
@@ -140,20 +137,7 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
-
-        switch (this._selectedItem.type) {
-            case ItemType.FirstAid:
-                character.increaseHealth(this._selectedItem.effectValue);
-                break;
-            case ItemType.Food:
-                character.decreaseHungry(this._selectedItem.effectValue);
-                break;
-        }
-
-        for (let status of this._selectedItem.status) {
-            character.removeStatus(status);
-        }
-
+        character.removeStatus(this._selectedItem.status);
         this._bagThrowAwayBtn.style.display = 'none';
     }
 

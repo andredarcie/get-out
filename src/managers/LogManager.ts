@@ -19,10 +19,10 @@ export class LogManager {
     constructor() {
         this._game = Game.getInstance();
 
-        this._logListResult = document.querySelector("#log-list-result");
-        this._logListStatusChange = document.querySelector("#log-list-status-change");
+        this._logListResult = document.querySelector("#log-list-result")!;
+        this._logListStatusChange = document.querySelector("#log-list-status-change")!;
 
-        this._travelBtn = document.querySelector("#log-back-character-btn");
+        this._travelBtn = document.querySelector("#log-back-character-btn")!;
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
     }
 
@@ -72,32 +72,16 @@ export class LogManager {
             let currentCharacter = currentCharacters[i];
 
             if (!currentCharacter.isDead) {
-                if (previousCharacter.health != currentCharacter.health || 
-                    previousCharacter.hungry != currentCharacter.hungry ||
-                    previousCharacter.stamina != currentCharacter.stamina) {
+                if (previousCharacter.sanity != currentCharacter.sanity) {
                     status_change_logs += '<li> ' + currentCharacter.name + ' ';
 
-                    if (previousCharacter.health != currentCharacter.health) {
-                        if (previousCharacter.health > currentCharacter.health) {
-                            status_change_logs += 'L -' + (previousCharacter.health - currentCharacter.health) + '% ';
-                        } else {
-                            status_change_logs += 'L +' + (currentCharacter.health - previousCharacter.health) + '% ';
-                        }
-                    }
+                    status_change_logs += 'Sanity: '
 
-                    if (previousCharacter.hungry != currentCharacter.hungry) {
-                        if (previousCharacter.hungry > currentCharacter.hungry) {
-                            status_change_logs += 'H -' + (previousCharacter.hungry - currentCharacter.hungry) + '% ';
+                    if (previousCharacter.sanity != currentCharacter.sanity) {
+                        if (previousCharacter.sanity > currentCharacter.sanity) {
+                            status_change_logs += ' -' + (previousCharacter.sanity - currentCharacter.sanity) + '% ';
                         } else {
-                            status_change_logs += 'H +' + (currentCharacter.hungry - previousCharacter.hungry) + '% ';
-                        }
-                    }
-
-                    if (previousCharacter.stamina != currentCharacter.stamina) {
-                        if (previousCharacter.stamina > currentCharacter.stamina) {
-                            status_change_logs += 'S -' + (previousCharacter.stamina - currentCharacter.stamina) + '% ';
-                        } else {
-                            status_change_logs += 'S +' + (currentCharacter.stamina - previousCharacter.stamina) + '% ';
+                            status_change_logs += ' +' + (currentCharacter.sanity - previousCharacter.sanity) + '% ';
                         }
                     }
 

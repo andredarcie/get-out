@@ -50,20 +50,20 @@ export class EventSeeds {
     public getPlaceEvent() {
         const events: Event[] = [
             new Event(
-                'Old Memories',
-                'You come across a place that feels strangely familiar',
-                'Memories of a happier time flood your mind, mixed with sadness',
+                'Velhas Memórias',
+                'Você se depara com um lugar que parece estranhamente familiar.',
+                'Memórias de um tempo mais feliz inundam sua mente, misturadas com tristeza.',
                 'ferrisWheel',
                 [{
-                    buttonText: 'Embrace the memories',
+                    buttonText: 'Abraçar as memórias',
                     skillCheck: false,
                     skillCheckFields: null,
                     normalResultPath: () => {
-                        this._game.log.addTempLog("You allow yourself to feel the sadness, and it gives you a strange sense of comfort.", LogType.Result);
+                        this._game.log.addTempLog("Você se permite sentir a tristeza, e isso lhe dá uma estranha sensação de conforto.", LogType.Result);
                     }
                 },
                 {
-                    buttonText: 'Push the memories away',
+                    buttonText: 'Afastar as memórias',
                     skillCheck: true,
                     skillCheckFields: {
                         difficulty: Difficulties.MEDIUM,
@@ -71,11 +71,11 @@ export class EventSeeds {
                         canGiveItems: false,
                         resultPath: {
                             success: () => {
-                                this._game.log.addTempLog('You manage to suppress the emotions, feeling a bit numb.', LogType.Result);
+                                this._game.log.addTempLog('Você consegue suprimir as emoções, sentindo-se um pouco entorpecido.', LogType.Result);
                             },
                             failure: () => {
-                                this._game.characterManager.makeSomeoneInTheGroupGetStatus('Depressed');
-                                this._game.log.addTempLog("You fail to suppress the memories, and they overwhelm you with sadness.", LogType.Result);
+                                this._game.characterManager.makeSomeoneInTheGroupGetStatus('Depressão');
+                                this._game.log.addTempLog("Você falha em suprimir as memórias, e elas o sobrecarregam com tristeza.", LogType.Result);
                             }
                         }
                     },
@@ -85,12 +85,12 @@ export class EventSeeds {
                 null
             ),
             new Event(
-                'Haunting Echoes',
-                'You hear a distant sound, faint but familiar, like someone calling your name from far away.',
-                'An eerie sensation creeps up your spine, making you feel as though you are not alone.',
+                'Ecos Assombrados',
+                'Você ouve um som distante, fraco mas familiar, como se alguém estivesse chamando seu nome de longe.',
+                'Uma sensação estranha sobe pela sua espinha, fazendo você se sentir como se não estivesse sozinho.',
                 'geysir',
                 [{
-                    buttonText: 'Follow the sound',
+                    buttonText: 'Seguir o som',
                     skillCheck: true,
                     skillCheckFields: {
                         difficulty: Difficulties.EASY,
@@ -98,23 +98,23 @@ export class EventSeeds {
                         canGiveItems: true,
                         resultPath: {
                             success: () => {
-                                this._game.log.addTempLog('You carefully follow the sound, discovering an itme hidden among the trees.', LogType.Result);
+                                this._game.log.addTempLog('Você segue cuidadosamente o som, descobrindo um item escondido entre as árvores.', LogType.Result);
                                 this._game.itemPickerManager.addItemToPick(ItemSeeds.getOneRandomItem());
                             },
                             failure: () => {
-                                this._game.characterManager.makeSomeoneInTheGroupGetStatus('Paranoid');
-                                this._game.log.addTempLog('You become lost in the forest, hearing whispers all around you but finding nothing.', LogType.Result);
+                                this._game.characterManager.makeSomeoneInTheGroupGetStatus('Paranoia');
+                                this._game.log.addTempLog('Você se perde na floresta, ouvindo sussurros ao seu redor, mas não encontra nada.', LogType.Result);
                             }
                         }
                     },
                     normalResultPath: null
                 },
                 {
-                    buttonText: 'Ignore the sound',
+                    buttonText: 'Ignorar o som',
                     skillCheck: false,
                     skillCheckFields: null,
                     normalResultPath: () => {
-                        this._game.log.addTempLog("You decide to ignore the sound, but it lingers in the back of your mind, leaving you uneasy.", LogType.Result);
+                        this._game.log.addTempLog("Você decide ignorar o som, mas ele persiste no fundo da sua mente, deixando você inquieto.", LogType.Result);
                     }
                 }],
                 EventType.Psychological,

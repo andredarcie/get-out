@@ -10,14 +10,12 @@ export class Item {
     private _name: string;
     private _amount: number;
     private _type: ItemType;
-    private _effectValue: number;
-    private _status: Status[] = [];
+    private _status: Status;
  
-    constructor(name: string, type: ItemType, effectValue: number, status: Status[] = []) {
+    constructor(name: string, type: ItemType, status: Status) {
         this._name = name;
         this._type = type;
         this._amount = 0;
-        this._effectValue = effectValue;
         this._status = status;
     }
 
@@ -33,28 +31,8 @@ export class Item {
         return this._type;
     }
 
-    get status(): Status[] {
+    get status(): Status {
         return this._status;
-    }
-
-    get effect(): string {
-        let effect: string = '';
-
-        switch(this._type) {
-            case ItemType.FirstAid:
-                effect += 'L';
-                break;
-            case ItemType.Food:
-                effect += 'H';
-                break;
-        }
-
-        effect += ' +' + this.effectValue + '%';
-        return effect;
-    }
-
-    get effectValue(): number {
-        return this._effectValue;
     }
 
     set amount(amount: number) {
@@ -71,20 +49,5 @@ export class Item {
 
     increaseAmount(): void {
         this._amount++;
-    }
-
-    public showStatus(): string {
-        if (this._status.length == 0) {
-            return '';
-        }
-
-        let afflictions: string = '';
-        for (let affliction of this._status) {
-            if (affliction) {
-                afflictions += ' -' + affliction.name;
-            }
-        }
-
-        return afflictions;
     }
 }

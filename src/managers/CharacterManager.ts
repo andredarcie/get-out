@@ -20,10 +20,10 @@ export class CharacterManager {
     }
 
     private createAllCharacters(): void {
-        this.characters.push(new Character('Dmytro', 'you', 100, 100, 100, '1985', false));
-        this.characters.push(new Character('Olena', 'wife', 100, 100, 100, '1988', false));
-        this.characters.push(new Character('Mykola', 'son', 100, 100, 100, '2003', false));
-        this.characters.push(new Character('Sofiia', 'daughter', 100, 100, 100, '2005', false));
+        this.characters.push(new Character('Dmytro', 'you', 100, '1985', false));
+        this.characters.push(new Character('Olena', 'wife', 100, '1988', false));
+        this.characters.push(new Character('Mykola', 'son', 100, '2003', false));
+        this.characters.push(new Character('Sofiia', 'daughter', 100, '2005', false));
     }
 
     public savePreviousCharacters() {
@@ -31,38 +31,9 @@ export class CharacterManager {
         for (let character of this.characters) {
             this.previousCharacters.push(new Character(character.name, 
                                                        character.kinship, 
-                                                       character.health, 
-                                                       character.stamina, 
-                                                       character.hungry, 
-                                                       character.getDateOfBirth(), character.isDead))
-        }
-    }
-
-    increaseHungryOfAllCharacters() {
-        let characters = this.getCharactersAlive();
-        for (let character of characters) {
-            character.increaseHungry();
-        }
-    }
-
-    decreaseStaminaOfAllCharacters(staminToDecrease: number) {
-        let characters = this.getCharactersAlive();
-        for (let character of characters) {
-            character.decreaseStamina(staminToDecrease);
-        }
-    }
-
-    increaseStaminaOfAllCharactersToMax() {
-        let characters = this.getCharactersAlive();
-        for (let character of characters) {
-            character.increaseStaminaToMax();
-        }
-    }
-
-    increaseStaminaOfAllCharacters() {
-        let characters = this.getCharactersAlive();
-        for (let character of characters) {
-            character.increaseStamina();
+                                                       character.sanity, 
+                                                       character.getDateOfBirth(), 
+                                                       character.isDead))
         }
     }
 
@@ -86,8 +57,7 @@ export class CharacterManager {
     isInDanger(): boolean {
         let characters = this.getCharactersAlive();
         for (let character of characters) {
-            if (character.health <= 25 || character.stamina <= 25 ||
-                character.hungry <= 25)
+            if (character.sanity <= 25)
                 return true;
         }
 
@@ -101,28 +71,22 @@ export class CharacterManager {
         return character;
     }
 
-    makeSomeoneInTheGroupGetStatus(status?: string): Character {
+    makeSomeoneInTheGroupGetStatus(status: string): Character {
         let character: Character = this.picksACharacterAtRandom();
-        if (status != null) {
-            character.addStatus(StatusSeeds.getStatusByName(status));
-        } else {
-            character.addStatus(StatusSeeds.getOneRandomStatus());
-        }
+        character.addStatus(StatusSeeds.getStatusByName(status));
         return character;
     }
 
     decreasesTheHealthOfSomeoneInTheGroup(): Character {
         let character: Character = this.picksACharacterAtRandom();
-        character.looseHealth(30);
+        character.looseSanity(30);
         return character;
     }
 
     public statusOfTheCharactersChange(): boolean {
         for (let i = 0; i < this.previousCharacters.length; i++) {
             if(!this.previousCharacters[i].isDead &&
-                (this.previousCharacters[i].health != this.characters[i].health ||
-                 this.previousCharacters[i].stamina != this.characters[i].stamina ||
-                 this.previousCharacters[i].hungry != this.characters[i].hungry)) {
+                (this.previousCharacters[i].sanity != this.characters[i].sanity)) {
                 this.previousCharacters = this.characters;
                 return true;
             }
