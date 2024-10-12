@@ -73,7 +73,7 @@ export class CharacterManager {
 
     makeSomeoneInTheGroupGetStatus(status: string): Character {
         let character: Character = this.picksACharacterAtRandom();
-        character.addStatus(StatusSeeds.getStatusByName(status));
+        character.setStatus(StatusSeeds.getStatusByName(status));
         return character;
     }
 

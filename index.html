@@ -22,65 +22,54 @@
     <div id="container">
         <div id="core">
             <p id="current-time-field"></p>
-            <div id="travel-page">
-                <h1 id="your-family">Those You Love</h1>
-                <div class="travel-content">
-                    <div class="stats-content">
-                        <ul>
-                            <li class="character-content">
-                                <img style="display: inline-block; margin: 2px" src="img/characters/man.jpg" height="60" width="60"></img>
-                                <div class="character-atributes-box">
-                                    <div id="first-character-name-field" class="character-name-field"></div>
-                                    <div id="first-character-atributes-field"></div>
-                                    <div class="character-afflictions-field" id="first-character-afflictions-field"></div>
-                                </div>
-                            </li>
-                            <li class="character-content">
-                                <img style="display: inline-block; margin: 2px" src="img/characters/woman.jpg" height="60" width="60"></img>
-                                <div class="character-atributes-box">
-                                    <div id="second-character-name-field" class="character-name-field"></div>
-                                    <div id="second-character-atributes-field"></div>
-                                    <div class="character-afflictions-field" id="second-character-afflictions-field"></div>
-                                </div>
-                            </li>
-                            <li class="character-content">
-                                <img style="display: inline-block; margin: 2px" src="img/characters/kid.jpg" height="60" width="60"></img>
-                                <div class="character-atributes-box">
-                                    <div id="third-character-name-field" class="character-name-field"></div>
-                                    <div id="third-character-atributes-field"></div>
-                                    <div class="character-afflictions-field" id="third-character-afflictions-field"></div>
-                                </div>
-                            </li>
-                            <li class="character-content">
-                                <img style="display: inline-block; margin: 2px" src="img/characters/girl.jpg" height="60" width="60"></img>
-                                <div class="character-atributes-box">
-                                    <div id="fourth-character-name-field" class="character-name-field"></div>
-                                    <div id="fourth-character-atributes-field"></div>
-                                    <div class="character-afflictions-field" id="fourth-character-afflictions-field"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <p id="travelled-distance"></p>
-                    <canvas id="progress-bar" width="300" height="30"></canvas>
+            <div id="log-page">
+                <h1>Overview</h1>
+                <div class="log-content">
+                    <ul id="log-list-result"></ul>
                 </div>
+                <div class="stats-content">
+                    <div>
+                        <div class="character-content">
+                            <img class="character-image" src="img/characters/man.jpg" height="60" width="60"></img>
+                            <div class="character-atributes-box">
+                                <div id="first-character-name-field" class="character-name-field"></div>
+                                <div id="first-character-atributes-field"></div>
+                                <div class="character-afflictions-field" id="first-character-afflictions-field"></div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <img class="character-image" src="img/characters/woman.jpg" height="60" width="60"></img>
+                            <div class="character-atributes-box">
+                                <div id="second-character-name-field" class="character-name-field"></div>
+                                <div id="second-character-atributes-field"></div>
+                                <div class="character-afflictions-field" id="second-character-afflictions-field"></div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <img class="character-image" src="img/characters/kid.jpg" height="60" width="60"></img>
+                            <div class="character-atributes-box">
+                                <div id="third-character-name-field" class="character-name-field"></div>
+                                <div id="third-character-atributes-field"></div>
+                                <div class="character-afflictions-field" id="third-character-afflictions-field"></div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <img class="character-image" src="img/characters/girl.jpg" height="60" width="60"></img>
+                            <div class="character-atributes-box">
+                                <div id="fourth-character-name-field" class="character-name-field"></div>
+                                <div id="fourth-character-atributes-field"></div>
+                                <div class="character-afflictions-field" id="fourth-character-afflictions-field"></div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+                <p id="travelled-distance"></p>
+                <canvas id="progress-bar" width="300" height="30"></canvas>
                 <div class="page-actions">
-                    <button id="walk-btn">Walk (+1 hour)</button>
                     <button id="camp-btn">Camp (+6 hour)</button>
                     <button id="bag-btn">Open bag</button>
-                </div>
-            </div>
-            <div id="log-page">
-                <h1>Log</h1>
-                <div class="log-content">
-                    <h2>Result</h2>
-                    <ul id="log-list-result"></ul>
-                    <h2>Status Change</h2>
-                    <ul id="log-list-status-change"></ul>
-                </div>
-                <div class="page-actions">
-                    <button id="log-back-character-btn">Back to travel</button>
-                </div>
+                    <button id="walk-btn">Continue to walk (+1 hour)</button>
+                </div></div>
             </div>
             <div id="skill-check-page">
                 <div class="header">

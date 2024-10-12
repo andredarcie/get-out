@@ -7,8 +7,8 @@ export class GameOverManager {
 
     constructor() {
         this._game = Game.getInstance();
-        this._gameOverMessage = document.querySelector("#game-over-message");
-        this._tryAgainBtn = document.querySelector('#try-again-btn');
+        this._gameOverMessage = document.querySelector("#game-over-message")!;
+        this._tryAgainBtn = document.querySelector('#try-again-btn')!;
     }
 
     start(): void {

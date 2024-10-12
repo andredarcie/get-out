@@ -13,8 +13,8 @@ export enum EventType {
 export interface Choice {
     buttonText: string;
     skillCheck: boolean;
-    skillCheckFields: SkillCheckFields | null;
-    normalResultPath: any | null;
+    skillCheckFields: SkillCheckFields;
+    normalResultPath: any;
 }
 
 export interface SkillCheckFields {

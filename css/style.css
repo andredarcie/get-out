@@ -18,8 +18,7 @@ h2 {
 
 #container {
     color: #CCCCCC;
-    padding: 0.7em;
-    max-width: 300px;
+    max-width: 340px;
     max-height: 750px;
     margin: auto;
     background-color: #000000;
@@ -28,7 +27,6 @@ h2 {
     justify-content: center;
     align-items: center;
     position: relative;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra para destaque */
 }
 
 #event-page-title {
@@ -82,9 +80,10 @@ h2 {
 #core > div > .stats-content,
 #core > div > .bag-content,
 #core > div > .log-content {
-    padding: 20px;
+    padding: 10px;
     max-height: 400px;
     overflow-y: auto;
+    font-size: 12px;
 }
 
 button {
@@ -181,12 +180,25 @@ button:disabled {
 }
 
 .character-atributes-box {
-    display: inline-block; margin-top: 8px; position: absolute; padding-left: 10px;
+    display: inline-block; 
+    margin-top: 8px; 
+    margin-left: 10px;
+    position: absolute; 
+    font-size: 11px;
 }
 
 .character-content {
-    position: relative;
-    height: 7.5em;
+    align-content: top;
+    display: inline-block;
+    margin: 2px;
+    height: 60px;
+    width: 150px;
+}
+
+#progress-bar {
+    width: 300;
+    margin-left: 13px;
+    margin-bottom: 10px;
 }
 
 .character-afflictions-field {
@@ -248,6 +260,11 @@ ul {
 }
 
 .character-name-field {
-    padding: 0.3em;
-    font-size: larger;
+    padding: 0.1em;
+}
+
+.character-image {
+    border-right: ;
+    transform: scale(1); /* 20% do tamanho original */
+    transform-origin: center; /* Define o ponto de origem da transformação */
 }

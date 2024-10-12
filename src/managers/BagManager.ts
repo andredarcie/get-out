@@ -35,7 +35,7 @@ export class BagManager {
 
     private onClickBagClose() {
         this._game.audioManager.playButtonSound();
-        this._game.stateManager.goToState(GameStates.TRAVEL);
+        this._game.stateManager.goToState(GameStates.LOG);
     }
 
     private onClickThrowAway() {
@@ -137,7 +137,7 @@ export class BagManager {
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
-        character.removeStatus(this._selectedItem.status);
+        character.removeStatus();
         this._bagThrowAwayBtn.style.display = 'none';
     }
 

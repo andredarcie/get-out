@@ -17,12 +17,12 @@ export class RipManager {
         this._game = Game.getInstance();
 
         this._ripPageImageElement = document.querySelector("#rip-page-image") as HTMLImageElement;
-        this._ripPageNameElement = document.querySelector("#rip-page-name");
-        this._ripPageDatesElement = document.querySelector("#rip-page-dates");
-        this._ripPageQuoteElement = document.querySelector("#rip-page-quote");
-        this._ripPageStatusElement = document.querySelector("#rip-page-status");
+        this._ripPageNameElement = document.querySelector("#rip-page-name")!;
+        this._ripPageDatesElement = document.querySelector("#rip-page-dates")!;
+        this._ripPageQuoteElement = document.querySelector("#rip-page-quote")!;
+        this._ripPageStatusElement = document.querySelector("#rip-page-status")!;
 
-        this._travelBtn = document.querySelector('#rip-page-back-btn');
+        this._travelBtn = document.querySelector('#rip-page-back-btn')!;
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
     }
 
@@ -47,7 +47,7 @@ export class RipManager {
             this.showCharater(character);
             character.buried = true;
         } else {
-            this._game.stateManager.goToState(GameStates.TRAVEL);
+            this._game.stateManager.goToState(GameStates.LOG);
         }
     }
 }

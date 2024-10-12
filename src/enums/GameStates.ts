@@ -1,5 +1,4 @@
 export enum GameStates {
-    TRAVEL,
     EVENT,
     SKILLCHECK,
     GAME_OVER,

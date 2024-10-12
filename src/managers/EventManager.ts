@@ -16,10 +16,10 @@ export class EventManager {
     private readonly _game: Game;
 
     constructor() {
-        this._titleElement = document.getElementById("event-page-title");
-        this._descriptionElement = document.getElementById("event-page-description");
-        this._photographyBorder = document.querySelector(".photography-border");
-        this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list");
+        this._titleElement = document.getElementById("event-page-title")!;
+        this._descriptionElement = document.getElementById("event-page-description")!;
+        this._photographyBorder = document.querySelector(".photography-border")!;
+        this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list")!;
         this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
 
         this._images = new Map<string, string>([
@@ -33,6 +33,7 @@ export class EventManager {
     }
 
     start(): void {
+        console.log("event page")
         this._eventPageChoicesBtnListElement.innerHTML = '';
         const eventSeeds = new EventSeeds();
         eventSeeds.start();
@@ -48,12 +49,12 @@ export class EventManager {
             this._currentEvent = eventSeeds.getCombatEvent();
         }
 
-        this.showWaitingMessage();
+        this.showEvent();
     }
 
     private showChoices() {
         this._eventPageChoicesBtnListElement.innerHTML = '';
-        let diceManager = new DiceManager();
+        let diceManager = new DiceManager("");
         for (let choice of this.currentEvent.choices) {
             const button = document.createElement("button");
 
@@ -92,7 +93,7 @@ export class EventManager {
         }
 
         this.currentChoice.normalResultPath();
-        this.checkLogs();
+        this._game.stateManager.goToState(GameStates.LOG);
     }
 
     get currentEvent(): Event {
@@ -126,6 +127,7 @@ export class EventManager {
     }
 
     showEvent(): void {
+        console.log("show event");
         this._titleElement.style.display = 'block';
         this._photographyBorder.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.title;
@@ -138,13 +140,5 @@ export class EventManager {
 
         this._imageElement.style.display = 'block';
         this.showChoices();
-    }
-
-    checkLogs(): void {
-        if (this._game.log.isThereAnyTemporaryLog()) {
-            this._game.stateManager.goToState(GameStates.LOG);
-        } else {
-            this._game.stateManager.goToState(GameStates.TRAVEL);
-        }
     }
 }

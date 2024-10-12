@@ -1,7 +1,6 @@
 import { EventManager } from './managers/EventManager';
 import { GameOverManager } from './managers/GameOverManager';
 import { RipManager } from './managers/RipManager';
-import { TravelManager } from './managers/TravelManager';
 import { LogManager } from './managers/LogManager';
 import { BagManager } from './managers/BagManager';
 import { StateManager } from './managers/StateManager';
@@ -26,23 +25,21 @@ export class Game {
     private _clock: Clock; 
     private _distanceToTheBorder = 300;
 
-    public travelPage: HTMLElement | null;
-    public logPage: HTMLElement | null;
-    public eventPage: HTMLElement | null;
-    public skillCheckPage: HTMLElement | null;
-    public gameOverPage: HTMLElement | null;
-    public ripPage: HTMLElement | null;
-    public bagPage: HTMLElement | null;
-    public itemPickerPage: HTMLElement | null;
-    public dialogPage: HTMLElement | null;
-    public mapPage: HTMLElement | null;
-    public skillUpPage: HTMLElement | null;
+    public logPage: HTMLElement;
+    public eventPage: HTMLElement;
+    public skillCheckPage: HTMLElement;
+    public gameOverPage: HTMLElement;
+    public ripPage: HTMLElement;
+    public bagPage: HTMLElement;
+    public itemPickerPage: HTMLElement;
+    public dialogPage: HTMLElement;
+    public mapPage: HTMLElement;
+    public skillUpPage: HTMLElement;
 
     public eventManager: EventManager;
     public skillCheckManager: SkillCheckManager;
     public gameOverManager: GameOverManager;
     public ripManager: RipManager;
-    public travelManager: TravelManager;
     public logManager: LogManager;
     public bagManager: BagManager;
     public characterManager: CharacterManager;
@@ -54,25 +51,24 @@ export class Game {
     public skillUpManager: SkillUpManager;
     public audioManager: AudioManager;
 
-    private _currentTimeField: Element | null;
+    private _currentTimeField: Element;
     private playerGuid: string;
 
     public skillCheckResult: SkillCheckResults;
 
     private constructor() {
-        this.travelPage = document.getElementById("travel-page");
-        this.logPage = document.getElementById("log-page");
-        this.eventPage = document.getElementById("event-page");
-        this.skillCheckPage = document.getElementById("skill-check-page");
-        this.gameOverPage = document.getElementById("game-over-page");
-        this.ripPage = document.getElementById("rip-page");
-        this.bagPage = document.getElementById("bag-page");
-        this.itemPickerPage = document.getElementById("item-picker-page");
-        this.dialogPage = document.querySelector("#dialog-page");
-        this.mapPage = document.querySelector("#map-page");
-        this.skillUpPage = document.querySelector("#skill-up-page");
+        this.logPage = document.getElementById("log-page")!;
+        this.eventPage = document.getElementById("event-page")!;
+        this.skillCheckPage = document.getElementById("skill-check-page")!;
+        this.gameOverPage = document.getElementById("game-over-page")!;
+        this.ripPage = document.getElementById("rip-page")!;
+        this.bagPage = document.getElementById("bag-page")!;
+        this.itemPickerPage = document.getElementById("item-picker-page")!;
+        this.dialogPage = document.querySelector("#dialog-page")!;
+        this.mapPage = document.querySelector("#map-page")!;
+        this.skillUpPage = document.querySelector("#skill-up-page")!;
 
-        this._currentTimeField = document.querySelector("#current-time-field");
+        this._currentTimeField = document.querySelector("#current-time-field")!;
         this.playerGuid = this.generateGuid();
     }
 
@@ -97,7 +93,6 @@ export class Game {
         this.gameOverManager = new GameOverManager();
         this.skillCheckManager = new SkillCheckManager();
         this.ripManager = new RipManager();
-        this.travelManager = new TravelManager();
         this._clock = new Clock(8, true);
         this.logManager = new LogManager();
         this.stateManager = new StateManager();
@@ -108,7 +103,7 @@ export class Game {
         this.audioManager = new AudioManager();
 
         this.showDataTime();
-        this.stateManager.goToState(GameStates.TRAVEL);
+        this.stateManager.goToState(GameStates.LOG);
     }
 
     get events() {
@@ -166,7 +161,6 @@ export class Game {
     }
 
     public hideAllPages(): void {
-        this.hidePage(this.travelPage);
         this.hidePage(this.logPage);
         this.hidePage(this.eventPage);
         this.hidePage(this.skillCheckPage);

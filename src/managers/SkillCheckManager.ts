@@ -25,14 +25,14 @@ export class SkillCheckManager {
     constructor() {
         this._game = Game.getInstance();
 
-        this._resultLabel = document.querySelector("#skill-check-result-label");
-        this._skillCheckResultValue = document.querySelector("#skill-check-result-value");
-        this._skillCheckResultValueLabel = document.querySelector("#skill-check-result-value-label");
+        this._resultLabel = document.querySelector("#skill-check-result-label")!;
+        this._skillCheckResultValue = document.querySelector("#skill-check-result-value")!;
+        this._skillCheckResultValueLabel = document.querySelector("#skill-check-result-value-label")!;
 
-        this._travelBtn = document.querySelector("#skill-check-back-btn");
-        this._firstDice = document.querySelector("#first-dice");
-        this._secondDice = document.querySelector("#second-dice");
-        this._skillCheckExpected = document.querySelector("#skill-check-expected");
+        this._travelBtn = document.querySelector("#skill-check-back-btn")!;
+        this._firstDice = document.querySelector("#first-dice")!;
+        this._secondDice = document.querySelector("#second-dice")!;
+        this._skillCheckExpected = document.querySelector("#skill-check-expected")!;
 
         this._travelBtn.addEventListener('click', () => { this.onClickTravel() });
         this._diceManager = new DiceManager("teste");

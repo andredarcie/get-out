@@ -3,7 +3,7 @@ import { GameStates } from '../enums/GameStates';
 
 export class StateManager {
     private readonly _game: Game;
-    public currentState: GameStates = GameStates.TRAVEL;
+    public currentState: GameStates = GameStates.LOG;
 
     constructor() {
         this._game = Game.getInstance();
@@ -16,10 +16,6 @@ export class StateManager {
         this._game.hideAllPages();
 
         switch(this.currentState) {
-            case GameStates.TRAVEL: 
-                this._game.showPage(this._game.travelPage);
-                this._game.travelManager.start();
-            break;
             case GameStates.EVENT: 
                 this._game.showPage(this._game.eventPage);
                 this._game.eventManager.start();

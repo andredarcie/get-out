@@ -9,7 +9,7 @@ export class Character {
     private _dateOfBirth: string;
     private _imageURL: string;
     private _sanity: number = 100;
-    private _status: Status[] = [];
+    private _status: Status | null;
 
     private _isDead: boolean = false;
     private _buried: boolean = false;
@@ -59,50 +59,26 @@ export class Character {
     }
 
     public walkOneHour(): void {
-        for (let affliction of this._status) {
-            this.looseSanity(affliction.healthPerHour);
-            this._game.logManager.addTempLog(this._name + ' has ' + affliction.name, LogType.Result);
+        if (this._status != null) {
+            this.looseSanity(this._status?.healthPerHour ?? 0);
         }
-    }
-
-    public showHealthLostPerHourDueToAllStatus(): number {
-        let totalHealth: number = 0;
-        for (let status of this._status) {
-            totalHealth += status.healthPerHour;
-        }
-
-        return totalHealth;
     }
 
     private checksIfAnStatusExists(statusName: string): boolean {
-        let existingStatusIndex = this._status.findIndex(status => status.name == statusName);
-        return existingStatusIndex  != -1 ? true : false;
+        return this._status?.name == statusName;
     }
 
-    public addStatus(affliction: Status) {
-        if (!this.checksIfAnStatusExists(affliction.name)) {
-            this._game.logManager.addTempLog(this._name + ' got: ' + affliction.name, LogType.Result);
-            this._status.push(affliction);
-        }
+    public setStatus(status: Status) {
+        this._game.logManager.addTempLog(this._name + ' pegou: ' + status.name, LogType.Result);
+        this._status = status;
     }
 
-    public removeStatus(statusToRemove: Status) {
-        this._status = this._status.filter(status => status !== statusToRemove);
+    public removeStatus() {
+        this._status = null;
     }
 
     public showAfflictions(): string {
-        if (this._status.length == 0) {
-            return '';
-        }
-
-        let afflictions: string = '';
-        for (let affliction of this._status) {
-            if (affliction) {
-                afflictions += ' -' + affliction.name;
-            }
-        }
-
-        return afflictions;
+        return this._status?.name ?? '';
     }
 
     getSanity(): string {
