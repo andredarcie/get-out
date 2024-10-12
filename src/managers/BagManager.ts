@@ -1,5 +1,5 @@
 import { Game } from '../Game';
-import { Item, ItemType } from '../entities/Item';
+import { Item } from '../entities/Item';
 import { Character } from '../entities/Character';
 import { GameStates } from '../enums/GameStates';
 
@@ -56,9 +56,7 @@ export class BagManager {
 
     private showSelectedItem() {
         this._selectedItemElement.style.display = 'block';
-        if (this._selectedItem.type == ItemType.FirstAid) {
-            this._selectedItemDescriptionElement.style.display = 'block';
-        }
+        this._selectedItemDescriptionElement.style.display = 'block';
     }
 
     private showItems() {
@@ -104,12 +102,8 @@ export class BagManager {
                 paragraph.classList.add('line');
                 paragraph.style.color = '#2c3e50';
             } else {
-                switch (this._selectedItem.type) {
-                    case ItemType.FirstAid:
-                        buttonText += character.getSanity();
-                        buttonText += character.showAfflictions();
-                        break;
-                }
+                buttonText += character.getSanity();
+                buttonText += character.showAfflictions();
             }
 
             paragraph.appendChild(document.createTextNode(buttonText));
