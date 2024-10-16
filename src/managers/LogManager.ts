@@ -241,21 +241,22 @@ export class LogManager {
     }
 
     showCharacters(): void {
-        let characters = this._game.characters;
+        this.showCharacter(this._game.characterManager.characterDmytro, 0);
+        this.showCharacter(this._game.characterManager.characterOlena, 1);
+        this.showCharacter(this._game.characterManager.characterMykola, 2);
+        this.showCharacter(this._game.characterManager.characterSofiia, 3);
+    }
 
-        for (let i = 0; i < characters.length; i++){
-            let character = characters[i];
-
-            if (character.isDead) {
-                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + ' 💀';
-                this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020';
-                this._charactersList[i].afflictionsField.innerHTML = '';
-            } else {
-                this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
-                this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
-                this._charactersList[i].atributesField.innerHTML = character.getSanity();
-                this._charactersList[i].afflictionsField.innerHTML = character.showAfflictions();
-            }
+    private showCharacter(character: Character, i: number) {
+        if (character.isDead) {
+            this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship + ' 💀';
+            this._charactersList[i].atributesField.innerHTML = character.getDateOfBirth() + ' - 2020';
+            this._charactersList[i].afflictionsField.innerHTML = '';
+        } else {
+            this._charactersList[i].nameField.innerHTML = character.name + ' - ' + character.kinship;
+            this._charactersList[i].nameField.innerHTML += character.getSickness() == 'Sick' ? ' [ Sick ]' : '';
+            this._charactersList[i].atributesField.innerHTML = character.getSanity();
+            this._charactersList[i].afflictionsField.innerHTML = character.showAfflictions();
         }
     }
 

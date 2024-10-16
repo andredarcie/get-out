@@ -45,8 +45,6 @@ export class EventManager {
             this._currentEvent = eventSeeds.getMileStoneEvent();
         } else if (randomEventType == 0) {
             this._currentEvent = eventSeeds.getPlaceEvent();
-        } else {
-            this._currentEvent = eventSeeds.getCombatEvent();
         }
 
         this.showEvent();
@@ -55,27 +53,30 @@ export class EventManager {
     private showChoices() {
         this._eventPageChoicesBtnListElement.innerHTML = '';
         let diceManager = new DiceManager("");
-        for (let choice of this.currentEvent.choices) {
-            const button = document.createElement("button");
+        this.showChoice(this.currentEvent.firstChoice, diceManager);
+        this.showChoice(this.currentEvent.secondChoice, diceManager);
+    }
 
-            if (choice.skillCheck) {
-                choice.skillCheckFields.difficult = diceManager.getDifficult(choice.skillCheckFields.difficulty);
+    private showChoice(choice : Choice, diceManager: DiceManager) {
+        const button = document.createElement("button");
 
-                let buttonText: string = choice.buttonText + ' [' +
-                                         choice.skillCheckFields.difficult.text + ': ' + 
-                                         choice.skillCheckFields.difficult.value + 
-                                         ' - ' + diceManager.calculateProbabilityFrom((choice.skillCheckFields.difficult.value - 3)) + ']';
+        if (choice.skillCheck && choice.skillCheckFields) {
+            choice.skillCheckFields.difficult = diceManager.getDifficult(choice.skillCheckFields.difficulty);
 
-                button.appendChild(document.createTextNode(buttonText));
-                button.classList.add(choice.skillCheckFields.difficult.class);
-            } else {
-                button.appendChild(document.createTextNode(choice.buttonText));
-            }
+            let buttonText: string = choice.buttonText + ' [' +
+                                     choice.skillCheckFields.difficult.text + ': ' + 
+                                     choice.skillCheckFields.difficult.value + 
+                                     ' - ' + diceManager.calculateProbabilityFrom((choice.skillCheckFields.difficult.value - 3)) + ']';
 
-            
-            button.addEventListener('click', () => this.selectChoice(choice));
-            this._eventPageChoicesBtnListElement.appendChild(button);
+            button.appendChild(document.createTextNode(buttonText));
+            button.classList.add(choice.skillCheckFields.difficult.class);
+        } else {
+            button.appendChild(document.createTextNode(choice.buttonText));
         }
+
+        
+        button.addEventListener('click', () => this.selectChoice(choice));
+        this._eventPageChoicesBtnListElement.appendChild(button);
     }
 
     private selectChoice(choice: Choice) {

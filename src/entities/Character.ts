@@ -98,13 +98,13 @@ export class Character {
         this._sick = true;
     }
 
-    looseSanity(healthToLoose: number): void {
-        if (healthToLoose < 0 || healthToLoose > 100) {
+    looseSanity(sanityToLoose: number): void {
+        if (sanityToLoose < 0 || sanityToLoose > 100) {
             throw new Error('Invalid value for healthToLoose');
         }
 
         if (this._sanity > 0) {
-            this._sanity -= healthToLoose;
+            this._sanity -= sanityToLoose;
 
             if (this._sanity <= 0) {
                 this._sanity = 0;
@@ -117,8 +117,8 @@ export class Character {
         }
     }
 
-    increaseHealth(healthToIncrease: number): void {
-        this._sanity += healthToIncrease;
+    increaseSanity(sanityToIncrease: number): void {
+        this._sanity += sanityToIncrease;
 
         if (this._sanity > 100) {
             this._sanity = 100;
