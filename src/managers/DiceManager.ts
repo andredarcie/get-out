@@ -16,24 +16,20 @@ export class DiceManager {
     private cornerRadius: number;
     private dotRadius: number;
     private positions: [number, number][][];
+    private _diceTimer: any; 
 
     constructor(canvasId: string) {
         this.percentageTable = {
-            '2': 97,
-            '3': 97,
-            '4': 92,
-            '5': 83,
-            '6': 73,
-            '7': 59,
-            '8': 42,
-            '9': 28,
-            '10': 17,
-            '11': 9,
-            '12': 3
-          };
+            '1': 16.67,
+            '2': 16.67,
+            '3': 16.67,
+            '4': 16.67,
+            '5': 16.67,
+            '6': 16.67
+        };
 
-        //this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-        //this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+        this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+        this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
 
         this.diceSize = 150;
         this.cornerRadius = 20;
@@ -55,19 +51,19 @@ export class DiceManager {
     }
 
     public getDifficult(difficulty: Difficulties): Difficult {
-        switch(difficulty) {
+        switch (difficulty) {
             case Difficulties.TRIVIAL:
-                return { value: this.getRandomNumber(3, 5), text: 'Trivial',  class: 'green-color-border' };
+                return { value: 1, text: 'Trivial', class: 'green-color-border' };
             case Difficulties.EASY:
-                return { value: this.getRandomNumber(6, 8), text: 'Easy',  class: 'green-color-border' };
+                return { value: 2, text: 'Easy', class: 'green-color-border' };
             case Difficulties.MEDIUM:
-                return { value: this.getRandomNumber(9, 11), text: 'Medium',  class: 'green-color-border' };
+                return { value: 3, text: 'Medium', class: 'green-color-border' };
             case Difficulties.CHALLENGING:
-                return { value: this.getRandomNumber(12, 14), text: 'Challenging',  class: 'yellow-color-border' };
+                return { value: 4, text: 'Challenging', class: 'yellow-color-border' };
             case Difficulties.VERY_HARD:
-                return { value: this.getRandomNumber(15, 17), text: 'Very Hard',  class: 'red-color-border' };
+                return { value: 5, text: 'Very Hard', class: 'red-color-border' };
             case Difficulties.IMPOSSIBILE:
-                return { value: this.getRandomNumber(18, 20), text: 'Impossibile',  class: 'red-color-border' };
+                return { value: 6, text: 'Impossibile', class: 'red-color-border' };
         }
     }
 
@@ -129,10 +125,15 @@ export class DiceManager {
         return Math.floor(Math.random() * 6) + 1;
     }
 
+    public stopDice(value: number) {
+        clearInterval(this._diceTimer);
+        this.drawDice(value);
+    }
+
     public animateDice(): void {
-        setInterval(() => {
+        this._diceTimer = setInterval(() => {
             const diceValue = this.getRandomDiceValue();
             this.drawDice(diceValue);
-        }, 1000);
+        }, 50);
     }
 }

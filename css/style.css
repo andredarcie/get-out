@@ -265,7 +265,14 @@ ul {
 }
 
 .character-image {
-    border-right: ;
     transform: scale(1); /* 20% do tamanho original */
     transform-origin: center; /* Define o ponto de origem da transformação */
+}
+
+#dice-canvas {
+    display: block;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    text-align: center;
 }

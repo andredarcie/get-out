@@ -52,7 +52,7 @@ export class EventManager {
 
     private showChoices() {
         this._eventPageChoicesBtnListElement.innerHTML = '';
-        let diceManager = new DiceManager("");
+        let diceManager = new DiceManager("dice-canvas");
         this.showChoice(this.currentEvent.firstChoice, diceManager);
         this.showChoice(this.currentEvent.secondChoice, diceManager);
     }
