@@ -68,7 +68,6 @@ export class Game {
         this.mapPage = document.querySelector("#map-page")!;
         this.skillUpPage = document.querySelector("#skill-up-page")!;
 
-        this._currentTimeField = document.querySelector("#current-time-field")!;
         this.playerGuid = this.generateGuid();
     }
 
@@ -81,7 +80,7 @@ export class Game {
     }
 
     public start(): void {
-        this.loc = new LocalizationManager(Language.EnUs);
+        this.loc = new LocalizationManager(Language.PtBr);
         let dice = new DiceManager("dice-canvas");
         dice.start();
         
@@ -102,7 +101,6 @@ export class Game {
         this.skillUpManager = new SkillUpManager();
         this.audioManager = new AudioManager();
 
-        this.showDataTime();
         this.stateManager.goToState(GameStates.LOG);
     }
 
@@ -173,16 +171,6 @@ export class Game {
         this.hidePage(this.mapPage);
     }
 
-    showDataTime() {
-        this._currentTimeField.innerHTML = this._clock.showTime() + ' - day ' + this._currentDay;
-
-        if (this.isDayLight()) {
-            this._currentTimeField.innerHTML += ' - daylight';
-        } else {
-            this._currentTimeField.innerHTML += ' - night';
-        }
-    }
-
     isDayLight(): boolean {
         if (this._clock.anteMeridiem) {
             if (this._clock.currentHour > 6 && this._clock.currentHour < 12) {
@@ -205,7 +193,6 @@ export class Game {
         }
 
         this._clock.nextHour();
-        this.showDataTime();
     }
 
     generateGuid(): string {
