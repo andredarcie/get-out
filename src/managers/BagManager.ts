@@ -91,25 +91,17 @@ export class BagManager {
         for (const character of this._game.characters) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.classList.add('bag-item');
 
-            let buttonText = character.name;
-
-            var paragraph = document.createElement("p");
-            
             if (character.isDead) {
                 button.disabled = true;
-                paragraph.classList.add('line');
-                paragraph.style.color = '#2c3e50';
+                button.textContent = `${character.name} — morto`;
             } else {
-                buttonText += character.getSanity();
-                buttonText += character.showAfflictions();
+                const affliction = character.showAfflictions();
+                button.textContent = `${character.name} (${character.kinship})`;
+                if (affliction) button.textContent += ` — ${affliction}`;
             }
 
-            paragraph.appendChild(document.createTextNode(buttonText));
-            button.appendChild(paragraph);
-
-            button.addEventListener('click', () => this.useItem(character) );
+            button.addEventListener('click', () => this.useItem(character));
             li.appendChild(button);
             this._itemListElement.appendChild(li);
         }
@@ -118,10 +110,8 @@ export class BagManager {
     private selectItem(selectedItem: Item) {
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
-        this._selectedItemElement.innerHTML = `Give ${this._selectedItem.name} ${this._selectedItem.status.name} to:`;
-        if (this._selectedItem.type == ItemType.FirstAid) {
-            this._selectedItemDescriptionElement.innerHTML = 'Can help with ' + this._selectedItem.status.name;
-        }
+        this._selectedItemElement.innerHTML = `${this._selectedItem.name}`;
+        this._selectedItemDescriptionElement.innerHTML = `Cura: ${this._selectedItem.status.name} — Escolha quem vai receber:`;
         this.showSelectedItem();
         this.showCharacters();
         this._bagThrowAwayBtn.style.display = 'block';

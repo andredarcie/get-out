@@ -10,6 +10,8 @@ export class EventManager {
     private _eventPageChoicesBtnListElement: HTMLElement;
     private _photographyBorder: HTMLElement;
     private _imageElement: HTMLImageElement;
+    private _developOverlay: HTMLElement;
+    private _characterCard: HTMLElement;
     private _currentEvent: Event;
     public currentChoice: Choice;
     private _images: Map<string, string>;
@@ -21,12 +23,28 @@ export class EventManager {
         this._photographyBorder = document.querySelector(".photography-border")!;
         this._eventPageChoicesBtnListElement = document.getElementById("event-page-choices-btn-list")!;
         this._imageElement = document.getElementById("event-page-image") as HTMLImageElement;
+        this._developOverlay = document.getElementById("photo-develop-overlay")!;
+        this._characterCard = document.getElementById("event-character-card")!;
 
         this._images = new Map<string, string>([
-            ['ferrisWheel', new URL('../../img/places/ferris-wheel.jpg', import.meta.url).toString()],
-            ['geysir', new URL('../../img/places/geyser.jpg', import.meta.url).toString()],
-            ['themePark', new URL('../../img/places/theme-park.jpg', import.meta.url).toString()],
-            ['barn', new URL('../../img/places/barn-abandoned-farm-homestead.jpg', import.meta.url).toString()],            
+            // lugares nomeados
+            ['barn',       new URL('../../img/places/barn-abandoned-farm-homestead.jpg', import.meta.url).toString()],
+            ['ferrisWheel',new URL('../../img/places/ferris-wheel.jpg', import.meta.url).toString()],
+            ['forestFog',  new URL('../../img/places/forest-fog.jpg', import.meta.url).toString()],
+            ['geyser',     new URL('../../img/places/geyser.jpg', import.meta.url).toString()],
+            ['milestone',  new URL('../../img/places/milestone.jpg', import.meta.url).toString()],
+            ['themePark',  new URL('../../img/places/theme-park.jpg', import.meta.url).toString()],
+            // numerados
+            ['img2', new URL('../../img/places/2.jpg', import.meta.url).toString()],
+            ['img4', new URL('../../img/places/4.jpg', import.meta.url).toString()],
+            ['img5', new URL('../../img/places/5.jpg', import.meta.url).toString()],
+            ['img6', new URL('../../img/places/6.jpg', import.meta.url).toString()],
+            ['img7', new URL('../../img/places/7.jpg', import.meta.url).toString()],
+            ['imgC', new URL('../../img/places/c.jpg', import.meta.url).toString()],
+            // raiz
+            ['forest', new URL('../../img/forest.jpg', import.meta.url).toString()],
+            ['house',  new URL('../../img/house.jpg',  import.meta.url).toString()],
+            ['wolf',   new URL('../../img/wolf.jpg',   import.meta.url).toString()],
         ]);
 
         this._game = Game.getInstance();
@@ -48,6 +66,31 @@ export class EventManager {
         }
 
         this.showEvent();
+    }
+
+    private showCharacterCard(): void {
+        const character = this._currentEvent.character;
+        if (!character) {
+            this._characterCard.innerHTML = '';
+            this._characterCard.style.display = 'none';
+            return;
+        }
+
+        const sanityPct = character.sanity;
+        const sanityClass = sanityPct > 50 ? 'sanity-ok' : sanityPct > 25 ? 'sanity-warn' : 'sanity-critical';
+
+        this._characterCard.style.display = 'flex';
+        const afflictions = character.showAfflictions();
+        this._characterCard.innerHTML = `
+            <img src="${character.imageURL}" alt="${character.name}" class="event-character-img">
+            <div class="event-character-info">
+                <div class="event-character-name">${character.name} <span class="event-character-kinship">${character.kinship}</span></div>
+                ${afflictions ? `<div class="event-character-afflictions">${afflictions}</div>` : ''}
+                <div class="character-sanity-bar">
+                    <div class="character-sanity-fill ${sanityClass}" style="width:${sanityPct}%"></div>
+                </div>
+            </div>
+        `;
     }
 
     private showChoices() {
@@ -134,12 +177,19 @@ export class EventManager {
         this._titleElement.innerHTML = this._currentEvent.title;
         this._descriptionElement.innerHTML = this._currentEvent.description;
         
+        this._imageElement.style.display = 'block';
+
         if (this._currentEvent.image != '') {
-            this._imageElement.src = 'img\\places\\' + this._currentEvent.image + '.jpg';
-            this._imageElement.src = this.getImagePath(this._currentEvent.image);
+            const path = this.getImagePath(this._currentEvent.image);
+            if (path) this._imageElement.src = path;
         }
 
-        this._imageElement.style.display = 'block';
+        // Trigger developing animation on every event
+        this._developOverlay.classList.remove('developing');
+        void this._developOverlay.offsetWidth;
+        this._developOverlay.classList.add('developing');
+
+        this.showCharacterCard();
         this.showChoices();
     }
 }

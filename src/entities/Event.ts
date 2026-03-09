@@ -76,6 +76,10 @@ export class Event {
         return this._type;
     }
 
+    get character() {
+        return this._character;
+    }
+
     get items() {
         return this._items;
     }

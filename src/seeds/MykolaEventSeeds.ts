@@ -13,7 +13,7 @@ export class MykolaEventSeeds {
         events.push(new Event(
             'Eco de Choro',
             'Mykola ouve ecos de um choro distante, que ressoam como um reflexo de sua própria dor.',
-            '',
+            'img4',
             {
                 buttonText: 'Confrontar',
                 skillCheck: true,
@@ -50,7 +50,7 @@ export class MykolaEventSeeds {
         events.push(new Event(
             'Companheiro Imaginário',
             'Mykola começa a falar com alguém que ninguém mais vê, buscando conforto em uma presença imaginária.',
-            '',
+            'themePark',
             {
                 buttonText: 'Enfrentar',
                 skillCheck: true,
@@ -87,7 +87,7 @@ export class MykolaEventSeeds {
         events.push(new Event(
             'Caminho Sem Volta',
             'Mykola encontra um caminho sombrio e desconhecido, que parece não ter fim.',
-            '',
+            'img7',
             {
                 buttonText: 'Pressão',
                 skillCheck: false,
@@ -118,6 +118,28 @@ export class MykolaEventSeeds {
                 normalResultPath: null
             },
             EventType.Psychological,
+            this._game.characterManager.characterMykola
+        ));
+
+        events.push(new Event(
+            'Mochila no Caminho',
+            'Mykola tropeça em uma mochila militar abandonada na estrada. Está suja de lama e parcialmente aberta. O que quer que esteja lá dentro ainda pode ser útil.',
+            'img7',
+            {
+                buttonText: 'Investigate',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: null
+            },
+            {
+                buttonText: 'Não tocar',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: () => {
+                    this._game.log.addTempLog('Mykola olha para a mochila por um longo momento, depois desvia o olhar e continua andando.', LogType.Result);
+                }
+            },
+            EventType.Place,
             this._game.characterManager.characterMykola
         ));
 

@@ -13,7 +13,7 @@ export class OlenaEventSeeds {
         events.push(new Event(
             'Olhos no Escuro',
             'Olena sente que algo a observa na escuridão, como se olhos invisíveis a seguissem por onde passa.',
-            '',
+            'img5',
             {
                 buttonText: 'Enfrentar',
                 skillCheck: true,
@@ -50,7 +50,7 @@ export class OlenaEventSeeds {
         events.push(new Event(
             'Sussurros dos Mortos',
             'Olena ouve sussurros que parecem vir do além, trazendo mensagens que ela não consegue decifrar.',
-            '',
+            'img6',
             {
                 buttonText: 'Esperança',
                 skillCheck: true,
@@ -87,7 +87,7 @@ export class OlenaEventSeeds {
         events.push(new Event(
             'Silêncio Mortal',
             'Olena se depara com um silêncio absoluto, um vazio que parece engolir todos os sons ao seu redor.',
-            '',
+            'geyser',
             {
                 buttonText: 'Pressão',
                 skillCheck: false,
@@ -118,6 +118,28 @@ export class OlenaEventSeeds {
                 normalResultPath: null
             },
             EventType.Psychological,
+            this._game.characterManager.characterOlena
+        ));
+
+        events.push(new Event(
+            'Farmácia Destruída',
+            'Olena encontra os restos de uma farmácia saqueada. Algumas prateleiras no fundo ainda estão intactas. Entre os escombros, pode haver algo que ajude a família.',
+            'img4',
+            {
+                buttonText: 'Investigate',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: null
+            },
+            {
+                buttonText: 'Deixar para trás',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: () => {
+                    this._game.log.addTempLog('Olena hesita na entrada, mas o instinto a faz seguir em frente sem olhar para trás.', LogType.Result);
+                }
+            },
+            EventType.Place,
             this._game.characterManager.characterOlena
         ));
 

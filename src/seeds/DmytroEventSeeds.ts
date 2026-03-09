@@ -13,7 +13,7 @@ export class DmytroEventSeeds {
         events.push(new Event(
             'Rostos nos Escombros',
             'Dmytro depara-se com os corpos de uma família, soterrados nos escombros de uma casa destruída. A visão traz um eco de dor e desolação, como se as paredes dilaceradas daquele lar sussurrassem segredos de vidas interrompidas. A imagem crava-se em sua mente, e o medo do mesmo destino para sua própria família transforma-se em um peso opressor, como se o céu desabasse sobre seus ombros.',
-            '',
+            'barn',
             {
                 buttonText: 'Enfrentar',
                 skillCheck: true,
@@ -51,7 +51,7 @@ export class DmytroEventSeeds {
         events.push(new Event(
             'O Velho Espelho',
             'Dmytro encontra um espelho rachado, um fragmento do passado que reflete não apenas seu rosto cansado, mas os fantasmas daqueles que ele não conseguiu salvar. As fissuras no vidro parecem traçar as linhas de sua própria culpa, um labirinto sem saída que o aprisiona em suas falhas.',
-            '',
+            'house',
             {
                 buttonText: 'Pressão',
                 skillCheck: false,
@@ -88,7 +88,7 @@ export class DmytroEventSeeds {
         events.push(new Event(
             'Gritos Fantasmas',
             'Dmytro ouve gritos ao longe, ecos de um massacre há muito ocorrido, mas que ainda ressoam como espectros em sua mente. Cada som é uma lâmina cortante, um chamado que rasga a calma da noite e o arrasta de volta às memórias que ele tenta enterrar.',
-            '',
+            'forestFog',
             {
                 buttonText: 'Confrontar',
                 skillCheck: true,
@@ -119,6 +119,28 @@ export class DmytroEventSeeds {
                 }
             },
             EventType.Psychological,
+            this._game.characterManager.characterDmytro
+        ));
+
+        events.push(new Event(
+            'Casa Abandonada',
+            'Dmytro avista uma casa abandonada à beira do caminho. As janelas estão quebradas, mas a estrutura ainda está de pé. Pode haver suprimentos lá dentro — ou perigo.',
+            'house',
+            {
+                buttonText: 'Investigate',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: null
+            },
+            {
+                buttonText: 'Ignorar e seguir',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: () => {
+                    this._game.log.addTempLog('Dmytro decide não arriscar. A família continua caminhando em silêncio.', LogType.Result);
+                }
+            },
+            EventType.Place,
             this._game.characterManager.characterDmytro
         ));
 

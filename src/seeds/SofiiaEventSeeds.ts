@@ -13,7 +13,7 @@ export class SofiiaEventSeeds {
         events.push(new Event(
             'Rostos Esquecidos',
             'Sofiia é assombrada por rostos que não consegue mais lembrar, como se as memórias estivessem desaparecendo de sua mente.',
-            '',
+            'img2',
             {
                 buttonText: 'Esperança',
                 skillCheck: true,
@@ -50,7 +50,7 @@ export class SofiiaEventSeeds {
         events.push(new Event(
             'Sombras no Horizonte',
             'Sofiia vê sombras misteriosas ao longe, que parecem se aproximar lentamente, trazendo uma sensação de medo.',
-            '',
+            'imgC',
             {
                 buttonText: 'Confrontar',
                 skillCheck: true,
@@ -87,7 +87,7 @@ export class SofiiaEventSeeds {
         events.push(new Event(
             'Esperança Quebrada',
             'Sofiia vê sua esperança desmoronar diante dos desafios que parecem insuperáveis.',
-            '',
+            'ferrisWheel',
             {
                 buttonText: 'Esperança',
                 skillCheck: true,
@@ -118,6 +118,28 @@ export class SofiiaEventSeeds {
                 }
             },
             EventType.Psychological,
+            this._game.characterManager.characterSofiia
+        ));
+
+        events.push(new Event(
+            'Veículo Abandonado',
+            'Sofiia localiza um carro capotado à margem da estrada. As portas estão abertas e o porta-malas ejetado. Parece que os donos fugiram às pressas — talvez tenham deixado algo para trás.',
+            'img5',
+            {
+                buttonText: 'Investigate',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: null
+            },
+            {
+                buttonText: 'Passar direto',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: () => {
+                    this._game.log.addTempLog('Sofiia se afasta do veículo sem tocar em nada. Alguns lugares é melhor não mexer.', LogType.Result);
+                }
+            },
+            EventType.Place,
             this._game.characterManager.characterSofiia
         ));
 

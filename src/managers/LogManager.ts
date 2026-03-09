@@ -18,9 +18,9 @@ export class LogManager {
     private _walkBtn: HTMLButtonElement;
     private _hoursSleeping: number = 0;
     private _sleepIntervalId: any;
-    private _travelledDistanceField: Element;
-    private _progressBarCanvasElement: HTMLCanvasElement;
-    private _progressBarCanvasContext: CanvasRenderingContext2D;
+    private _journeyNum: HTMLElement;
+    private _journeyFill: HTMLElement;
+    private _journeyMarker: HTMLElement;
     private readonly _game: Game;
 
     constructor() {
@@ -36,8 +36,9 @@ export class LogManager {
         this._bagBtn = document.querySelector('#bag-btn')!;
         this._walkBtn = document.querySelector("#walk-btn")!;
         this._yourFamily = document.querySelector("#your-family")!;
-        this._travelledDistanceField = document.querySelector("#travelled-distance")!;
-        this._progressBarCanvasElement = document.getElementById("progress-bar") as HTMLCanvasElement;
+        this._journeyNum = document.getElementById("journey-num")!;
+        this._journeyFill = document.getElementById("journey-fill")!;
+        this._journeyMarker = document.getElementById("journey-marker")!;
         this._charactersList = [];
     }
 
@@ -51,7 +52,7 @@ export class LogManager {
         this.updateBagButton();
         this.updateWalkButton();
         this.showCharacters();
-        this.showProgressBarCanvas();
+        this.showTravelledDistance();
     }
 
     private updateBagButton(): void {
@@ -219,7 +220,15 @@ export class LogManager {
     }
 
     showTravelledDistance(): void {
-        this._travelledDistanceField.innerHTML = `${this._game.state.distanceToTheBorder} ${this._game.loc.l('miles-to-the-border')}`;
+        const distance = this._game.state.distanceToTheBorder;
+        const pct = ((300 - distance) / 300 * 100);
+        const urgency = distance <= 50 ? 'critical' : distance <= 150 ? 'warn' : '';
+
+        this._journeyNum.textContent = String(distance);
+        this._journeyNum.className = 'journey-num' + (urgency ? ' ' + urgency : '');
+        this._journeyFill.style.width = pct + '%';
+        this._journeyMarker.style.left = pct + '%';
+        this._journeyMarker.className = 'journey-marker' + (urgency ? ' ' + urgency : '');
     }
 
     private arrivedAtTheBorder(): void {
@@ -233,6 +242,7 @@ export class LogManager {
                 nameField: document.querySelector(`#${id}-character-name-field`),
                 atributesField: document.querySelector(`#${id}-character-atributes-field`),
                 afflictionsField: document.querySelector(`#${id}-character-afflictions-field`),
+                sanityFill: document.getElementById(`${id}-character-sanity-fill`),
             };
         });
     }
@@ -251,53 +261,26 @@ export class LogManager {
     }
 
     private showCharacter(character: Character, index: number): void {
-        const { nameField, atributesField, afflictionsField } = this._charactersList[index];
+        const { nameField, atributesField, afflictionsField, sanityFill } = this._charactersList[index];
         if (character.isDead) {
             nameField.innerHTML = `${character.name} - ${character.kinship} 💀`;
             atributesField.innerHTML = `${character.getDateOfBirth()} - 2020`;
             afflictionsField.innerHTML = '';
+            if (sanityFill) {
+                sanityFill.style.width = '0%';
+                sanityFill.className = 'character-sanity-fill';
+            }
         } else {
             nameField.innerHTML = `${character.name} - ${character.kinship}`;
             nameField.innerHTML += character.getSickness() === 'Sick' ? ' [ Sick ]' : '';
             atributesField.innerHTML = character.getSanity();
             afflictionsField.innerHTML = character.showAfflictions();
+            if (sanityFill) {
+                sanityFill.style.width = character.sanity + '%';
+                sanityFill.className = 'character-sanity-fill ' +
+                    (character.sanity > 50 ? 'sanity-ok' : character.sanity > 25 ? 'sanity-warn' : 'sanity-critical');
+            }
         }
     }
 
-    private showProgressBarCanvas(): void {
-        this._progressBarCanvasElement.width = 300;
-        this._progressBarCanvasElement.height = 8;
-        this._progressBarCanvasContext = this._progressBarCanvasElement.getContext("2d")!;
-        this.drawProgressBarBackground();
-        this.drawPlayerPositionOnProgressBarCanvas(300 - this._game.state.distanceToTheBorder);
-    }
-
-    private drawProgressBarBackground(): void {
-        const ctx = this._progressBarCanvasContext;
-        ctx.clearRect(0, 0, this._progressBarCanvasElement.width, this._progressBarCanvasElement.height);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, this._progressBarCanvasElement.width, this._progressBarCanvasElement.height);
-
-        ctx.strokeStyle = "#2c3e50";
-        ctx.lineWidth = 1;
-        const positions = [10, 75, 150, 225, 290];
-        positions.forEach(pos => {
-            ctx.beginPath();
-            ctx.moveTo(pos, 0);
-            ctx.lineTo(pos, 8);
-            ctx.stroke();
-            ctx.closePath();
-        });
-    }
-
-    private drawPlayerPositionOnProgressBarCanvas(mile: number): void {
-        const lineSize = this._progressBarCanvasElement.width - 20;
-        const unit = lineSize / 300;
-        const unitsToWalk = mile * unit;
-        
-        this._progressBarCanvasContext.beginPath();
-        this._progressBarCanvasContext.arc(unitsToWalk + 10, 4, 3.5, 0, 2 * Math.PI);
-        this._progressBarCanvasContext.fillStyle = "#27ae60";
-        this._progressBarCanvasContext.fill();
-    }
 }

@@ -1,178 +1,230 @@
 <!doctype html>
-
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Get Out Game Teste</title>
-  <meta name="description" content="Get out game">
-  <meta name="author" content="game">
+  <title>Get Out</title>
+  <meta name="description" content="Get Out — survival narrative game">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0a0a08">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
-  <meta name="theme-color" content="black"/>
-  <!--<link rel="stylesheet" href="css/style.css?v=1.0">-->
-
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
 </head>
 
 <body>
-    <div id="container">
-        <div id="core">
-            <div id="log-page">
-                <h1>Overview</h1>
-                <div class="log-content">
-                    <ul id="log-list-result"></ul>
-                </div>
-                <div class="stats-content">
-                    <div>
-                        <div class="character-content">
-                            <img class="character-image" src="img/characters/man.jpg" height="60" width="60"></img>
-                            <div class="character-atributes-box">
-                                <div id="first-character-name-field" class="character-name-field"></div>
-                                <div id="first-character-atributes-field"></div>
-                                <div class="character-afflictions-field" id="first-character-afflictions-field"></div>
-                            </div>
-                        </div>
-                        <div class="character-content">
-                            <img class="character-image" src="img/characters/woman.jpg" height="60" width="60"></img>
-                            <div class="character-atributes-box">
-                                <div id="second-character-name-field" class="character-name-field"></div>
-                                <div id="second-character-atributes-field"></div>
-                                <div class="character-afflictions-field" id="second-character-afflictions-field"></div>
-                            </div>
-                        </div>
-                        <div class="character-content">
-                            <img class="character-image" src="img/characters/kid.jpg" height="60" width="60"></img>
-                            <div class="character-atributes-box">
-                                <div id="third-character-name-field" class="character-name-field"></div>
-                                <div id="third-character-atributes-field"></div>
-                                <div class="character-afflictions-field" id="third-character-afflictions-field"></div>
-                            </div>
-                        </div>
-                        <div class="character-content">
-                            <img class="character-image" src="img/characters/girl.jpg" height="60" width="60"></img>
-                            <div class="character-atributes-box">
-                                <div id="fourth-character-name-field" class="character-name-field"></div>
-                                <div id="fourth-character-atributes-field"></div>
-                                <div class="character-afflictions-field" id="fourth-character-afflictions-field"></div>
-                            </div>
-                        </div>
-                    </ul>
-                </div>
-                <p id="travelled-distance"></p>
-                <canvas id="progress-bar" width="300" height="30"></canvas>
-                <div class="page-actions">
-                    <button id="bag-btn">Open bag</button>
-                    <button id="walk-btn">Continue to walk (+1 hour)</button>
-                </div></div>
-            </div>
-            <div id="skill-check-page">
-                <div class="header">
-                    <h1>Julgamento do Destino</h1>
-                </div>
-                <div class="skill-check-content">
-                    <canvas id="dice-canvas" width="200" height="200"></canvas>
-                    <div id="skill-check-expected" style="font-size: 1.5em; text-align: center;">Expected: 10</div>
-                    <h2 style="text-align: center; width: 15em; height: 5em; margin: 0 auto;">
-                        <span id="skill-check-result-label" style="font-size: 2.5em;">SUCCESS</span>
-                    </h2>
-                </div>
-                <div class="page-actions">
-                    <button id="skill-check-back-btn">Continue</button>
-                </div>
-            </div>
-            <div id="event-page">
-                <div class="page-header">
-                    <h1 id="event-page-title">Frozen lake</h1>
-                </div>
-                <div class="page-content">
-                    <div class="photography-border">
-                        <img class="photography fade-in" id="event-page-image" src="img/forest.jpg" alt="Some place" height="260" width="321" style="display: none;">
-                    </div>
-                    <p id="event-page-description"></p>
-                </div>
-                <div class="page-actions">
-                    <div id="event-page-choices-btn-list"></div>
-                </div>
-            </div>
-            <div id="bag-page">
-                <div class="page-header">
-                    <h1 id="bag-page-title">Bag</h1>
-                    <p id="bag-selected-item"></p>
-                    <p id="bag-selected-item-description"></p>
-                </div>
-                <div class="bag-content">
-                    <ul id="bag-item-list"></ul>
-                </div>
-                <div class="page-actions">
-                    <button id="bag-throw-away-btn">Throw away</button>
-                    <button id="bag-close-btn">Close Bag</button>
-                </div>
-            </div>
-            <div id="item-picker-page">
-                <h1 id="item-picker-page-title">Item picker</h1>
-                <div class="item-picker-page-content">
-                    <p id="item-picker-page-message">Did you find something!</p>
-                    <h2 id="items-found-title">Items found</h2>
-                    <ul id="item-picker-page-items-to-pick"></ul>
-                    <button style="margin-top:10px" id="item-picker-page-take-all-btn">Take All</button>
-                    <h2 id="your-items-title">Your items</h2>
-                    <ul id="item-picker-page-item-my-items"></ul>
-                </div>
-                <div class="page-actions">
-                    <button id="item-picker-page-continue-btn">Continue</button>
-                </div>
-            </div>
-            <div id="rip-page">
-                <h1 id="rip-page-title">Rest in peace</h1>
-                <div class="page-content" style="margin: 0 auto !important; text-align: center;">
-                    <img id="rip-page-image" style="margin-right: auto; margin-left: auto;" src="img/characters/man.jpg" height="60" width="60"></img>
-                    <h2 id="rip-page-name"></h2>
-                    <p id="rip-page-dates"></p>
-                    <p id="rip-page-quote"></p>
-                    <p id="rip-page-status"></p>
-                </div>
-                <div class="page-actions">
-                    <button id="rip-page-back-btn">Back to travel</button>
-                </div>
-            </div>
-            <div id="game-over-page">
-                <h1>Game over</h1>
-                <p id="game-over-message"></p>
-                <div class="page-actions">
-                    <button id="try-again-btn">Try again</button>
-                </div>
-            </div>
-            <div id="dialog-page">
-                <h1 id="dialog-page-title">Dialog Page</h1>
-                <div class="page-content">
-                </div>
-                <div class="page-actions">
-                </div>
-            </div>
-            <div id="map-page">
-                <h1 id="map-page-title">Map Page</h1>
-                <div class="page-content">
-                </div>
-                <div class="page-actions">
-                </div>
-            </div>
-            <div id="skill-up-page">
-                <h1 id="´skill-up-page-title">Skill Up Page</h1>
-                <div class="page-content">
-                </div>
-                <div class="page-actions">
-                </div>
-            </div>
+  <div id="container">
+    <div id="core">
+
+      <!-- LOG PAGE -->
+      <div id="log-page">
+        <div class="page-header">
+          <h1>Overview</h1>
         </div>
-        <img id="rip-page-image-1" style="display: none;" src="img/characters/man.jpg" height="60" width="60"></img>
-        <img id="rip-page-image-2" style="display: none;" src="img/characters/woman.jpg" height="60" width="60"></img>
-        <img id="rip-page-image-3" style="display: none;" src="img/characters/kid.jpg" height="60" width="60"></img>
-        <img id="rip-page-image-4" style="display: none;" src="img/characters/girl.jpg" height="60" width="60"></img>
-    </div>
-    <script type="module" src="/src/index.ts"></script>
+        <div class="log-content">
+          <ul id="log-list-result"></ul>
+        </div>
+        <div class="stats-content">
+          <div class="character-card">
+            <img class="character-image" src="img/characters/man.jpg" alt="Dmytro" width="44" height="44">
+            <div class="character-info">
+              <div id="first-character-name-field" class="character-name-field"></div>
+              <div id="first-character-atributes-field"></div>
+              <div class="character-afflictions-field" id="first-character-afflictions-field"></div>
+              <div class="character-sanity-bar">
+                <div id="first-character-sanity-fill" class="character-sanity-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div class="character-card">
+            <img class="character-image" src="img/characters/woman.jpg" alt="Olena" width="44" height="44">
+            <div class="character-info">
+              <div id="second-character-name-field" class="character-name-field"></div>
+              <div id="second-character-atributes-field"></div>
+              <div class="character-afflictions-field" id="second-character-afflictions-field"></div>
+              <div class="character-sanity-bar">
+                <div id="second-character-sanity-fill" class="character-sanity-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div class="character-card">
+            <img class="character-image" src="img/characters/kid.jpg" alt="Mykola" width="44" height="44">
+            <div class="character-info">
+              <div id="third-character-name-field" class="character-name-field"></div>
+              <div id="third-character-atributes-field"></div>
+              <div class="character-afflictions-field" id="third-character-afflictions-field"></div>
+              <div class="character-sanity-bar">
+                <div id="third-character-sanity-fill" class="character-sanity-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div class="character-card">
+            <img class="character-image" src="img/characters/girl.jpg" alt="Sofiia" width="44" height="44">
+            <div class="character-info">
+              <div id="fourth-character-name-field" class="character-name-field"></div>
+              <div id="fourth-character-atributes-field"></div>
+              <div class="character-afflictions-field" id="fourth-character-afflictions-field"></div>
+              <div class="character-sanity-bar">
+                <div id="fourth-character-sanity-fill" class="character-sanity-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-progress">
+          <div class="journey-header">
+            <span id="journey-num" class="journey-num">300</span>
+            <span class="journey-unit">mi até a fronteira</span>
+          </div>
+          <div class="journey-track">
+            <div id="journey-fill" class="journey-fill"></div>
+            <div class="journey-cp" style="left:16.67%"></div>
+            <div class="journey-cp" style="left:33.33%"></div>
+            <div class="journey-cp" style="left:50%"></div>
+            <div class="journey-cp" style="left:66.67%"></div>
+            <div class="journey-cp" style="left:83.33%"></div>
+            <div id="journey-marker" class="journey-marker"></div>
+          </div>
+        </div>
+        <div class="page-actions">
+          <button id="bag-btn">Open bag</button>
+          <button id="walk-btn">Continue to walk (+1 hour)</button>
+        </div>
+      </div>
+
+      <!-- SKILL CHECK PAGE -->
+      <div id="skill-check-page">
+        <div class="header">
+          <h1>Julgamento do Destino</h1>
+        </div>
+        <div class="skill-check-content">
+          <canvas id="dice-canvas" width="200" height="200"></canvas>
+          <div id="skill-check-expected"></div>
+          <h2>
+            <span id="skill-check-result-label"></span>
+          </h2>
+        </div>
+        <div class="page-actions">
+          <button id="skill-check-back-btn">Continue</button>
+        </div>
+      </div>
+
+      <!-- EVENT PAGE -->
+      <div id="event-page">
+        <div class="page-header">
+          <h1 id="event-page-title"></h1>
+        </div>
+        <div class="page-content">
+          <div class="photography-border">
+            <img class="photography" id="event-page-image" src="img/forest.jpg" alt="Event scene">
+            <div id="photo-develop-overlay"></div>
+          </div>
+          <p id="event-page-description"></p>
+        </div>
+        <div class="page-actions">
+          <div id="event-character-card" class="event-character-card"></div>
+          <div id="event-page-choices-btn-list"></div>
+        </div>
+      </div>
+
+      <!-- BAG PAGE -->
+      <div id="bag-page">
+        <div class="page-header">
+          <h1 id="bag-page-title">Bag</h1>
+          <p id="bag-selected-item"></p>
+          <p id="bag-selected-item-description"></p>
+        </div>
+        <div class="bag-content">
+          <ul id="bag-item-list"></ul>
+        </div>
+        <div class="page-actions">
+          <button id="bag-throw-away-btn">Throw away</button>
+          <button id="bag-close-btn">Close Bag</button>
+        </div>
+      </div>
+
+      <!-- ITEM PICKER PAGE -->
+      <div id="item-picker-page">
+        <div class="page-header">
+          <h1 id="item-picker-page-title">Item picker</h1>
+        </div>
+        <div class="item-picker-page-content">
+          <p id="item-picker-page-message">Did you find something!</p>
+          <h2 id="items-found-title">Items found</h2>
+          <ul id="item-picker-page-items-to-pick"></ul>
+          <button id="item-picker-page-take-all-btn">Take All</button>
+          <h2 id="your-items-title">Your items</h2>
+          <ul id="item-picker-page-item-my-items"></ul>
+        </div>
+        <div class="page-actions">
+          <button id="item-picker-page-continue-btn">Continue</button>
+        </div>
+      </div>
+
+      <!-- RIP PAGE -->
+      <div id="rip-page">
+        <h1 id="rip-page-title">Rest in peace</h1>
+        <img id="rip-page-image" src="img/characters/man.jpg" alt="Character portrait" width="90" height="90">
+        <div>
+          <h2 id="rip-page-name"></h2>
+          <p id="rip-page-dates"></p>
+          <p id="rip-page-quote"></p>
+          <p id="rip-page-status"></p>
+        </div>
+        <div class="page-actions">
+          <button id="rip-page-back-btn">Back to travel</button>
+        </div>
+      </div>
+
+      <!-- GAME OVER PAGE -->
+      <div id="game-over-page">
+        <h1>Game over</h1>
+        <p id="game-over-message"></p>
+        <div class="page-actions">
+          <button id="try-again-btn">Try again</button>
+        </div>
+      </div>
+
+      <!-- DIALOG PAGE (stub) -->
+      <div id="dialog-page">
+        <div class="page-header">
+          <h1 id="dialog-page-title">Dialog</h1>
+        </div>
+        <div class="page-content"></div>
+        <div class="page-actions"></div>
+      </div>
+
+      <!-- MAP PAGE (stub) -->
+      <div id="map-page">
+        <div class="page-header">
+          <h1 id="map-page-title">Map</h1>
+        </div>
+        <div class="page-content"></div>
+        <div class="page-actions"></div>
+      </div>
+
+      <!-- SKILL UP PAGE (stub) -->
+      <div id="skill-up-page">
+        <div class="page-header">
+          <h1 id="skill-up-page-title">Skill Up</h1>
+        </div>
+        <div class="page-content"></div>
+        <div class="page-actions"></div>
+      </div>
+
+    </div><!-- /core -->
+  </div><!-- /container -->
+
+  <!-- Hidden character images for RIP page -->
+  <img id="rip-page-image-1" src="img/characters/man.jpg"   alt="" width="90" height="90" style="display:none">
+  <img id="rip-page-image-2" src="img/characters/woman.jpg" alt="" width="90" height="90" style="display:none">
+  <img id="rip-page-image-3" src="img/characters/kid.jpg"   alt="" width="90" height="90" style="display:none">
+  <img id="rip-page-image-4" src="img/characters/girl.jpg"  alt="" width="90" height="90" style="display:none">
+
+  <script type="module" src="/src/index.ts"></script>
 </body>
 </html>
