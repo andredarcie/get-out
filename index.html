@@ -102,7 +102,46 @@
           <h1>Julgamento do Destino</h1>
         </div>
         <div class="skill-check-content">
-          <canvas id="dice-canvas" width="200" height="200"></canvas>
+          <div class="dice-scene" aria-hidden="true">
+            <div class="dice-shadow"></div>
+            <div id="dice-canvas" class="dice dice--1">
+              <div class="dice-cube">
+                <div class="dice-face dice-face--1">
+                  <span class="pip pip--center"></span>
+                </div>
+                <div class="dice-face dice-face--2">
+                  <span class="pip pip--top-left"></span>
+                  <span class="pip pip--bottom-right"></span>
+                </div>
+                <div class="dice-face dice-face--3">
+                  <span class="pip pip--top-left"></span>
+                  <span class="pip pip--center"></span>
+                  <span class="pip pip--bottom-right"></span>
+                </div>
+                <div class="dice-face dice-face--4">
+                  <span class="pip pip--top-left"></span>
+                  <span class="pip pip--top-right"></span>
+                  <span class="pip pip--bottom-left"></span>
+                  <span class="pip pip--bottom-right"></span>
+                </div>
+                <div class="dice-face dice-face--5">
+                  <span class="pip pip--top-left"></span>
+                  <span class="pip pip--top-right"></span>
+                  <span class="pip pip--center"></span>
+                  <span class="pip pip--bottom-left"></span>
+                  <span class="pip pip--bottom-right"></span>
+                </div>
+                <div class="dice-face dice-face--6">
+                  <span class="pip pip--top-left"></span>
+                  <span class="pip pip--mid-left"></span>
+                  <span class="pip pip--bottom-left"></span>
+                  <span class="pip pip--top-right"></span>
+                  <span class="pip pip--mid-right"></span>
+                  <span class="pip pip--bottom-right"></span>
+                </div>
+              </div>
+            </div>
+          </div>
           <div id="skill-check-expected"></div>
           <h2>
             <span id="skill-check-result-label"></span>
