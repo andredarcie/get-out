@@ -39,7 +39,7 @@ export class EventManager {
         eventSeeds.start();
         let events = eventSeeds.events;
 
-        let randomEventType: number = this._game.getRandomArbitrary(1);
+        let randomEventType: number = this._game.state.getRandomArbitrary(1);
 
         if (this.checkForMileStone()) {
             this._currentEvent = eventSeeds.getMileStoneEvent();
@@ -102,11 +102,11 @@ export class EventManager {
     }
 
     private checkForMileStone(): boolean {
-        return (this._game.distanceToTheBorder == 250 ||
-            this._game.distanceToTheBorder == 200 ||
-            this._game.distanceToTheBorder == 150 ||
-            this._game.distanceToTheBorder == 100 ||
-            this._game.distanceToTheBorder == 50);
+        return (this._game.state.distanceToTheBorder == 250 ||
+            this._game.state.distanceToTheBorder == 200 ||
+            this._game.state.distanceToTheBorder == 150 ||
+            this._game.state.distanceToTheBorder == 100 ||
+            this._game.state.distanceToTheBorder == 50);
     }
 
     showWaitingMessage(): void {

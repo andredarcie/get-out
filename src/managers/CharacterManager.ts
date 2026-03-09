@@ -82,7 +82,7 @@ export class CharacterManager {
 
     picksACharacterAtRandom(): Character {
         const characters = this.getCharactersAlive();
-        const randomNumber = Math.floor(this._game.getRandomArbitrary(characters.length));
+        const randomNumber = Math.floor(this._game.state.getRandomArbitrary(characters.length));
         return characters[randomNumber];
     }
 

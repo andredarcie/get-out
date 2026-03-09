@@ -13,47 +13,48 @@ export class StateManager {
     }
 
     public setState(): void {
-        this._game.hideAllPages();
+        const { pages } = this._game;
+        pages.hideAll();
 
         switch(this.currentState) {
-            case GameStates.EVENT: 
-                this._game.showPage(this._game.eventPage);
+            case GameStates.EVENT:
+                pages.show(pages.event);
                 this._game.eventManager.start();
             break;
             case GameStates.SKILLCHECK:
-                this._game.showPage(this._game.skillCheckPage);
+                pages.show(pages.skillCheck);
                 this._game.skillCheckManager.start();
             break;
             case GameStates.LOG:
-                this._game.showPage(this._game.logPage);
+                pages.show(pages.log);
                 this._game.logManager.start();
             break;
             case GameStates.GAME_OVER:
-                this._game.showPage(this._game.gameOverPage);
+                pages.show(pages.gameOver);
                 this._game.gameOverManager.start();
             break;
             case GameStates.RIP:
-                this._game.showPage(this._game.ripPage);
+                pages.show(pages.rip);
                 this._game.ripManager.start();
             break;
             case GameStates.BAG:
-                this._game.showPage(this._game.bagPage);
+                pages.show(pages.bag);
                 this._game.bagManager.start();
             break;
             case GameStates.ITEM_PICKER:
-                this._game.showPage(this._game.itemPickerPage);
+                pages.show(pages.itemPicker);
                 this._game.itemPickerManager.start();
             break;
             case GameStates.SKILL_UP:
-                this._game.showPage(this._game.skillUpPage);
+                pages.show(pages.skillUp);
                 this._game.skillUpManager.start();
             break;
             case GameStates.DIALOG:
-                this._game.showPage(this._game.dialogPage);
+                pages.show(pages.dialog);
                 this._game.dialogManager.start();
             break;
             case GameStates.MAP:
-                this._game.showPage(this._game.mapPage);
+                pages.show(pages.map);
                 this._game.mapManager.start();
         }
     }

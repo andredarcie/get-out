@@ -156,7 +156,7 @@ export class LogManager {
     sleeping(): void {
         if (this._hoursSleeping <= 6) {
             this.updateCharacterSleepingStatus();
-            this._game.passOneHour();
+            this._game.state.passOneHour();
             this._hoursSleeping++;
         } else {
             this.onWakeUp();
@@ -181,16 +181,16 @@ export class LogManager {
 
     private getRandomCharacterStatus(): string {
         const statusOptions = ["Zzz", "zZz", "zzZ"];
-        return statusOptions[this._game.getRandomArbitrary(0, statusOptions.length)];
+        return statusOptions[this._game.state.getRandomArbitrary(0, statusOptions.length)];
     }
 
     onClickWalkBtn(): void {
-        if (this._game.distanceToTheBorder === 300) {
+        if (this._game.state.distanceToTheBorder === 300) {
             this._game.audioManager.playRainSound();
         }
 
         this._game.audioManager.playButtonSound();
-        this._game.passOneHour();
+        this._game.state.passOneHour();
         this.walkOneHour();
 
         const deadCharacters = this._game.characterManager.getCharactersDead();
@@ -210,16 +210,16 @@ export class LogManager {
             character.walkOneHour();
         });
 
-        this._game.decreaseTheDistanceToTheBorder(2);
+        this._game.state.decreaseTheDistanceToTheBorder(2);
         this.showTravelledDistance();
 
-        if (this._game.distanceToTheBorder <= 0) {
+        if (this._game.state.distanceToTheBorder <= 0) {
             this.arrivedAtTheBorder();
         }
     }
 
     showTravelledDistance(): void {
-        this._travelledDistanceField.innerHTML = `${this._game.distanceToTheBorder} ${this._game.loc.l('miles-to-the-border')}`;
+        this._travelledDistanceField.innerHTML = `${this._game.state.distanceToTheBorder} ${this._game.loc.l('miles-to-the-border')}`;
     }
 
     private arrivedAtTheBorder(): void {
@@ -269,7 +269,7 @@ export class LogManager {
         this._progressBarCanvasElement.height = 8;
         this._progressBarCanvasContext = this._progressBarCanvasElement.getContext("2d")!;
         this.drawProgressBarBackground();
-        this.drawPlayerPositionOnProgressBarCanvas(300 - this._game.distanceToTheBorder);
+        this.drawPlayerPositionOnProgressBarCanvas(300 - this._game.state.distanceToTheBorder);
     }
 
     private drawProgressBarBackground(): void {

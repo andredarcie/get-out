@@ -13,7 +13,7 @@ export class GameOverManager {
 
     start(): void {
         this._tryAgainBtn.addEventListener('click', () => { this.onClickTryAgainBtn() });
-        this.setGameOverMessage('You died with ' + this._game.distanceToTheBorder + ' miles to the border');
+        this.setGameOverMessage('You died with ' + this._game.state.distanceToTheBorder + ' miles to the border');
     }
 
     private onClickTryAgainBtn() {

@@ -3,11 +3,9 @@ import { Game } from '../Game';
 import { GameStates } from '../enums/GameStates';
 import { Choice } from '../entities/Event';
 import { DiceManager } from './DiceManager';
+import { SkillCheckResults } from '../enums/SkillCheckResults';
 
-export enum SkillCheckResults {
-    Success,
-    Failure
-}
+export { SkillCheckResults };
 
 export class SkillCheckManager {
     private readonly _game: Game;
@@ -49,7 +47,7 @@ export class SkillCheckManager {
 
     onClickTravel() {
         this._game.audioManager.playButtonSound();
-        if (this._game.skillCheckResult == SkillCheckResults.Success) {
+        if (this._game.state.skillCheckResult == SkillCheckResults.Success) {
             this._currentChoice.skillCheckFields.resultPath.success();
 
             if (this._currentChoice.skillCheckFields.canGiveItems) {
@@ -57,7 +55,7 @@ export class SkillCheckManager {
                 return;
             }
 
-        } else if (this._game.skillCheckResult == SkillCheckResults.Failure) {
+        } else if (this._game.state.skillCheckResult == SkillCheckResults.Failure) {
             this._currentChoice.skillCheckFields.resultPath.failure();
         }
 
@@ -80,28 +78,28 @@ export class SkillCheckManager {
         if (diceValue == 6) {
             this._game.audioManager.playSuccessSound();
             this.setCriticalSuccess();
-            this._game.skillCheckResult = SkillCheckResults.Success;
+            this._game.state.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (diceValue == 1) {
             this._game.audioManager.playFailSound();
             this.setCriticalFailure();
-            this._game.skillCheckResult = SkillCheckResults.Failure;
+            this._game.state.skillCheckResult = SkillCheckResults.Failure;
             return;
         }
 
         if (diceValue >= expectedValue) {
             this._game.audioManager.playSuccessSound();
             this.setSuccess();
-            this._game.skillCheckResult = SkillCheckResults.Success;
+            this._game.state.skillCheckResult = SkillCheckResults.Success;
             return;
         }
 
         if (diceValue < expectedValue) {
             this._game.audioManager.playFailSound();
             this.setFailure();
-            this._game.skillCheckResult = SkillCheckResults.Failure;
+            this._game.state.skillCheckResult = SkillCheckResults.Failure;
             return;
         }
     }
