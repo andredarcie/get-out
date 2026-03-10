@@ -1,7 +1,5 @@
-import { Event, EventType } from '../entities/Event';
+import { Event, EventType, Choice } from '../entities/Event';
 import { Game } from '../Game';
-import { LogType } from '../managers/LogManager';
-import { Difficulties } from '../enums/Difficulties';
 import { DmytroEventSeeds } from './DmytroEventSeeds';
 import { MykolaEventSeeds } from './MykolaEventSeeds';
 import { OlenaEventSeeds } from './OlenaEventSeeds';
@@ -32,7 +30,7 @@ export class EventSeeds {
     public getPlaceEvent() {
         const availableEvents = this._events.filter(event => !this._triggeredEvents.has(event.title));
         if (availableEvents.length === 0) {
-            return null; // Retorna null se todos os eventos já aconteceram
+            return null;
         }
         const selectedEvent = availableEvents[Math.floor(Math.random() * availableEvents.length)];
         this._triggeredEvents.add(selectedEvent.title);
@@ -40,19 +38,23 @@ export class EventSeeds {
     }
 
     public getMileStoneEvent(): Event {
+        const continueChoice: Choice = {
+            buttonText: 'Voltar para a viagem',
+            skillCheck: false,
+            skillCheckFields: null,
+            normalResultPath: () => {}
+        };
+
         return new Event(
-            'Marcos Alcançado!',
-            `${this._game.distanceToTheBorder} milhas para a fronteira`,
+            'Marco alcan�ado!',
+            `${this._game.state.distanceToTheBorder} milhas para a fronteira`,
             'milestone',
-            {
-                buttonText: 'Voltar para a viagem',
-                skillCheck: false,
-                skillCheckFields: null,
-                normalResultPath: () => {}
-            },
-            EventType.Exploration, 
-            null,
+            continueChoice,
+            null as any,
+            EventType.Exploration,
+            null as any,
             null
         );
     }
 }
+

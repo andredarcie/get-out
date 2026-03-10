@@ -96,8 +96,12 @@ export class EventManager {
     private showChoices() {
         this._eventPageChoicesBtnListElement.innerHTML = '';
         let diceManager = new DiceManager("dice-canvas");
-        this.showChoice(this.currentEvent.firstChoice, diceManager);
-        this.showChoice(this.currentEvent.secondChoice, diceManager);
+        if (this.currentEvent.firstChoice) {
+            this.showChoice(this.currentEvent.firstChoice, diceManager);
+        }
+        if (this.currentEvent.secondChoice) {
+            this.showChoice(this.currentEvent.secondChoice, diceManager);
+        }
     }
 
     private showChoice(choice : Choice, diceManager: DiceManager) {
