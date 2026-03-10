@@ -528,6 +528,186 @@ button.loading::after {
 }
 
 
+/* MAP PAGE */
+
+#map-page {
+  gap: 0;
+}
+
+.map-sheet {
+  position: relative;
+  min-height: 100%;
+  padding: 0;
+}
+
+.map-graph {
+  position: relative;
+  min-height: 360px;
+  margin-bottom: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(27, 34, 28, 0.78), rgba(13, 15, 12, 0.96));
+  background-size: 32px 32px, 32px 32px, auto;
+  overflow: hidden;
+}
+
+.map-graph--tree {
+  height: 1240px;
+  overflow: visible;
+}
+
+.map-graph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.06), transparent 24%),
+    radial-gradient(circle at 70% 68%, rgba(45, 106, 79, 0.09), transparent 20%);
+  pointer-events: none;
+}
+
+.map-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.map-edge-line {
+  stroke: rgba(212, 207, 196, 0.18);
+  stroke-width: 0.16;
+  stroke-dasharray: 0.8 1.2;
+  stroke-linecap: round;
+}
+
+.map-edge-line--traversed {
+  stroke: rgba(120, 190, 142, 0.34);
+  stroke-width: 0.22;
+  stroke-dasharray: 1 0.9;
+}
+
+.map-edge {
+  position: absolute;
+  height: 2px;
+  transform-origin: left center;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(212, 207, 196, 0.55) 0,
+    rgba(212, 207, 196, 0.55) 8px,
+    transparent 8px,
+    transparent 13px
+  );
+  opacity: 0.8;
+}
+
+.map-node {
+  position: absolute;
+  z-index: 1;
+  width: 132px;
+  margin-left: -66px;
+  margin-top: -22px;
+  text-align: center;
+}
+
+.map-node-button {
+  width: 44px;
+  min-height: 44px;
+  margin: 0 auto var(--sp-2);
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(7, 8, 7, 0.88);
+}
+
+.map-node-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: currentColor;
+  display: block;
+}
+
+.map-node-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  max-width: 132px;
+  margin: 0 auto;
+}
+
+.map-node--available {
+  color: #d7c28b;
+}
+
+.map-node--available .map-node-button {
+  border-color: rgba(215, 194, 139, 0.72);
+  box-shadow: 0 0 0 1px rgba(215, 194, 139, 0.12), 0 0 18px rgba(154, 114, 0, 0.18);
+}
+
+.map-node--available .map-node-button:hover {
+  background: rgba(154, 114, 0, 0.10);
+}
+
+.map-node--current {
+  color: #78be8e;
+}
+
+.map-node--current .map-node-button {
+  border-color: rgba(120, 190, 142, 0.82);
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.24), 0 0 18px rgba(45, 106, 79, 0.28);
+}
+
+.map-node--traversed {
+  color: rgba(170, 201, 180, 0.82);
+}
+
+.map-node--traversed .map-node-button {
+  border-color: rgba(120, 190, 142, 0.34);
+  box-shadow: 0 0 0 1px rgba(120, 190, 142, 0.08);
+}
+
+.map-node--border .map-node-button,
+.map-node--border-available .map-node-button,
+.map-node--border-locked .map-node-button {
+  width: 56px;
+  min-height: 56px;
+  border-radius: 16px;
+}
+
+.map-node--border-available {
+  color: #d9534f;
+}
+
+.map-node--border-available .map-node-button {
+  border-color: rgba(217, 83, 79, 0.7);
+  box-shadow: 0 0 0 1px rgba(217, 83, 79, 0.16), 0 0 22px rgba(192, 57, 43, 0.22);
+}
+
+.map-node--border-locked {
+  color: rgba(217, 83, 79, 0.35);
+}
+
+.map-node--locked,
+.map-node--unreachable {
+  color: rgba(212, 207, 196, 0.68);
+}
+
+.map-node--locked .map-node-button,
+.map-node--unreachable .map-node-button {
+  border-color: rgba(212, 207, 196, 0.2);
+  background: rgba(12, 12, 11, 0.88);
+}
+
+.map-node--locked .map-node-dot,
+.map-node--unreachable .map-node-dot {
+  opacity: 0.55;
+}
+
+
 /* ── 6. EVENT PAGE ───────────────────────────────────────────── */
 
 #event-page {

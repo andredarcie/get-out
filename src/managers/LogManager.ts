@@ -21,13 +21,13 @@ export class LogManager {
     private _journeyNum: HTMLElement;
     private _journeyFill: HTMLElement;
     private _journeyMarker: HTMLElement;
+    private _journeyUnit: HTMLElement;
     private readonly _game: Game;
 
     constructor() {
         this._game = Game.getInstance();
         this.initializeElements();
         this.addEventListeners();
-        this.showTravelledDistance();
         this.getAtributesPageElements();
     }
 
@@ -39,6 +39,7 @@ export class LogManager {
         this._journeyNum = document.getElementById("journey-num")!;
         this._journeyFill = document.getElementById("journey-fill")!;
         this._journeyMarker = document.getElementById("journey-marker")!;
+        this._journeyUnit = document.getElementById("journey-unit")!;
         this._charactersList = [];
     }
 
@@ -67,6 +68,7 @@ export class LogManager {
 
     private updateWalkButton(): void {
         this._walkBtn.innerHTML = this._game.loc.l('walk-one-hour');
+        this._walkBtn.disabled = false;
     }
 
     showLogs(): void {
@@ -191,6 +193,10 @@ export class LogManager {
         }
 
         this._game.audioManager.playButtonSound();
+        this._game.stateManager.goToState(GameStates.MAP);
+    }
+
+    public travelToSelectedLocation(): void {
         this._game.state.passOneHour();
         this.walkOneHour();
 
@@ -198,6 +204,7 @@ export class LogManager {
 
         for (const character of deadCharacters) {
             if (!character.buried) {
+                this._game.state.setGameOverMessage('A fuga cobrou um preço alto demais antes que a família pudesse terminar a exploração.');
                 this._game.stateManager.goToState(GameStates.RIP);
                 return;
             }
@@ -213,26 +220,19 @@ export class LogManager {
 
         this._game.state.decreaseTheDistanceToTheBorder(2);
         this.showTravelledDistance();
-
-        if (this._game.state.distanceToTheBorder <= 0) {
-            this.arrivedAtTheBorder();
-        }
     }
 
     showTravelledDistance(): void {
-        const distance = this._game.state.distanceToTheBorder;
-        const pct = ((300 - distance) / 300 * 100);
-        const urgency = distance <= 50 ? 'critical' : distance <= 150 ? 'warn' : '';
+        const explored = this._game.state.exploredLocationsCount;
+        const total = this._game.mapManager.totalLocations;
+        const pct = total > 0 ? (explored / total) * 100 : 0;
 
-        this._journeyNum.textContent = String(distance);
-        this._journeyNum.className = 'journey-num' + (urgency ? ' ' + urgency : '');
+        this._journeyNum.textContent = `${explored}/${total}`;
+        this._journeyNum.className = 'journey-num';
+        this._journeyUnit.textContent = 'lugares explorados';
         this._journeyFill.style.width = pct + '%';
         this._journeyMarker.style.left = pct + '%';
-        this._journeyMarker.className = 'journey-marker' + (urgency ? ' ' + urgency : '');
-    }
-
-    private arrivedAtTheBorder(): void {
-        this._game.stateManager.goToState(GameStates.GAME_OVER);
+        this._journeyMarker.className = 'journey-marker';
     }
 
     getAtributesPageElements(): void {

@@ -111,6 +111,7 @@ export class Character {
                 this._isDead = true;
 
                 if (this._kinship == 'you') {
+                    this._game.state.setGameOverMessage('Você perdeu a própria mente no caminho. A travessia termina aqui.');
                     this._game.stateManager.goToState(GameStates.GAME_OVER);
                 }
             }

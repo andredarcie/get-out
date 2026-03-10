@@ -17,6 +17,7 @@ export class EventManager {
     private _images: Map<string, string>;
     private readonly _game: Game;
     private _imageLoadRequestId: number;
+    private _pendingEvent: Event | null;
 
     constructor() {
         this._titleElement = document.getElementById("event-page-title")!;
@@ -50,24 +51,38 @@ export class EventManager {
 
         this._game = Game.getInstance();
         this._imageLoadRequestId = 0;
+        this._pendingEvent = null;
     }
 
     start(): void {
         console.log("event page")
         this._eventPageChoicesBtnListElement.innerHTML = '';
-        const eventSeeds = new EventSeeds();
-        eventSeeds.start();
-        let events = eventSeeds.events;
+        if (this._pendingEvent) {
+            this._currentEvent = this._pendingEvent;
+            this._pendingEvent = null;
+        } else {
+            const eventSeeds = new EventSeeds();
+            eventSeeds.start();
+            let randomEventType: number = this._game.state.getRandomArbitrary(1);
 
-        let randomEventType: number = this._game.state.getRandomArbitrary(1);
+            if (this.checkForMileStone()) {
+                this._currentEvent = eventSeeds.getMileStoneEvent();
+            } else if (randomEventType == 0) {
+                this._currentEvent = eventSeeds.getPlaceEvent();
+            }
+        }
 
-        if (this.checkForMileStone()) {
+        if (!this._currentEvent) {
+            const eventSeeds = new EventSeeds();
+            eventSeeds.start();
             this._currentEvent = eventSeeds.getMileStoneEvent();
-        } else if (randomEventType == 0) {
-            this._currentEvent = eventSeeds.getPlaceEvent();
         }
 
         this.showEvent();
+    }
+
+    public queueEvent(event: Event): void {
+        this._pendingEvent = event;
     }
 
     private showCharacterCard(): void {

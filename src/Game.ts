@@ -52,6 +52,7 @@ export class Game {
 
     public start(): void {
         this.loc = new LocalizationManager(Language.PtBr);
+        this.audioManager = new AudioManager();
         this.bagManager = new BagManager();
         this.characterManager = new CharacterManager();
         this.characterManager.start();
@@ -59,13 +60,12 @@ export class Game {
         this.gameOverManager = new GameOverManager();
         this.skillCheckManager = new SkillCheckManager();
         this.ripManager = new RipManager();
+        this.mapManager = new MapManager();
         this.logManager = new LogManager();
         this.stateManager = new StateManager();
         this.itemPickerManager = new ItemPickerManager();
         this.dialogManager = new DialogManager();
-        this.mapManager = new MapManager();
         this.skillUpManager = new SkillUpManager();
-        this.audioManager = new AudioManager();
 
         this.stateManager.goToState(GameStates.LOG);
     }
