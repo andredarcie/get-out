@@ -16,6 +16,7 @@ export class EventManager {
     public currentChoice: Choice;
     private _images: Map<string, string>;
     private readonly _game: Game;
+    private _imageLoadRequestId: number;
 
     constructor() {
         this._titleElement = document.getElementById("event-page-title")!;
@@ -48,6 +49,7 @@ export class EventManager {
         ]);
 
         this._game = Game.getInstance();
+        this._imageLoadRequestId = 0;
     }
 
     start(): void {
@@ -177,23 +179,60 @@ export class EventManager {
     showEvent(): void {
         console.log("show event");
         this._titleElement.style.display = 'block';
-        this._photographyBorder.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.title;
         this._descriptionElement.innerHTML = this._currentEvent.description;
-        
-        this._imageElement.style.display = 'block';
-
-        if (this._currentEvent.image != '') {
-            const path = this.getImagePath(this._currentEvent.image);
-            if (path) this._imageElement.src = path;
-        }
-
-        // Trigger developing animation on every event
-        this._developOverlay.classList.remove('developing');
-        void this._developOverlay.offsetWidth;
-        this._developOverlay.classList.add('developing');
+        this.renderEventImage();
 
         this.showCharacterCard();
         this.showChoices();
+    }
+
+    private renderEventImage(): void {
+        const imageName = this._currentEvent.image;
+        if (imageName == '') {
+            this._photographyBorder.style.display = 'none';
+            this._imageElement.style.display = 'none';
+            this._developOverlay.classList.remove('developing');
+            this._developOverlay.style.background = 'transparent';
+            return;
+        }
+
+        const path = this.getImagePath(imageName);
+        if (!path) {
+            this._photographyBorder.style.display = 'none';
+            this._imageElement.style.display = 'none';
+            this._developOverlay.classList.remove('developing');
+            this._developOverlay.style.background = 'transparent';
+            return;
+        }
+
+        const requestId = ++this._imageLoadRequestId;
+        this._photographyBorder.style.display = 'block';
+        this._imageElement.style.display = 'none';
+        this._developOverlay.classList.remove('developing');
+        this._developOverlay.style.background = '#000';
+
+        const preloadImage = new Image();
+        preloadImage.onload = () => {
+            if (requestId !== this._imageLoadRequestId) return;
+
+            this._imageElement.src = path;
+            this._imageElement.style.display = 'block';
+            this._developOverlay.classList.remove('developing');
+            void this._developOverlay.offsetWidth;
+            this._developOverlay.classList.add('developing');
+        };
+
+        preloadImage.onerror = () => {
+            if (requestId !== this._imageLoadRequestId) return;
+
+            this._photographyBorder.style.display = 'none';
+            this._imageElement.style.display = 'none';
+            this._developOverlay.classList.remove('developing');
+            this._developOverlay.style.background = 'transparent';
+            console.error(`Failed to load image: ${path}`);
+        };
+
+        preloadImage.src = path;
     }
 }
