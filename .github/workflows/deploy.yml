@@ -31,7 +31,7 @@ jobs:
 
       # Configura o Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20' # Use a versão mais recente do Node.js 20.x
 
@@ -45,7 +45,7 @@ jobs:
 
       # Faz upload dos artefatos para serem usados no job de deploy
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist # A pasta onde o Parcel gera os arquivos construídos
 
@@ -63,4 +63,4 @@ jobs:
       # Faz o deploy para o GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
