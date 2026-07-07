@@ -7,7 +7,6 @@ export interface Difficult {
 }
 
 export class DiceManager {
-    private percentageTable: Record<string, number>;
     private readonly diceElement: HTMLElement;
     private readonly sceneElement: HTMLElement;
     private readonly cubeElement: HTMLElement;
@@ -15,11 +14,6 @@ export class DiceManager {
     private settleAnimation: Animation | null = null;
 
     constructor(canvasId: string) {
-        this.percentageTable = {
-            '1': 16.67, '2': 16.67, '3': 16.67,
-            '4': 16.67, '5': 16.67, '6': 16.67
-        };
-
         this.diceElement = document.getElementById(canvasId) as HTMLElement;
         this.sceneElement = this.diceElement.closest('.dice-scene') as HTMLElement;
         this.cubeElement = this.diceElement.querySelector('.dice-cube') as HTMLElement;
@@ -30,19 +24,23 @@ export class DiceManager {
 
     public getDifficult(difficulty: Difficulties): Difficult {
         switch (difficulty) {
-            case Difficulties.TRIVIAL:     return { value: 1, text: 'Trivial',      class: 'green-color-border' };
-            case Difficulties.EASY:        return { value: 2, text: 'Easy',         class: 'green-color-border' };
-            case Difficulties.MEDIUM:      return { value: 3, text: 'Medium',       class: 'green-color-border' };
-            case Difficulties.CHALLENGING: return { value: 4, text: 'Challenging',  class: 'yellow-color-border' };
-            case Difficulties.VERY_HARD:   return { value: 5, text: 'Very Hard',    class: 'red-color-border' };
-            case Difficulties.IMPOSSIBILE: return { value: 6, text: 'Impossibile',  class: 'red-color-border' };
+            case Difficulties.TRIVIAL:     return { value: 1, text: 'Trivial',          class: 'green-color-border' };
+            case Difficulties.EASY:        return { value: 2, text: 'Fácil',            class: 'green-color-border' };
+            case Difficulties.MEDIUM:      return { value: 3, text: 'Médio',            class: 'green-color-border' };
+            case Difficulties.CHALLENGING: return { value: 4, text: 'Difícil',          class: 'yellow-color-border' };
+            case Difficulties.VERY_HARD:   return { value: 5, text: 'Muito Difícil',    class: 'red-color-border' };
+            case Difficulties.IMPOSSIBILE: return { value: 6, text: 'Quase Impossível', class: 'red-color-border' };
         }
     }
 
-    public calculateProbabilityFrom(value: number): string {
-        if (value > 12) value = 12;
-        if (value <= 1) value = 2;
-        return this.percentageTable[value] + '%';
+    /**
+     * Chance real de sucesso contra um valor-alvo do d6, considerando
+     * as regras de crítico: 6 sempre é sucesso, 1 sempre é falha.
+     */
+    public probabilityForTarget(targetValue: number): string {
+        const successfulFaces: Record<number, number> = { 1: 5, 2: 5, 3: 4, 4: 3, 5: 2, 6: 1 };
+        const faces = successfulFaces[targetValue] ?? 1;
+        return Math.round((faces / 6) * 100) + '%';
     }
 
     private setFace(value: number): void {

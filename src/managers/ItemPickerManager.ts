@@ -31,14 +31,14 @@ export class ItemPickerManager {
         this._myItemsListElement = document.querySelector('#item-picker-page-item-my-items');
         this._yourItemsTitle = document.querySelector('#your-items-title')!;
         this._takeAllBtn = document.querySelector('#item-picker-page-take-all-btn')!;
+        this._takeAllBtn.addEventListener('click', () => { this.onTakeAllBtn() });
     }
 
     public start(): void {
+        this.character = this.resolveSearchingCharacter();
         this.showPageMessage();
         this._itemsToPick = [];
         this._myItems = [];
-        
-        this.character = this._game.characterManager.picksACharacterAtRandom();
 
         for (let i = 0; i < this.itemsFound; i++) {
             let itemFounded: Item = ItemSeeds.getOneRandomItem();
@@ -46,6 +46,18 @@ export class ItemPickerManager {
         }
 
         this.showItems();
+    }
+
+    /**
+     * Quem vasculha é o personagem do evento atual — é a história dele.
+     * Se ele não estiver mais entre os vivos, outro assume.
+     */
+    private resolveSearchingCharacter(): Character {
+        const eventCharacter = this._game.eventManager.currentEvent?.character;
+        if (eventCharacter && !eventCharacter.isDead) {
+            return eventCharacter;
+        }
+        return this._game.characterManager.picksACharacterAtRandom();
     }
 
     private showPageMessage() {
@@ -56,12 +68,14 @@ export class ItemPickerManager {
         this._yourItemsTitle.style.display = 'none';
         this._takeAllBtn.style.display = 'none';
 
+        this._pageMessageElement.textContent = `${this.character.name} vasculha...`;
         this._pageMessageElement.style.display = 'block';
 
         setTimeout(() => this.showPageElements(), 1500);
     }
 
     private showPageElements() {
+        this._game.audioManager.playItemFoundSound();
         this._itemsFoundTitle.style.display = 'block';
         this._continueBtn.style.display = 'block';
         this._itemsToPickListElement.style.display = 'block';
@@ -73,14 +87,22 @@ export class ItemPickerManager {
     }
 
     private showItems() {
-        if (this._itemsToPick.length <= (this._myItemsMax - this._myItems.length)) {
+        if (this._itemsToPick.length <= (this._myItemsMax - this.countMyItems())) {
             this._takeAllBtn.disabled = false;
         } else {
-            this._takeAllBtn.disabled =true;
+            this._takeAllBtn.disabled = true;
         }
 
         this.showItemsToPick();
         this.showMyItems();
+    }
+
+    private countMyItems(): number {
+        return this._myItems.reduce((total, item) => total + Math.max(1, item.amount), 0);
+    }
+
+    private countItemsToPick(): number {
+        return this._itemsToPick.reduce((total, item) => total + Math.max(1, item.amount), 0);
     }
 
     private showItemsToPick() {
@@ -89,10 +111,10 @@ export class ItemPickerManager {
         for (let item of this._itemsToPick) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(item.name + ' (' + item.status.name + ') ' + item.showAmount()));
+            button.appendChild(document.createTextNode(item.name + ' → ' + item.status.name + item.showAmount()));
             button.addEventListener('click', () => this.selectItemToPick(item));
 
-            if (this._myItems.length >= this._myItemsMax) {
+            if (this.countMyItems() >= this._myItemsMax) {
                 button.disabled = true;
             }
 
@@ -102,13 +124,13 @@ export class ItemPickerManager {
     }
 
     private showMyItems() {
-        this._yourItemsTitle.innerHTML = 'Your items - (' + this._myItems.length + '/' + this._myItemsMax + ')';
+        this._yourItemsTitle.innerHTML = `Levar (${this.countMyItems()}/${this._myItemsMax})`;
         this._myItemsListElement.innerHTML = '';
 
         for (let item of this._myItems) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(item.name + ' (' + item.status.name + ') ' + item.showAmount()));
+            button.appendChild(document.createTextNode(item.name + ' → ' + item.status.name + item.showAmount()));
             button.addEventListener('click', () => this.selectItemMyItem(item));
             li.appendChild(button);
             this._myItemsListElement.appendChild(li);
@@ -117,24 +139,30 @@ export class ItemPickerManager {
 
     private selectItemToPick(selectedItem: Item) {
         this._game.audioManager.playTakeItemSound();
-        this.removeItemToPick(selectedItem.name);
-        this.addMyItem(selectedItem);
+        this.moveOneItem(selectedItem, this._itemsToPick, (item) => this.addMyItem(item));
         this.showItems();
     }
 
     private selectItemMyItem(selectedItem: Item) {
         this._game.audioManager.playThrowSound();
-        this.removeMyItem(selectedItem.name);
-        this.addItemToPick(selectedItem);
+        this.moveOneItem(selectedItem, this._myItems, (item) => this.addItemToPick(item));
         this.showItems();
     }
 
-    public removeItemToPick(itemName: string): void {
-        this._itemsToPick = this._itemsToPick.filter(item => item.name !== itemName);
-    }
+    /**
+     * Move uma unidade do item entre as listas, preservando pilhas.
+     */
+    private moveOneItem(selectedItem: Item, fromList: Item[], addTo: (item: Item) => void): void {
+        if (selectedItem.amount > 1) {
+            selectedItem.decreaseAmount();
+        } else {
+            const index = fromList.indexOf(selectedItem);
+            if (index >= 0) fromList.splice(index, 1);
+        }
 
-    public removeMyItem(itemName: string): void {
-        this._myItems = this._myItems.filter(item => item.name !== itemName);
+        const single = new Item(selectedItem.name, selectedItem.status);
+        single.amount = 1;
+        addTo(single);
     }
 
     addItemToPick(itemToPut: Item): void {
@@ -161,9 +189,31 @@ export class ItemPickerManager {
         this._game.audioManager.playButtonSound();
         for (let i = 0; i < this._myItems.length; i++) {
             this._game.bagManager.putItem(this._myItems[i]);
-            this._game.log.addTempLog(this.character.name + ' picked up ' + this._myItems[i].name, LogType.Result);
+            this._game.log.addTempLog(`${this.character.name}: +${this._myItems[i].name}${this._myItems[i].showAmount()}`, LogType.Result);
         }
 
-        this._game.stateManager.goToState(GameStates.LOG);
+        this._game.stateManager.goToState(this._game.eventManager.resolveNextState());
+    }
+
+    private onTakeAllBtn(): void {
+        if (this.countItemsToPick() > (this._myItemsMax - this.countMyItems())) {
+            return;
+        }
+
+        this._game.audioManager.playTakeItemSound();
+
+        const itemsToMove = [...this._itemsToPick];
+        this._itemsToPick = [];
+        itemsToMove.forEach((item) => {
+            let existingItemIndex = this._myItems.findIndex(myItem => myItem.name == item.name);
+            if (existingItemIndex >= 0) {
+                for (let i = 0; i < Math.max(1, item.amount); i++) {
+                    this._myItems[existingItemIndex].increaseAmount();
+                }
+            } else {
+                this._myItems.push(item);
+            }
+        });
+        this.showItems();
     }
 }

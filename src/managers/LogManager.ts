@@ -1,6 +1,7 @@
 import { Character } from '../entities/Character';
 import { Game } from '../Game';
 import { GameStates } from '../enums/GameStates';
+import { STORY_YEAR } from '../GameState';
 
 export enum LogType {
     Result,
@@ -10,14 +11,11 @@ export enum LogType {
 export class LogManager {
     private _logListResult: Element;
     private _tempResultLogs: string[] = [];
-    private _tempoStatusChangeLogs: string[] = [];
     private _logs: string[] = [];
     private _bagBtn: HTMLButtonElement;
-    private _yourFamily: HTMLButtonElement;
-    private _charactersList: any;
     private _walkBtn: HTMLButtonElement;
-    private _hoursSleeping: number = 0;
-    private _sleepIntervalId: any;
+    private _dayField: HTMLElement;
+    private _charactersList: any;
     private _journeyNum: HTMLElement;
     private _journeyFill: HTMLElement;
     private _journeyMarker: HTMLElement;
@@ -35,7 +33,7 @@ export class LogManager {
         this._logListResult = document.querySelector("#log-list-result")!;
         this._bagBtn = document.querySelector('#bag-btn')!;
         this._walkBtn = document.querySelector("#walk-btn")!;
-        this._yourFamily = document.querySelector("#your-family")!;
+        this._dayField = document.getElementById("log-day-field")!;
         this._journeyNum = document.getElementById("journey-num")!;
         this._journeyFill = document.getElementById("journey-fill")!;
         this._journeyMarker = document.getElementById("journey-marker")!;
@@ -52,8 +50,9 @@ export class LogManager {
         this.showLogs();
         this.updateBagButton();
         this.updateWalkButton();
+        this.showDayAndTime();
         this.showCharacters();
-        this.showTravelledDistance();
+        this.showJourneyProgress();
     }
 
     private updateBagButton(): void {
@@ -61,7 +60,7 @@ export class LogManager {
             this._bagBtn.innerHTML = this._game.loc.l('bag-is-empty');
             this._bagBtn.disabled = true;
         } else {
-            this._bagBtn.innerHTML = `Open bag (${this._game.bagManager.showQuantityOfItems()})`;
+            this._bagBtn.innerHTML = `Bolsa (${this._game.bagManager.showQuantityOfItems()})`;
             this._bagBtn.disabled = false;
         }
     }
@@ -71,9 +70,11 @@ export class LogManager {
         this._walkBtn.disabled = false;
     }
 
+    private showDayAndTime(): void {
+        this._dayField.textContent = `Dia ${this._game.state.currentDay} · ${this._game.state.clock.showTime()}`;
+    }
+
     showLogs(): void {
-        this._logs = this._tempoStatusChangeLogs;
-        this._tempoStatusChangeLogs = [];
         this._logListResult.innerHTML = '';
         this.showResultLogs();
     }
@@ -97,41 +98,17 @@ export class LogManager {
         }, 300);
     }
 
-    createLogsForStatusChange(): string {
-        const previousCharacters = this._game.characterManager.previousCharacters;
-        const currentCharacters = this._game.characterManager.characters;
-        let status_change_logs = '';
-
-        for (let i = 0; i < previousCharacters.length; i++) {
-            const prev = previousCharacters[i];
-            const curr = currentCharacters[i];
-
-            if (!curr.isDead && prev.sanity !== curr.sanity) {
-                status_change_logs += `<li> ${curr.name} Sanity: `;
-                const sanityDifference = curr.sanity - prev.sanity;
-                status_change_logs += sanityDifference > 0
-                    ? `+${sanityDifference}%`
-                    : `-${-sanityDifference}%`;
-                status_change_logs += '</li>';
-            }
-        }
-
-        return status_change_logs;
-    }
-
     clearLogs(): void {
         this._logListResult.innerHTML = '';
     }
 
     isThereAnyTemporaryLog(): boolean {
-        return this._tempResultLogs.length > 0 || this._tempoStatusChangeLogs.length > 0;
+        return this._tempResultLogs.length > 0;
     }
 
     addTempLog(log: string, logType: LogType): void {
         if (logType === LogType.Result) {
             this._tempResultLogs.push(log);
-        } else {
-            this._tempoStatusChangeLogs.push(log);
         }
     }
 
@@ -140,74 +117,25 @@ export class LogManager {
         this._game.stateManager.goToState(GameStates.BAG);
     }
 
-    onClickCampBtn(): void {
-        this.disableButtons();
-        this._yourFamily.innerHTML = 'Camping...';
-        this._sleepIntervalId = window.setInterval(() => this.sleeping(), 500);
-    }
-
-    private disableButtons(): void {
-        this._bagBtn.disabled = true;
-        this._walkBtn.disabled = true;
-    }
-
-    private enableButtons(): void {
-        this._bagBtn.disabled = false;
-        this._walkBtn.disabled = false;
-    }
-
-    sleeping(): void {
-        if (this._hoursSleeping <= 6) {
-            this.updateCharacterSleepingStatus();
-            this._game.state.passOneHour();
-            this._hoursSleeping++;
-        } else {
-            this.onWakeUp();
-        }
-    }
-
-    private updateCharacterSleepingStatus(): void {
-        this._game.characters.forEach((character, index) => {
-            if (!character.isDead) {
-                const randomNumber = this.getRandomCharacterStatus();
-                this._charactersList[index].atributesField.innerHTML = randomNumber;
-            }
-        });
-    }
-
-    private onWakeUp(): void {
-        this.showCharacters();
-        this.enableButtons();
-        this._yourFamily.innerHTML = this._game.loc.l('your-family');
-        clearInterval(this._sleepIntervalId);
-    }
-
-    private getRandomCharacterStatus(): string {
-        const statusOptions = ["Zzz", "zZz", "zzZ"];
-        return statusOptions[this._game.state.getRandomArbitrary(0, statusOptions.length)];
-    }
-
     onClickWalkBtn(): void {
-        if (this._game.state.distanceToTheBorder === 300) {
-            this._game.audioManager.playRainSound();
-        }
-
         this._game.audioManager.playButtonSound();
         this._game.stateManager.goToState(GameStates.MAP);
     }
 
     public travelToSelectedLocation(): void {
+        this._game.audioManager.playWalkSound();
         this._game.state.passOneHour();
+        this.addTempLog(`A estrada cobra. −${Character.FATIGUE_PER_HOUR}`, LogType.Result);
         this.walkOneHour();
 
-        const deadCharacters = this._game.characterManager.getCharactersDead();
+        if (this._game.stateManager.currentState === GameStates.GAME_OVER) {
+            // A caminhada custou a mente do jogador.
+            return;
+        }
 
-        for (const character of deadCharacters) {
-            if (!character.buried) {
-                this._game.state.setGameOverMessage('A fuga cobrou um preço alto demais antes que a família pudesse terminar a exploração.');
-                this._game.stateManager.goToState(GameStates.RIP);
-                return;
-            }
+        if (this._game.characterManager.getFirstCharacterDeadAndNotBuried()) {
+            this._game.stateManager.goToState(GameStates.RIP);
+            return;
         }
 
         this._game.stateManager.goToState(GameStates.EVENT);
@@ -217,22 +145,26 @@ export class LogManager {
         this._game.characterManager.getCharactersAlive().forEach((character) => {
             character.walkOneHour();
         });
-
-        this._game.state.decreaseTheDistanceToTheBorder(2);
-        this.showTravelledDistance();
     }
 
-    showTravelledDistance(): void {
-        const explored = this._game.state.exploredLocationsCount;
-        const total = this._game.mapManager.totalLocations;
-        const pct = total > 0 ? (explored / total) * 100 : 0;
+    showJourneyProgress(): void {
+        const depth = this._game.mapManager.getCurrentDepth();
+        const total = this._game.mapManager.totalSteps;
+        const pct = total > 0 ? (depth / total) * 100 : 0;
 
-        this._journeyNum.textContent = `${explored}/${total}`;
+        this._journeyNum.textContent = `Etapa ${depth}/${total}`;
         this._journeyNum.className = 'journey-num';
-        this._journeyUnit.textContent = 'lugares explorados';
+        this._journeyUnit.textContent = this.getActName(depth);
         this._journeyFill.style.width = pct + '%';
         this._journeyMarker.style.left = pct + '%';
         this._journeyMarker.className = 'journey-marker';
+    }
+
+    private getActName(depth: number): string {
+        if (depth <= 2) return 'Ato I. A Cidade Morta.';
+        if (depth <= 5) return 'Ato II. A Descida.';
+        if (depth <= 7) return 'Ato III. A Última Milha.';
+        return 'Fronteira.';
     }
 
     getAtributesPageElements(): void {
@@ -264,7 +196,7 @@ export class LogManager {
         const { nameField, atributesField, afflictionsField, sanityFill } = this._charactersList[index];
         if (character.isDead) {
             nameField.innerHTML = `${character.name} - ${character.kinship} 💀`;
-            atributesField.innerHTML = `${character.getDateOfBirth()} - 2020`;
+            atributesField.innerHTML = `${character.getDateOfBirth()} — ${STORY_YEAR}`;
             afflictionsField.innerHTML = '';
             if (sanityFill) {
                 sanityFill.style.width = '0%';
@@ -272,7 +204,7 @@ export class LogManager {
             }
         } else {
             nameField.innerHTML = `${character.name} - ${character.kinship}`;
-            nameField.innerHTML += character.getSickness() === 'Sick' ? ' [ Sick ]' : '';
+            nameField.className = 'character-name-field' + (character.sanity <= 25 ? ' critical' : '');
             atributesField.innerHTML = character.getSanity();
             afflictionsField.innerHTML = character.showAfflictions();
             if (sanityFill) {

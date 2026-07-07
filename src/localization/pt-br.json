@@ -1,16 +1,9 @@
 {
-    "walk-one-hour": "Andar",
-    "your-family": "Aqueles que Você Ama",
-    "miles-to-the-border": "km",
+    "walk-one-hour": "Seguir",
+    "your-family": "Os seus",
     "you": "você",
     "wife": "esposa",
     "son": "filho",
     "daughter": "filha",
-    "day": "dia",
-    "daylight": "luz do dia",
-    "strength": "Força",
-    "speak": "Labia",
-    "stealth": "Furtividade",
-    "exploration": "Exploração",
-    "bag-is-empty": "A bolsa esta vazia"
+    "bag-is-empty": "Bolsa"
 }

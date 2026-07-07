@@ -1,16 +1,9 @@
 {
-    "walk-one-hour": "Walk",
-    "your-family": "Those You Love",
-    "miles-to-the-border": "km",
+    "walk-one-hour": "Continue",
+    "your-family": "Yours",
     "you": "you",
     "wife": "wife",
     "son": "son",
     "daughter": "daughter",
-    "day": "day",
-    "daylight": "daylight",
-    "strength": "Strength",
-    "speak": "Speak",
-    "stealth": "Stealth",
-    "exploration": "Exploration",
-    "bag-is-empty": "Bag is empty"
+    "bag-is-empty": "Bag"
 }

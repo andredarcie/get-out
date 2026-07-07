@@ -146,6 +146,10 @@ tmp
 
 /target/
 
+# Generated test/debug artifacts (screenshots + state dumps)
+output/
+test-artifacts/
+
 .DS_Store
 npm-debug.log*
 package-lock.json

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Get Out</title>
-  <meta name="description" content="Get Out — survival narrative game">
+  <meta name="description" content="Get Out — jogo narrativo de sobrevivência">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#0a0a08">
   <meta name="mobile-web-app-capable" content="yes">
@@ -21,10 +21,28 @@
   <div id="container">
     <div id="core">
 
+      <!-- INTRO PAGE -->
+      <div id="intro-page">
+        <div class="intro-content">
+          <p class="intro-kicker">Fevereiro. 2022.</p>
+          <h1 class="intro-title">Get Out</h1>
+          <div class="intro-divider"></div>
+          <p class="intro-word" style="animation-delay:0.4s">Guerra.</p>
+          <p class="intro-word" style="animation-delay:1.1s">Uma cidade morta.</p>
+          <p class="intro-word" style="animation-delay:1.8s">Quatro nomes.</p>
+          <p class="intro-word" style="animation-delay:2.5s">Uma fronteira.</p>
+          <p class="intro-word intro-word--em" style="animation-delay:3.4s">Juntos. Ou não.</p>
+        </div>
+        <div class="page-actions">
+          <button id="intro-start-btn">Partir</button>
+        </div>
+      </div>
+
       <!-- LOG PAGE -->
       <div id="log-page">
         <div class="page-header">
-          <h1>Overview</h1>
+          <h1>Diário.</h1>
+          <p id="log-day-field" class="log-day-field"></p>
         </div>
         <div class="log-content">
           <ul id="log-list-result"></ul>
@@ -77,29 +95,35 @@
         </div>
         <div class="journey-progress">
           <div class="journey-header">
-            <span id="journey-num" class="journey-num">0/4</span>
-            <span id="journey-unit" class="journey-unit">lugares explorados</span>
+            <span id="journey-num" class="journey-num">Etapa 0/8</span>
+            <span id="journey-unit" class="journey-unit"></span>
           </div>
           <div class="journey-track">
             <div id="journey-fill" class="journey-fill"></div>
-            <div class="journey-cp" style="left:16.67%"></div>
-            <div class="journey-cp" style="left:33.33%"></div>
+            <div class="journey-cp" style="left:12.5%"></div>
+            <div class="journey-cp" style="left:25%"></div>
+            <div class="journey-cp" style="left:37.5%"></div>
             <div class="journey-cp" style="left:50%"></div>
-            <div class="journey-cp" style="left:66.67%"></div>
-            <div class="journey-cp" style="left:83.33%"></div>
+            <div class="journey-cp" style="left:62.5%"></div>
+            <div class="journey-cp" style="left:75%"></div>
+            <div class="journey-cp" style="left:87.5%"></div>
             <div id="journey-marker" class="journey-marker"></div>
+          </div>
+          <div class="journey-endpoints">
+            <span>Estação</span>
+            <span>Fronteira</span>
           </div>
         </div>
         <div class="page-actions">
-          <button id="bag-btn">Open bag</button>
-          <button id="walk-btn">Continue to walk (+1 hour)</button>
+          <button id="bag-btn">Bolsa</button>
+          <button id="walk-btn">Seguir</button>
         </div>
       </div>
 
       <!-- SKILL CHECK PAGE -->
       <div id="skill-check-page">
         <div class="header">
-          <h1>Julgamento do Destino</h1>
+          <h1>O Dado.</h1>
         </div>
         <div id="skill-check-flash"></div>
         <div class="skill-check-content">
@@ -149,7 +173,7 @@
           </h2>
         </div>
         <div class="page-actions">
-          <button id="skill-check-back-btn">Continue</button>
+          <button id="skill-check-back-btn">Continuar</button>
         </div>
       </div>
 
@@ -160,7 +184,7 @@
         </div>
         <div class="page-content">
           <div class="photography-border">
-            <img class="photography" id="event-page-image" src="img/forest.jpg" alt="Event scene">
+            <img class="photography" id="event-page-image" src="img/forest.jpg" alt="Cena do evento">
             <div id="photo-develop-overlay"></div>
           </div>
           <p id="event-page-description"></p>
@@ -174,7 +198,7 @@
       <!-- BAG PAGE -->
       <div id="bag-page">
         <div class="page-header">
-          <h1 id="bag-page-title">Bag</h1>
+          <h1 id="bag-page-title">Bolsa.</h1>
           <p id="bag-selected-item"></p>
           <p id="bag-selected-item-description"></p>
         </div>
@@ -182,33 +206,33 @@
           <ul id="bag-item-list"></ul>
         </div>
         <div class="page-actions">
-          <button id="bag-throw-away-btn">Throw away</button>
-          <button id="bag-close-btn">Close Bag</button>
+          <button id="bag-throw-away-btn">Descartar</button>
+          <button id="bag-close-btn">Fechar</button>
         </div>
       </div>
 
       <!-- ITEM PICKER PAGE -->
       <div id="item-picker-page">
         <div class="page-header">
-          <h1 id="item-picker-page-title">Item picker</h1>
+          <h1 id="item-picker-page-title">Achados.</h1>
         </div>
         <div class="item-picker-page-content">
-          <p id="item-picker-page-message">Did you find something!</p>
-          <h2 id="items-found-title">Items found</h2>
+          <p id="item-picker-page-message">Vasculhando...</p>
+          <h2 id="items-found-title">Achados</h2>
           <ul id="item-picker-page-items-to-pick"></ul>
-          <button id="item-picker-page-take-all-btn">Take All</button>
-          <h2 id="your-items-title">Your items</h2>
+          <button id="item-picker-page-take-all-btn">Tudo</button>
+          <h2 id="your-items-title">Levar</h2>
           <ul id="item-picker-page-item-my-items"></ul>
         </div>
         <div class="page-actions">
-          <button id="item-picker-page-continue-btn">Continue</button>
+          <button id="item-picker-page-continue-btn">Seguir</button>
         </div>
       </div>
 
       <!-- RIP PAGE -->
       <div id="rip-page">
-        <h1 id="rip-page-title">Rest in peace</h1>
-        <img id="rip-page-image" src="img/characters/man.jpg" alt="Character portrait" width="90" height="90">
+        <h1 id="rip-page-title">Descanse.</h1>
+        <img id="rip-page-image" src="img/characters/man.jpg" alt="Retrato" width="90" height="90">
         <div>
           <h2 id="rip-page-name"></h2>
           <p id="rip-page-dates"></p>
@@ -216,46 +240,29 @@
           <p id="rip-page-status"></p>
         </div>
         <div class="page-actions">
-          <button id="rip-page-back-btn">Back to travel</button>
+          <button id="rip-page-back-btn">Seguir</button>
         </div>
       </div>
 
-      <!-- GAME OVER PAGE -->
+      <!-- GAME OVER / ENDING PAGE -->
       <div id="game-over-page">
-        <h1>Game over</h1>
+        <h1>Fim.</h1>
         <p id="game-over-message"></p>
+        <p id="game-over-stats"></p>
         <div class="page-actions">
-          <button id="try-again-btn">Try again</button>
+          <button id="try-again-btn">De novo</button>
         </div>
-      </div>
-
-      <!-- DIALOG PAGE (stub) -->
-      <div id="dialog-page">
-        <div class="page-header">
-          <h1 id="dialog-page-title">Dialog</h1>
-        </div>
-        <div class="page-content"></div>
-        <div class="page-actions"></div>
       </div>
 
       <!-- MAP PAGE -->
       <div id="map-page">
         <div class="page-header">
-          <h1 id="map-page-title">Mapa de Exploração</h1>
+          <h1 id="map-page-title">Mapa.</h1>
         </div>
         <div id="map-page-content" class="page-content"></div>
         <div id="map-page-actions" class="page-actions">
           <button id="map-back-btn">Voltar</button>
         </div>
-      </div>
-
-      <!-- SKILL UP PAGE (stub) -->
-      <div id="skill-up-page">
-        <div class="page-header">
-          <h1 id="skill-up-page-title">Skill Up</h1>
-        </div>
-        <div class="page-content"></div>
-        <div class="page-actions"></div>
       </div>
 
     </div><!-- /core -->

@@ -2,6 +2,7 @@ import { Game } from '../Game';
 import { Item } from '../entities/Item';
 import { Character } from '../entities/Character';
 import { GameStates } from '../enums/GameStates';
+import { LogType } from './LogManager';
 
 export class BagManager {
     private _items: Item[] = [];
@@ -14,7 +15,6 @@ export class BagManager {
     private readonly _game: Game;
 
     constructor() {
-        
         this._game = Game.getInstance();
 
         this._itemListElement = document.querySelector('#bag-item-list')!;
@@ -39,7 +39,7 @@ export class BagManager {
     }
 
     private onClickThrowAway() {
-        this._game.audioManager.playButtonSound();
+        this._game.audioManager.playThrowSound();
         this.removeOrDecreaseItem();
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.style.display = 'none';
@@ -63,14 +63,14 @@ export class BagManager {
         this._itemListElement.innerHTML = '';
 
         if (this._items.length == 0) {
-            this._itemListElement.innerHTML = 'Empty';
+            this._itemListElement.innerHTML = 'Vazia.';
             return;
         }
 
         for (let item of this._items) {
             const li = document.createElement("li");
             const button = document.createElement("button");
-            button.appendChild(document.createTextNode(item.name + ' (' + item.status.name + ') ' + item.showAmount()));
+            button.appendChild(document.createTextNode(item.name + ' → ' + item.status.name + item.showAmount()));
             button.addEventListener('click', () => this.selectItem(item));
             li.appendChild(button);
             this._itemListElement.appendChild(li);
@@ -81,7 +81,9 @@ export class BagManager {
         let existingItemIndex = this._items.findIndex(item => item.name == itemToPut.name);
 
         if (existingItemIndex >= 0) {
-            this._items[existingItemIndex].increaseAmount();
+            for (let i = 0; i < Math.max(1, itemToPut.amount); i++) {
+                this._items[existingItemIndex].increaseAmount();
+            }
         } else {
             this._items.push(itemToPut);
         }
@@ -94,34 +96,40 @@ export class BagManager {
 
             if (character.isDead) {
                 button.disabled = true;
-                button.textContent = `${character.name} — morto`;
-            } else {
+                button.textContent = `${character.name} ✝`;
+            } else if (character.showAfflictions() !== this._selectedItem.status.name) {
+                button.disabled = true;
                 const affliction = character.showAfflictions();
-                button.textContent = `${character.name} (${character.kinship})`;
-                if (affliction) button.textContent += ` — ${affliction}`;
+                button.textContent = affliction ? `${character.name} — ${affliction}` : character.name;
+            } else {
+                button.textContent = `${character.name} — ${character.showAfflictions()}`;
+                button.addEventListener('click', () => this.useItem(character));
             }
 
-            button.addEventListener('click', () => this.useItem(character));
             li.appendChild(button);
             this._itemListElement.appendChild(li);
         }
     }
 
     private selectItem(selectedItem: Item) {
+        this._game.audioManager.playButtonSound();
         this._selectedItem = selectedItem;
         this._itemListElement.innerHTML = '';
         this._selectedItemElement.innerHTML = `${this._selectedItem.name}`;
-        this._selectedItemDescriptionElement.innerHTML = `Cura: ${this._selectedItem.status.name} — Escolha quem vai receber:`;
+        this._selectedItemDescriptionElement.innerHTML = `→ ${this._selectedItem.status.name}. Quem?`;
         this.showSelectedItem();
         this.showCharacters();
         this._bagThrowAwayBtn.style.display = 'block';
     }
 
     private useItem(character: Character) {
+        this._game.audioManager.playTakeItemSound();
+        const affliction = character.showAfflictions();
         this.removeOrDecreaseItem();
         this.hideSelectedItem();
         this.showItems();
         character.removeStatus();
+        this._game.log.addTempLog(`${this._selectedItem.name}. ${character.name}: ${affliction} some.`, LogType.Result);
         this._bagThrowAwayBtn.style.display = 'none';
     }
 

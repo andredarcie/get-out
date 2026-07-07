@@ -1,6 +1,7 @@
 import { Game } from '../Game';
 import { Character } from '../entities/Character';
 import { StatusSeeds } from '../seeds/AfflictionSeeds';
+import { LogType } from './LogManager';
 
 export class CharacterManager {
     public characters: Character[];
@@ -76,10 +77,6 @@ export class CharacterManager {
             .find(character => character.isDead && !character.buried);
     }
 
-    isInDanger(): boolean {
-        return this.getCharactersAlive().some(character => character.sanity <= 25);
-    }
-
     picksACharacterAtRandom(): Character {
         const characters = this.getCharactersAlive();
         const randomNumber = Math.floor(this._game.state.getRandomArbitrary(characters.length));
@@ -96,22 +93,51 @@ export class CharacterManager {
         return this.characters.find(character => character.name === characterName)!;
     }
 
-    decreasesTheHealthOfSomeoneInTheGroup(): Character {
-        const character = this.picksACharacterAtRandom();
-        character.looseSanity(30);
-        return character;
+    /**
+     * Chamado quando um familiar (não o jogador) morre.
+     * O luto atinge todos os sobreviventes — nunca mata, mas marca.
+     */
+    public onCharacterDied(dead: Character): void {
+        this._game.log.addTempLog(`${dead.name} se foi.`, LogType.Result);
+
+        const survivors = this.getCharactersAlive();
+        survivors.forEach(survivor => survivor.sufferGrief(25));
+
+        if (survivors.length > 0) {
+            this._game.log.addTempLog('Luto. −25 nos vivos.', LogType.Result);
+        }
     }
 
-    public statusOfTheCharactersChange(): boolean {
-        const currentCharacters = this.characters;
-        const previousCharacters = this.previousCharacters;
+    /**
+     * Evitar tem preço: −10 em quem se cala e −4 em quem assiste.
+     * Uma família que só foge afunda inteira.
+     */
+    public applyAvoidCost(character: Character): void {
+        character.looseSanity(10);
+        this.getCharactersAlive()
+            .filter(other => other !== character)
+            .forEach(other => other.looseSanity(4));
+    }
 
-        for (let i = 0; i < currentCharacters.length; i++) {
-            if (!previousCharacters[i].isDead && previousCharacters[i].sanity !== currentCharacters[i].sanity) {
-                this.savePreviousCharacters();
-                return true;
-            }
+    /**
+     * Falha em teste: dano base, agravado em 50% se o personagem
+     * já rolou com a mente rachada (aflição ativa). Aplica a nova
+     * aflição e devolve o dano real para o log.
+     */
+    public applyCheckFailure(character: Character, baseDamage: number, afflictionName: string): number {
+        const aggravated = character.hasAffliction();
+        const damage = Math.round(baseDamage * (aggravated ? 1.5 : 1));
+
+        character.looseSanity(damage);
+
+        if (!character.isDead) {
+            this.makeSomeoneInTheGroupGetStatus(character.name, afflictionName);
         }
-        return false;
+
+        if (aggravated) {
+            this._game.log.addTempLog('Mente rachada. A queda é pior.', LogType.Result);
+        }
+
+        return damage;
     }
 }

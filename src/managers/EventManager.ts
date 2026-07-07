@@ -1,8 +1,7 @@
-import { Event, EventType, Choice } from '../entities/Event';
+import { Event, Choice } from '../entities/Event';
 import { Game } from '../Game';
-import { EventSeeds } from '../seeds/EventSeeds';
 import { GameStates } from '../enums/GameStates';
-import { DiceManager, Difficult } from './DiceManager';
+import { DiceManager } from './DiceManager';
 
 export class EventManager {
     private _titleElement: HTMLElement;
@@ -28,25 +27,29 @@ export class EventManager {
         this._developOverlay = document.getElementById("photo-develop-overlay")!;
         this._characterCard = document.getElementById("event-character-card")!;
 
+        // Cada chave é um lugar do mapa — foto real de um ambiente abandonado
+        // (Pripyat / Zona de Exclusão de Chernobyl), em preto e branco e 4:3.
+        // Baixadas do Wikimedia Commons; créditos e licenças em
+        // img/places/ATTRIBUTIONS.md. Ver scripts/fetch-place-images.mjs.
         this._images = new Map<string, string>([
-            // lugares nomeados
-            ['barn',       new URL('../../img/places/barn-abandoned-farm-homestead.jpg', import.meta.url).toString()],
-            ['ferrisWheel',new URL('../../img/places/ferris-wheel.jpg', import.meta.url).toString()],
-            ['forestFog',  new URL('../../img/places/forest-fog.jpg', import.meta.url).toString()],
-            ['geyser',     new URL('../../img/places/geyser.jpg', import.meta.url).toString()],
-            ['milestone',  new URL('../../img/places/milestone.jpg', import.meta.url).toString()],
-            ['themePark',  new URL('../../img/places/theme-park.jpg', import.meta.url).toString()],
-            // numerados
-            ['img2', new URL('../../img/places/2.jpg', import.meta.url).toString()],
-            ['img4', new URL('../../img/places/4.jpg', import.meta.url).toString()],
-            ['img5', new URL('../../img/places/5.jpg', import.meta.url).toString()],
-            ['img6', new URL('../../img/places/6.jpg', import.meta.url).toString()],
-            ['img7', new URL('../../img/places/7.jpg', import.meta.url).toString()],
-            ['imgC', new URL('../../img/places/c.jpg', import.meta.url).toString()],
-            // raiz
-            ['forest', new URL('../../img/forest.jpg', import.meta.url).toString()],
-            ['house',  new URL('../../img/house.jpg',  import.meta.url).toString()],
-            ['wolf',   new URL('../../img/wolf.jpg',   import.meta.url).toString()],
+            ['placeHospital',          new URL('../../img/places/hospital.jpg', import.meta.url).toString()],
+            ['placeApartmentBlock',    new URL('../../img/places/apartment-block.jpg', import.meta.url).toString()],
+            ['placeMaternity',         new URL('../../img/places/maternity.jpg', import.meta.url).toString()],
+            ['placePostOffice',        new URL('../../img/places/post-office.jpg', import.meta.url).toString()],
+            ['placeSchool',            new URL('../../img/places/school.jpg', import.meta.url).toString()],
+            ['placePool',              new URL('../../img/places/pool.jpg', import.meta.url).toString()],
+            ['placeApartmentInterior', new URL('../../img/places/apartment-interior.jpg', import.meta.url).toString()],
+            ['placePharmacy',          new URL('../../img/places/pharmacy.jpg', import.meta.url).toString()],
+            ['placeKindergarten',      new URL('../../img/places/kindergarten.jpg', import.meta.url).toString()],
+            ['placeMural',             new URL('../../img/places/mural.jpg', import.meta.url).toString()],
+            ['placeRiverPark',         new URL('../../img/places/river-park.jpg', import.meta.url).toString()],
+            ['placeCentralSquare',     new URL('../../img/places/central-square.jpg', import.meta.url).toString()],
+            ['placeRailwayBridge',     new URL('../../img/places/railway-bridge.jpg', import.meta.url).toString()],
+            ['placeFerrisWheel',       new URL('../../img/places/ferris-wheel.jpg', import.meta.url).toString()],
+            ['placeTrench',            new URL('../../img/places/trench.jpg', import.meta.url).toString()],
+            ['placeAbandonedCar',      new URL('../../img/places/abandoned-car.jpg', import.meta.url).toString()],
+            ['placePalaceCulture',     new URL('../../img/places/palace-culture.jpg', import.meta.url).toString()],
+            ['placeFrozenRiver',       new URL('../../img/places/frozen-river.jpg', import.meta.url).toString()],
         ]);
 
         this._game = Game.getInstance();
@@ -55,27 +58,17 @@ export class EventManager {
     }
 
     start(): void {
-        console.log("event page")
         this._eventPageChoicesBtnListElement.innerHTML = '';
+
         if (this._pendingEvent) {
             this._currentEvent = this._pendingEvent;
             this._pendingEvent = null;
-        } else {
-            const eventSeeds = new EventSeeds();
-            eventSeeds.start();
-            let randomEventType: number = this._game.state.getRandomArbitrary(1);
-
-            if (this.checkForMileStone()) {
-                this._currentEvent = eventSeeds.getMileStoneEvent();
-            } else if (randomEventType == 0) {
-                this._currentEvent = eventSeeds.getPlaceEvent();
-            }
         }
 
         if (!this._currentEvent) {
-            const eventSeeds = new EventSeeds();
-            eventSeeds.start();
-            this._currentEvent = eventSeeds.getMileStoneEvent();
+            // Sem evento na fila — nada a mostrar aqui.
+            this._game.stateManager.goToState(GameStates.LOG);
+            return;
         }
 
         this.showEvent();
@@ -83,6 +76,10 @@ export class EventManager {
 
     public queueEvent(event: Event): void {
         this._pendingEvent = event;
+    }
+
+    public get hasPendingEvent(): boolean {
+        return this._pendingEvent != null;
     }
 
     private showCharacterCard(): void {
@@ -127,10 +124,8 @@ export class EventManager {
         if (choice.skillCheck && choice.skillCheckFields) {
             choice.skillCheckFields.difficult = diceManager.getDifficult(choice.skillCheckFields.difficulty);
 
-            let buttonText: string = choice.buttonText + ' [' +
-                                     choice.skillCheckFields.difficult.text + ': ' + 
-                                     choice.skillCheckFields.difficult.value + 
-                                     ' - ' + diceManager.calculateProbabilityFrom((choice.skillCheckFields.difficult.value - 3)) + ']';
+            let buttonText: string = choice.buttonText + ' · ' +
+                                     diceManager.probabilityForTarget(choice.skillCheckFields.difficult.value);
 
             button.appendChild(document.createTextNode(buttonText));
             button.classList.add(choice.skillCheckFields.difficult.class);
@@ -138,7 +133,6 @@ export class EventManager {
             button.appendChild(document.createTextNode(choice.buttonText));
         }
 
-        
         button.addEventListener('click', () => this.selectChoice(choice));
         this._eventPageChoicesBtnListElement.appendChild(button);
     }
@@ -152,34 +146,36 @@ export class EventManager {
             return;
         }
 
-        if (this.currentEvent.type == EventType.Place && choice.buttonText == 'Investigate') {
+        if (this.currentChoice.opensItemPicker) {
             this._game.stateManager.goToState(GameStates.ITEM_PICKER);
             return;
         }
 
-        this.currentChoice.normalResultPath();
-        this._game.stateManager.goToState(GameStates.LOG);
+        if (this.currentChoice.normalResultPath) {
+            this.currentChoice.normalResultPath();
+        }
+
+        this._game.stateManager.goToState(this.resolveNextState());
+    }
+
+    /**
+     * Decide para onde ir depois que um evento se resolve:
+     * epílogo (fronteira cruzada), enterro (alguém morreu) ou diário.
+     */
+    public resolveNextState(): GameStates {
+        if (this._game.state.pendingExplorationVictory) {
+            return GameStates.GAME_OVER;
+        }
+
+        if (this._game.characterManager.getFirstCharacterDeadAndNotBuried()) {
+            return GameStates.RIP;
+        }
+
+        return GameStates.LOG;
     }
 
     get currentEvent(): Event {
         return this._currentEvent;
-    }
-
-    private checkForMileStone(): boolean {
-        return (this._game.state.distanceToTheBorder == 250 ||
-            this._game.state.distanceToTheBorder == 200 ||
-            this._game.state.distanceToTheBorder == 150 ||
-            this._game.state.distanceToTheBorder == 100 ||
-            this._game.state.distanceToTheBorder == 50);
-    }
-
-    showWaitingMessage(): void {
-        this._titleElement.style.display = 'none';
-        this._photographyBorder.style.display = 'none';
-        this._descriptionElement.innerHTML = 'Something happened!'
-        this._imageElement.style.display = 'none';
-
-        setTimeout(() => this.showEvent(), 1000);
     }
 
     public getImagePath(imageName: string): string {
@@ -192,7 +188,7 @@ export class EventManager {
     }
 
     showEvent(): void {
-        console.log("show event");
+        this._game.audioManager.playEventRevealSound();
         this._titleElement.style.display = 'block';
         this._titleElement.innerHTML = this._currentEvent.title;
         this._descriptionElement.innerHTML = this._currentEvent.description;
@@ -231,6 +227,7 @@ export class EventManager {
         preloadImage.onload = () => {
             if (requestId !== this._imageLoadRequestId) return;
 
+            this._game.audioManager.playImageRevealSound();
             this._imageElement.src = path;
             this._imageElement.style.display = 'block';
             this._developOverlay.classList.remove('developing');

@@ -3,6 +3,10 @@ import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { Difficulties } from '../enums/Difficulties';
 
+/**
+ * Arco de Dmytro — o pai. Tema: culpa.
+ * Lugares: Bloco Kurchatov, Correios, Escola 4, Casa 17.
+ */
 export class DmytroEventSeeds {
     private static _game: Game;
 
@@ -11,37 +15,35 @@ export class DmytroEventSeeds {
         let events: Event[] = [];
 
         events.push(new Event(
-            'Rostos nos Escombros',
-            'Dmytro depara-se com os corpos de uma família, soterrados nos escombros de uma casa destruída. A visão traz um eco de dor e desolação, como se as paredes dilaceradas daquele lar sussurrassem segredos de vidas interrompidas. A imagem crava-se em sua mente, e o medo do mesmo destino para sua própria família transforma-se em um peso opressor, como se o céu desabasse sobre seus ombros.',
-            'barn',
+            'Escombros.',
+            'Quatro corpos. Quatro mochilas.',
+            'placeApartmentBlock',
             {
-                buttonText: 'Enfrentar',
+                buttonText: 'Olhar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterDmytro.increaseSanity(5);
-                            this._game.log.addTempLog('Dmytro encontra força em sua alma exausta, encarando o terror com uma chama trêmula de coragem, e por um instante, a escuridão recua, devolvendo-lhe um fragmento de paz.', LogType.Result);
+                            this._game.characterManager.characterDmytro.increaseSanity(15);
+                            this._game.log.addTempLog('Dmytro: força. +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterDmytro.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Dmytro', 'Ansiedade');
-                            this._game.log.addTempLog('A visão é um golpe demasiado cruel para sua mente já ferida, e a imagem dos corpos assombra cada recanto de seus pensamentos, lançando-o em um abismo de ansiedade.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterDmytro, 18, 'Ansiedade');
+                            this._game.log.addTempLog(`Dmytro: Ansiedade. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Evitar',
+                buttonText: 'Desviar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterDmytro.looseSanity(5);
-                    this._game.log.addTempLog('Dmytro desvia o olhar, mas a sombra daqueles rostos segue-o, como uma cicatriz na memória, corroendo sua sanidade com a persistência de um veneno invisível.', LogType.Result);
-                    this._game.log.addTempLog('Dmytro se ajoelha no solo frio, e lágrimas amargas escorrem de seus olhos enquanto ele é consumido por um lamento silencioso.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterDmytro);
+                    this._game.log.addTempLog('Dmytro desvia. Os quatro seguem. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -49,33 +51,32 @@ export class DmytroEventSeeds {
         ));
 
         events.push(new Event(
-            'O Velho Espelho',
-            'Dmytro encontra um espelho rachado, um fragmento do passado que reflete não apenas seu rosto cansado, mas os fantasmas daqueles que ele não conseguiu salvar. As fissuras no vidro parecem traçar as linhas de sua própria culpa, um labirinto sem saída que o aprisiona em suas falhas.',
-            'house',
+            'Espelho.',
+            'Um rosto rachado. Quase o seu.',
+            'placePostOffice',
             {
-                buttonText: 'Pressão',
+                buttonText: 'Encarar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterDmytro.looseSanity(5);
-                    this._game.log.addTempLog('Ao encarar o espelho, Dmytro sente-se afundar sob o peso de cada reflexo, cada rosto perdido que retorna para assombrá-lo, roubando-lhe mais um pouco de sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterDmytro);
+                    this._game.log.addTempLog('Dmytro encara. Nomes voltam. −10 · grupo −4', LogType.Result);
                 }
             },
             {
-                buttonText: 'Cautela',
+                buttonText: 'Desviar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterDmytro.increaseSanity(5);
-                            this._game.log.addTempLog('Dmytro desvia o olhar a tempo, fechando a porta para os espectros que o espelho convocava, recuperando uma pequena parte de si mesmo no processo.', LogType.Result);
+                            this._game.characterManager.characterDmytro.increaseSanity(15);
+                            this._game.log.addTempLog('Dmytro vira o espelho. «Depois.» +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterDmytro.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Dmytro', 'Culpa');
-                            this._game.log.addTempLog('O reflexo fragmentado invade sua mente, e Dmytro é incapaz de evitar a torrente de culpa que o consome, como um rio subterrâneo que devora a terra por dentro.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterDmytro, 18, 'Culpa');
+                            this._game.log.addTempLog(`Dmytro: Culpa. −${dmg}`, LogType.Result);
                         }
                     }
                 },
@@ -86,36 +87,35 @@ export class DmytroEventSeeds {
         ));
 
         events.push(new Event(
-            'Gritos Fantasmas',
-            'Dmytro ouve gritos ao longe, ecos de um massacre há muito ocorrido, mas que ainda ressoam como espectros em sua mente. Cada som é uma lâmina cortante, um chamado que rasga a calma da noite e o arrasta de volta às memórias que ele tenta enterrar.',
-            'forestFog',
+            'Gritos.',
+            'Recreio. Pátio vazio.',
+            'placeSchool',
             {
-                buttonText: 'Confrontar',
+                buttonText: 'Entrar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.CHALLENGING,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterDmytro.increaseSanity(10);
-                            this._game.log.addTempLog('Dmytro enfrenta os gritos com uma força que ele não sabia possuir, transpondo as barreiras do medo e emergindo um pouco mais forte, como um sobrevivente que encontra luz em meio à devastação.', LogType.Result);
+                            this._game.characterManager.characterDmytro.increaseSanity(20);
+                            this._game.log.addTempLog('Dmytro fica. O eco morre. +20', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterDmytro.looseSanity(15);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Dmytro', 'Trauma');
-                            this._game.log.addTempLog('Os gritos são como garras invisíveis, cravando-se em sua mente, arrastando Dmytro para um vórtice de lembranças e pesadelos, até que tudo que resta é um trauma irreparável.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterDmytro, 32, 'Trauma');
+                            this._game.log.addTempLog(`Dmytro: Trauma. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Fugir',
+                buttonText: 'Contornar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterDmytro.looseSanity(7);
-                    this._game.log.addTempLog('Dmytro tenta fugir dos gritos, mas eles se entrelaçam ao vento, assombrando seus passos e corroendo sua mente com uma persistência maligna.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterDmytro);
+                    this._game.log.addTempLog('Os gritos seguem no vento. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -123,21 +123,22 @@ export class DmytroEventSeeds {
         ));
 
         events.push(new Event(
-            'Casa Abandonada',
-            'Dmytro avista uma casa abandonada à beira do caminho. As janelas estão quebradas, mas a estrutura ainda está de pé. Pode haver suprimentos lá dentro — ou perigo.',
-            'house',
+            'Casa.',
+            'Porta trancada. Botas pequenas.',
+            'placeApartmentInterior',
             {
-                buttonText: 'Investigate',
+                buttonText: 'Vasculhar',
                 skillCheck: false,
                 skillCheckFields: null,
-                normalResultPath: null
+                normalResultPath: null,
+                opensItemPicker: true
             },
             {
-                buttonText: 'Ignorar e seguir',
+                buttonText: 'Seguir',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.log.addTempLog('Dmytro decide não arriscar. A família continua caminhando em silêncio.', LogType.Result);
+                    this._game.log.addTempLog('A casa fica. Inteira.', LogType.Result);
                 }
             },
             EventType.Place,

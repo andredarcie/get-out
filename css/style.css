@@ -280,7 +280,69 @@ button.loading::after {
 }
 
 
+/* ── 4b. INTRO PAGE ──────────────────────────────────────────── */
+
+#intro-page {
+  justify-content: center;
+}
+
+.intro-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sp-3);
+  overflow-y: auto;
+  padding: var(--sp-4) var(--sp-2);
+}
+
+.intro-kicker {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  margin: 0;
+}
+
+.intro-title {
+  font-size: var(--fs-2xl);
+  letter-spacing: 0.18em;
+  color: var(--c-text);
+  animation: fadeIn 1.6s ease both;
+}
+
+.intro-divider {
+  width: 56px;
+  height: 1px;
+  background: var(--c-accent);
+  margin: var(--sp-2) 0 var(--sp-3);
+}
+
+.intro-word {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  color: var(--c-text);
+  margin: 0;
+  animation: fadeIn 1.2s ease both;
+}
+
+.intro-word--em {
+  color: var(--c-text-dim);
+  margin-top: var(--sp-4);
+}
+
+
 /* ── 5. LOG PAGE ─────────────────────────────────────────────── */
+
+.log-day-field {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  margin: var(--sp-1) 0 0;
+}
 
 #log-page {
   gap: var(--sp-3);
@@ -313,32 +375,32 @@ button.loading::after {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Personagens */
+/* Personagens — grade 2×2 para otimizar o espaço */
 .stats-content {
   flex: 1;
   max-height: none;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+  align-content: start;
 }
 
 .character-card {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-2) 0;
-  border-bottom: 1px solid var(--c-border);
-}
-
-.character-card:last-child {
-  border-bottom: none;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+  min-width: 0;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  background: var(--c-surface);
 }
 
 .character-image {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   object-fit: cover;
   border-radius: var(--radius-sm);
   filter: grayscale(50%) brightness(0.75);
@@ -788,12 +850,16 @@ button.loading::after {
 }
 
 #event-page-description {
-  font-size: var(--fs-base);
-  line-height: 1.75;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+  text-align: center;
   color: var(--c-text);
   flex: 1;
   overflow-y: auto;
-  margin: 0 0 var(--sp-3);
+  margin: var(--sp-3) 0;
+  animation: fadeIn 1s ease both;
 }
 
 /* card do personagem envolvido no evento */
@@ -1471,6 +1537,17 @@ button.loading::after {
   font-size: var(--fs-base);
   color: var(--c-text);
   letter-spacing: 0.05em;
+  line-height: 1.85;
+  text-align: left;
+  max-height: 45dvh;
+  overflow-y: auto;
+}
+
+#game-over-stats {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
 }
 
 #game-over-page .page-actions {

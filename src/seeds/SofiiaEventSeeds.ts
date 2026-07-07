@@ -3,6 +3,10 @@ import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { Difficulties } from '../enums/Difficulties';
 
+/**
+ * Arco de Sofiia — a filha. Tema: memória.
+ * Lugares: Jardim Lastivka, Praça da Cultura, Roda-Gigante, Viaduto Leste.
+ */
 export class SofiiaEventSeeds {
     private static _game: Game;
 
@@ -11,36 +15,35 @@ export class SofiiaEventSeeds {
         let events: Event[] = [];
 
         events.push(new Event(
-            'Rostos Esquecidos',
-            'Sofiia é assombrada por rostos que não consegue mais lembrar, como se as memórias estivessem desaparecendo de sua mente.',
-            'img2',
+            'Mural.',
+            'Rostos conhecidos. Nomes fugindo.',
+            'placeMural',
             {
-                buttonText: 'Esperança',
+                buttonText: 'Recitar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterSofiia.increaseSanity(10);
-                            this._game.log.addTempLog('Sofiia se agarra à esperança de que as memórias perdidas retornem, recuperando parte de sua sanidade.', LogType.Result);
+                            this._game.characterManager.characterSofiia.increaseSanity(15);
+                            this._game.log.addTempLog('Katya. Yulia. Vira. +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterSofiia.looseSanity(15);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Sofiia', 'Isolamento');
-                            this._game.log.addTempLog('A sensação de perda é esmagadora para Sofiia, que se afasta cada vez mais dos outros, sentindo-se isolada.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterSofiia, 18, 'Isolamento');
+                            this._game.log.addTempLog(`Sofiia: Isolamento. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Desespero',
+                buttonText: 'Passar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterSofiia.looseSanity(5);
-                    this._game.log.addTempLog('Sofiia cede ao desespero ao perceber que as memórias estão se esvaindo, perdendo parte de sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterSofiia);
+                    this._game.log.addTempLog('De cabeça baixa. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -48,36 +51,35 @@ export class SofiiaEventSeeds {
         ));
 
         events.push(new Event(
-            'Sombras no Horizonte',
-            'Sofiia vê sombras misteriosas ao longe, que parecem se aproximar lentamente, trazendo uma sensação de medo.',
-            'imgC',
+            'Sombras.',
+            'No fim da rua. Mais perto.',
+            'placeCentralSquare',
             {
-                buttonText: 'Confrontar',
+                buttonText: 'Aproximar',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: Difficulties.MEDIUM,
+                    difficulty: Difficulties.CHALLENGING,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterSofiia.increaseSanity(5);
-                            this._game.log.addTempLog('Sofiia enfrenta as sombras com coragem, recuperando parte de sua sanidade.', LogType.Result);
+                            this._game.characterManager.characterSofiia.increaseSanity(20);
+                            this._game.log.addTempLog('Casacos num varal. Riso. +20', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterSofiia.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Sofiia', 'Medo');
-                            this._game.log.addTempLog('O confronto com as sombras é demais para Sofiia, que sucumbe ao medo crescente.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterSofiia, 32, 'Medo');
+                            this._game.log.addTempLog(`Sofiia: Medo. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Fugir',
+                buttonText: 'Desviar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterSofiia.looseSanity(5);
-                    this._game.log.addTempLog('Sofiia tenta escapar das sombras, mas o medo a persegue, corroendo sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterSofiia);
+                    this._game.log.addTempLog('Sem olhar para trás. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -85,36 +87,35 @@ export class SofiiaEventSeeds {
         ));
 
         events.push(new Event(
-            'Esperança Quebrada',
-            'Sofiia vê sua esperança desmoronar diante dos desafios que parecem insuperáveis.',
-            'ferrisWheel',
+            'Roda.',
+            'Nunca girou. O ingresso, guardado.',
+            'placeFerrisWheel',
             {
-                buttonText: 'Esperança',
+                buttonText: 'Subir',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: Difficulties.MEDIUM,
+                    difficulty: Difficulties.CHALLENGING,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterSofiia.increaseSanity(10);
-                            this._game.log.addTempLog('Sofiia se agarra a um fio de esperança, encontrando força para seguir em frente e recuperar parte de sua sanidade.', LogType.Result);
+                            this._game.characterManager.characterSofiia.increaseSanity(20);
+                            this._game.log.addTempLog('Lá do alto: o caminho. «A gente chega.» +20', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterSofiia.looseSanity(15);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Sofiia', 'Desespero');
-                            this._game.log.addTempLog('A esperança de Sofiia se despedaça, e ela é tomada por um profundo desespero.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterSofiia, 32, 'Desespero');
+                            this._game.log.addTempLog(`Sofiia: Desespero. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Desespero',
+                buttonText: 'Soltar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterSofiia.looseSanity(5);
-                    this._game.log.addTempLog('Sofiia sucumbe ao desespero, vendo sua sanidade lentamente se esvair.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterSofiia);
+                    this._game.log.addTempLog('Um enterro pequeno. De papel. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -122,21 +123,22 @@ export class SofiiaEventSeeds {
         ));
 
         events.push(new Event(
-            'Veículo Abandonado',
-            'Sofiia localiza um carro capotado à margem da estrada. As portas estão abertas e o porta-malas ejetado. Parece que os donos fugiram às pressas — talvez tenham deixado algo para trás.',
-            'img5',
+            'Carro.',
+            'Quatro portas abertas. Pressa.',
+            'placeAbandonedCar',
             {
-                buttonText: 'Investigate',
+                buttonText: 'Vasculhar',
                 skillCheck: false,
                 skillCheckFields: null,
-                normalResultPath: null
+                normalResultPath: null,
+                opensItemPicker: true
             },
             {
-                buttonText: 'Passar direto',
+                buttonText: 'Passar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.log.addTempLog('Sofiia se afasta do veículo sem tocar em nada. Alguns lugares é melhor não mexer.', LogType.Result);
+                    this._game.log.addTempLog('«Que tenham conseguido.»', LogType.Result);
                 }
             },
             EventType.Place,

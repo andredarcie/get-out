@@ -10,42 +10,43 @@ interface MapNode {
     label: string;
     eventTitle: string | null;
     kind: MapNodeKind;
+    depth: number;
     left: number;
     top: number;
     connections: string[];
 }
 
 const MAP_NODES: MapNode[] = [
-    { id: 'camp', label: 'Estação', eventTitle: null, kind: 'camp', left: 50, top: 4, connections: ['a1', 'a2'] },
+    { id: 'camp', label: 'Estação', eventTitle: null, kind: 'camp', depth: 0, left: 50, top: 4, connections: ['a1', 'a2'] },
 
-    { id: 'a1', label: 'Hospital 2', eventTitle: 'Olhos no Escuro', kind: 'event', left: 28, top: 13, connections: ['b1', 'b2'] },
-    { id: 'a2', label: 'Bloco Kurchatov', eventTitle: 'Rostos nos Escombros', kind: 'event', left: 72, top: 13, connections: ['b2', 'b3'] },
+    { id: 'a1', label: 'Hospital 2', eventTitle: 'Olhos.', kind: 'event', depth: 1, left: 28, top: 13, connections: ['b1', 'b2'] },
+    { id: 'a2', label: 'Bloco Kurchatov', eventTitle: 'Escombros.', kind: 'event', depth: 1, left: 72, top: 13, connections: ['b2', 'b3'] },
 
-    { id: 'b1', label: 'Maternidade', eventTitle: 'Sussurros dos Mortos', kind: 'event', left: 18, top: 23, connections: ['c1', 'c2'] },
-    { id: 'b2', label: 'Correios', eventTitle: 'O Velho Espelho', kind: 'event', left: 50, top: 23, connections: ['c1', 'c2'] },
-    { id: 'b3', label: 'Escola 4', eventTitle: 'Gritos Fantasmas', kind: 'event', left: 82, top: 23, connections: ['c1', 'c2'] },
+    { id: 'b1', label: 'Maternidade', eventTitle: 'Sussurros.', kind: 'event', depth: 2, left: 18, top: 23, connections: ['c1', 'c2'] },
+    { id: 'b2', label: 'Correios', eventTitle: 'Espelho.', kind: 'event', depth: 2, left: 50, top: 23, connections: ['c1', 'c2'] },
+    { id: 'b3', label: 'Escola 4', eventTitle: 'Gritos.', kind: 'event', depth: 2, left: 82, top: 23, connections: ['c1', 'c2'] },
 
-    { id: 'c1', label: 'Piscina Lazúrna', eventTitle: 'Silêncio Mortal', kind: 'event', left: 28, top: 34, connections: ['d1', 'd2', 'd3'] },
-    { id: 'c2', label: 'Casa 17', eventTitle: 'Casa Abandonada', kind: 'event', left: 72, top: 34, connections: ['d2', 'd3'] },
+    { id: 'c1', label: 'Piscina Lazúrna', eventTitle: 'Silêncio.', kind: 'event', depth: 3, left: 28, top: 34, connections: ['d1', 'd2', 'd3'] },
+    { id: 'c2', label: 'Casa 17', eventTitle: 'Casa.', kind: 'event', depth: 3, left: 72, top: 34, connections: ['d2', 'd3'] },
 
-    { id: 'd1', label: 'Farmácia Velha', eventTitle: 'Farmácia Destruída', kind: 'event', left: 18, top: 45, connections: ['e1', 'e2'] },
-    { id: 'd2', label: 'Creche Solnyshko', eventTitle: 'Eco de Choro', kind: 'event', left: 50, top: 45, connections: ['e1', 'e2'] },
-    { id: 'd3', label: 'Jardim Lastivka', eventTitle: 'Rostos Esquecidos', kind: 'event', left: 82, top: 45, connections: ['e1', 'e2'] },
+    { id: 'd1', label: 'Farmácia Velha', eventTitle: 'Farmácia.', kind: 'event', depth: 4, left: 18, top: 45, connections: ['e1', 'e2'] },
+    { id: 'd2', label: 'Creche Solnyshko', eventTitle: 'Choro.', kind: 'event', depth: 4, left: 50, top: 45, connections: ['e1', 'e2'] },
+    { id: 'd3', label: 'Jardim Lastivka', eventTitle: 'Mural.', kind: 'event', depth: 4, left: 82, top: 45, connections: ['e1', 'e2'] },
 
-    { id: 'e1', label: 'Parque do Rio', eventTitle: 'Companheiro Imaginário', kind: 'event', left: 28, top: 58, connections: ['f1', 'f2'] },
-    { id: 'e2', label: 'Praça da Cultura', eventTitle: 'Sombras no Horizonte', kind: 'event', left: 72, top: 58, connections: ['f2', 'f3'] },
+    { id: 'e1', label: 'Parque do Rio', eventTitle: 'Sasha.', kind: 'event', depth: 5, left: 28, top: 58, connections: ['f1', 'f2'] },
+    { id: 'e2', label: 'Praça da Cultura', eventTitle: 'Sombras.', kind: 'event', depth: 5, left: 72, top: 58, connections: ['f2', 'f3'] },
 
-    { id: 'f1', label: 'Passarela Férrea', eventTitle: 'Caminho Sem Volta', kind: 'event', left: 18, top: 71, connections: ['g1', 'g2'] },
-    { id: 'f2', label: 'Roda-Gigante', eventTitle: 'Esperança Quebrada', kind: 'event', left: 50, top: 71, connections: ['g1', 'g2'] },
-    { id: 'f3', label: 'Valeta Sul', eventTitle: 'Mochila no Caminho', kind: 'event', left: 82, top: 71, connections: ['g1', 'g2'] },
+    { id: 'f1', label: 'Passarela Férrea', eventTitle: 'Passarela.', kind: 'event', depth: 6, left: 18, top: 71, connections: ['g1', 'g2'] },
+    { id: 'f2', label: 'Roda-Gigante', eventTitle: 'Roda.', kind: 'event', depth: 6, left: 50, top: 71, connections: ['g1', 'g2'] },
+    { id: 'f3', label: 'Valeta Sul', eventTitle: 'Mochila.', kind: 'event', depth: 6, left: 82, top: 71, connections: ['g1', 'g2'] },
 
-    { id: 'g1', label: 'Viaduto Leste', eventTitle: 'Veículo Abandonado', kind: 'event', left: 28, top: 84, connections: ['border'] },
-    { id: 'g2', label: 'Palácio Energetik', eventTitle: null, kind: 'camp', left: 72, top: 84, connections: ['border'] },
+    { id: 'g1', label: 'Viaduto Leste', eventTitle: 'Carro.', kind: 'event', depth: 7, left: 28, top: 84, connections: ['border'] },
+    { id: 'g2', label: 'Palácio Energetik', eventTitle: 'Palácio.', kind: 'event', depth: 7, left: 72, top: 84, connections: ['border'] },
 
-    { id: 'border', label: 'Fronteira Norte', eventTitle: null, kind: 'border', left: 50, top: 95, connections: [] },
+    { id: 'border', label: 'Fronteira Norte', eventTitle: 'Fronteira.', kind: 'border', depth: 8, left: 50, top: 95, connections: [] },
 ];
 
-export const MAP_EXPLORABLE_LOCATION_COUNT = MAP_NODES.filter((node) => node.kind === 'event').length;
+export const MAP_TOTAL_DEPTH = 8;
 
 export class MapManager {
     private readonly _game: Game;
@@ -63,12 +64,18 @@ export class MapManager {
         this._backButton.addEventListener('click', () => this.onBack());
     }
 
-    public get totalLocations(): number {
-        return MAP_EXPLORABLE_LOCATION_COUNT;
+    public get totalSteps(): number {
+        return MAP_TOTAL_DEPTH;
+    }
+
+    public getCurrentDepth(): number {
+        const node = this.getNodeById(this._game.state.currentMapNodeId);
+        return node ? node.depth : 0;
     }
 
     public start(): void {
-        this._pageTitle.textContent = 'Mapa de Fuga';
+        this._game.audioManager.playMapOpenSound();
+        this._pageTitle.textContent = 'Mapa.';
         this._pageContent.innerHTML = this.buildMapMarkup();
         this._pageActions.style.display = 'block';
         this.bindNodeEvents();
@@ -99,13 +106,11 @@ export class MapManager {
         this._game.state.setCurrentMapNode(selectedNode.id);
 
         if (selectedNode.kind === 'border') {
-            this._game.state.setGameOverMessage('A família atravessou a fronteira depois de encarar tudo que havia pelo caminho.', true);
-            this._game.stateManager.goToState(GameStates.GAME_OVER);
-            return;
-        }
-
-        if (selectedNode.kind !== 'event') {
-            this._game.stateManager.goToState(GameStates.MAP);
+            const finale = this.getEventForNode(selectedNode);
+            if (finale) {
+                this._game.eventManager.queueEvent(finale);
+            }
+            this._game.logManager.travelToSelectedLocation();
             return;
         }
 
@@ -209,7 +214,7 @@ export class MapManager {
 
         const eventSeeds = new EventSeeds();
         eventSeeds.start();
-        return eventSeeds.events.find((event) => event.title === node.eventTitle) ?? null;
+        return eventSeeds.getEventByTitle(node.eventTitle);
     }
 
     private getNodeById(nodeId: string): MapNode | undefined {

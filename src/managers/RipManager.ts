@@ -1,6 +1,13 @@
 import { Game } from '../Game';
 import { Character } from '../entities/Character';
 import { GameStates } from '../enums/GameStates';
+import { STORY_YEAR } from '../GameState';
+
+const RIP_QUOTES: Record<string, string> = {
+    'Olena': 'Via demais.',
+    'Mykola': 'Cresceu depressa demais.',
+    'Sofiia': 'Guardava os nomes.',
+};
 
 export class RipManager {
     private _ripPageImageElement: HTMLImageElement;
@@ -27,27 +34,41 @@ export class RipManager {
     }
 
     start(): void {
-        const character: Character = this._game.characterManager.getFirstCharacterDeadAndNotBuried();
-        this.showCharater(character);
+        const character = this._game.characterManager.getFirstCharacterDeadAndNotBuried();
+        if (!character) {
+            this._game.stateManager.goToState(GameStates.LOG);
+            return;
+        }
+
+        this._game.audioManager.playCharacterDeathSound();
+        this.showCharacter(character);
         character.buried = true;
     }
 
-    showCharater(character: Character) {
+    private showCharacter(character: Character) {
         this._ripPageImageElement.src = character.imageURL;
-        this._ripPageNameElement.innerHTML = character.name + ' Miller';
-        this._ripPageDatesElement.innerHTML = '⭐ 02/02/1996 - 20/03/2020 ✝️';
-        this._ripPageQuoteElement.innerHTML = 'I pray you find peace and rest wherever you are';
-        this._ripPageStatusElement.innerHTML = '<span style="font-weight: bold;">Status:</span> Starved to death';
+        this._ripPageNameElement.innerHTML = character.name;
+        this._ripPageDatesElement.innerHTML = `⭐ ${character.getDateOfBirth()} — ${STORY_YEAR} ✝`;
+        this._ripPageQuoteElement.innerHTML = RIP_QUOTES[character.name] ?? 'Descanse.';
+        this._ripPageStatusElement.innerHTML = 'A mente cedeu.';
     }
 
-    onClickTravel() {
+    private onClickTravel() {
         this._game.audioManager.playButtonSound();
-        const character: Character = this._game.characterManager.getFirstCharacterDeadAndNotBuried();
-        if (character != null) {
-            this.showCharater(character);
+        const character = this._game.characterManager.getFirstCharacterDeadAndNotBuried();
+
+        if (character) {
+            this._game.audioManager.playCharacterDeathSound();
+            this.showCharacter(character);
             character.buried = true;
-        } else {
-            this._game.stateManager.goToState(GameStates.LOG);
+            return;
         }
+
+        if (this._game.eventManager.hasPendingEvent) {
+            this._game.stateManager.goToState(GameStates.EVENT);
+            return;
+        }
+
+        this._game.stateManager.goToState(GameStates.LOG);
     }
 }

@@ -3,6 +3,10 @@ import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { Difficulties } from '../enums/Difficulties';
 
+/**
+ * Arco de Mykola — o filho. Tema: infância interrompida.
+ * Lugares: Creche Solnyshko, Parque do Rio, Passarela Férrea, Valeta Sul.
+ */
 export class MykolaEventSeeds {
     private static _game: Game;
 
@@ -11,36 +15,35 @@ export class MykolaEventSeeds {
         let events: Event[] = [];
 
         events.push(new Event(
-            'Eco de Choro',
-            'Mykola ouve ecos de um choro distante, que ressoam como um reflexo de sua própria dor.',
-            'img4',
+            'Choro.',
+            'Não há mais crianças aqui.',
+            'placeKindergarten',
             {
-                buttonText: 'Confrontar',
+                buttonText: 'Procurar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterMykola.increaseSanity(5);
-                            this._game.log.addTempLog('Mykola reúne coragem para confrontar os ecos, encontrando um breve alívio em sua mente.', LogType.Result);
+                            this._game.characterManager.characterMykola.increaseSanity(15);
+                            this._game.log.addTempLog('Um brinquedo. Pilha fraca. +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterMykola.looseSanity(15);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Mykola', 'Pânico');
-                            this._game.log.addTempLog('Os ecos são demais para Mykola, mergulhando-o em um estado de pânico incontrolável.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterMykola, 18, 'Pânico');
+                            this._game.log.addTempLog(`Mykola: Pânico. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Fugir',
+                buttonText: 'Ignorar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterMykola.looseSanity(5);
-                    this._game.log.addTempLog('Mykola tenta escapar dos sons, mas eles continuam a persegui-lo, minando sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterMykola);
+                    this._game.log.addTempLog('O choro segue junto. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -48,36 +51,35 @@ export class MykolaEventSeeds {
         ));
 
         events.push(new Event(
-            'Companheiro Imaginário',
-            'Mykola começa a falar com alguém que ninguém mais vê, buscando conforto em uma presença imaginária.',
-            'themePark',
+            'Sasha.',
+            'O balanço vazio range.',
+            'placeRiverPark',
             {
-                buttonText: 'Enfrentar',
+                buttonText: 'Despedir',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: Difficulties.MEDIUM,
+                    difficulty: Difficulties.CHALLENGING,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterMykola.increaseSanity(5);
-                            this._game.log.addTempLog('Mykola reconhece a ilusão e consegue encontrar um pouco de equilíbrio, recuperando parte de sua sanidade.', LogType.Result);
+                            this._game.characterManager.characterMykola.increaseSanity(20);
+                            this._game.log.addTempLog('«Chega bem, Sasha.» +20', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterMykola.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Mykola', 'Alucinações');
-                            this._game.log.addTempLog('Mykola perde o controle sobre a realidade, mergulhando em alucinações cada vez mais intensas.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterMykola, 32, 'Alucinações');
+                            this._game.log.addTempLog(`Mykola: Alucinações. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Evitar',
+                buttonText: 'Fingir',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterMykola.looseSanity(5);
-                    this._game.log.addTempLog('Mykola tenta ignorar a presença imaginária, mas a sensação de solidão o consome, corroendo sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterMykola);
+                    this._game.log.addTempLog('Ninguém pergunta. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -85,58 +87,58 @@ export class MykolaEventSeeds {
         ));
 
         events.push(new Event(
-            'Caminho Sem Volta',
-            'Mykola encontra um caminho sombrio e desconhecido, que parece não ter fim.',
-            'img7',
+            'Passarela.',
+            'Doze metros. Tábuas faltando.',
+            'placeRailwayBridge',
             {
-                buttonText: 'Pressão',
-                skillCheck: false,
-                skillCheckFields: null,
-                normalResultPath: () => {
-                    this._game.characterManager.characterMykola.looseSanity(5);
-                    this._game.log.addTempLog('Mykola sente a pressão do caminho interminável, perdendo um pouco de sua sanidade ao avançar por ele.', LogType.Result);
-                }
-            },
-            {
-                buttonText: 'Cautela',
+                buttonText: 'Ir primeiro',
                 skillCheck: true,
                 skillCheckFields: {
-                    difficulty: Difficulties.MEDIUM,
+                    difficulty: Difficulties.CHALLENGING,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterMykola.increaseSanity(5);
-                            this._game.log.addTempLog('Mykola avança com cautela, conseguindo manter sua mente focada e recuperar um pouco de sanidade.', LogType.Result);
+                            this._game.characterManager.characterMykola.increaseSanity(20);
+                            this._game.log.addTempLog('O filho guia o pai. +20', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterMykola.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Mykola', 'Ansiedade');
-                            this._game.log.addTempLog('O medo do desconhecido toma conta de Mykola, provocando uma crise de ansiedade.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterMykola, 32, 'Ansiedade');
+                            this._game.log.addTempLog(`Mykola: Ansiedade. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
+            },
+            {
+                buttonText: 'No meio',
+                skillCheck: false,
+                skillCheckFields: null,
+                normalResultPath: () => {
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterMykola);
+                    this._game.log.addTempLog('Agarrado aos ombros. −10 · grupo −4', LogType.Result);
+                }
             },
             EventType.Psychological,
             this._game.characterManager.characterMykola
         ));
 
         events.push(new Event(
-            'Mochila no Caminho',
-            'Mykola tropeça em uma mochila militar abandonada na estrada. Está suja de lama e parcialmente aberta. O que quer que esteja lá dentro ainda pode ser útil.',
-            'img7',
+            'Mochila.',
+            'Militar. Meio aberta.',
+            'placeTrench',
             {
-                buttonText: 'Investigate',
+                buttonText: 'Vasculhar',
                 skillCheck: false,
                 skillCheckFields: null,
-                normalResultPath: null
+                normalResultPath: null,
+                opensItemPicker: true
             },
             {
                 buttonText: 'Não tocar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.log.addTempLog('Mykola olha para a mochila por um longo momento, depois desvia o olhar e continua andando.', LogType.Result);
+                    this._game.log.addTempLog('Algumas histórias ficam fechadas.', LogType.Result);
                 }
             },
             EventType.Place,

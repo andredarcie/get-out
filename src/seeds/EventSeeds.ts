@@ -1,19 +1,19 @@
-import { Event, EventType, Choice } from '../entities/Event';
-import { Game } from '../Game';
+import { Event } from '../entities/Event';
 import { DmytroEventSeeds } from './DmytroEventSeeds';
 import { MykolaEventSeeds } from './MykolaEventSeeds';
 import { OlenaEventSeeds } from './OlenaEventSeeds';
 import { SofiiaEventSeeds } from './SofiiaEventSeeds';
+import { StoryEventSeeds } from './StoryEventSeeds';
 
+/**
+ * Registro central de eventos. Cada nó do mapa aponta para um
+ * evento pelo título; este registro monta todos e resolve a busca.
+ */
 export class EventSeeds {
     private _events: Event[];
-    private _game: Game;
-    private _triggeredEvents: Set<string>;
 
     constructor() {
-        this._game = Game.getInstance();
         this._events = [];
-        this._triggeredEvents = new Set();
     }
 
     start() {
@@ -21,40 +21,14 @@ export class EventSeeds {
         this._events.push(...MykolaEventSeeds.createMykolaEvents());
         this._events.push(...OlenaEventSeeds.createOlenaEvents());
         this._events.push(...SofiiaEventSeeds.createSofiiaEvents());
+        this._events.push(...StoryEventSeeds.createStoryEvents());
     }
 
     get events() {
         return this._events;
     }
 
-    public getPlaceEvent() {
-        const availableEvents = this._events.filter(event => !this._triggeredEvents.has(event.title));
-        if (availableEvents.length === 0) {
-            return null;
-        }
-        const selectedEvent = availableEvents[Math.floor(Math.random() * availableEvents.length)];
-        this._triggeredEvents.add(selectedEvent.title);
-        return selectedEvent;
-    }
-
-    public getMileStoneEvent(): Event {
-        const continueChoice: Choice = {
-            buttonText: 'Voltar para a viagem',
-            skillCheck: false,
-            skillCheckFields: null,
-            normalResultPath: () => {}
-        };
-
-        return new Event(
-            'Marco alcan�ado!',
-            `${this._game.state.distanceToTheBorder} milhas para a fronteira`,
-            'milestone',
-            continueChoice,
-            null as any,
-            EventType.Exploration,
-            null as any,
-            null
-        );
+    public getEventByTitle(title: string): Event | null {
+        return this._events.find((event) => event.title === title) ?? null;
     }
 }
-

@@ -1,5 +1,4 @@
 import { Item } from './Item';
-import { Skills } from '../enums/Skills';
 import { Difficulties } from '../enums/Difficulties';
 import { Difficult } from '../managers/DiceManager';
 import { Character } from './Character';
@@ -16,6 +15,7 @@ export interface Choice {
     skillCheck: boolean;
     skillCheckFields: SkillCheckFields | null;
     normalResultPath: any;
+    opensItemPicker?: boolean;
 }
 
 export interface SkillCheckFields {
@@ -40,7 +40,7 @@ export class Event {
     private _items: Item[] = [];
     private _character: Character;
 
-    constructor(title: string, description: string, 
+    constructor(title: string, description: string,
                 image: string, firstChoice: Choice, secondChoice: Choice,
                 type: EventType, character: Character, items?: Item[]) {
         this._title = title;
@@ -58,10 +58,6 @@ export class Event {
 
     get title() {
         return this._title;
-    }
-
-    get subtitle() {
-        return this._subtitle;
     }
 
     get description() {

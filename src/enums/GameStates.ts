@@ -1,4 +1,5 @@
 export enum GameStates {
+    INTRO,
     EVENT,
     SKILLCHECK,
     GAME_OVER,
@@ -6,7 +7,5 @@ export enum GameStates {
     LOG,
     BAG,
     ITEM_PICKER,
-    DIALOG,
-    MAP,
-    SKILL_UP
+    MAP
 }

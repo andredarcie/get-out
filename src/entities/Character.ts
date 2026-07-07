@@ -1,6 +1,6 @@
 import { Game } from '../Game';
-import { LogType } from '../managers/LogManager';
 import { GameStates } from '../enums/GameStates';
+import { LogType } from '../managers/LogManager';
 import { Status } from './Status';
 
 export class Character {
@@ -13,7 +13,6 @@ export class Character {
 
     private _isDead: boolean = false;
     private _buried: boolean = false;
-    private _sick: boolean = false;
 
     private readonly _game: Game;
 
@@ -42,6 +41,10 @@ export class Character {
         return this._game.loc.l(this._kinship);
     }
 
+    get isPlayer(): boolean {
+        return this._kinship === 'you';
+    }
+
     get buried() {
         return this._buried;
     }
@@ -62,14 +65,17 @@ export class Character {
         if (this._status != null) {
             this.looseSanity(this._status?.healthPerHour ?? 0);
         }
+        // Fadiga: a estrada cobra de todos, a cada etapa.
+        this.looseSanity(Character.FATIGUE_PER_HOUR);
     }
 
-    private checksIfAnStatusExists(statusName: string): boolean {
-        return this._status?.name == statusName;
+    public static readonly FATIGUE_PER_HOUR = 4;
+
+    public hasAffliction(): boolean {
+        return this._status != null;
     }
 
     public setStatus(status: Status) {
-        this._game.logManager.addTempLog(this._name + ' pegou: ' + status.name, LogType.Result);
         this._status = status;
     }
 
@@ -82,43 +88,47 @@ export class Character {
     }
 
     getSanity(): string {
-        return 'Sanity: ' + this._sanity + '%';
-    }
-
-    getSickness(): string {
-        return this._sick ? 'Sick' : 'Not sick'
+        return this._sanity + '%';
     }
 
     getDateOfBirth(): string {
         return this._dateOfBirth;
     }
 
-    
-    sicken(): void {
-        this._sick = true;
-    }
-
     looseSanity(sanityToLoose: number): void {
         if (sanityToLoose < 0 || sanityToLoose > 100) {
-            throw new Error('Invalid value for healthToLoose');
+            throw new Error('Invalid value for sanityToLoose');
         }
 
-        if (this._sanity > 0) {
-            this._sanity -= sanityToLoose;
+        if (this._isDead || this._sanity <= 0) return;
 
-            if (this._sanity <= 0) {
-                this._sanity = 0;
-                this._isDead = true;
+        this._sanity -= sanityToLoose;
 
-                if (this._kinship == 'you') {
-                    this._game.state.setGameOverMessage('Você perdeu a própria mente no caminho. A travessia termina aqui.');
-                    this._game.stateManager.goToState(GameStates.GAME_OVER);
-                }
+        if (this._sanity <= 0) {
+            this._sanity = 0;
+            this._isDead = true;
+
+            if (this.isPlayer) {
+                this._game.state.setGameOverMessage('A mente cede. O caminho se perde.');
+                this._game.stateManager.goToState(GameStates.GAME_OVER);
+            } else {
+                this._game.characterManager.onCharacterDied(this);
             }
         }
     }
 
+    /**
+     * Luto nunca mata — deixa marcas. Reduz a sanidade sem
+     * disparar morte, com piso mínimo de 5.
+     */
+    public sufferGrief(amount: number): void {
+        if (this._isDead) return;
+        this._sanity = Math.max(5, this._sanity - amount);
+    }
+
     increaseSanity(sanityToIncrease: number): void {
+        if (this._isDead) return;
+
         this._sanity += sanityToIncrease;
 
         if (this._sanity > 100) {

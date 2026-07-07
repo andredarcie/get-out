@@ -8,9 +8,8 @@ import { GameStates } from './enums/GameStates';
 import { Character } from './entities/Character';
 import { CharacterManager } from './managers/CharacterManager';
 import { Language, LocalizationManager } from './managers/LocalizationManager';
-import { DialogManager } from './managers/DialogManager';
+import { IntroManager } from './managers/IntroManager';
 import { MapManager } from './managers/MapManager';
-import { SkillUpManager } from './managers/SkillUpManager';
 import { SkillCheckManager } from './managers/SkillCheckManager';
 import { ItemPickerManager } from './managers/ItemPickerManager';
 import { AudioManager } from './managers/AudioManager';
@@ -33,9 +32,8 @@ export class Game {
     public stateManager: StateManager;
     public itemPickerManager: ItemPickerManager;
     public loc: LocalizationManager;
-    public dialogManager: DialogManager;
+    public introManager: IntroManager;
     public mapManager: MapManager;
-    public skillUpManager: SkillUpManager;
     public audioManager: AudioManager;
 
     private constructor() {
@@ -64,10 +62,9 @@ export class Game {
         this.logManager = new LogManager();
         this.stateManager = new StateManager();
         this.itemPickerManager = new ItemPickerManager();
-        this.dialogManager = new DialogManager();
-        this.skillUpManager = new SkillUpManager();
+        this.introManager = new IntroManager();
 
-        this.stateManager.goToState(GameStates.LOG);
+        this.stateManager.goToState(GameStates.INTRO);
     }
 
     get log(): LogManager {

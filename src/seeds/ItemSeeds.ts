@@ -1,33 +1,29 @@
 import { Item } from '../entities/Item';
 import { StatusSeeds } from './AfflictionSeeds';
 
-export enum ItemsNames {
-    FirstAid,
-    Food
-}
-
+/**
+ * Cada item alivia exatamente uma aflição. Encontrar o item certo
+ * para a aflição certa é o coração da economia de recursos do jogo.
+ */
 export class ItemSeeds {
-    public static items: Item[] = [
-        new Item('Comprimidos de Diazepam', StatusSeeds.getStatusByName('Ansiedade')),
-        new Item('Seringa de Morfina', StatusSeeds.getStatusByName('Paranoia')),
-        new Item('Lata de Cafeína Pura', StatusSeeds.getStatusByName('Desespero')),
-        new Item('Diário Rasgado', StatusSeeds.getStatusByName('Culpa')),
-        new Item('Crucifixo de Bolso', StatusSeeds.getStatusByName('Medo')),
-        new Item('Foto Desgastada', StatusSeeds.getStatusByName('Alucinações')),
-        new Item('Carta de Um Ente Querido', StatusSeeds.getStatusByName('Isolamento')),
-        new Item('Cartela de Antidepressivos', StatusSeeds.getStatusByName('Depressão')),
-        new Item('Kit de Primeiros Socorros Básico', StatusSeeds.getStatusByName('Trauma')),
-        new Item('Comprimidos de Anfetamina', StatusSeeds.getStatusByName('Pânico'))
+    private static readonly _blueprints: Array<{ name: string, cures: string }> = [
+        { name: 'Diazepam', cures: 'Ansiedade' },
+        { name: 'Morfina', cures: 'Paranoia' },
+        { name: 'Cafeína', cures: 'Desespero' },
+        { name: 'Diário', cures: 'Culpa' },
+        { name: 'Crucifixo', cures: 'Medo' },
+        { name: 'Foto antiga', cures: 'Alucinações' },
+        { name: 'Carta', cures: 'Isolamento' },
+        { name: 'Antidepressivos', cures: 'Depressão' },
+        { name: 'Curativos', cures: 'Trauma' },
+        { name: 'Anfetamina', cures: 'Pânico' },
     ];
-    
-
-    public static getItens(name: ItemsNames, amount: number): Item {
-        this.items[name].amount = amount;
-        return this.items[name];
-    }
 
     public static getOneRandomItem(): Item {
-        return ItemSeeds.items[ItemSeeds.getRandomArbitrary(0, ItemSeeds.items.length)];
+        const blueprint = this._blueprints[this.getRandomArbitrary(0, this._blueprints.length)];
+        const item = new Item(blueprint.name, StatusSeeds.getStatusByName(blueprint.cures));
+        item.amount = 1;
+        return item;
     }
 
     private static getRandomArbitrary(min: number, max: number) {

@@ -1,4 +1,5 @@
 export class PageRegistry {
+    public readonly intro: HTMLElement;
     public readonly log: HTMLElement;
     public readonly event: HTMLElement;
     public readonly skillCheck: HTMLElement;
@@ -6,11 +7,10 @@ export class PageRegistry {
     public readonly rip: HTMLElement;
     public readonly bag: HTMLElement;
     public readonly itemPicker: HTMLElement;
-    public readonly dialog: HTMLElement;
     public readonly map: HTMLElement;
-    public readonly skillUp: HTMLElement;
 
     constructor() {
+        this.intro    = document.getElementById("intro-page")!;
         this.log      = document.getElementById("log-page")!;
         this.event    = document.getElementById("event-page")!;
         this.skillCheck  = document.getElementById("skill-check-page")!;
@@ -18,9 +18,7 @@ export class PageRegistry {
         this.rip      = document.getElementById("rip-page")!;
         this.bag      = document.getElementById("bag-page")!;
         this.itemPicker  = document.getElementById("item-picker-page")!;
-        this.dialog   = document.querySelector("#dialog-page")!;
         this.map      = document.querySelector("#map-page")!;
-        this.skillUp  = document.querySelector("#skill-up-page")!;
     }
 
     show(page: HTMLElement): void {
@@ -32,8 +30,8 @@ export class PageRegistry {
     }
 
     hideAll(): void {
-        [this.log, this.event, this.skillCheck, this.gameOver, this.bag,
-         this.rip, this.itemPicker, this.skillUp, this.dialog, this.map]
+        [this.intro, this.log, this.event, this.skillCheck, this.gameOver,
+         this.bag, this.rip, this.itemPicker, this.map]
             .forEach(p => this.hide(p));
     }
 }

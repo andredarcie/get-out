@@ -3,6 +3,10 @@ import { Game } from '../Game';
 import { LogType } from '../managers/LogManager';
 import { Difficulties } from '../enums/Difficulties';
 
+/**
+ * Arco de Olena — a esposa. Tema: vigilância.
+ * Lugares: Hospital 2, Maternidade, Piscina Lazúrna, Farmácia Velha.
+ */
 export class OlenaEventSeeds {
     private static _game: Game;
 
@@ -11,36 +15,35 @@ export class OlenaEventSeeds {
         let events: Event[] = [];
 
         events.push(new Event(
-            'Olhos no Escuro',
-            'Olena sente que algo a observa na escuridão, como se olhos invisíveis a seguissem por onde passa.',
-            'img5',
+            'Olhos.',
+            'O hospital observa.',
+            'placeHospital',
             {
-                buttonText: 'Enfrentar',
+                buttonText: 'Encarar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterOlena.increaseSanity(5);
-                            this._game.log.addTempLog('Olena encara os olhos imaginários na escuridão, recuperando um pouco de sua sanidade.', LogType.Result);
+                            this._game.characterManager.characterOlena.increaseSanity(15);
+                            this._game.log.addTempLog('Olena encara. Nada. +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterOlena.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Olena', 'Paranoia');
-                            this._game.log.addTempLog('A presença invisível se torna insuportável para Olena, levando-a a um estado de paranoia constante.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterOlena, 18, 'Paranoia');
+                            this._game.log.addTempLog(`Olena: Paranoia. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Evitar',
+                buttonText: 'Apressar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterOlena.looseSanity(5);
-                    this._game.log.addTempLog('Olena tenta ignorar os olhos na escuridão, mas a sensação de ser observada persiste, minando sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterOlena);
+                    this._game.log.addTempLog('Os olhos viajam junto. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -48,36 +51,35 @@ export class OlenaEventSeeds {
         ));
 
         events.push(new Event(
-            'Sussurros dos Mortos',
-            'Olena ouve sussurros que parecem vir do além, trazendo mensagens que ela não consegue decifrar.',
-            'img6',
+            'Sussurros.',
+            'O berçário canta baixinho.',
+            'placeMaternity',
             {
-                buttonText: 'Esperança',
+                buttonText: 'Ouvir',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterOlena.increaseSanity(10);
-                            this._game.log.addTempLog('Olena se apega a uma esperança tênue ao interpretar os sussurros como um sinal positivo, recuperando parte de sua sanidade.', LogType.Result);
+                            this._game.characterManager.characterOlena.increaseSanity(15);
+                            this._game.log.addTempLog('O primeiro choro de Sofiia. Aqui. +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterOlena.looseSanity(15);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Olena', 'Desespero');
-                            this._game.log.addTempLog('Os sussurros se tornam um peso insuportável para Olena, mergulhando-a em um profundo desespero.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterOlena, 18, 'Desespero');
+                            this._game.log.addTempLog(`Olena: Desespero. −${dmg}`, LogType.Result);
                         }
                     }
                 },
                 normalResultPath: null
             },
             {
-                buttonText: 'Desespero',
+                buttonText: 'Tapar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterOlena.looseSanity(7);
-                    this._game.log.addTempLog('Olena cede ao desespero que os sussurros trazem, perdendo ainda mais de sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterOlena);
+                    this._game.log.addTempLog('Memória não tem porta. −10 · grupo −4', LogType.Result);
                 }
             },
             EventType.Psychological,
@@ -85,33 +87,32 @@ export class OlenaEventSeeds {
         ));
 
         events.push(new Event(
-            'Silêncio Mortal',
-            'Olena se depara com um silêncio absoluto, um vazio que parece engolir todos os sons ao seu redor.',
-            'geyser',
+            'Silêncio.',
+            'Denso. Com peso.',
+            'placePool',
             {
-                buttonText: 'Pressão',
+                buttonText: 'Gritar',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.characterManager.characterOlena.looseSanity(5);
-                    this._game.log.addTempLog('O silêncio opressor faz com que Olena se sinta cada vez mais isolada, diminuindo sua sanidade.', LogType.Result);
+                    this._game.characterManager.applyAvoidCost(this._game.characterManager.characterOlena);
+                    this._game.log.addTempLog('O eco volta sozinho. −10 · grupo −4', LogType.Result);
                 }
             },
             {
-                buttonText: 'Cautela',
+                buttonText: 'Atravessar',
                 skillCheck: true,
                 skillCheckFields: {
                     difficulty: Difficulties.MEDIUM,
                     canGiveItems: false,
                     resultPath: {
                         success: () => {
-                            this._game.characterManager.characterOlena.increaseSanity(5);
-                            this._game.log.addTempLog('Olena mantém a calma diante do silêncio, conseguindo encontrar um ponto de equilíbrio em meio ao vazio.', LogType.Result);
+                            this._game.characterManager.characterOlena.increaseSanity(15);
+                            this._game.log.addTempLog('Um azulejo por vez. +15', LogType.Result);
                         },
                         failure: () => {
-                            this._game.characterManager.characterOlena.looseSanity(10);
-                            this._game.characterManager.makeSomeoneInTheGroupGetStatus('Olena', 'Depressão');
-                            this._game.log.addTempLog('O vazio do silêncio consome Olena, levando-a a um estado de depressão profunda.', LogType.Result);
+                            const dmg = this._game.characterManager.applyCheckFailure(this._game.characterManager.characterOlena, 18, 'Depressão');
+                            this._game.log.addTempLog(`Olena: Depressão. −${dmg}`, LogType.Result);
                         }
                     }
                 },
@@ -122,21 +123,22 @@ export class OlenaEventSeeds {
         ));
 
         events.push(new Event(
-            'Farmácia Destruída',
-            'Olena encontra os restos de uma farmácia saqueada. Algumas prateleiras no fundo ainda estão intactas. Entre os escombros, pode haver algo que ajude a família.',
-            'img4',
+            'Farmácia.',
+            'Saqueada. O fundo, não.',
+            'placePharmacy',
             {
-                buttonText: 'Investigate',
+                buttonText: 'Vasculhar',
                 skillCheck: false,
                 skillCheckFields: null,
-                normalResultPath: null
+                normalResultPath: null,
+                opensItemPicker: true
             },
             {
-                buttonText: 'Deixar para trás',
+                buttonText: 'Seguir',
                 skillCheck: false,
                 skillCheckFields: null,
                 normalResultPath: () => {
-                    this._game.log.addTempLog('Olena hesita na entrada, mas o instinto a faz seguir em frente sem olhar para trás.', LogType.Result);
+                    this._game.log.addTempLog('A porta fica encostada.', LogType.Result);
                 }
             },
             EventType.Place,

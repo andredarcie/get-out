@@ -3,7 +3,7 @@ import { GameStates } from '../enums/GameStates';
 
 export class StateManager {
     private readonly _game: Game;
-    public currentState: GameStates = GameStates.LOG;
+    public currentState: GameStates = GameStates.INTRO;
 
     constructor() {
         this._game = Game.getInstance();
@@ -17,6 +17,10 @@ export class StateManager {
         pages.hideAll();
 
         switch(this.currentState) {
+            case GameStates.INTRO:
+                pages.show(pages.intro);
+                this._game.introManager.start();
+            break;
             case GameStates.EVENT:
                 pages.show(pages.event);
                 this._game.eventManager.start();
@@ -45,14 +49,6 @@ export class StateManager {
                 pages.show(pages.itemPicker);
                 this._game.itemPickerManager.start();
             break;
-            case GameStates.SKILL_UP:
-                pages.show(pages.skillUp);
-                this._game.skillUpManager.start();
-            break;
-            case GameStates.DIALOG:
-                pages.show(pages.dialog);
-                this._game.dialogManager.start();
-            break;
             case GameStates.MAP:
                 pages.show(pages.map);
                 this._game.mapManager.start();
@@ -61,6 +57,10 @@ export class StateManager {
 
     public goToState(state: GameStates): void {
         if (this.currentState == GameStates.GAME_OVER) return;
+
+        if (state !== GameStates.MAP && state !== GameStates.LOG) {
+            this._game.audioManager.stopWalkSound();
+        }
 
         this.currentState = state;
         this.setState();
